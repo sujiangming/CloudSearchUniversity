@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:view="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="160dp"
+        android:background="@color/colorFDFBF3">
+
+        <ImageView
+            android:id="@+id/iv_lecture_ske"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/banner_buy_vip" />
+
+        <com.gk.custom.RichText
+            android:id="@+id/rt_lecture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:text="10229292"
+            android:drawablePadding="5dp"
+            android:textColor="@android:color/white"
+            view:drawable_height="15dp"
+            view:drawable_location="left"
+            view:drawable_src="@drawable/browse"
+            view:drawable_width="15dp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_lecture_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
+        android:textSize="16sp"
+        android:textColor="@color/color555555"
+        android:text="师岛索隆基地" />
+</LinearLayout>

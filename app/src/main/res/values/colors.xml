@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#F6F6F6</color>
+    <color name="colorPrimaryDark">#F6F6F6</color>
+    <color name="colorAccent">#F6F6F6</color>
+    <color name="colorBackground">#F5F6F8</color>
+    <color name="colorBtnSetPress">#0099B8</color>
+    <color name="choosePressColor">#D2D0CA</color>
+    <color name="indexColorChange">#F4F2E9</color>
+    <color name="color353535">#353535</color>
+    <color name="color555555">#555555</color>
+    <color name="color878787">#878787</color>
+    <color name="colorFDFBF3">#FDFBF3</color>
+    <color name="colorDBDBDB">#FFDDDD</color>
+    <color name="color4BC6FF">#4BC6FF</color>
+    <color name="color19B4D4">#19B4D4</color>
+    <color name="color33000000">#33000000</color>
+    <color name="color80000000">#80000000</color>
+    <color name="colorF1F1F1">#F1F1F1</color>
+    <color name="colorF6F5F8">#F6F5F8</color>
+    <color name="colorF0EFF5">#F0EFF5</color>
+    <color name="colorA9A9A9">#A9A9A9</color>
+    <color name="color8f8e94">#8f8e94</color>
+    <color name="color030303">#030303</color>
+    <color name="colorc8c7cc">#c8c7cc</color>
+    <color name="color1A000000">#1A000000</color>
+    <color name="color4a4a4a">#4a4a4a</color>
+    <color name="color4c90bf">#4c90bf</color>
+</resources>

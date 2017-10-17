@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/top_bar_live"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="@string/main_tab_txt4"
+        android:textColor="@color/color030303"
+        android:textSize="@dimen/font_17_sp" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_44_dp"
+                android:background="#c9c9ce"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="@dimen/space_8_dp"
+                    android:background="@drawable/search_bg"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:src="@drawable/ic_search3x" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_8_dp"
+                        android:text="Settings"
+                        android:textColor="#8e8e93"
+                        android:textSize="@dimen/font_14_sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+            <!--中间菜单-->
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingBottom="@dimen/space_20_dp"
+                android:paddingTop="@dimen/space_20_dp">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_12_dp">
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="0dp"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:text="全部"
+                        android:textColor="#302f30"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="30dp" />
+
+                </TableRow>
+            </TableLayout>
+            <!--下半部分1-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_44_dp"
+                android:layout_marginTop="@dimen/space_20_dp"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/space_16_dp"
+                android:paddingRight="@dimen/space_16_dp">
+
+                <TextView
+                    android:layout_width="@dimen/space_3_dp"
+                    android:layout_height="@dimen/space_16_dp"
+                    android:background="@drawable/ic_shuxian_blue" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:layout_weight="1"
+                    android:text="名师讲堂"
+                    android:textColor="#302f30"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_right_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="@dimen/space_1_px"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_12_dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_12_dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--下半部分2-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_44_dp"
+                android:layout_marginTop="@dimen/space_20_dp"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/space_16_dp"
+                android:paddingRight="@dimen/space_16_dp">
+
+                <TextView
+                    android:layout_width="@dimen/space_3_dp"
+                    android:layout_height="@dimen/space_16_dp"
+                    android:background="@drawable/ic_shuxian_blue" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:layout_weight="1"
+                    android:text="历年真题"
+                    android:textColor="#302f30"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_right_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="@dimen/space_1_px"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_12_dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_12_dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--试卷模拟-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_44_dp"
+                android:layout_marginTop="@dimen/space_20_dp"
+                android:background="@android:color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/space_16_dp"
+                android:paddingRight="@dimen/space_16_dp">
+
+                <TextView
+                    android:layout_width="@dimen/space_3_dp"
+                    android:layout_height="@dimen/space_16_dp"
+                    android:background="@drawable/ic_shuxian_blue" />
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:layout_weight="1"
+                    android:text="模拟试卷"
+                    android:textColor="#302f30"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_right_arrow" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="@dimen/space_1_px"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_12_dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:background="@android:color/white"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_12_dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="25dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/ym" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/space_30_dp"
+                        android:ellipsize="end"
+                        android:gravity="center_vertical"
+                        android:maxLines="1"
+                        android:text="杨幂迷" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
+    <!--android:id="@+id/smart_rf_lecture"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="0dp"-->
+    <!--android:layout_marginTop="@dimen/space_20_dp"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@android:color/white">-->
+
+    <!--<GridView-->
+    <!--android:id="@+id/gv_lecture"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:gravity="center"-->
+    <!--android:horizontalSpacing="12dp"-->
+    <!--android:numColumns="2"-->
+    <!--android:paddingLeft="12dp"-->
+    <!--android:paddingRight="12dp"-->
+    <!--android:paddingTop="12dp"-->
+    <!--android:scrollbars="none"-->
+    <!--android:stretchMode="columnWidth">-->
+
+    <!--</GridView>-->
+    <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
+</LinearLayout>

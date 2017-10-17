@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="44dp"
+    android:background="@color/colorAccent">
+
+    <TextView
+        android:id="@+id/text_title"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:text="标题"
+        android:textColor="@color/color4a4a4a"
+        android:textSize="@dimen/font_16_sp" />
+
+    <ImageView
+        android:id="@+id/back_image"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/login_press_style"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/back_image" />
+
+    <ImageView
+        android:id="@+id/right_image"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/login_press_style"
+        android:paddingLeft="12dp"
+        android:paddingRight="12dp"
+        android:scaleType="centerInside"
+        android:visibility="visible" />
+
+</RelativeLayout>

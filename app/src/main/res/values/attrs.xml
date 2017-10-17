@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="CircleImageView">
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="border_overlay" format="boolean" />
+    </declare-styleable>
+    <declare-styleable name="CirCleRefreshLayout">
+        <attr name="AniBackColor" format="color" />
+        <attr name="AniForeColor" format="color" />
+        <attr name="CircleSmaller" format="integer"/>
+    </declare-styleable>
+    <!--自定义导航栏-->
+    <declare-styleable name="Topbar">
+        <attr name="titleText" format="string|reference" />
+        <attr name="titleSize" format="dimension|reference" />
+        <attr name="titleColor" format="color|reference" />
+        <attr name="leftBtn" format="reference"/>
+        <attr name="rightBtn" format="reference"/>
+    </declare-styleable>
+    <!--自定义TextView 可以设置上下左右图片的大小-->
+    <declare-styleable name="RichText">
+        <attr name="drawable_src" format="reference" />
+        <attr name="drawable_height" format="dimension" />
+        <attr name="drawable_width" format="dimension" />
+        <attr name="drawable_location">
+            <enum name="left" value="1" />
+            <enum name="top" value="2" />
+            <enum name="right" value="3" />
+            <enum name="bottom" value="4" />
+        </attr>
+    </declare-styleable>
+</resources>

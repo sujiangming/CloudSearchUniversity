@@ -1,0 +1,366 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/fragment_home_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <!--头部部分-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorF6F5F8"
+        android:scrollbars="none">
+        <!--banner部分-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.youth.banner.Banner
+                android:id="@+id/banner"
+                android:layout_width="match_parent"
+                android:layout_height="240dp">
+
+            </com.youth.banner.Banner>
+            <!--中间菜单-->
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.gk.custom.RichText
+                        android:id="@+id/rtv_school_query"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/space_12_dp"
+                        android:text="@string/school_query"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="40dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/gaokao"
+                        app:drawable_width="40dp" />
+
+                    <com.gk.custom.RichText
+                        android:id="@+id/rtv_score_query"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/space_12_dp"
+                        android:text="@string/score_query"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="40dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/zhuanye"
+                        app:drawable_width="40dp" />
+
+                    <com.gk.custom.RichText
+                        android:id="@+id/rtv_choose_school"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/space_12_dp"
+                        android:text="@string/school_choice"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="40dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/zhaosheng"
+                        app:drawable_width="40dp" />
+
+                    <com.gk.custom.RichText
+                        android:id="@+id/rtv_career_test"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:paddingTop="@dimen/space_12_dp"
+                        android:text="@string/school_rank"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="40dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/daxue"
+                        app:drawable_width="40dp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.gk.custom.RichText
+                        android:id="@+id/rtv_risk"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/space_12_dp"
+                        android:text="@string/rick_evaluate"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="40dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/vip"
+                        app:drawable_width="40dp" />
+
+                    <com.gk.custom.RichText
+                        android:id="@+id/rtv_same_score"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/space_12_dp"
+                        android:text="@string/wish_define_report"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="40dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/zhiyuan"
+                        app:drawable_width="40dp" />
+
+                    <com.gk.custom.RichText
+                        android:id="@+id/rtv_same_rank"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/space_12_dp"
+                        android:text="@string/wisdom_choose_school"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="40dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/zhineng"
+                        app:drawable_width="40dp" />
+
+                    <com.gk.custom.RichText
+                        android:id="@+id/rtv_exam_skill"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:ellipsize="end"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:paddingTop="@dimen/space_12_dp"
+                        android:text="@string/same_score_direction"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="40dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/kaosheng"
+                        app:drawable_width="40dp" />
+
+                </TableRow>
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10_dp"
+                android:stretchColumns="*">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/space_16_dp">
+
+                    <TextView
+                        android:layout_width="@dimen/space_3_dp"
+                        android:layout_height="@dimen/space_16_dp"
+                        android:background="@drawable/shuxian" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_5_dp"
+                        android:layout_weight="1"
+                        android:text="@string/test_evaluate"
+                        android:textSize="@dimen/font_14_sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_1_px"
+                    android:background="@color/colorF1F1F1" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white">
+
+                    <com.gk.custom.RichText
+                        android:id="@+id/rtv_famous_teacher"
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:drawablePadding="@dimen/space_5_dp"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/space_10_dp"
+                        android:paddingTop="@dimen/space_10_dp"
+                        android:text="@string/career_test"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/zhiye"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:drawablePadding="@dimen/space_5_dp"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/space_10_dp"
+                        android:paddingTop="@dimen/space_10_dp"
+                        android:text="@string/fit_profession"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/zhuanye_69"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:drawablePadding="@dimen/space_5_dp"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/space_10_dp"
+                        android:paddingTop="@dimen/space_10_dp"
+                        android:text="@string/luqu_risk_evaluate"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/fengxian"
+                        app:drawable_width="30dp" />
+                </TableRow>
+            </TableLayout>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/space_18_dp"
+                android:layout_marginTop="@dimen/space_10_dp"
+                android:stretchColumns="*">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="30dp"
+                    android:background="@android:color/white"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/space_16_dp">
+
+                    <TextView
+                        android:layout_width="@dimen/space_3_dp"
+                        android:layout_height="@dimen/space_16_dp"
+                        android:background="@drawable/shuxian" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_5_dp"
+                        android:layout_weight="1"
+                        android:text="@string/wish_improve"
+                        android:textSize="@dimen/font_14_sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_1_px"
+                    android:background="@color/colorF1F1F1" />
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/white">
+
+                    <com.gk.custom.RichText
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:drawablePadding="@dimen/space_5_dp"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/space_10_dp"
+                        android:paddingTop="@dimen/space_10_dp"
+                        android:text="@string/gaokao_ti_ku"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/tiku"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:drawablePadding="@dimen/space_5_dp"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/space_10_dp"
+                        android:paddingTop="@dimen/space_10_dp"
+                        android:text="@string/daxue_on_live"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/zhibo"
+                        app:drawable_width="30dp" />
+
+                    <com.gk.custom.RichText
+                        android:layout_width="match_parent"
+                        android:layout_height="80dp"
+                        android:background="@drawable/menu_btn_press"
+                        android:clickable="true"
+                        android:drawablePadding="@dimen/space_5_dp"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/space_10_dp"
+                        android:paddingTop="@dimen/space_10_dp"
+                        android:text="@string/zhao_sheng_breif"
+                        android:textSize="@dimen/font_12_sp"
+                        app:drawable_height="30dp"
+                        app:drawable_location="top"
+                        app:drawable_src="@drawable/zhaosheng_80"
+                        app:drawable_width="30dp" />
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+    </ScrollView>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/color1A000000"
+        android:gravity="center"
+        android:text="@string/main_tab_txt1"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_16_sp" />
+</FrameLayout>

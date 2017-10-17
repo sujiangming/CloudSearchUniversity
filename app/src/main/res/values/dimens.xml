@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="font_12_sp">12sp</dimen>
+    <dimen name="font_14_sp">14sp</dimen>
+    <dimen name="font_16_sp">16sp</dimen>
+    <dimen name="font_17_sp">17sp</dimen>
+    <dimen name="text_16_sp">16sp</dimen>
+    <dimen name="space_1_px">1px</dimen>
+    <dimen name="space_2_dp">2dp</dimen>
+    <dimen name="space_3_dp">3dp</dimen>
+    <dimen name="space_4_dp">4dp</dimen>
+    <dimen name="space_5_dp">5dp</dimen>
+    <dimen name="space_6_dp">6dp</dimen>
+    <dimen name="space_7_dp">7dp</dimen>
+    <dimen name="space_8_dp">8dp</dimen>
+    <dimen name="space_9_dp">9dp</dimen>
+    <dimen name="space_10_dp">10dp</dimen>
+    <dimen name="space_11_dp">11dp</dimen>
+    <dimen name="space_12_dp">12dp</dimen>
+    <dimen name="space_13_dp">13dp</dimen>
+    <dimen name="space_14_dp">14dp</dimen>
+    <dimen name="space_15_dp">15dp</dimen>
+    <dimen name="space_16_dp">16dp</dimen>
+    <dimen name="space_17_dp">17dp</dimen>
+    <dimen name="space_18_dp">18dp</dimen>
+    <dimen name="space_20_dp">20dp</dimen>
+    <dimen name="space_24_dp">24dp</dimen>
+    <dimen name="space_25_dp">25dp</dimen>
+    <dimen name="space_30_dp">30dp</dimen>
+    <dimen name="space_35_dp">35dp</dimen>
+    <dimen name="space_38_dp">38dp</dimen>
+    <dimen name="space_40_dp">40dp</dimen>
+    <dimen name="space_44_dp">44dp</dimen>
+    <dimen name="space_49_dp">49dp</dimen>
+    <dimen name="space_50_dp">50dp</dimen>
+    <dimen name="space_60_dp">60dp</dimen>
+</resources>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="jdryStyle" parent="AppTheme">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:windowAnimationStyle">@style/jdryanmi</item>
+    </style>
+
+    <style name="jdryanmi" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/move_in</item>
+        <item name="android:activityOpenExitAnimation">@anim/move_out</item>
+        <item name="android:activityCloseEnterAnimation">@anim/back_in</item>
+        <item name="android:activityCloseExitAnimation">@anim/back_out</item>
+    </style>
+
+    <style name="JdryProgressbar" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item><!--边框-->
+        <item name="android:windowIsFloating">true</item><!--是否浮现在activity之上-->
+        <item name="android:windowNoTitle">true</item><!--无标题-->
+        <item name="android:windowBackground">@drawable/processbar_circle</item>
+        <item name="android:backgroundDimEnabled">false</item><!--模糊-->
+        <!-- <item name="android:windowContentOverlay">@null</item> -->
+    </style>
+
+    <!--启动页设置透明全屏Theme-->
+    <style name="jdryStyle.AppStartLoadTranslucent">
+        <item name="windowActionBar">false</item>
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:windowAnimationStyle">@style/jdryanmi</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+
+    <!--启动欢迎页-->
+    <style name="AppWelcome" parent="jdryStyle">
+        <item name="android:windowBackground">@drawable/lanch</item>
+    </style>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/text_16_sp</item>
+    </style>
+</resources>

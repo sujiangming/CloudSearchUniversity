@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:layout_marginTop="@dimen/space_12_dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/phone3x" />
+
+        <EditText
+            android:id="@+id/et_user_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_5_dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:hint="请输入手机号"
+            android:inputType="phone"
+            android:maxLength="11"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/space_25_dp"
+            android:textColor="@color/color353535"
+            android:textColorHint="#d9d9d9"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_14_sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:layout_marginLeft="@dimen/space_44_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:background="@color/color555555" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:layout_marginTop="@dimen/space_38_dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pwd3x" />
+
+        <EditText
+            android:id="@id/et_user_pwd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_5_dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:hint="请输入密码"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/space_20_dp"
+            android:textColor="@color/color353535"
+            android:textColorHint="#d9d9d9"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_14_sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:layout_marginLeft="@dimen/space_44_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:background="@color/color555555" />
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_40_dp"
+        android:background="@color/color878787"
+        android:gravity="center"
+        android:text="登录"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_16_sp" />
+
+    <TextView
+        android:id="@+id/tv_forget_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_gravity="right"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_12_dp"
+        android:background="@drawable/menu_btn_press"
+        android:gravity="right|center_vertical"
+        android:lineSpacingExtra="@dimen/space_5_dp"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp"
+        android:text="忘记密码？"
+        android:textColor="@color/color555555"
+        android:textSize="@dimen/font_12_sp" />
+
+    <com.gk.custom.RichText
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:drawablePadding="@dimen/space_20_dp"
+        android:gravity="bottom|center_horizontal"
+        android:paddingBottom="@dimen/space_25_dp"
+        android:text="--------第三方登录--------"
+        android:textColor="@color/color555555"
+        android:textSize="@dimen/font_14_sp"
+        app:drawable_height="@dimen/space_50_dp"
+        app:drawable_location="bottom"
+        app:drawable_src="@drawable/ic_weixin"
+        app:drawable_width="@dimen/space_50_dp" />
+</LinearLayout>
