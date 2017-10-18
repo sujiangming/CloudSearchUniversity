@@ -33,5 +33,17 @@
     <string name="user_help_center">帮助中心(QA)</string>
     <string name="user_contact_client_service">联系客服</string>
     <string name="user_about_us">关于我们</string>
+    <string name="all_ke_mu">全部</string>
+    <string name="yu_wen">语文</string>
+    <string name="shu_xue">数据</string>
+    <string name="english">英语</string>
+    <string name="wen_zong">文综</string>
+    <string name="li_zong">理综</string>
+    <string name="wu_li">物理</string>
+    <string name="hua_xue">化学</string>
+    <string name="sheng_wu">生物</string>
+    <string name="li_shi">历史</string>
+    <string name="zheng_zhi">政治</string>
+    <string name="di_li">地理</string>
 
 </resources>
