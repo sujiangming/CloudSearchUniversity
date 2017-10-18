@@ -3,6 +3,7 @@
     <color name="colorPrimary">#F6F6F6</color>
     <color name="colorPrimaryDark">#F6F6F6</color>
     <color name="colorAccent">#F6F6F6</color>
+    <color name="colorNavigation">#F6F6F6</color>
     <color name="colorBackground">#F5F6F8</color>
     <color name="colorBtnSetPress">#0099B8</color>
     <color name="choosePressColor">#D2D0CA</color>

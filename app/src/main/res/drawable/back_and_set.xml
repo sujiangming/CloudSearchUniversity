@@ -3,12 +3,12 @@
     <item android:state_pressed="false">
         <shape android:shape="rectangle">
             <!-- 填充的颜色 -->
-            <solid android:color="@color/color4c90bf" />
+            <solid android:color="@color/colorNavigation" />
         </shape>
     </item>
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorBtnSetPress" />
+            <solid android:color="@color/color80000000" />
         </shape>
     </item>
 </selector>

@@ -106,7 +106,7 @@
         android:layout_gravity="right"
         android:layout_marginRight="@dimen/space_12_dp"
         android:layout_marginTop="@dimen/space_12_dp"
-        android:background="@drawable/menu_btn_press"
+        android:background="@drawable/login_btn_press"
         android:gravity="right|center_vertical"
         android:lineSpacingExtra="@dimen/space_5_dp"
         android:paddingLeft="@dimen/space_12_dp"

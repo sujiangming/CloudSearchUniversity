@@ -182,7 +182,7 @@ public class MainActivity extends SjmBaseActivity {
         banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+                Log.e("onPageScrolled->","当前位置=" + position + "\n 偏移量=" + positionOffset + "\n 偏移像素=" + positionOffsetPixels);
             }
 
             @Override
@@ -214,7 +214,7 @@ public class MainActivity extends SjmBaseActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-
+                Log.e("onPageScrollSChanged","当前状态=" + state);
             }
         });
     }

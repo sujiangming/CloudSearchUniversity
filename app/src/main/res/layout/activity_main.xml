@@ -32,7 +32,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorNavigation"
             android:baselineAligned="false"
             android:orientation="horizontal">
 
@@ -200,18 +200,18 @@
         android:background="@android:color/transparent"
         android:gravity="bottom|center_horizontal"
         android:orientation="vertical"
-        android:paddingBottom="@dimen/space_60_dp"
+        android:paddingBottom="@dimen/space_40_dp"
         android:visibility="gone">
 
         <TextView
             android:id="@+id/tv_btn"
             android:layout_width="100dp"
-            android:layout_height="@dimen/space_30_dp"
+            android:layout_height="@dimen/space_35_dp"
             android:background="@drawable/shape_fragment_wish"
             android:gravity="center"
             android:text="进入云校"
-            android:textColor="@color/color555555"
-            android:textSize="@dimen/font_16_sp"
+            android:textColor="@color/color4c90bf"
+            android:textSize="@dimen/font_14_sp"
             android:visibility="visible" />
     </LinearLayout>
     <!--欢迎页面-->
