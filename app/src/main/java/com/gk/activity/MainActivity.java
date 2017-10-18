@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -182,12 +181,12 @@ public class MainActivity extends SjmBaseActivity {
         banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                Log.e("onPageScrolled->","当前位置=" + position + "\n 偏移量=" + positionOffset + "\n 偏移像素=" + positionOffsetPixels);
+                //Log.e("onPageScrolled->","当前位置=" + position + "\n 偏移量=" + positionOffset + "\n 偏移像素=" + positionOffsetPixels);
             }
 
             @Override
             public void onPageSelected(final int position) {
-                Log.d("-onPageSelected-", position + "");
+                //Log.d("-onPageSelected-", position + "");
                 if (lastPosition == position) { //最后一张图片
                     llEnterApp.setVisibility(View.VISIBLE);
                     tvBtn.setOnClickListener(new View.OnClickListener() {
@@ -214,7 +213,7 @@ public class MainActivity extends SjmBaseActivity {
 
             @Override
             public void onPageScrollStateChanged(int state) {
-                Log.e("onPageScrollSChanged","当前状态=" + state);
+
             }
         });
     }

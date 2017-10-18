@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.gk.R;
+import com.gk.activity.LiveVideoDetailActivity;
 import com.gk.adpater.LiveVideoAdapter;
 import com.gk.presenter.LiveVideoPresenter;
 import com.gk.tools.GlideImageLoader;
@@ -65,8 +66,7 @@ public class LiveVideoFragment extends SjmBaseFragment {
         liveList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //openNewActivity(LiveVideoDetailActivity.class);
-                ToastUtils.toast(getContext(), mStringList.get(position));
+                openNewActivity(LiveVideoDetailActivity.class);
             }
         });
 

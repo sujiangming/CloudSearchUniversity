@@ -6,7 +6,7 @@ android {
     buildToolsVersion "25.0.3"
     defaultConfig {
         applicationId "com.gk"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -47,4 +47,6 @@ dependencies {
     compile files('libs/fastjson-1.2.2.jar')
     //add greenDao library
     compile 'org.greenrobot:greendao:3.2.2'
+    //视频播放器
+    compile 'com.shuyu:GSYVideoPlayer:2.1.0'
 }
