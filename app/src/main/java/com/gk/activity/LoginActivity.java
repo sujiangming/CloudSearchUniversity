@@ -41,7 +41,7 @@ public class LoginActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         initTopBar();
         initData();
-        pager.setAdapter(new LoginFragmentPagerAdapter(getSupportFragmentManager(), list));
+        pager.setAdapter(new LoginFragmentPagerAdapter(getSupportFragmentManager(), list,mEnterFlag));
         tabLayout.setupWithViewPager(pager);
     }
 
@@ -73,14 +73,19 @@ public class LoginActivity extends SjmBaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            //两秒之内按返回键就会退出
-            if ((System.currentTimeMillis() - exitTime) > 2000) {
-                toast("再按一次退出程序");
-                exitTime = System.currentTimeMillis();
+            if (mEnterFlag == YXXConstants.FROM_MAIN_FLAG) {
+                //两秒之内按返回键就会退出
+                if ((System.currentTimeMillis() - exitTime) > 2000) {
+                    toast("再按一次退出程序");
+                    exitTime = System.currentTimeMillis();
+                } else {
+                    appManager.finishAllActivity();
+                }
+                return true;
             } else {
-                appManager.finishAllActivity();
+                closeActivity();
+                return true;
             }
-            return true;
         }
         return super.onKeyDown(keyCode, event);
     }

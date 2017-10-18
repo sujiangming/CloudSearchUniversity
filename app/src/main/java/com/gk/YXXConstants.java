@@ -12,4 +12,6 @@ public class YXXConstants {
     public static final String ENTER_LOGIN_PAGE_FLAG = "login";
     public static final int FROM_MAIN_FLAG = 1;
     public static final int FROM_OTHER_FLAG = 2;
+    public static final int LOGIN_SET_RESULT = 512;
+    public static final int MAIN_TO_LOGIN_REQUEST = 514;
 }

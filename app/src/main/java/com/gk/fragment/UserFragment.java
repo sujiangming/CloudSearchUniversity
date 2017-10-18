@@ -1,8 +1,10 @@
 package com.gk.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.gk.R;
+import com.gk.YXXConstants;
 import com.gk.activity.LoginActivity;
 
 import butterknife.OnClick;
@@ -26,6 +28,8 @@ public class UserFragment extends SjmBaseFragment {
 
     @OnClick(R.id.ll_set)
     public void onViewClicked() {
-        openNewActivity(LoginActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG,YXXConstants.FROM_OTHER_FLAG);
+        openNewActivityByIntent(LoginActivity.class,intent);
     }
 }

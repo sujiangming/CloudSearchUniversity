@@ -137,8 +137,8 @@ public class MainActivity extends SjmBaseActivity {
         } else {
             hideBanner();
             mainView.setVisibility(View.VISIBLE);
-            initFragments();
         }
+        initFragments();
     }
 
     private boolean isUserBeanExit() {
@@ -193,16 +193,12 @@ public class MainActivity extends SjmBaseActivity {
                         @Override
                         public void onClick(View v) {
                             if (isUserBeanExit()) { // 判断用户是否存在，存在则弹出欢迎蒙版，否则需要直接跳到登录页面
-                                banner.setVisibility(View.GONE);
-                                llEnterApp.setVisibility(View.GONE);
-                                mainView.setVisibility(View.VISIBLE);
-                                showWelcome();
-                                initFragments();
-                                new LongTimeTask().execute("New Text");
+                                showMainView();
                             } else {
                                 Intent intent = new Intent();
                                 intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, YXXConstants.FROM_MAIN_FLAG);
-                                openNewActivityByIntent(LoginActivity.class, intent);
+                                intent.setClass(MainActivity.this,LoginActivity.class);
+                                startActivityForResult(intent,YXXConstants.MAIN_TO_LOGIN_REQUEST);
                             }
                         }
                     });
@@ -216,6 +212,21 @@ public class MainActivity extends SjmBaseActivity {
 
             }
         });
+    }
+
+    private void showMainView(){
+        hideBanner();
+        llEnterApp.setVisibility(View.GONE);
+        mainView.setVisibility(View.VISIBLE);
+        showWelcome();
+        new LongTimeTask().execute("welcome");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == YXXConstants.LOGIN_SET_RESULT){
+            showMainView();
+        }
     }
 
     private TranslateAnimation mShowAction;

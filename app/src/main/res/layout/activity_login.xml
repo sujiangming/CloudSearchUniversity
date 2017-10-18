@@ -9,7 +9,9 @@
     <com.gk.custom.TopBarView
         android:id="@+id/top_bar_login"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:titleColor="@color/color030303"
+        app:titleSize="@dimen/font_17_sp">
 
     </com.gk.custom.TopBarView>
     <!--头部部分-->

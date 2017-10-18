@@ -1,5 +1,6 @@
 package com.gk.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.YXXApplication;
+import com.gk.YXXConstants;
+import com.gk.activity.LoginActivity;
 import com.gk.beans.UserBean;
 import com.gk.tools.ToastUtils;
 
@@ -35,6 +38,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
 
     private String descPrefix = "温馨提示：未注册云寻校的手机，登录时将自动注册，且代表您已同意";
     private boolean isLogin = false;
+    private static int mEnterFlag = 0;
 
     @Override
     public int getResourceId() {
@@ -44,8 +48,9 @@ public class LoginLeftFragment extends SjmBaseFragment {
     public LoginLeftFragment() {
     }
 
-    public static LoginLeftFragment newInstance() {
+    public static LoginLeftFragment newInstance(int enterFlag) {
         LoginLeftFragment blankFragment = new LoginLeftFragment();
+        mEnterFlag = enterFlag;
         return blankFragment;
     }
 
@@ -96,11 +101,17 @@ public class LoginLeftFragment extends SjmBaseFragment {
             case R.id.tv_login:
                 if (isLogin) {
                     ToastUtils.toast(getContext(), "登录成功~");
-                    closeActivity();
                     UserBean userBean = new UserBean();
                     userBean.setUserId(etUserPhone.getText().toString());
                     userBean.setUserPwd(etUserPwd.getText().toString());
                     YXXApplication.getDaoSession().getUserBeanDao().insertOrReplace(userBean);
+                    if(mEnterFlag == YXXConstants.FROM_MAIN_FLAG){
+                        Intent intent = new Intent();
+                        intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG,mEnterFlag);
+                        LoginActivity loginActivity = (LoginActivity) getActivity();
+                        loginActivity.setResult(YXXConstants.LOGIN_SET_RESULT,intent);
+                    }
+                    closeActivity();
                 } else {
                     ToastUtils.toast(getContext(), "手机号或密码不能为空~");
                 }

@@ -16,18 +16,20 @@ import java.util.List;
 public class LoginFragmentPagerAdapter extends FragmentPagerAdapter {
 
     private List<String> list;
+    private int mEnterFlag;
 
-    public LoginFragmentPagerAdapter(FragmentManager fm, List<String> list) {
+    public LoginFragmentPagerAdapter(FragmentManager fm, List<String> list, int enterFlag) {
         super(fm);
         this.list = list;
+        this.mEnterFlag = enterFlag;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            return LoginLeftFragment.newInstance();
+            return LoginLeftFragment.newInstance(mEnterFlag);
         } else {
-            return LoginRightFragment.newInstance();
+            return LoginRightFragment.newInstance(mEnterFlag);
         }
     }
 

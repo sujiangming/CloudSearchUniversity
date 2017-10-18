@@ -1,5 +1,6 @@
 package com.gk.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -8,6 +9,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gk.R;
+import com.gk.YXXApplication;
+import com.gk.YXXConstants;
+import com.gk.activity.LoginActivity;
+import com.gk.beans.UserBean;
 import com.gk.tools.ToastUtils;
 
 import butterknife.BindView;
@@ -28,6 +33,7 @@ public class LoginRightFragment extends SjmBaseFragment {
     TextView tvForgetPwd;
 
     private boolean isLogin = false;
+    private static int mEnterFlag = 0;
 
     @Override
     public int getResourceId() {
@@ -37,8 +43,9 @@ public class LoginRightFragment extends SjmBaseFragment {
     public LoginRightFragment() {
     }
 
-    public static LoginRightFragment newInstance() {
+    public static LoginRightFragment newInstance(int enterFlag) {
         LoginRightFragment blankFragment = new LoginRightFragment();
+        mEnterFlag = enterFlag;
         return blankFragment;
     }
 
@@ -84,7 +91,16 @@ public class LoginRightFragment extends SjmBaseFragment {
         switch (view.getId()) {
             case R.id.tv_login:
                 if (isLogin) {
-                    ToastUtils.toast(getContext(), "登录成功~");
+                    UserBean userBean = new UserBean();
+                    userBean.setUserId(etUserPhone.getText().toString());
+                    userBean.setUserPwd(etUserPwd.getText().toString());
+                    YXXApplication.getDaoSession().getUserBeanDao().insertOrReplace(userBean);
+                    if(mEnterFlag == YXXConstants.FROM_MAIN_FLAG){
+                        Intent intent = new Intent();
+                        intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG,mEnterFlag);
+                        LoginActivity loginActivity = (LoginActivity) getActivity();
+                        loginActivity.setResult(YXXConstants.LOGIN_SET_RESULT,intent);
+                    }
                     closeActivity();
                 } else {
                     ToastUtils.toast(getContext(), "手机号或密码不能为空~");
