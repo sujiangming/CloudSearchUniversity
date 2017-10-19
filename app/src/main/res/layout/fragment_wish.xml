@@ -292,7 +292,7 @@
                     android:drawablePadding="@dimen/space_16_dp"
                     android:gravity="center_horizontal"
                     android:paddingTop="@dimen/space_20_dp"
-                    android:text="VIP智能设计"
+                    android:text="VIP智能+专家1V1"
                     android:textColor="@color/color19B4D4"
                     app:drawable_location="top"
                     app:drawable_src="@drawable/ic_zhuan_jia3x" />
