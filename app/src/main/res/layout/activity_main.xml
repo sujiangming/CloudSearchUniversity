@@ -12,7 +12,7 @@
         android:background="@color/colorBackground"
         android:clipChildren="false"
         android:orientation="vertical"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <LinearLayout
             android:id="@+id/ll_fragment_container"
@@ -182,37 +182,6 @@
                     android:textSize="12sp" />
             </LinearLayout>
         </LinearLayout>
-
-    </LinearLayout>
-    <!--新特性页面-->
-    <com.youth.banner.Banner
-        android:id="@+id/banner_main"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone">
-
-    </com.youth.banner.Banner>
-    <!--进入云寻校按钮-->
-    <LinearLayout
-        android:id="@+id/ll_enter_app"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:gravity="bottom|center_horizontal"
-        android:orientation="vertical"
-        android:paddingBottom="@dimen/space_40_dp"
-        android:visibility="gone">
-
-        <TextView
-            android:id="@+id/tv_btn"
-            android:layout_width="100dp"
-            android:layout_height="@dimen/space_35_dp"
-            android:background="@drawable/shape_fragment_wish"
-            android:gravity="center"
-            android:text="进入云校"
-            android:textColor="@color/color4c90bf"
-            android:textSize="@dimen/font_14_sp"
-            android:visibility="visible" />
     </LinearLayout>
     <!--欢迎页面-->
     <include

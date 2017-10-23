@@ -23,7 +23,7 @@ public class YXXApplication extends Application {
         instance = this;
         setupGreenDao();
         initAppManager();
-        insertVersionTest();
+        //insertVersionTest();
     }
 
     public static YXXApplication getInstance() {
@@ -57,7 +57,7 @@ public class YXXApplication extends Application {
 
     public void insertVersionTest() {
         VersionBean versionBean = new VersionBean();
-        versionBean.setVersionCode(1);
+        versionBean.setVersionCode(2);
         daoSession.getVersionBeanDao().insertOrReplace(versionBean);
     }
 }

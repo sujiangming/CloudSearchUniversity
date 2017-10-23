@@ -5,7 +5,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.TranslateAnimation;
@@ -15,23 +15,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.YXXApplication;
 import com.gk.YXXConstants;
-import com.gk.beans.UserBean;
-import com.gk.beans.UserBeanDao;
-import com.gk.beans.VersionBean;
-import com.gk.beans.VersionBeanDao;
 import com.gk.fragment.HomeFragment;
 import com.gk.fragment.LectureFragment;
 import com.gk.fragment.LiveVideoFragment;
 import com.gk.fragment.UserFragment;
 import com.gk.fragment.WishFragment;
-import com.gk.tools.GlideImageLoader;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -71,19 +60,8 @@ public class MainActivity extends SjmBaseActivity {
     ImageView ivTabUser;
     @BindView(R.id.iv_tab_wish)
     ImageView ivTabWish;
-    @BindView(R.id.banner_main)
-    Banner banner;
-
-    @BindView(R.id.ll_enter_app)
-    LinearLayout llEnterApp;
-    @BindView(R.id.tv_btn)
-    TextView tvBtn;
-
     @BindView(R.id.welcome)
     View welcomeView;
-
-    @BindView(R.id.main_view)
-    LinearLayout mainView;
 
     @OnClick({R.id.ll_home, R.id.ll_live, R.id.ll_wish, R.id.ll_lesson, R.id.ll_user})
     public void onViewClicked(View view) {
@@ -117,7 +95,6 @@ public class MainActivity extends SjmBaseActivity {
     private int[] imageViewChangeRes = {R.drawable.shouye_press, R.drawable.zhibo_press, R.drawable.gaokaozhiyuan, R.drawable.gaokao_press, R.drawable.my_press};
 
     private int index = 0;
-    public int lastPosition = 0;
 
     @Override
     public int getResouceId() {
@@ -131,100 +108,18 @@ public class MainActivity extends SjmBaseActivity {
     }
 
     private void initView() {
-        if (isNewVersionExit(2)) { // 判断当前是否有新版本，有则显示新特性面轮播页；否则，不显示，直接进行用户存在与否的判断
-            banner.setVisibility(View.VISIBLE);
-            initNewFeature();
-        } else {
-            hideBanner();
-            mainView.setVisibility(View.VISIBLE);
-        }
+        showMainView();
         initFragments();
     }
 
-    private boolean isUserBeanExit() {
-        UserBeanDao userBeanDao = YXXApplication.getDaoSession().getUserBeanDao();
-        List<UserBean> list = userBeanDao.loadAll();
-        if (list == null || list.size() == 0) {
-            return false;
-        }
-        return true;
-    }
-
-    private void hideBanner() {
-        if (banner.getVisibility() == View.VISIBLE)
-            banner.setVisibility(View.GONE);
-    }
-
-    private boolean isNewVersionExit(int newVersion) {
-        VersionBeanDao versionBeanDao = YXXApplication.getDaoSession().getVersionBeanDao();
-        List<VersionBean> list = versionBeanDao.loadAll();
-        if (list == null || list.size() == 0) {
-            return false;
-        }
-        int oldVersion = list.get(0).getVersionCode();
-        if (newVersion <= oldVersion) {
-            return false;
-        }
-        return true;
-    }
-
-    private void initNewFeature() {
-        List<Integer> imageList = new ArrayList<>();
-        imageList.add(R.drawable.timg);
-        imageList.add(R.drawable.timg_1);
-        imageList.add(R.drawable.timg_2);
-        lastPosition = imageList.size() - 1;
-        banner.isAutoPlay(false);
-        banner.setViewPagerIsScroll(true);
-        banner.setIndicatorGravity(BannerConfig.CENTER);
-        banner.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
-        banner.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                //Log.e("onPageScrolled->","当前位置=" + position + "\n 偏移量=" + positionOffset + "\n 偏移像素=" + positionOffsetPixels);
-            }
-
-            @Override
-            public void onPageSelected(final int position) {
-                //Log.d("-onPageSelected-", position + "");
-                if (lastPosition == position) { //最后一张图片
-                    llEnterApp.setVisibility(View.VISIBLE);
-                    tvBtn.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if (isUserBeanExit()) { // 判断用户是否存在，存在则弹出欢迎蒙版，否则需要直接跳到登录页面
-                                showMainView();
-                            } else {
-                                Intent intent = new Intent();
-                                intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, YXXConstants.FROM_MAIN_FLAG);
-                                intent.setClass(MainActivity.this,LoginActivity.class);
-                                startActivityForResult(intent,YXXConstants.MAIN_TO_LOGIN_REQUEST);
-                            }
-                        }
-                    });
-                } else {
-                    llEnterApp.setVisibility(View.GONE);
-                }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-    }
-
-    private void showMainView(){
-        hideBanner();
-        llEnterApp.setVisibility(View.GONE);
-        mainView.setVisibility(View.VISIBLE);
+    private void showMainView() {
         showWelcome();
         new LongTimeTask().execute("welcome");
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == YXXConstants.LOGIN_SET_RESULT){
+        if (resultCode == YXXConstants.LOGIN_SET_RESULT) {
             showMainView();
         }
     }
@@ -265,7 +160,7 @@ public class MainActivity extends SjmBaseActivity {
         protected Object doInBackground(Object[] params) {
             try {
                 //线程睡眠5秒，模拟耗时操作，这里面的内容Android系统会自动为你启动一个新的线程执行
-                Thread.sleep(2000);
+                Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
@@ -370,5 +265,22 @@ public class MainActivity extends SjmBaseActivity {
                 imageViews[i].setImageResource(imageViewNormalRes[i]);
             }
         }
+    }
+
+    private long exitTime = 0;
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            //两秒之内按返回键就会退出
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                toast("再按一次退出程序");
+                exitTime = System.currentTimeMillis();
+            } else {
+                appManager.finishAllActivity();
+            }
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

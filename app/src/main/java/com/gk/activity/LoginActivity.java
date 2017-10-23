@@ -48,7 +48,7 @@ public class LoginActivity extends SjmBaseActivity {
     private void initTopBar() {
         Intent intent = getIntent();
         mEnterFlag = intent.getIntExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, 0);
-        if (mEnterFlag == YXXConstants.FROM_MAIN_FLAG) {
+        if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
             topBarLogin.getBackView().setVisibility(View.GONE);
         }
         topBarLogin.getTitleView().setText("登录");
@@ -73,7 +73,7 @@ public class LoginActivity extends SjmBaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (mEnterFlag == YXXConstants.FROM_MAIN_FLAG) {
+            if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
                 //两秒之内按返回键就会退出
                 if ((System.currentTimeMillis() - exitTime) > 2000) {
                     toast("再按一次退出程序");

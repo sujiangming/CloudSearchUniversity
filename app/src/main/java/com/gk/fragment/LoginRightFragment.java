@@ -1,6 +1,5 @@
 package com.gk.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -11,7 +10,7 @@ import android.widget.TextView;
 import com.gk.R;
 import com.gk.YXXApplication;
 import com.gk.YXXConstants;
-import com.gk.activity.LoginActivity;
+import com.gk.activity.MainActivity;
 import com.gk.beans.UserBean;
 import com.gk.tools.ToastUtils;
 
@@ -95,11 +94,8 @@ public class LoginRightFragment extends SjmBaseFragment {
                     userBean.setUserId(etUserPhone.getText().toString());
                     userBean.setUserPwd(etUserPwd.getText().toString());
                     YXXApplication.getDaoSession().getUserBeanDao().insertOrReplace(userBean);
-                    if(mEnterFlag == YXXConstants.FROM_MAIN_FLAG){
-                        Intent intent = new Intent();
-                        intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG,mEnterFlag);
-                        LoginActivity loginActivity = (LoginActivity) getActivity();
-                        loginActivity.setResult(YXXConstants.LOGIN_SET_RESULT,intent);
+                    if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
+                        openNewActivity(MainActivity.class);
                     }
                     closeActivity();
                 } else {

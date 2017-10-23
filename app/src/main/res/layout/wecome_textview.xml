@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/space_12_dp"
+    android:layout_height="@dimen/space_12_dp"
+    android:layout_marginLeft="@dimen/space_6_dp"
+    android:background="@drawable/circle_indcation">
+
+</TextView>

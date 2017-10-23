@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.gk.IView;
@@ -121,5 +122,25 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
 
     public void toast(String desc) {
         ToastUtils.toast(this, desc);
+    }
+
+    /**
+     * 获取屏幕的宽度 单位为px
+     *
+     * @return
+     */
+    public int getScreenWidth() {
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        return dm.widthPixels;
+    }
+
+    /**
+     * 获取屏幕的高度 单位为px
+     *
+     * @return
+     */
+    public int getScreenHeight() {
+        DisplayMetrics dm = getResources().getDisplayMetrics();
+        return dm.heightPixels;
     }
 }
