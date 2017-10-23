@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.gk.R;
+import com.gk.activity.SchoolQueryActivity;
 import com.gk.custom.RichText;
 import com.gk.tools.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -39,9 +40,6 @@ public class HomeFragment extends SjmBaseFragment {
     RichText rtvExamSkill;
     @BindView(R.id.rtv_famous_teacher)
     RichText rtvFamousTeacher;
-
-//    @BindView(R.id.welcome)
-//    LinearLayout welcomeLayout;
 
     @Override
     public int getResourceId() {
@@ -80,7 +78,7 @@ public class HomeFragment extends SjmBaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rtv_school_query:
-                //openNewActivity(QuerySchoolActivity.class);
+                openNewActivity(SchoolQueryActivity.class);
                 break;
             case R.id.rtv_score_query:
                 //openNewActivity(ScoreQueryActivity.class);

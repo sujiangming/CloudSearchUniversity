@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <dimen name="font_10_sp">10sp</dimen>
     <dimen name="font_12_sp">12sp</dimen>
     <dimen name="font_14_sp">14sp</dimen>
     <dimen name="font_16_sp">16sp</dimen>
     <dimen name="font_17_sp">17sp</dimen>
+    <dimen name="font_18_sp">18sp</dimen>
     <dimen name="text_16_sp">16sp</dimen>
     <dimen name="space_1_px">1px</dimen>
+    <dimen name="space_3_px">3px</dimen>
     <dimen name="space_2_dp">2dp</dimen>
     <dimen name="space_3_dp">3dp</dimen>
     <dimen name="space_4_dp">4dp</dimen>

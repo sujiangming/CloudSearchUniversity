@@ -45,9 +45,18 @@
         <activity
             android:name=".activity.NewFeatureActivity"
             android:screenOrientation="portrait" />
+
         <activity
             android:name=".activity.LiveVideoDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
+
+        <activity
+            android:name=".activity.VIPActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.SchoolQueryActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

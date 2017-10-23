@@ -271,6 +271,7 @@
                 android:paddingRight="@dimen/space_12_dp">
 
                 <com.gk.custom.RichText
+                    android:id="@+id/rich_wish"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
