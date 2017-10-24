@@ -92,7 +92,7 @@ public class MainActivity extends SjmBaseActivity {
     private WishFragment wishFragment = null;
     private ImageView[] imageViews = new ImageView[5];
     private int[] imageViewNormalRes = {R.drawable.shouye, R.drawable.zhibo_95, R.drawable.gaokaozhiyuan, R.drawable.gaokao_74, R.drawable.my};
-    private int[] imageViewChangeRes = {R.drawable.shouye_press, R.drawable.zhibo_press, R.drawable.gaokaozhiyuan, R.drawable.gaokao_press, R.drawable.my_press};
+    private int[] imageViewChangeRes = {R.drawable.shouye_press, R.drawable.zhibo_press, R.drawable.gaokaozhiyuan_selected3x, R.drawable.gaokao_press, R.drawable.my_press};
 
     private int index = 0;
 
