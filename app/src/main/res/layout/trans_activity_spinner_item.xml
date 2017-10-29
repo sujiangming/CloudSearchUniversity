@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?><!--spinner展开后的Item布局-->
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/trans_spinner_textView"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:background="@drawable/spinner_split_line"
+    android:ellipsize="end"
+    android:gravity="center"
+    android:maxLines="1"
+    android:text="SpinnerItem"
+    android:textColor="@color/color302f30"
+    android:textSize="16dp"></TextView>

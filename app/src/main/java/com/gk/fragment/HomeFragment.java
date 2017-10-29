@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.gk.R;
-import com.gk.activity.SchoolQueryActivity;
+import com.gk.activity.QuerySchoolActivity;
+import com.gk.activity.SchoolRankActivity;
+import com.gk.activity.SchoolZSPlanActivity;
 import com.gk.custom.RichText;
 import com.gk.tools.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -28,7 +30,7 @@ public class HomeFragment extends SjmBaseFragment {
     RichText rtvScoreQuery;
     @BindView(R.id.rtv_choose_school)
     RichText rtvChooseSchool;
-    @BindView(R.id.rtv_career_test)
+    @BindView(R.id.rtv_rank_school)
     RichText rtvCareerTest;
     @BindView(R.id.rtv_risk)
     RichText rtvRisk;
@@ -74,18 +76,20 @@ public class HomeFragment extends SjmBaseFragment {
         banner.stopAutoPlay();
     }
 
-    @OnClick({R.id.rtv_school_query, R.id.rtv_score_query, R.id.rtv_choose_school, R.id.rtv_career_test, R.id.rtv_risk, R.id.rtv_same_score, R.id.rtv_same_rank, R.id.rtv_exam_skill, R.id.rtv_famous_teacher})
+    @OnClick({R.id.rtv_school_query, R.id.rtv_score_query, R.id.rtv_choose_school, R.id.rtv_rank_school, R.id.rtv_risk, R.id.rtv_same_score, R.id.rtv_same_rank, R.id.rtv_exam_skill, R.id.rtv_famous_teacher})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rtv_school_query:
-                openNewActivity(SchoolQueryActivity.class);
+                openNewActivity(QuerySchoolActivity.class);
                 break;
             case R.id.rtv_score_query:
                 //openNewActivity(ScoreQueryActivity.class);
                 break;
             case R.id.rtv_choose_school:
+                openNewActivity(SchoolZSPlanActivity.class);
                 break;
-            case R.id.rtv_career_test:
+            case R.id.rtv_rank_school:
+                openNewActivity(SchoolRankActivity.class);
                 break;
             case R.id.rtv_risk:
                 break;

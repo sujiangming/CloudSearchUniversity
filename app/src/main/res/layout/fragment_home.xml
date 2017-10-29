@@ -80,7 +80,7 @@
                         app:drawable_width="40dp" />
 
                     <com.gk.custom.RichText
-                        android:id="@+id/rtv_career_test"
+                        android:id="@+id/rtv_rank_school"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         android:layout_weight="1"

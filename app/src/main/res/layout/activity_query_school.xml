@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:background="@color/colorNavigation"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/back_and_set"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/back_arrow" />
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/searchview"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_30_dp"
+            android:layout_weight="1"
+            android:background="@color/colorNavigation"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@android:color/white"
+            app:queryHint="请输入关键字" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="53dp"
+        android:background="#F0EFF3"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/space_12_dp">
+
+            <Spinner
+                android:id="@+id/spinner1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:dropDownVerticalOffset="44dp"
+                android:dropDownWidth="100dp"
+                android:gravity="center_vertical|left"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:popupBackground="#ffffff"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginBottom="1dp"
+                android:src="@drawable/arrow_down3x" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_2_dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/space_12_dp">
+
+            <Spinner
+                android:id="@+id/spinner2"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:dropDownVerticalOffset="44dp"
+                android:dropDownWidth="100dp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:popupBackground="#ffffff"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginBottom="1dp"
+                android:src="@drawable/arrow_down3x" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_2_dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/space_12_dp">
+
+            <Spinner
+                android:id="@+id/spinner3"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:dropDownVerticalOffset="44dp"
+                android:dropDownWidth="100dp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:popupBackground="#ffffff"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginBottom="1dp"
+                android:src="@drawable/arrow_down3x" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_2_dp"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/space_12_dp">
+
+            <Spinner
+                android:id="@+id/spinner4"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@android:color/transparent"
+                android:dropDownVerticalOffset="44dp"
+                android:dropDownWidth="100dp"
+                android:gravity="center"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:popupBackground="#ffffff"
+                android:spinnerMode="dropdown" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right|center_vertical"
+                android:layout_marginBottom="1dp"
+                android:src="@drawable/arrow_down3x" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_rf_query_school"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorF0EFF3"
+        android:paddingTop="@dimen/space_10_dp">
+
+        <ListView
+            android:id="@+id/lv_query_school"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/colorF0EFF3"
+            android:dividerHeight="@dimen/space_10_dp">
+
+        </ListView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

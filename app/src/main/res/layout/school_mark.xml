@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="@dimen/space_2_dp"
+    android:background="@drawable/shool_mark"
+    android:gravity="center"
+    android:paddingBottom="@dimen/space_5_dp"
+    android:paddingLeft="@dimen/space_10_dp"
+    android:paddingRight="@dimen/space_10_dp"
+    android:paddingTop="@dimen/space_5_dp"
+    android:text="985"
+    android:textColor="@android:color/white"
+    android:textSize="@dimen/font_12_sp">
+
+</TextView>

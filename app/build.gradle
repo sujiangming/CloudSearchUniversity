@@ -49,4 +49,8 @@ dependencies {
     compile 'org.greenrobot:greendao:3.2.2'
     //视频播放器
     compile 'com.shuyu:GSYVideoPlayer:2.1.0'
+    //万能adapter for listView
+    compile 'com.zhy:base-adapter:3.0.3'
+    //万能adapter for RecyclerView
+    compile 'com.zhy:base-rvadapter:3.0.3'
 }

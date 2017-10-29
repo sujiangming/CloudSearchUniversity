@@ -55,7 +55,13 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.SchoolQueryActivity"
+            android:name=".activity.QuerySchoolActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SchoolRankActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".activity.SchoolZSPlanActivity"
             android:screenOrientation="portrait" />
     </application>
 
