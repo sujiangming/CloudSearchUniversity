@@ -63,6 +63,15 @@
         <activity
             android:name=".activity.SchoolZSPlanActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.ProfessionalQueryActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.SameScoreActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 
 </manifest>

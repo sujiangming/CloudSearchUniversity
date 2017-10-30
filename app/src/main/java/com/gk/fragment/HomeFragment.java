@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.gk.R;
+import com.gk.activity.ProfessionalQueryActivity;
 import com.gk.activity.QuerySchoolActivity;
+import com.gk.activity.SameScoreActivity;
 import com.gk.activity.SchoolRankActivity;
 import com.gk.activity.SchoolZSPlanActivity;
 import com.gk.custom.RichText;
@@ -83,7 +85,7 @@ public class HomeFragment extends SjmBaseFragment {
                 openNewActivity(QuerySchoolActivity.class);
                 break;
             case R.id.rtv_score_query:
-                //openNewActivity(ScoreQueryActivity.class);
+                openNewActivity(ProfessionalQueryActivity.class);
                 break;
             case R.id.rtv_choose_school:
                 openNewActivity(SchoolZSPlanActivity.class);
@@ -98,6 +100,7 @@ public class HomeFragment extends SjmBaseFragment {
             case R.id.rtv_same_rank:
                 break;
             case R.id.rtv_exam_skill:
+                openNewActivity(SameScoreActivity.class);
                 break;
             case R.id.rtv_famous_teacher:
                 //openNewActivity(FamousTeacherActivity.class);

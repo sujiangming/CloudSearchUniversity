@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:background="@color/colorNavigation"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/space_50_dp"
+            android:layout_height="@dimen/space_44_dp"
+            android:background="@drawable/back_and_set"
+            android:paddingLeft="@dimen/space_12_dp"
+            android:paddingRight="@dimen/space_12_dp"
+            android:src="@drawable/back_arrow" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_30_dp"
+            android:layout_marginRight="@dimen/space_30_dp"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_level_1"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_weight="1"
+                android:background="@drawable/fault_level_left_press"
+                android:gravity="center"
+                android:tag="01"
+                android:text="本科"
+                android:textColor="@android:color/white"
+                android:textSize="12dp" />
+
+            <TextView
+                android:id="@+id/tv_level_2"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginLeft="-1dp"
+                android:layout_weight="1"
+                android:background="@drawable/fault_level_right_normal"
+                android:gravity="center"
+                android:tag="02"
+                android:text="专科"
+                android:textColor="@color/color2fa2cb"
+                android:textSize="12dp" />
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/iv_search"
+            android:layout_width="@dimen/space_50_dp"
+            android:layout_height="@dimen/space_44_dp"
+            android:background="@drawable/back_and_set"
+            android:paddingLeft="@dimen/space_12_dp"
+            android:paddingRight="@dimen/space_12_dp"
+            android:src="@drawable/ic_search3x" />
+    </LinearLayout>
+
+    <ExpandableListView
+        android:id="@+id/expand_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:divider="@color/colorNavigation"
+        android:dividerHeight="@dimen/space_1_px"
+        android:groupIndicator="@null" />
+</LinearLayout>

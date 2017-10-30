@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground">
+
+    <com.gk.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.gk.custom.TopBarView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_bar"
+        android:layout_marginLeft="@dimen/space_10_dp"
+        android:layout_marginRight="@dimen/space_10_dp"
+        android:layout_marginTop="@dimen/space_10_dp"
+        android:background="@android:color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="@dimen/space_12_dp"
+            android:paddingTop="@dimen/space_12_dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="贵州"
+                android:textColor="@color/color4a4a4a"
+                android:textSize="@dimen/font_18_sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_25_dp"
+                android:text="理科"
+                android:textColor="@color/color4a4a4a"
+                android:textSize="@dimen/font_18_sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_24_dp"
+                android:text="550分"
+                android:textColor="@color/color4a4a4a"
+                android:textSize="@dimen/font_18_sp" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_2_dp"
+            android:layout_marginLeft="@dimen/space_10_dp"
+            android:layout_marginRight="@dimen/space_10_dp"
+            android:background="@color/color2fa2cb" />
+
+        <TextView
+            android:id="@+id/tv_same_top_10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_10_dp"
+            android:layout_marginRight="@dimen/space_10_dp"
+            android:layout_marginTop="@dimen/space_10_dp"
+            android:text="合适高校Top10"
+            android:textColor="@color/color4a4a4a"
+            android:textSize="@dimen/font_14_sp" />
+
+        <ListView
+            android:id="@+id/lv_same_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:paddingBottom="75dp"
+            android:paddingTop="@dimen/space_10_dp">
+
+        </ListView>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_more_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/space_10_dp"
+        android:layout_marginRight="@dimen/space_10_dp"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/tv_ps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_10_dp"
+            android:text="*以上数据为最近一年的数据"
+            android:textColor="@color/color4a4a4a"
+            android:textSize="@dimen/font_14_sp" />
+
+        <TextView
+            android:id="@+id/tv_more_data"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_40_dp"
+            android:layout_below="@id/tv_ps"
+            android:layout_marginLeft="@dimen/space_10_dp"
+            android:layout_marginRight="@dimen/space_10_dp"
+            android:background="@drawable/more_data_bg"
+            android:gravity="center"
+            android:text="更多往年数据"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_14_sp" />
+    </RelativeLayout>
+</RelativeLayout>

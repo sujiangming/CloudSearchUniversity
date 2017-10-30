@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_50_dp">
+
+    <TextView
+        android:id="@+id/tv_same_score_name"
+        android:layout_width="92dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="@dimen/space_10_dp"
+        android:gravity="center_vertical"
+        android:text="贵州大学"
+        android:textColor="@color/color4a4a4a"
+        android:textSize="@dimen/font_14_sp" />
+
+    <TextView
+        android:id="@+id/tv_score_start"
+        android:layout_width="@dimen/space_40_dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="37dp"
+        android:layout_toRightOf="@id/tv_same_score_name"
+        android:padding="@dimen/space_5_dp"
+        android:text="485"
+        android:textColor="@color/color4a4a4a"
+        android:textSize="@dimen/font_14_sp" />
+
+    <TextView
+        android:id="@+id/tv_score_end"
+        android:layout_width="@dimen/space_40_dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/space_21_dp"
+        android:padding="@dimen/space_5_dp"
+        android:text="602"
+        android:textColor="@color/color4a4a4a"
+        android:textSize="@dimen/font_14_sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar1"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_score_start"
+        android:layout_marginRight="@dimen/space_10_dp"
+        android:layout_toRightOf="@id/tv_same_score_name" />
+
+</RelativeLayout>
