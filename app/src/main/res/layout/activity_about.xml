@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F0F0F4"
+    android:orientation="vertical">
+
+    <com.gk.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_width="218dp"
+        android:layout_height="218dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/space_10_dp"
+        android:src="@drawable/about" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="云寻校V1.0.0"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_17_sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_60_dp"
+        android:gravity="center"
+        android:text="Gui Zhou Pu Xue Education Information Consultation Co.,Ltd"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_17_sp" />
+</LinearLayout>

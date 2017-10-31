@@ -10,6 +10,7 @@ import android.view.View;
 
 import com.gk.IView;
 import com.gk.custom.SjmProgressBar;
+import com.gk.custom.TopBarView;
 import com.gk.tools.AppManager;
 import com.gk.tools.ToastUtils;
 
@@ -44,6 +45,26 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
+    }
+
+    /**
+     * 设置topbar共同的方法
+     *
+     * @param topBar
+     * @param title
+     * @param color
+     */
+    public void setTopBar(TopBarView topBar, String title, int color) {
+        topBar.getTitleView().setText(title);
+        if (color != 0) {
+            topBar.getTitleView().setTextColor(color);
+        }
+        topBar.getBackView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                closeActivity();
+            }
+        });
     }
 
     @Override

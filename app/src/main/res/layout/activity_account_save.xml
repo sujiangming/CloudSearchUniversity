@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:background="@color/colorNavigation"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="@dimen/space_60_dp"
+            android:layout_height="@dimen/space_40_dp"
+            android:src="@drawable/back_arrow" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="账号与安全"
+            android:textColor="@color/color4a4a4a"
+            android:textSize="@dimen/font_16_sp" />
+
+        <TextView
+            android:id="@+id/tv_save"
+            android:layout_width="@dimen/space_60_dp"
+            android:layout_height="match_parent"
+            android:background="@drawable/back_and_set"
+            android:gravity="center"
+            android:text="保存"
+            android:textColor="@color/color19B4D4"
+            android:textSize="@dimen/font_16_sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="@dimen/space_20_dp"
+        android:background="@drawable/home_item_press"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_15_dp"
+        android:paddingRight="@dimen/space_15_dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="账号"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <EditText
+            android:id="@+id/et_account"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:hint="请输入账号"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/space_50_dp"
+            android:textColor="@color/color353535"
+            android:textColorHint="@color/color878787"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_16_sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="@dimen/space_20_dp"
+        android:background="@drawable/home_item_press"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_15_dp"
+        android:paddingRight="@dimen/space_15_dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="旧密码"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <EditText
+            android:id="@+id/et_old_pwd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:hint="请输入旧密码"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/space_30_dp"
+            android:textColor="@color/color353535"
+            android:textColorHint="@color/color878787"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_16_sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="@dimen/space_2_dp"
+        android:background="@drawable/home_item_press"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_15_dp"
+        android:paddingRight="@dimen/space_15_dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="新密码"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <EditText
+            android:id="@+id/et_new_pwd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:hint="请输入新密码"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/space_30_dp"
+            android:textColor="@color/color353535"
+            android:textColorHint="@color/color878787"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_16_sp" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginTop="@dimen/space_2_dp"
+        android:background="@drawable/home_item_press"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_15_dp"
+        android:paddingRight="@dimen/space_15_dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="确认密码"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <EditText
+            android:id="@+id/et_confirm_new_pwd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:hint="请输入新密码"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/space_13_dp"
+            android:textColor="@color/color353535"
+            android:textColorHint="@color/color878787"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_16_sp" />
+    </LinearLayout>
+</LinearLayout>

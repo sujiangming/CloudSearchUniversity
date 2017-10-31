@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <com.gk.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.gk.custom.TopBarView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="110dp"
+        android:layout_marginTop="@dimen/space_10_dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_20_dp"
+        android:paddingRight="@dimen/space_20_dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="头像"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <com.gk.custom.CircleImageView
+            android:id="@+id/iv_user_head"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/space_15_dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ym" />
+
+        <ImageView
+            android:layout_width="@dimen/space_30_dp"
+            android:layout_height="@dimen/space_30_dp"
+            android:layout_marginLeft="@dimen/space_10_dp"
+            android:src="@drawable/right_arrow" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:background="@color/colorc8c7cc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_20_dp"
+        android:paddingRight="@dimen/space_10_dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="姓名"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <com.gk.custom.RichText
+            android:id="@+id/tv_user_cname"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/menu_btn_press"
+            android:clickable="true"
+            android:drawablePadding="@dimen/space_15_dp"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/space_11_dp"
+            android:text="未填写"
+            android:textColor="@color/color8f8e94"
+            android:textSize="@dimen/font_16_sp"
+            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_location="right"
+            app:drawable_src="@drawable/right_arrow"
+            app:drawable_width="@dimen/space_40_dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_20_dp"
+        android:paddingRight="@dimen/space_10_dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="等级"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <com.gk.custom.RichText
+            android:id="@+id/tv_vip_level"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/menu_btn_press"
+            android:clickable="true"
+            android:drawablePadding="@dimen/space_15_dp"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/space_11_dp"
+            android:text="普通会员"
+            android:textColor="@color/color8f8e94"
+            android:textSize="@dimen/font_16_sp"
+            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_location="right"
+            app:drawable_src="@drawable/right_arrow"
+            app:drawable_width="@dimen/space_40_dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginTop="@dimen/space_10_dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_20_dp"
+        android:paddingRight="@dimen/space_10_dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="生源地"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <com.gk.custom.RichText
+            android:id="@+id/tv_student_source"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/menu_btn_press"
+            android:clickable="true"
+            android:drawablePadding="@dimen/space_15_dp"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/space_11_dp"
+            android:text="贵州"
+            android:textColor="@color/color8f8e94"
+            android:textSize="@dimen/font_16_sp"
+            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_location="right"
+            app:drawable_src="@drawable/right_arrow"
+            app:drawable_width="@dimen/space_40_dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:background="@color/colorc8c7cc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_20_dp"
+        android:paddingRight="@dimen/space_10_dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="高考分数"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <com.gk.custom.RichText
+            android:id="@+id/tv_student_score"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/menu_btn_press"
+            android:clickable="true"
+            android:drawablePadding="@dimen/space_15_dp"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/space_11_dp"
+            android:text="650分"
+            android:textColor="@color/color8f8e94"
+            android:textSize="@dimen/font_16_sp"
+            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_location="right"
+            app:drawable_src="@drawable/right_arrow"
+            app:drawable_width="@dimen/space_40_dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:background="@color/colorc8c7cc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_20_dp"
+        android:paddingRight="@dimen/space_10_dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="高考排名"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <com.gk.custom.RichText
+            android:id="@+id/tv_student_rank"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/menu_btn_press"
+            android:clickable="true"
+            android:drawablePadding="@dimen/space_15_dp"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/space_11_dp"
+            android:text="2508名"
+            android:textColor="@color/color8f8e94"
+            android:textSize="@dimen/font_16_sp"
+            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_location="right"
+            app:drawable_src="@drawable/right_arrow"
+            app:drawable_width="@dimen/space_40_dp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:background="@color/colorc8c7cc" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_20_dp"
+        android:paddingRight="@dimen/space_10_dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/wen_li"
+            android:textColor="@color/color030303"
+            android:textSize="@dimen/font_17_sp" />
+
+        <com.gk.custom.RichText
+            android:id="@+id/tv_wen_li_ke"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/menu_btn_press"
+            android:clickable="true"
+            android:drawablePadding="@dimen/space_15_dp"
+            android:gravity="center_vertical|right"
+            android:paddingRight="@dimen/space_11_dp"
+            android:text="理科"
+            android:textColor="@color/color8f8e94"
+            android:textSize="@dimen/font_16_sp"
+            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_location="right"
+            app:drawable_src="@drawable/right_arrow"
+            app:drawable_width="@dimen/space_40_dp" />
+    </LinearLayout>
+</LinearLayout>
