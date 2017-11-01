@@ -46,6 +46,21 @@
     <string name="zheng_zhi">政治</string>
     <string name="di_li">地理</string>
     <string name="video_brief">简介</string>
+    <string name="mbti_desc">性格外向/内向适合做什么？那些职业适合我的性格？性格是影响人一生的重要因素，性格不同，看待问题、处理事情的方式不同。通过本次测试，将让你发现真实的自己。</string>
+    <string name="mbti_desc_1">MBTI的全名是Myers-Briggs Type Indicator。它是一种迫选型、自我报告式的性格评估理论模型，用以衡量和描述人们在获取信息、作出决策、对待生活等方面的心理活动规律和性格类型。</string>
+    <string name="mbti_qw">以为MBTI职业模型为基础，通过专业的心理测试，让您清楚的了解自身职业倾向类型</string>
+    <string name="mbti_qx">根据您的性格特点，为您推荐专业，你适合什么，看看结果就知道了。</string>
+    <string name="mbti_sy">性格报告准确定义性格特征，并且分析行为特点，为您推荐适合的专业</string>
+    <string name="interest_1">你知道你的兴趣是什么，适合干什么吗？</string>
+    <string name="interest_2">一个人的职业兴趣倾向，决定了他最适合的职业，一个人如果干的是自己兴趣相符的工作，往往会将自己的潜力大大的激发，做出更高的成绩。在选择长期、稳定的职业时，不仅需要知道有能力做什么，更重要的是需要知道自己想做什么。</string>
+    <string name="interest_3">霍兰德兴趣测试介绍</string>
+    <string name="interest_4">霍兰德职业兴趣自测(Self-Directed Search)是由美国职业指导专家霍兰德(John Holland)根据他本人大量的职业咨询经验及其职业类型理论编制的测评工具。霍兰德把人的性格分成6个维度，每个人的性格都是这六个维度的不同程度组合。</string>
+    <string name="interest_ys">有创造力，乐于创造新颖、与众不同的成果，渴望表现自己的个性，实现自身的价值。做事理想化，追求完美，不重实际。</string>
+    <string name="interest_ct">尊重权威和规章制度，喜欢按计划办事，细心、有条理，习惯接受他人的指挥和领导，自己不谋求领导职务。</string>
+    <string name="interest_yy">追求权力、权威和物质财富，具有领导才能。喜欢竞争、敢冒风险、有野心、抱负。</string>
+    <string name="interest_yj">思想家而非实干家,抽象思维能力强，求知欲强，肯动脑，善思考，不愿动手。喜欢独立的和富有创造性的工作。</string>
+    <string name="interest_xs">愿意使用工具从事操作性工作，动手能力强，做事手脚灵活，动作协调。偏好于具体任务，不善言辞，做事保守，较为谦虚。</string>
+    <string name="interest_sh">喜欢与人交往、不断结交新的朋友、善言谈、愿意教导别人。关心社会问题、渴望发挥自己的社会作用。</string>
     <string name="detail_text">
         我发斯蒂芬是打发阿斯蒂芬撒地方我发斯蒂撒地方芬是打发阿斯蒂打发阿斯蒂芬撒地方我撒地方我我蒂芬撒
         芬撒地方我发斯蒂芬是打发阿斯蒂芬撒地方方撒地方芬是打发阿斯蒂芬撒地方我发斯蒂芬是打发阿斯蒂芬撒

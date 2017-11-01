@@ -102,7 +102,7 @@
                     android:layout_height="wrap_content">
 
                     <com.gk.custom.RichText
-                        android:id="@+id/rtv_risk"
+                        android:id="@+id/rtv_vip"
                         android:layout_width="0dp"
                         android:layout_height="100dp"
                         android:layout_weight="1"
@@ -232,6 +232,7 @@
                         app:drawable_width="30dp" />
 
                     <com.gk.custom.RichText
+                        android:id="@+id/rtv_interest"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:background="@drawable/menu_btn_press"
@@ -248,6 +249,7 @@
                         app:drawable_width="30dp" />
 
                     <com.gk.custom.RichText
+                        android:id="@+id/rtv_lq_risk"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:background="@drawable/menu_btn_press"

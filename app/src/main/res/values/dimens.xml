@@ -6,6 +6,7 @@
     <dimen name="font_16_sp">16sp</dimen>
     <dimen name="font_17_sp">17sp</dimen>
     <dimen name="font_18_sp">18sp</dimen>
+    <dimen name="font_20_sp">20sp</dimen>
     <dimen name="text_16_sp">16sp</dimen>
     <dimen name="space_1_px">1px</dimen>
     <dimen name="space_3_px">3px</dimen>

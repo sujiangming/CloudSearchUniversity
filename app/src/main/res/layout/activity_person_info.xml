@@ -42,8 +42,8 @@
             android:src="@drawable/ym" />
 
         <ImageView
-            android:layout_width="@dimen/space_30_dp"
-            android:layout_height="@dimen/space_30_dp"
+            android:layout_width="@dimen/space_23_dp"
+            android:layout_height="23dp"
             android:layout_marginLeft="@dimen/space_10_dp"
             android:src="@drawable/right_arrow" />
     </LinearLayout>
@@ -83,11 +83,16 @@
             android:text="未填写"
             android:textColor="@color/color8f8e94"
             android:textSize="@dimen/font_16_sp"
-            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_height="@dimen/space_25_dp"
             app:drawable_location="right"
             app:drawable_src="@drawable/right_arrow"
-            app:drawable_width="@dimen/space_40_dp" />
+            app:drawable_width="@dimen/space_25_dp" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:background="@color/colorc8c7cc" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -119,10 +124,10 @@
             android:text="普通会员"
             android:textColor="@color/color8f8e94"
             android:textSize="@dimen/font_16_sp"
-            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_height="@dimen/space_25_dp"
             app:drawable_location="right"
             app:drawable_src="@drawable/right_arrow"
-            app:drawable_width="@dimen/space_40_dp" />
+            app:drawable_width="@dimen/space_25_dp" />
     </LinearLayout>
 
     <LinearLayout
@@ -156,10 +161,10 @@
             android:text="贵州"
             android:textColor="@color/color8f8e94"
             android:textSize="@dimen/font_16_sp"
-            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_height="@dimen/space_25_dp"
             app:drawable_location="right"
             app:drawable_src="@drawable/right_arrow"
-            app:drawable_width="@dimen/space_40_dp" />
+            app:drawable_width="@dimen/space_25_dp" />
     </LinearLayout>
 
     <TextView
@@ -197,10 +202,10 @@
             android:text="650分"
             android:textColor="@color/color8f8e94"
             android:textSize="@dimen/font_16_sp"
-            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_height="@dimen/space_25_dp"
             app:drawable_location="right"
             app:drawable_src="@drawable/right_arrow"
-            app:drawable_width="@dimen/space_40_dp" />
+            app:drawable_width="@dimen/space_25_dp" />
     </LinearLayout>
 
     <TextView
@@ -238,10 +243,10 @@
             android:text="2508名"
             android:textColor="@color/color8f8e94"
             android:textSize="@dimen/font_16_sp"
-            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_height="@dimen/space_25_dp"
             app:drawable_location="right"
             app:drawable_src="@drawable/right_arrow"
-            app:drawable_width="@dimen/space_40_dp" />
+            app:drawable_width="@dimen/space_25_dp" />
     </LinearLayout>
 
     <TextView
@@ -279,9 +284,9 @@
             android:text="理科"
             android:textColor="@color/color8f8e94"
             android:textSize="@dimen/font_16_sp"
-            app:drawable_height="@dimen/space_40_dp"
+            app:drawable_height="@dimen/space_25_dp"
             app:drawable_location="right"
             app:drawable_src="@drawable/right_arrow"
-            app:drawable_width="@dimen/space_40_dp" />
+            app:drawable_width="@dimen/space_25_dp" />
     </LinearLayout>
 </LinearLayout>

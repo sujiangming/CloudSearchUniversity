@@ -96,5 +96,17 @@
             android:name=".activity.WishReportActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.MBTIActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.InterestActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.LqRiskActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 </manifest>

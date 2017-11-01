@@ -4,12 +4,14 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.gk.R;
+import com.gk.activity.InterestActivity;
+import com.gk.activity.LqRiskActivity;
+import com.gk.activity.MBTIActivity;
 import com.gk.activity.ProfessionalQueryActivity;
 import com.gk.activity.QuerySchoolActivity;
 import com.gk.activity.SameScoreActivity;
 import com.gk.activity.SchoolRankActivity;
 import com.gk.activity.SchoolZSPlanActivity;
-import com.gk.custom.RichText;
 import com.gk.tools.GlideImageLoader;
 import com.youth.banner.Banner;
 
@@ -26,24 +28,6 @@ import butterknife.OnClick;
 public class HomeFragment extends SjmBaseFragment {
     @BindView(R.id.banner)
     Banner banner;
-    @BindView(R.id.rtv_school_query)
-    RichText rtvSchoolQuery;
-    @BindView(R.id.rtv_score_query)
-    RichText rtvScoreQuery;
-    @BindView(R.id.rtv_choose_school)
-    RichText rtvChooseSchool;
-    @BindView(R.id.rtv_rank_school)
-    RichText rtvCareerTest;
-    @BindView(R.id.rtv_risk)
-    RichText rtvRisk;
-    @BindView(R.id.rtv_same_score)
-    RichText rtvSameScore;
-    @BindView(R.id.rtv_same_rank)
-    RichText rtvSameRank;
-    @BindView(R.id.rtv_exam_skill)
-    RichText rtvExamSkill;
-    @BindView(R.id.rtv_famous_teacher)
-    RichText rtvFamousTeacher;
 
     @Override
     public int getResourceId() {
@@ -78,7 +62,7 @@ public class HomeFragment extends SjmBaseFragment {
         banner.stopAutoPlay();
     }
 
-    @OnClick({R.id.rtv_school_query, R.id.rtv_score_query, R.id.rtv_choose_school, R.id.rtv_rank_school, R.id.rtv_risk, R.id.rtv_same_score, R.id.rtv_same_rank, R.id.rtv_exam_skill, R.id.rtv_famous_teacher})
+    @OnClick({R.id.rtv_school_query, R.id.rtv_score_query, R.id.rtv_choose_school, R.id.rtv_rank_school, R.id.rtv_vip, R.id.rtv_same_score, R.id.rtv_same_rank, R.id.rtv_exam_skill, R.id.rtv_famous_teacher, R.id.rtv_interest, R.id.rtv_lq_risk})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rtv_school_query:
@@ -93,7 +77,7 @@ public class HomeFragment extends SjmBaseFragment {
             case R.id.rtv_rank_school:
                 openNewActivity(SchoolRankActivity.class);
                 break;
-            case R.id.rtv_risk:
+            case R.id.rtv_vip:
                 break;
             case R.id.rtv_same_score:
                 break;
@@ -103,7 +87,13 @@ public class HomeFragment extends SjmBaseFragment {
                 openNewActivity(SameScoreActivity.class);
                 break;
             case R.id.rtv_famous_teacher:
-                //openNewActivity(FamousTeacherActivity.class);
+                openNewActivity(MBTIActivity.class);
+                break;
+            case R.id.rtv_interest:
+                openNewActivity(InterestActivity.class);
+                break;
+            case R.id.rtv_lq_risk:
+                openNewActivity(LqRiskActivity.class);
                 break;
 
         }
