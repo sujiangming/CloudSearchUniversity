@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <com.gk.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/intelligent3x" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/space_25_dp"
+                android:layout_marginLeft="@dimen/space_12_dp"
+                android:layout_marginTop="@dimen/space_23_dp"
+                android:background="@drawable/intelligent_title3x"
+                android:gravity="center"
+                android:text="考生情况"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_14_sp" />
+
+            <RelativeLayout
+                android:layout_width="351dp"
+                android:layout_height="95dp"
+                android:layout_gravity="center"
+                android:background="@drawable/intelligent_bg3x">
+
+                <TextView
+                    android:id="@+id/tv_source_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:text="贵州 理科"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_student_qx"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_source_address"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:text="意向去"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_student_want"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_student_qx"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:text="想学习"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_student_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_source_address"
+                    android:gravity="right"
+                    android:text="590分"
+                    android:textColor="@color/color555555"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_s_want_city"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_student_score"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_student_qx"
+                    android:gravity="right"
+                    android:text="北京、上海、广州、西安"
+                    android:textColor="@color/color555555"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_quxiang"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_student_score"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginRight="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_s_want_city"
+                    android:text="上大学"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_zy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_s_want_city"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginRight="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_student_qx"
+                    android:gravity="left"
+                    android:text="机械工程、自动化、电力电子、土木工程"
+                    android:textColor="@color/color555555"
+                    android:textSize="@dimen/font_14_sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/space_25_dp"
+                android:layout_marginLeft="@dimen/space_12_dp"
+                android:layout_marginTop="@dimen/space_23_dp"
+                android:background="@drawable/intelligent_title3x"
+                android:gravity="center"
+                android:text="智能海选情况"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_14_sp" />
+
+            <RelativeLayout
+                android:layout_width="351dp"
+                android:layout_height="95dp"
+                android:layout_gravity="center"
+                android:background="@drawable/intelligent_bg3x">
+
+                <TextView
+                    android:id="@+id/tv_wish_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:text="志愿报告状态:"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_wish_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_wish_desc"
+                    android:text="人工智能报告已经生成"
+                    android:textColor="#ff0000"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_44_dp"
+                    android:layout_below="@id/tv_wish_report"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:layout_marginRight="@dimen/space_12_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:background="@drawable/mbti_btn_bg3x"
+                    android:text="马上查看"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/space_25_dp"
+                android:layout_marginLeft="@dimen/space_12_dp"
+                android:layout_marginTop="@dimen/space_23_dp"
+                android:background="@drawable/intelligent_title3x"
+                android:gravity="center"
+                android:text="专家审核情况"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_14_sp" />
+
+            <RelativeLayout
+                android:layout_width="351dp"
+                android:layout_height="95dp"
+                android:layout_gravity="center"
+                android:background="@drawable/intelligent_bg3x"
+                android:layout_marginBottom="@dimen/space_16_dp">
+
+                <TextView
+                    android:id="@+id/tv_wish_desc_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:text="志愿报告状态:"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_yh_level_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_wish_desc_1"
+                    android:text="会员等级低，不能生成"
+                    android:textColor="#ff0000"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_44_dp"
+                    android:layout_below="@id/tv_yh_level_low"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:layout_marginRight="@dimen/space_12_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:background="@drawable/mbti_btn_bg3x"
+                    android:text="马上升级"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

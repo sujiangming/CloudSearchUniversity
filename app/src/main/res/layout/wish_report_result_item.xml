@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/tv_mind_test_result"
+    android:layout_marginTop="@dimen/space_15_dp">
+
+    <com.gk.custom.RichText
+        android:id="@+id/rtv_bk"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/space_21_dp"
+        android:layout_marginLeft="@dimen/space_5_dp"
+        android:drawablePadding="@dimen/space_3_dp"
+        android:gravity="center"
+        android:text="本科第一批"
+        android:textColor="@color/color302f30"
+        android:textSize="@dimen/font_16_sp"
+        app:drawable_height="@dimen/space_21_dp"
+        app:drawable_location="left"
+        app:drawable_src="@drawable/wish_result_icon3x" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/space_21_dp"
+        android:layout_toRightOf="@id/rtv_bk"
+        android:gravity="center"
+        android:paddingLeft="@dimen/space_5_dp"
+        android:text="(推荐志愿6个）"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_12_sp" />
+
+    <TextView
+        android:id="@+id/tv_wish_bk_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rtv_bk"
+        android:layout_marginLeft="@dimen/space_15_dp"
+        android:layout_marginTop="@dimen/space_14_dp"
+        android:text="①  中国地质大学（北京）"
+        android:textColor="@color/color555555"
+        android:textSize="@dimen/font_14_sp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/rtv_bk"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_14_dp"
+        android:text="服从调剂"
+        android:textColor="@color/color555555"
+        android:textSize="@dimen/font_12_sp" />
+
+
+    <TableLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_wish_bk_1"
+        android:layout_marginLeft="@dimen/space_30_dp"
+        android:layout_marginRight="@dimen/space_25_dp"
+        android:layout_marginTop="@dimen/space_5_dp">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="@dimen/space_4_dp"
+            android:paddingBottom="@dimen/space_8_dp"
+            android:paddingTop="@dimen/space_5_dp">
+
+            <TextView
+                android:id="@+id/tv_left_title_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="2017年最低分  623"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:id="@+id/tv_right_title_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="录取概率  26%"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+        </TableRow>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/my_wish_line3x" />
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="@dimen/space_4_dp"
+            android:paddingTop="@dimen/space_5_dp">
+
+            <TextView
+                android:id="@+id/tv_left_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="1、土木工程"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:id="@+id/tv_right_1"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="2、计算机科学与技术"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            android:paddingTop="@dimen/space_5_dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="3、岩土工程"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="4、软件工程"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            android:paddingTop="@dimen/space_5_dp">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="5、法学"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="1dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="6、数学与应用数学"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+        </TableRow>
+    </TableLayout>
+</RelativeLayout>

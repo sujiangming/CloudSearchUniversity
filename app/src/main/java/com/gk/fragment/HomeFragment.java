@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.gk.R;
+import com.gk.activity.IntelligentActivity;
 import com.gk.activity.InterestActivity;
 import com.gk.activity.LqRiskActivity;
 import com.gk.activity.MBTIActivity;
@@ -12,6 +13,8 @@ import com.gk.activity.QuerySchoolActivity;
 import com.gk.activity.SameScoreActivity;
 import com.gk.activity.SchoolRankActivity;
 import com.gk.activity.SchoolZSPlanActivity;
+import com.gk.activity.VIPActivity;
+import com.gk.activity.WishReportResultActivity;
 import com.gk.tools.GlideImageLoader;
 import com.youth.banner.Banner;
 
@@ -62,7 +65,7 @@ public class HomeFragment extends SjmBaseFragment {
         banner.stopAutoPlay();
     }
 
-    @OnClick({R.id.rtv_school_query, R.id.rtv_score_query, R.id.rtv_choose_school, R.id.rtv_rank_school, R.id.rtv_vip, R.id.rtv_same_score, R.id.rtv_same_rank, R.id.rtv_exam_skill, R.id.rtv_famous_teacher, R.id.rtv_interest, R.id.rtv_lq_risk})
+    @OnClick({R.id.rtv_school_query, R.id.rtv_score_query, R.id.rtv_choose_school, R.id.rtv_rank_school, R.id.rtv_vip, R.id.rtv_same_score, R.id.rtv_same_rank, R.id.rtv_wish_report, R.id.rtv_famous_teacher, R.id.rtv_interest, R.id.rtv_lq_risk})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rtv_school_query:
@@ -78,12 +81,15 @@ public class HomeFragment extends SjmBaseFragment {
                 openNewActivity(SchoolRankActivity.class);
                 break;
             case R.id.rtv_vip:
+                openNewActivity(VIPActivity.class);
                 break;
-            case R.id.rtv_same_score:
+            case R.id.rtv_wish_report:
+                openNewActivity(WishReportResultActivity.class);
                 break;
             case R.id.rtv_same_rank:
+                openNewActivity(IntelligentActivity.class);
                 break;
-            case R.id.rtv_exam_skill:
+            case R.id.rtv_same_score:
                 openNewActivity(SameScoreActivity.class);
                 break;
             case R.id.rtv_famous_teacher:

@@ -108,5 +108,12 @@
             android:name=".activity.LqRiskActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".activity.IntelligentActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.WishReportResultActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>
