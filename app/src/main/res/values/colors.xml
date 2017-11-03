@@ -32,4 +32,6 @@
     <color name="color808080">#808080</color>
     <color name="colorF0EFF3">#F0EFF3</color>
     <color name="color2fa2cb">#2fa2cb</color>
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="color33FFFFFF">#33FFFFFF</color>
 </resources>
