@@ -6,12 +6,12 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <com.gk.custom.TopBarView
+    <com.gk.mvp.view.custom.TopBarView
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.gk.custom.TopBarView>
+    </com.gk.mvp.view.custom.TopBarView>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -32,7 +32,7 @@
             android:textColor="@color/color030303"
             android:textSize="@dimen/font_17_sp" />
 
-        <com.gk.custom.CircleImageView
+        <com.gk.mvp.view.custom.CircleImageView
             android:id="@+id/iv_user_head"
             android:layout_width="85dp"
             android:layout_height="85dp"
@@ -70,7 +70,7 @@
             android:textColor="@color/color030303"
             android:textSize="@dimen/font_17_sp" />
 
-        <com.gk.custom.RichText
+        <com.gk.mvp.view.custom.RichText
             android:id="@+id/tv_user_cname"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -111,7 +111,7 @@
             android:textColor="@color/color030303"
             android:textSize="@dimen/font_17_sp" />
 
-        <com.gk.custom.RichText
+        <com.gk.mvp.view.custom.RichText
             android:id="@+id/tv_vip_level"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -148,7 +148,7 @@
             android:textColor="@color/color030303"
             android:textSize="@dimen/font_17_sp" />
 
-        <com.gk.custom.RichText
+        <com.gk.mvp.view.custom.RichText
             android:id="@+id/tv_student_source"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -189,7 +189,7 @@
             android:textColor="@color/color030303"
             android:textSize="@dimen/font_17_sp" />
 
-        <com.gk.custom.RichText
+        <com.gk.mvp.view.custom.RichText
             android:id="@+id/tv_student_score"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -230,7 +230,7 @@
             android:textColor="@color/color030303"
             android:textSize="@dimen/font_17_sp" />
 
-        <com.gk.custom.RichText
+        <com.gk.mvp.view.custom.RichText
             android:id="@+id/tv_student_rank"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -271,7 +271,7 @@
             android:textColor="@color/color030303"
             android:textSize="@dimen/font_17_sp" />
 
-        <com.gk.custom.RichText
+        <com.gk.mvp.view.custom.RichText
             android:id="@+id/tv_wen_li_ke"
             android:layout_width="0dp"
             android:layout_height="match_parent"

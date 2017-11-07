@@ -20,12 +20,12 @@
     <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
-        android:name="com.gk.YXXApplication"
+        android:name="com.gk.global.YXXApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/jdryStyle">
         <activity
-            android:name=".activity.SplashActivity"
+            android:name=".mvp.view.activity.SplashActivity"
             android:configChanges="keyboardHidden|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppWelcome"
@@ -36,85 +36,85 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".mvp.view.activity.MainActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.LoginActivity"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name=".activity.NewFeatureActivity"
+            android:name=".mvp.view.activity.LoginActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.LiveVideoDetailActivity"
+            android:name=".mvp.view.activity.NewFeatureActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.LiveVideoDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize" />
 
         <activity
-            android:name=".activity.VIPActivity"
+            android:name=".mvp.view.activity.VIPActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.QuerySchoolActivity"
+            android:name=".mvp.view.activity.QuerySchoolActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SchoolRankActivity"
+            android:name=".mvp.view.activity.SchoolRankActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SchoolZSPlanActivity"
+            android:name=".mvp.view.activity.SchoolZSPlanActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.ProfessionalQueryActivity"
+            android:name=".mvp.view.activity.ProfessionalQueryActivity"
             android:screenOrientation="portrait">
         </activity>
 
         <activity
-            android:name=".activity.SameScoreActivity"
+            android:name=".mvp.view.activity.SameScoreActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.HelpCenterActivity"
+            android:name=".mvp.view.activity.HelpCenterActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.PersonInfoActivity"
+            android:name=".mvp.view.activity.PersonInfoActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.SetActivity"
+            android:name=".mvp.view.activity.SetActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.AccountSaveActivity"
+            android:name=".mvp.view.activity.AccountSaveActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.AboutActivity"
+            android:name=".mvp.view.activity.AboutActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.WishReportActivity"
+            android:name=".mvp.view.activity.WishReportActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.MBTIActivity"
+            android:name=".mvp.view.activity.MBTIActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.InterestActivity"
+            android:name=".mvp.view.activity.InterestActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.LqRiskActivity"
+            android:name=".mvp.view.activity.LqRiskActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.IntelligentActivity"
+            android:name=".mvp.view.activity.IntelligentActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.WishReportResultActivity"
+            android:name=".mvp.view.activity.WishReportResultActivity"
             android:screenOrientation="portrait" />
     </application>
 </manifest>

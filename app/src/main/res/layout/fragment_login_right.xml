@@ -115,7 +115,7 @@
         android:textColor="@color/color555555"
         android:textSize="@dimen/font_12_sp" />
 
-    <com.gk.custom.RichText
+    <com.gk.mvp.view.custom.RichText
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"

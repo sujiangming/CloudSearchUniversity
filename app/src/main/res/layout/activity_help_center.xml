@@ -6,12 +6,12 @@
     android:background="@color/colorBackground"
     android:orientation="vertical">
 
-    <com.gk.custom.TopBarView
+    <com.gk.mvp.view.custom.TopBarView
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.gk.custom.TopBarView>
+    </com.gk.mvp.view.custom.TopBarView>
 
     <LinearLayout
         android:id="@+id/ll_wish_report"
@@ -115,7 +115,7 @@
             android:src="@drawable/more" />
     </LinearLayout>
 
-    <com.gk.custom.RichText
+    <com.gk.mvp.view.custom.RichText
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_40_dp"
         android:layout_gravity="bottom|end"

@@ -67,7 +67,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -85,7 +85,7 @@
                         app:drawable_src="@drawable/all_ke_mu"
                         app:drawable_width="30dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -103,7 +103,7 @@
                         app:drawable_src="@drawable/yuwen"
                         app:drawable_width="30dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -121,7 +121,7 @@
                         app:drawable_src="@drawable/shuxue"
                         app:drawable_width="30dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -139,7 +139,7 @@
                         app:drawable_src="@drawable/english"
                         app:drawable_width="30dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -157,7 +157,7 @@
                         app:drawable_src="@drawable/wenzong"
                         app:drawable_width="30dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -181,7 +181,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -199,7 +199,7 @@
                         app:drawable_src="@drawable/wuli"
                         app:drawable_width="30dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -217,7 +217,7 @@
                         app:drawable_src="@drawable/huaxue"
                         app:drawable_width="30dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -235,7 +235,7 @@
                         app:drawable_src="@drawable/shengwu"
                         app:drawable_width="30dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -253,7 +253,7 @@
                         app:drawable_src="@drawable/dili"
                         app:drawable_width="30dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -271,7 +271,7 @@
                         app:drawable_src="@drawable/lish"
                         app:drawable_width="30dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

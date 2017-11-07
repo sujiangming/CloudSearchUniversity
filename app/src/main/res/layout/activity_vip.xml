@@ -10,12 +10,12 @@
         android:background="@color/colorBackground"
         android:orientation="vertical">
 
-        <com.gk.custom.TopBarView
+        <com.gk.mvp.view.custom.TopBarView
             android:id="@+id/tv_top_bar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        </com.gk.custom.TopBarView>
+        </com.gk.mvp.view.custom.TopBarView>
 
         <TextView
             android:layout_width="match_parent"
@@ -40,7 +40,7 @@
                     android:background="@drawable/border_radius_vip"
                     android:paddingTop="@dimen/space_12_dp">
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:id="@+id/rich_vip"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -66,7 +66,7 @@
                         android:textColor="#808080"
                         android:textSize="@dimen/font_12_sp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:id="@+id/tv_blue_circle_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -96,7 +96,7 @@
                         android:textColor="#2fa2cb"
                         android:textSize="@dimen/font_10_sp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:id="@+id/tv_blue_circle_2"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -134,7 +134,7 @@
                     android:background="@drawable/border_radius_vip"
                     android:orientation="vertical">
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/space_10_dp"
@@ -166,7 +166,7 @@
                         android:textColor="#302f30"
                         android:textSize="@dimen/font_14_sp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -182,7 +182,7 @@
                         app:drawable_src="@drawable/blue_circle"
                         app:drawable_width="@dimen/space_10_dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -198,7 +198,7 @@
                         app:drawable_src="@drawable/blue_circle"
                         app:drawable_width="@dimen/space_10_dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -214,7 +214,7 @@
                         app:drawable_src="@drawable/blue_circle"
                         app:drawable_width="@dimen/space_10_dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -230,7 +230,7 @@
                         app:drawable_src="@drawable/blue_circle"
                         app:drawable_width="@dimen/space_10_dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -246,7 +246,7 @@
                         app:drawable_src="@drawable/blue_circle"
                         app:drawable_width="@dimen/space_10_dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -262,7 +262,7 @@
                         app:drawable_src="@drawable/blue_circle"
                         app:drawable_width="@dimen/space_10_dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -305,7 +305,7 @@
                     android:background="@drawable/border_radius_vip"
                     android:orientation="vertical">
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/space_10_dp"
@@ -337,7 +337,7 @@
                         android:textColor="#302f30"
                         android:textSize="@dimen/font_14_sp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -353,7 +353,7 @@
                         app:drawable_src="@drawable/blue_circle"
                         app:drawable_width="@dimen/space_10_dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -369,7 +369,7 @@
                         app:drawable_src="@drawable/blue_circle"
                         app:drawable_width="@dimen/space_10_dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -385,7 +385,7 @@
                         app:drawable_src="@drawable/blue_circle"
                         app:drawable_width="@dimen/space_10_dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"
@@ -401,7 +401,7 @@
                         app:drawable_src="@drawable/blue_circle"
                         app:drawable_width="@dimen/space_10_dp" />
 
-                    <com.gk.custom.RichText
+                    <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_below="@id/tv_vip_desc"

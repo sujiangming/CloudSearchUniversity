@@ -6,7 +6,7 @@
     android:background="#EDF8F9"
     android:orientation="vertical">
 
-    <com.gk.custom.TopBarView
+    <com.gk.mvp.view.custom.TopBarView
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -80,7 +80,7 @@
             android:textColor="@color/color030303"
             android:textSize="@dimen/font_17_sp" />
 
-        <com.gk.custom.RichText
+        <com.gk.mvp.view.custom.RichText
             android:id="@+id/tv_student_score"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -117,7 +117,7 @@
             android:textColor="@color/color030303"
             android:textSize="@dimen/font_17_sp" />
 
-        <com.gk.custom.RichText
+        <com.gk.mvp.view.custom.RichText
             android:id="@+id/tv_student_mb"
             android:layout_width="0dp"
             android:layout_height="match_parent"

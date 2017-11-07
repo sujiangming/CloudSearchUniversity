@@ -1,6 +1,7 @@
 package com.gk.http;
 
-import com.gk.config.Config;
+
+import com.gk.global.YXXConstants;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,7 +27,7 @@ public class RetrofitUtil {
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         mRetrofit = new Retrofit.Builder()
                 .client(builder.build())
-                .baseUrl(Config.HOST)
+                .baseUrl(YXXConstants.HOST)
                  //在此处声明使用FastJsonConverter做为转换器
                 .addConverterFactory(FastJsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

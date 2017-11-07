@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground">
 
-    <com.gk.custom.TopBarView
+    <com.gk.mvp.view.custom.TopBarView
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    </com.gk.custom.TopBarView>
+    </com.gk.mvp.view.custom.TopBarView>
 
     <LinearLayout
         android:layout_width="match_parent"

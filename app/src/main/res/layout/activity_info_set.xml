@@ -5,7 +5,7 @@
     android:background="#F0F0F4"
     android:orientation="vertical">
 
-    <com.gk.custom.TopBarView
+    <com.gk.mvp.view.custom.TopBarView
         android:id="@+id/top_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

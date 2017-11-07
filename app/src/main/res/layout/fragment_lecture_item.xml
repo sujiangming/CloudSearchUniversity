@@ -17,7 +17,7 @@
             android:scaleType="fitXY"
             android:src="@drawable/banner_buy_vip" />
 
-        <com.gk.custom.RichText
+        <com.gk.mvp.view.custom.RichText
             android:id="@+id/rt_lecture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
