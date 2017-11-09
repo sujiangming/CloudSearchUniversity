@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import com.gk.mvp.view.IView;
 import com.gk.mvp.view.custom.SjmProgressBar;
 import com.gk.tools.AppManager;
+import com.gk.tools.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -99,7 +100,10 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
     public void showProgress() {
         if (null == this.jdryProgressBar) {
             jdryProgressBar = SjmProgressBar.show(mContext);
+        } else {
+            jdryProgressBar.show();
         }
+
     }
 
     @Override
@@ -107,6 +111,10 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
         if (null != jdryProgressBar && jdryProgressBar.isShowing()) {
             jdryProgressBar.dismiss();
         }
+    }
+
+    public void toast(String desc) {
+        ToastUtils.toast(getContext(), desc);
     }
 
     public void refresh(int pageNum) {

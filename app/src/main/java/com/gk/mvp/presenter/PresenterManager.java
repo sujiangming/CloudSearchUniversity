@@ -89,7 +89,7 @@ public class PresenterManager {
             @Override
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                 CommonBean commonBean = response.body();
-                setNoDataByBean(commonBean);
+                goNext(commonBean);
                 mIView.hideProgress();
             }
 
@@ -102,7 +102,7 @@ public class PresenterManager {
         return mInstance;
     }
 
-    private void setNoDataByBean(CommonBean commonBean) {
+    private void goNext(CommonBean commonBean) {
         if (commonBean == null) {
             mIView.fillWithNoData("网络请求错误", mOrder);
             return;

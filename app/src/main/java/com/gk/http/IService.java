@@ -13,11 +13,19 @@ import retrofit2.http.POST;
 
 public interface IService {
     @FormUrlEncoded
-    @POST("app/getSalt")
-    Call<CommonBean> getSaltValue(@Field("data") String jsonParameter);
+    @POST("app/login/getSalt")
+    Call<CommonBean> getSalt(@Field("data") String jsonParameter);
 
     @FormUrlEncoded
-    @POST("app/login")
+    @POST("app/login/login")
     Call<CommonBean> login(@Field("data") String jsonParameter);
+
+    @FormUrlEncoded
+    @POST("app/login/verifyLogin")
+    Call<CommonBean> verifyLogin(@Field("data") String jsonParameter);
+
+    @FormUrlEncoded
+    @POST("app/login/getVerifyCode")
+    Call<CommonBean> getVerityfyCode(@Field("data") String jsonParameter);
 
 }

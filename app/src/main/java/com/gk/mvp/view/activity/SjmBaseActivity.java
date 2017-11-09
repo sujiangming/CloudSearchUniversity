@@ -130,6 +130,8 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
     public void showProgress() {
         if (null == this.jdryProgressBar) {
             jdryProgressBar = SjmProgressBar.show(this);
+        } else {
+            jdryProgressBar.show();
         }
     }
 

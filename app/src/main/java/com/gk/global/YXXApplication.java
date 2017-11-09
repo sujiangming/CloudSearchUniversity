@@ -23,7 +23,6 @@ public class YXXApplication extends Application {
         instance = this;
         setupGreenDao();
         initAppManager();
-        //insertVersionTest();
     }
 
     public static YXXApplication getInstance() {
