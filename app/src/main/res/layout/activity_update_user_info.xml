@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.gk.mvp.view.custom.TopBarView
+        android:id="@+id/tv_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.gk.mvp.view.custom.TopBarView>
+
+    <EditText
+        android:id="@+id/et_user_pwd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_15_dp"
+        android:ellipsize="end"
+        android:gravity="center_vertical"
+        android:hint="请输入内容"
+        android:inputType="text"
+        android:maxLines="1"
+        android:paddingLeft="@dimen/space_20_dp"
+        android:textColor="@color/color353535"
+        android:textColorHint="#d9d9d9"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/font_14_sp" />
+
+    <TextView
+        android:id="@+id/tv_login"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_40_dp"
+        android:background="@drawable/login_press_style"
+        android:gravity="center"
+        android:text="确定"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_16_sp" />
+
+</LinearLayout>
