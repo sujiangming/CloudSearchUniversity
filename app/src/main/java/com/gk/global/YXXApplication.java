@@ -2,11 +2,20 @@ package com.gk.global;
 
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 
+import com.gk.R;
 import com.gk.beans.DaoMaster;
 import com.gk.beans.DaoSession;
-import com.gk.beans.VersionBean;
+import com.gk.beans.LoginBean;
+import com.gk.listener.GlidePauseOnScrollListener;
+import com.gk.load.GlideImageLoader;
 import com.gk.tools.AppManager;
+
+import cn.finalteam.galleryfinal.CoreConfig;
+import cn.finalteam.galleryfinal.FunctionConfig;
+import cn.finalteam.galleryfinal.GalleryFinal;
+import cn.finalteam.galleryfinal.ThemeConfig;
 
 
 /**
@@ -16,6 +25,8 @@ public class YXXApplication extends Application {
 
     private static YXXApplication instance;
     private static DaoSession daoSession;
+    private static FunctionConfig functionConfig;
+    private static CoreConfig coreConfig;
 
     @Override
     public void onCreate() {
@@ -23,6 +34,8 @@ public class YXXApplication extends Application {
         instance = this;
         setupGreenDao();
         initAppManager();
+        initLoginBean();
+        initImage();
     }
 
     public static YXXApplication getInstance() {
@@ -34,6 +47,14 @@ public class YXXApplication extends Application {
      */
     private void initAppManager() {
         AppManager.getAppManager();
+    }
+
+    /**
+     * 初始化LoginBean
+     */
+    private void initLoginBean() {
+        LoginBean.getInstance().setmContext(getApplicationContext());
+        LoginBean.getInstance().load();
     }
 
     /**
@@ -54,9 +75,42 @@ public class YXXApplication extends Application {
         return daoSession;
     }
 
-    public void insertVersionTest() {
-        VersionBean versionBean = new VersionBean();
-        versionBean.setVersionCode(2);
-        daoSession.getVersionBeanDao().insertOrReplace(versionBean);
+    private void initImage() {
+        //设置主题
+        ThemeConfig theme = new ThemeConfig.Builder()
+                .setTitleBarBgColor(Color.rgb(0xFF, 0x57, 0x22))
+                .setTitleBarTextColor(Color.BLACK)
+                .setTitleBarIconColor(Color.BLACK)
+                .setFabNornalColor(Color.RED)
+                .setFabPressedColor(Color.BLUE)
+                .setCheckNornalColor(Color.WHITE)
+                .setCheckSelectedColor(Color.BLACK)
+                .setIconBack(R.drawable.ic_action_previous_item)
+                .setIconRotate(R.drawable.ic_action_repeat)
+                .setIconCrop(R.drawable.ic_action_crop)
+                .setIconCamera(R.drawable.ic_action_camera)
+                .build();
+        //配置功能
+        functionConfig = new FunctionConfig.Builder()
+                .setEnableCamera(true)
+                .setEnableEdit(true)
+                .setEnableCrop(true)
+                .setEnableRotate(true)
+                .setCropSquare(true)
+                .setEnablePreview(true)
+                .build();
+        coreConfig = new CoreConfig.Builder(this, new GlideImageLoader(), theme)
+                .setFunctionConfig(functionConfig)
+                .setPauseOnScrollListener(new GlidePauseOnScrollListener(false, true))
+                .build();
+        GalleryFinal.init(coreConfig);
+    }
+
+    public static FunctionConfig getFunctionConfig() {
+        return functionConfig;
+    }
+
+    public static CoreConfig getCoreConfig() {
+        return coreConfig;
     }
 }

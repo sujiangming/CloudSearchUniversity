@@ -16,7 +16,7 @@ public class YXXConstants {
     public static final int LOGIN_SET_RESULT = 512;
     public static final int MAIN_TO_LOGIN_REQUEST = 514;
 
-    public static final String HOST = "http://192.168.1.28:8080/cloudsch/";
+    public static final String HOST = "http://192.168.1.123:8080/cloudsch/";
     public static final int INVOKE_API_DEFAULT_TIME = 1;
     public static final int INVOKE_API_SECOND_TIME = 2;
     public static final int INVOKE_API_THIRD_TIME = 3;
@@ -24,4 +24,6 @@ public class YXXConstants {
     public static final String[] FEATURES = {"特色", "985", "211", "自主招生", "研究生院", "卓越计划", "双一流"};
     public static final String[] CLASSIFICATION = {"分类", "综合类", "理工类", "财经类", "农林类", "林业类", "医药类", "师范类", "体育类", "语言类", "政法类", "艺术类", "民族类", "军事类"};
     public static final String[] LEVEL = {"层次", "本科", "专科"};
+    //序列化标志
+    public static final String LOGIN_INFO_SERIALIZE_KEY = "loginBean";
 }

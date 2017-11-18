@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -12,35 +12,117 @@
     </com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer>
 
     <TextView
+        android:id="@+id/tv_video_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/video_player_live_detail"
         android:padding="16dp"
-        android:text="@string/video_brief"
+        android:text="视频名称"
         android:textColor="@color/color353535"
-        android:textSize="18sp" />
+        android:textSize="@dimen/font_17_sp" />
 
     <TextView
+        android:id="@+id/tv_video_count"
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_video_name"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
+        android:padding="@dimen/space_4_dp"
+        android:text="播放次数:2000"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_14_sp" />
+
+    <RelativeLayout
+        android:id="@+id/rl_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_video_count"
+        android:layout_marginTop="@dimen/space_16_dp">
+
+        <TextView
+            android:id="@+id/tv_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/comment3x"
+            android:drawablePadding="@dimen/space_5_dp"
+            android:paddingLeft="@dimen/space_15_dp"
+            android:paddingRight="@dimen/space_15_dp"
+            android:text="评论:  521"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_14_sp" />
+
+        <TextView
+            android:id="@+id/tv_zan"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:drawableLeft="@drawable/zan3x"
+            android:drawablePadding="@dimen/space_5_dp"
+            android:paddingLeft="@dimen/space_15_dp"
+            android:paddingRight="@dimen/space_15_dp"
+            android:text="点赞:  521"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_14_sp" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_below="@id/rl_comment"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginTop="@dimen/space_10_dp"
         android:background="@color/color4a4a4a" />
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_line"
         android:paddingLeft="@dimen/space_12_dp"
         android:paddingRight="@dimen/space_12_dp">
 
         <TextView
+            android:id="@+id/tv_brief"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:lineSpacingExtra="12dp"
             android:paddingBottom="@dimen/space_12_dp"
             android:paddingTop="@dimen/space_12_dp"
+            android:scrollbars="vertical"
             android:text="@string/detail_text"
             android:textColor="@color/color353535"
             android:textSize="16sp" />
     </ScrollView>
-</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:layout_alignParentBottom="true"
+        android:layout_margin="@dimen/space_8_dp"
+        android:background="@drawable/search_bg"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/et_user_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_5_dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:hint="请输入手机号"
+            android:inputType="phone"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/space_20_dp"
+            android:textColor="@color/color353535"
+            android:textColorHint="#d9d9d9"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_16_sp" />
+    </LinearLayout>
+</RelativeLayout>

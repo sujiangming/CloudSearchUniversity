@@ -1,6 +1,7 @@
 package com.gk.mvp.view.fragment;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -12,6 +13,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
+import com.gk.beans.LoginBean;
 import com.gk.beans.SaltBean;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
@@ -55,6 +57,13 @@ public class LoginRightFragment extends SjmBaseFragment {
         LoginRightFragment blankFragment = new LoginRightFragment();
         mEnterFlag = enterFlag;
         return blankFragment;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        etUserPhone.setText("");
+        etUserPwd.setText("");
     }
 
     @Override
@@ -110,16 +119,12 @@ public class LoginRightFragment extends SjmBaseFragment {
         jsonObject.put("username", userName);
         switch (view.getId()) {
             case R.id.tv_login:
-                if (isLogin) {
-                    PresenterManager.getInstance()
-                            .setmContext(getContext())
-                            .setmIView(this)
-                            .setCall(RetrofitUtil.getInstance().createReq(IService.class).getSalt(jsonObject.toJSONString()))
-                            .isShowProgress(true)
-                            .request();
-                } else {
-
-                }
+                showProgress();
+                PresenterManager.getInstance()
+                        .setmContext(getContext())
+                        .setmIView(this)
+                        .setCall(RetrofitUtil.getInstance().createReq(IService.class).getSalt(jsonObject.toJSONString()))
+                        .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
                 break;
             case R.id.tv_forget_pwd:
                 break;
@@ -131,36 +136,34 @@ public class LoginRightFragment extends SjmBaseFragment {
         CommonBean commonBean = (CommonBean) t;
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                saltBean = JSON.parseObject(commonBean.getData().toString(), SaltBean.class);
-                Log.e("获取验证码成功~", saltBean.getVerifyCode());
-                String pwd = userName + saltBean.getVerifyCode() + password;
+                SaltBean saltBean = JSON.parseObject(commonBean.getData().toString(), SaltBean.class);
+                String pwd = userName + saltBean.getSalt() + password;// + password;
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("username", userName);
                 jsonObject.put("password", MD5Util.encrypt(pwd));
+                Log.d(LoginRightFragment.class.getName(), MD5Util.encrypt(pwd));
                 PresenterManager.getInstance()
                         .setmContext(getContext())
                         .setmIView(this)
                         .setCall(RetrofitUtil.getInstance().createReq(IService.class).login(jsonObject.toJSONString()))
-                        .isShowProgress(true)
-                        .setInvokeOrder(YXXConstants.INVOKE_API_SECOND_TIME)
-                        .request();
+                        .request(YXXConstants.INVOKE_API_SECOND_TIME);
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
+                LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
+                loginBean.setmContext(getContext()).saveLoginBean(loginBean);
+                Log.e(LoginRightFragment.class.getName(),JSON.toJSONString(loginBean));
                 if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
                     openNewActivity(MainActivity.class);
                 }
                 closeActivity();
                 break;
         }
+        hideProgress();
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        switch (order) {
-            case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                break;
-            case YXXConstants.INVOKE_API_SECOND_TIME:
-                break;
-        }
+        toast((String) t);
+        hideProgress();
     }
 }

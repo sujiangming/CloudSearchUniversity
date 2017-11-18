@@ -14,7 +14,7 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
  */
 
 public class RetrofitUtil {
-    public static final int DEFAULT_TIMEOUT = 15;
+    public static final int DEFAULT_TIMEOUT = 60;
     public Retrofit mRetrofit;
 
     private static RetrofitUtil mInstance;

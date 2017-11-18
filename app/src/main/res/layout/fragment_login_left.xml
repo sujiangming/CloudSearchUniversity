@@ -70,7 +70,7 @@
             android:ellipsize="end"
             android:gravity="center_vertical"
             android:hint="请输入密码"
-            android:inputType="textPassword"
+            android:inputType="number"
             android:maxLines="1"
             android:paddingLeft="@dimen/space_20_dp"
             android:textColor="@color/color353535"

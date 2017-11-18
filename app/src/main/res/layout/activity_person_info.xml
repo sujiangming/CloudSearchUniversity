@@ -38,8 +38,7 @@
             android:layout_height="85dp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/space_15_dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/ym" />
+            android:scaleType="centerCrop" />
 
         <ImageView
             android:layout_width="@dimen/space_23_dp"

@@ -2,17 +2,23 @@ package com.gk.mvp.view.activity;
 
 import android.content.Context;
 import android.content.res.Configuration;
-import android.graphics.Color;
-import android.os.Build;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.LiveBean;
+import com.gk.global.YXXConstants;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
 import com.gk.listener.SjmStandardVideoAllCallBackListener;
+import com.gk.mvp.presenter.PresenterManager;
 import com.gk.tools.SjmDensityUtil;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
@@ -23,6 +29,7 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import java.lang.reflect.Field;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by JDRY-SJM on 2017/9/23.
@@ -31,6 +38,23 @@ import butterknife.BindView;
 public class LiveVideoDetailActivity extends SjmBaseActivity {
     @BindView(R.id.video_player_live_detail)
     StandardGSYVideoPlayer videoPlayerLiveDetail;
+
+    @BindView(R.id.tv_zan)
+    TextView tvZan;
+
+    @BindView(R.id.tv_comment)
+    TextView tvComment;
+
+    @OnClick(R.id.tv_zan)
+    public void tvZanClicked() {
+        Drawable drawable = getResources().getDrawable(R.drawable.zan_press3x);
+        /// 这一步必须要做,否则不会显示.
+        drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+        tvZan.setCompoundDrawables(drawable, null, null, null);
+        String[] textArray = tvZan.getText().toString().split("  ");
+        int count = Integer.valueOf(textArray[1]) + 1;
+        tvZan.setText(String.valueOf(count));
+    }
 
     private OrientationUtils orientationUtils;
     private boolean isPlay;
@@ -43,13 +67,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            View decorView = getWindow().getDecorView();
-            int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
-            decorView.setSystemUiVisibility(option);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
+        setStatusBarTransparent();
         String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
         //增加封面
         ImageView imageView = new ImageView(this);
@@ -126,6 +144,28 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
                 closeActivity();
             }
         });
+
+
+        LiveBean liveBean = (LiveBean) getIntent().getSerializableExtra("videoId");
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("videoId", liveBean.getId());
+        PresenterManager.getInstance()
+                .setmContext(this)
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoCommentList(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+
+    }
+
+    @Override
+    public <T> void fillWithData(T t, int order) {
+
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+
     }
 
     @Override

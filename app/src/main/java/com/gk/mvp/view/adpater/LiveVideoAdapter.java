@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gk.R;
+import com.gk.beans.LiveBean;
 
 
 /**
@@ -35,17 +36,9 @@ public class LiveVideoAdapter extends JdryBaseAdapter {
             //viewHolder.linearLayout = (LinearLayout) convertView.findViewById(R.id.ll_no_data_tip);
             convertView.setTag(viewHolder);
         }
-//        int len = list.size();
-//        String first = list.get(0).toString();
-//        if(len == 1 && first.equals("no")){
-//            viewHolder.linearLayout.setVisibility(View.VISIBLE);
-//            JdrySetViewNoDataTip.setViewNoDataTip(mContext,viewHolder.linearLayout);
-//        }else{
-//            viewHolder.linearLayout.setVisibility(View.GONE);
-//            viewHolder.tvLiveTitle.setText(list.get(position).toString());
-//        }
-        viewHolder.tvLiveTitle.setText(list.get(position).toString());
-
+        LiveBean liveBean = (LiveBean) list.get(position);
+        viewHolder.tvLiveTitle.setText(liveBean.getVideoName());
+        viewHolder.tvTeacher.setText(liveBean.getSpeaker());
         return convertView;
     }
 
