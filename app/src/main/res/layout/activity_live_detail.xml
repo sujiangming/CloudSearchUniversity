@@ -134,16 +134,29 @@
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_17_sp" />
 
-            <ListView
-                android:id="@+id/lv_comment"
+            <LinearLayout
+                android:id="@+id/ll_list"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_comment_desc"
-                android:divider="@null"
-                android:dividerHeight="0dp"
-                android:focusable="false">
+                android:orientation="vertical">
 
-            </ListView>
+                <com.gk.mvp.view.custom.SjmListView
+                    android:id="@+id/lv_comment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:dividerHeight="0dp"
+                    android:focusable="false">
+
+                </com.gk.mvp.view.custom.SjmListView>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_40_dp"
+                android:layout_below="@id/ll_list"
+                android:background="@android:color/transparent" />
         </RelativeLayout>
     </ScrollView>
 
@@ -175,4 +188,9 @@
             android:scaleType="centerInside"
             android:src="@drawable/zan3x" />
     </LinearLayout>
+
+    <include
+        android:id="@+id/include_comment"
+        layout="@layout/video_comment_edit"
+        android:visibility="gone" />
 </RelativeLayout>

@@ -1,20 +1,25 @@
 package com.gk.mvp.view.activity;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.TranslateAnimation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.CommentVideoBean;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LiveBean;
 import com.gk.beans.LoginBean;
@@ -23,14 +28,21 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.listener.SjmStandardVideoAllCallBackListener;
 import com.gk.mvp.presenter.PresenterManager;
-import com.gk.tools.SjmDensityUtil;
+import com.gk.mvp.view.adpater.VideoCommentAadapter;
+import com.gk.mvp.view.custom.SjmListView;
+import com.gk.tools.GlideImageLoader;
+import com.gk.tools.JdryTime;
+import com.gk.tools.YxxUtils;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
+import com.zhy.adapter.abslistview.CommonAdapter;
+import com.zhy.adapter.abslistview.ViewHolder;
 
-import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -56,13 +68,28 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
     Button btnComment;
 
     @BindView(R.id.lv_comment)
-    ListView lvComment;
+    SjmListView lvComment;
+    @BindView(R.id.tv_video_name)
+    TextView tvVideoName;
+    @BindView(R.id.tv_video_count)
+    TextView tvVideoCount;
+    @BindView(R.id.tv_brief)
+    TextView tvBrief;
+    @BindView(R.id.tv_cancel)
+    TextView tvCancel;
+    @BindView(R.id.tv_submit)
+    TextView tvSubmit;
+    @BindView(R.id.et_comment)
+    EditText etComment;
+
+    @BindView(R.id.include_comment)
+    View includeComment;
 
     private boolean isTvZan = false;
     private boolean isIvZan = false;
 
 
-    @OnClick({R.id.tv_zan, R.id.btn_comment, R.id.iv_zan})
+    @OnClick({R.id.tv_zan, R.id.btn_comment, R.id.iv_zan, R.id.tv_submit, R.id.tv_cancel})
     public void tvZanClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_zan:
@@ -75,7 +102,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
                 }
                 break;
             case R.id.btn_comment:
-                addCommentInter();
+                showWelcome();
                 break;
             case R.id.iv_zan:
                 if (!isIvZan) {
@@ -86,6 +113,12 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
                     toast("您已经点过赞了");
                 }
                 break;
+            case R.id.tv_submit:
+                addCommentInter();
+                break;
+            case R.id.tv_cancel:
+                hideWelcome();
+                break;
         }
     }
 
@@ -93,9 +126,46 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
     private boolean isPlay;
     private boolean isPause;
     private LiveBean liveBean;
+    private List<CommentVideoBean> commentVideoBeans = new ArrayList<>();
+    private VideoCommentAadapter videoCommentAadapter;
 
+    private TranslateAnimation mShowAction;
+    private TranslateAnimation mHiddenAction;
+
+    private void hideWelcome() {
+        mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
+        mShowAction.setDuration(150);
+        includeComment.setAnimation(mShowAction);
+        includeComment.setVisibility(View.GONE);
+    }
+
+    private void showWelcome() {
+        mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
+                Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF,
+                0.0f);
+        mHiddenAction.setDuration(150);
+        includeComment.setAnimation(mHiddenAction);
+        includeComment.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public int getResouceId() {
+        return R.layout.activity_live_detail;
+    }
+
+    @Override
+    protected void onCreateByMe(Bundle savedInstanceState) {
+        liveBean = (LiveBean) getIntent().getSerializableExtra("videoId");
+        initVideo();
+        addFocusInter();
+        getCommentInter();
+    }
 
     private void getCommentInter() {
+        showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("videoId", liveBean.getId());
         PresenterManager.getInstance()
@@ -106,15 +176,16 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
     }
 
     private void addCommentInter() {
-        String edit = btnComment.getText().toString();
+        String edit = etComment.getText().toString();
         if (TextUtils.isEmpty(edit)) {
             toast("请输入评论内容");
             return;
         }
+        showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("videoId", liveBean.getId());
         jsonObject.put("username", LoginBean.getInstance().getUsername());
-        jsonObject.put("content", edit);
+        jsonObject.put("content", YxxUtils.URLEncode(edit));
         PresenterManager.getInstance()
                 .setmContext(this)
                 .setmIView(this)
@@ -123,6 +194,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
     }
 
     private void addZanInter() {
+        showProgress();
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("videoId", liveBean.getId());
         PresenterManager.getInstance()
@@ -152,31 +224,64 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
                 .request(YXXConstants.INVOKE_API_FORTH_TIME);
     }
 
+
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        hideProgress();
+        final CommonBean commonBean = (CommonBean) t;
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                commentVideoBeans = JSON.parseArray(commonBean.getData().toString(), CommentVideoBean.class);
+                lvComment.setAdapter(new CommonAdapter<CommentVideoBean>(this, R.layout.video_comment, commentVideoBeans) {
+                    @Override
+                    protected void convert(ViewHolder viewHolder, CommentVideoBean item, int position) {
+                        viewHolder.setImageResource(R.id.iv_user_icon, R.drawable.ym);
+                        viewHolder.setText(R.id.tv_user, item.getNickName());
+                        viewHolder.setText(R.id.tv_time, JdryTime.format(JdryTime.getFullDate(JdryTime.getFullTimeBySec(item.getCreateTime()))));
+                        viewHolder.setText(R.id.tv_comment_content, item.getContent());
+                        int tmp = position % 2;
+                        if (tmp == 1) { //奇数
+                            viewHolder.setBackgroundColor(R.id.rl_comment_root, 0xFFF2F2F2);
+                        }
+                    }
+                });
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                toast(commonBean.getMessage());
+                hideWelcome();
+                getCommentInter();
+                break;
+            case YXXConstants.INVOKE_API_THREE_TIME:
+                toast(commonBean.getMessage());
+                break;
+            case YXXConstants.INVOKE_API_FORTH_TIME:
+                break;
+        }
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+        toast((String) t);
+        hideProgress();
+    }
+
     private void initVideo() {
         String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(R.drawable.ym);
+        GlideImageLoader glideImageLoader = new GlideImageLoader();
+        glideImageLoader.displayImage(this, liveBean.getVideoLogo(), imageView);
         //外部辅助的旋转，帮助全屏
         orientationUtils = new OrientationUtils(this, videoPlayerLiveDetail);
         //初始化不打开外部的旋转
         orientationUtils.setEnable(false);
-//        videoPlayerLiveDetail.setUp(url,true,null,"视频标题");
-//        videoPlayerLiveDetail.setThumbImageView(imageView);
-//        videoPlayerLiveDetail.setIsTouchWiget(true);
-//        videoPlayerLiveDetail.setRotateViewAuto(false);
-//        videoPlayerLiveDetail.getTitleTextView().setVisibility(View.GONE);
-//        videoPlayerLiveDetail.getBackButton().setVisibility(View.GONE);
-//        videoPlayerLiveDetail.startPlayLogic();
-        videoPlayerLiveDetail.getTitleTextView().setVisibility(View.GONE);
-        videoPlayerLiveDetail.getBackButton().setVisibility(View.GONE);
         new GSYVideoOptionBuilder()
                 .setThumbImageView(imageView)
                 .setUrl(url)
+                .setVideoTitle(liveBean.getVideoName() == null ? "视频名称" : liveBean.getVideoName())
                 .setCacheWithPlay(true)
                 .setIsTouchWiget(true)
-                .setVideoTitle("视频")
                 .setRotateViewAuto(false)
                 .setLockLand(false)
                 .setShowFullAnimation(false)
@@ -221,7 +326,6 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
                 }
             }
         });
-        //setTitleTextView();
         videoPlayerLiveDetail.getTitleTextView().setGravity(Gravity.CENTER);
         videoPlayerLiveDetail.getBackButton().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,42 +335,26 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
         });
     }
 
-    @Override
-    public int getResouceId() {
-        return R.layout.activity_live_detail;
-    }
-
-    @Override
-    protected void onCreateByMe(Bundle savedInstanceState) {
-        setStatusBarTransparent();
-        initVideo();
-        liveBean = (LiveBean) getIntent().getSerializableExtra("videoId");
-        addFocusInter();
-        getCommentInter();
-
-    }
-
-    @Override
-    public <T> void fillWithData(T t, int order) {
-        CommonBean commonBean = (CommonBean) t;
-        switch (order) {
-            case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                break;
-            case YXXConstants.INVOKE_API_SECOND_TIME:
-                toast(commonBean.getMessage());
-                break;
-            case YXXConstants.INVOKE_API_THREE_TIME:
-                toast(commonBean.getMessage());
-                break;
-            case YXXConstants.INVOKE_API_FORTH_TIME:
-                toast(commonBean.getMessage());
-                break;
+    public void setListViewHeightBasedOnChildren(ListView listView) {
+        // 获取ListView对应的Adapter
+        ListAdapter listAdapter = listView.getAdapter();
+        if (listAdapter == null) {
+            return;
         }
-    }
 
-    @Override
-    public <T> void fillWithNoData(T t, int order) {
+        int totalHeight = 0;
+        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
+            // listAdapter.getCount()返回数据项的数目
+            View listItem = listAdapter.getView(i, null, listView);
+            // 计算子项View 的宽高
+            listItem.measure(0, 0);
+            // 统计所有子项的总高度
+            totalHeight += listItem.getMeasuredHeight();
+        }
 
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        listView.setLayoutParams(params);
     }
 
     @Override
@@ -317,24 +405,5 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
         videoPlayerLiveDetail.getTitleTextView().setSingleLine();
         videoPlayerLiveDetail.getTitleTextView().setEllipsize(TextUtils.TruncateAt.MARQUEE);
         videoPlayerLiveDetail.getTitleTextView().setMarqueeRepeatLimit(-1);//等价于在xml配置成android:marqueeRepeatLimit ="marquee_forever"
-    }
-
-    public int getStatusBarHeight(Context context) {
-        Class<?> c = null;
-        Object obj = null;
-        Field field = null;
-        int x = 0, statusBarHeight = 0;
-        try {
-            c = Class.forName("com.android.internal.R$dimen");
-            obj = c.newInstance();
-            field = c.getField("status_bar_height");
-            x = Integer.parseInt(field.get(obj).toString());
-            statusBarHeight = context.getResources().getDimensionPixelSize(x);
-            Log.e("statusBarHeight:", "" + statusBarHeight);
-            statusBarHeight = SjmDensityUtil.px2dip(this, statusBarHeight);
-        } catch (Exception e1) {
-            e1.printStackTrace();
-        }
-        return statusBarHeight;
     }
 }

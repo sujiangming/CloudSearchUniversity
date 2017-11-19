@@ -2,9 +2,9 @@
 <resources>
     <string name="app_name">云寻校</string>
     <string name="main_tab_txt1">首页</string>
-    <string name="main_tab_txt2">直播</string>
+    <string name="main_tab_txt2">视频</string>
     <string name="main_tab_txt3">高考志愿</string>
-    <string name="main_tab_txt4">题库</string>
+    <string name="main_tab_txt4">资料</string>
     <string name="main_tab_txt5">我的</string>
     <string name="school_query">高校查询</string>
     <string name="score_query">专业查询</string>

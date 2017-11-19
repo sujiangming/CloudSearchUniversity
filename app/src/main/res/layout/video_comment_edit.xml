@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color80000000"
+    android:gravity="center_horizontal">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white">
+
+        <TextView
+            android:id="@+id/tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/space_15_dp"
+            android:text="取消"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_16_sp" />
+
+        <TextView
+            android:id="@+id/tv_submit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="@dimen/space_15_dp"
+            android:text="确定"
+            android:textColor="@color/color4c90bf"
+            android:textSize="@dimen/font_16_sp" />
+
+        <EditText
+            android:id="@+id/et_comment"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_below="@id/tv_cancel"
+            android:layout_marginLeft="@dimen/space_15_dp"
+            android:layout_marginRight="@dimen/space_15_dp"
+            android:background="@drawable/video_comment_edit_bg"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="left"
+            android:hint="写评论"
+            android:inputType="text"
+            android:padding="@dimen/space_5_dp"
+            android:textColor="@color/color353535"
+            android:textColorHint="@color/color808080"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_16_sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

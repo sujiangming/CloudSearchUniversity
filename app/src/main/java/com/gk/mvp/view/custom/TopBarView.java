@@ -13,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.tools.DensityUtil;
+import com.gk.tools.SjmDensityUtil;
 
 
 /**
@@ -66,7 +66,7 @@ public class TopBarView extends RelativeLayout implements OnClickListener {
                     break;
                 case R.styleable.Topbar_titleSize:
                     //dp sp = 3*px 3倍的关系
-                    int tmp = DensityUtil.px2dip(context, ta.getDimension(R.styleable.Topbar_titleSize, 0));
+                    int tmp = SjmDensityUtil.px2dip(context, ta.getDimension(R.styleable.Topbar_titleSize, 0));
                     titleTextSize = tmp;
                     break;
                 case R.styleable.Topbar_leftBtn:

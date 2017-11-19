@@ -51,14 +51,10 @@ public class LiveVideoFragment extends SjmBaseFragment {
     LinearLayout linearLayout;
 
     private LiveVideoAdapter liveVideoAdapter;
-
     private JSONObject jsonObject = new JSONObject();
-
     private List<LiveBean> liveBeanList = new ArrayList<>();
 
     private int mPage = 0;
-
-    private RefreshLayout mRefreshlayout;
 
     @Override
     public int getResourceId() {
@@ -77,21 +73,6 @@ public class LiveVideoFragment extends SjmBaseFragment {
         if (!hidden) {
             invoke(0);
         }
-    }
-
-    //如果你需要考虑更好的体验，可以这么操作
-    @Override
-    public void onStart() {
-        super.onStart();
-        //开始轮播
-        bannerLive.startAutoPlay();
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        //结束轮播
-        bannerLive.stopAutoPlay();
     }
 
     @Override
@@ -129,23 +110,7 @@ public class LiveVideoFragment extends SjmBaseFragment {
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
-        if (mPage == 0) {
-            liveBeanList = JSON.parseArray(commonBean.getData().toString(), LiveBean.class);
-            if (mRefreshlayout != null) {
-                mRefreshlayout.finishRefresh();
-            }
-
-        } else {
-            List<LiveBean> liveBeans = JSON.parseArray(commonBean.getData().toString(), LiveBean.class);
-            if (liveBeans != null) {
-                for (LiveBean liveBean : liveBeans) {
-                    liveBeanList.add(liveBean);
-                }
-            }
-            if (mRefreshlayout != null) {
-                mRefreshlayout.finishLoadmore();
-            }
-        }
+        liveBeanList = JSON.parseArray(commonBean.getData().toString(), LiveBean.class);
         liveVideoAdapter.update(liveBeanList);
         hideProgress();
     }
@@ -184,7 +149,7 @@ public class LiveVideoFragment extends SjmBaseFragment {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
                 invoke(0);
-                mRefreshlayout = refreshlayout;
+                refreshlayout.finishRefresh();
             }
         });
         smartRfLive.setOnLoadmoreListener(new OnLoadmoreListener() {
@@ -192,7 +157,7 @@ public class LiveVideoFragment extends SjmBaseFragment {
             public void onLoadmore(RefreshLayout refreshlayout) {
                 mPage++;
                 invoke(mPage);
-                mRefreshlayout = refreshlayout;
+                refreshlayout.finishRefresh();
             }
         });
     }
