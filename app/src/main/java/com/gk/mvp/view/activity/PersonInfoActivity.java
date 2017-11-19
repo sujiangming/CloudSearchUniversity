@@ -22,6 +22,7 @@ import com.gk.beans.CommonBean;
 import com.gk.beans.ImageBean;
 import com.gk.beans.LoginBean;
 import com.gk.global.YXXApplication;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
@@ -68,11 +69,13 @@ public class PersonInfoActivity extends SjmBaseActivity {
     RichText tvStudentRank;
     @BindView(R.id.tv_wen_li_ke)
     RichText tvWenLiKe;
+    @BindView(R.id.tv_user_nick_name)
+    RichText tvUserNickName;
 
     private LoginBean loginBean = LoginBean.getInstance();
     private static final String CODE_KEY = "code";
     private GlideImageLoader glideImageLoader = new GlideImageLoader();
-    private String defaultImage = "https://www.baidu.com/img/bdlogo.png";
+    private DialogInterface mDialog;
 
     @Override
     public int getResouceId() {
@@ -83,17 +86,22 @@ public class PersonInfoActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "个人信息", 0);
-        glideImageLoader.displayImage(this, defaultImage, ivUserHead);
+        glideImageLoader.displayImage(this, loginBean.getHeadImg(), ivUserHead);
+        tvUserCname.setText(loginBean.getCname());
+        tvUserNickName.setText(loginBean.getNickName());
+        tvWenLiKe.setText(loginBean.getWlDesc());
+        tvStudentRank.setText(String.valueOf(loginBean.getRanking()));
+        tvStudentScore.setText(String.valueOf(loginBean.getScore()));
+        tvStudentSource.setText(loginBean.getAddress());
+        tvVipLevel.setText(loginBean.getVipLevelDesc());
     }
 
 
-    @OnClick({R.id.iv_user_head, R.id.tv_user_cname, R.id.tv_vip_level, R.id.tv_student_source, R.id.tv_student_score, R.id.tv_student_rank, R.id.tv_wen_li_ke})
+    @OnClick({R.id.iv_user_head, R.id.tv_user_cname, R.id.tv_user_nick_name, R.id.tv_vip_level, R.id.tv_student_source, R.id.tv_student_score, R.id.tv_student_rank, R.id.tv_wen_li_ke})
     public void onViewClicked(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.iv_user_head:
-                //带配置
-                //GalleryFinal.openGallerySingle(REQUEST_CODE_GALLERY, functionConfig, mOnHanlderResultCallback);
                 showPhoto();
                 break;
             case R.id.tv_vip_level:
@@ -122,9 +130,12 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 startActivityForResult(intent, 5);
                 break;
             case R.id.tv_wen_li_ke:
+                showDialog();
+                break;
+            case R.id.tv_user_nick_name:
                 intent.setClass(this, UpdateUserInfoActivity.class);
-                intent.putExtra(CODE_KEY, 6);
-                startActivityForResult(intent, 6);
+                intent.putExtra(CODE_KEY, 7);
+                startActivityForResult(intent, 7);
                 break;
         }
     }
@@ -139,10 +150,6 @@ public class PersonInfoActivity extends SjmBaseActivity {
             return;
         }
         switch (requestCode) {
-            case 0:
-                break;
-            case 1:
-                break;
             case 2:
                 tvUserCname.setText(value);
                 break;
@@ -158,13 +165,14 @@ public class PersonInfoActivity extends SjmBaseActivity {
             case 6:
                 tvWenLiKe.setText(value);
                 break;
+            case 7:
+                tvUserNickName.setText(value);
+                break;
         }
     }
 
     private final int REQUEST_CODE_CAMERA = 1000;
     private final int REQUEST_CODE_GALLERY = 1001;
-    private final int REQUEST_CODE_CROP = 1002;
-    private final int REQUEST_CODE_EDIT = 1003;
 
     private FunctionConfig functionConfig = YXXApplication.getFunctionConfig();
 
@@ -181,19 +189,12 @@ public class PersonInfoActivity extends SjmBaseActivity {
 
                     @Override
                     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
-                        String imagePath = defaultImage;
                         switch (index) {
                             case 0:
                                 GalleryFinal.openGallerySingle(REQUEST_CODE_GALLERY, functionConfig, mOnHanlderResultCallback);
                                 break;
                             case 1:
                                 permission();
-                                break;
-                            case 2:
-                                GalleryFinal.openCrop(REQUEST_CODE_CROP, functionConfig, imagePath, mOnHanlderResultCallback);
-                                break;
-                            case 3:
-                                GalleryFinal.openEdit(REQUEST_CODE_EDIT, functionConfig, imagePath, mOnHanlderResultCallback);
                                 break;
                             default:
                                 break;
@@ -233,19 +234,12 @@ public class PersonInfoActivity extends SjmBaseActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Log.v("Upload", "success");
                 try {
-                    String ret = response.body().string();
-                    ImageBean imageBean = JSON.parseObject(ret, ImageBean.class);
-                    Log.e("ret", ret);
-                    JSONObject jsonObject = new JSONObject();
-                    jsonObject.put("username", LoginBean.getInstance().getUsername());
-                    jsonObject.put("headImg", imageBean.getData().getPath());
-                    PresenterManager.getInstance()
-                            .setmContext(PersonInfoActivity.this)
-                            .setmIView(PersonInfoActivity.this)
-                            .setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
-                            .request();
+                    if (response.isSuccessful()) {
+                        String ret = response.body().string();
+                        ImageBean imageBean = JSON.parseObject(ret, ImageBean.class);
+                        invokeService(0, 0, imageBean.getData().getPath());
+                    }
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -259,17 +253,85 @@ public class PersonInfoActivity extends SjmBaseActivity {
         });
     }
 
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("文理科选择");
+        //定义单选的选项
+        final String[] items = new String[]{"文科", "理科"};
+        //arg1：表示默认选中哪一项，-1表示没有默认选中项
+        builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+            //点击任何一个单选选项都会触发这个侦听方法执行
+            //arg1：点击的是哪一个选项
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // 执行选中某个选项后的业务逻辑
+                //点击某个选项后，触发onClick执行，要让对话框消失
+                int value = which + 1;
+                invokeService(1, value, null);
+                mDialog = dialog;
+                tvWenLiKe.setText(items[which]);
+            }
+        });
+        builder.show();
+    }
+
+    /**
+     * update user info
+     *
+     * @param flag      flag = 0 表示上传图片 flag = 1 更新文理科
+     * @param value     文科 1 理科 2
+     * @param imagePath 上传图片的路径
+     */
+    private void invokeService(int flag, int value, String imagePath) {
+        showProgress();
+        PresenterManager presenterManager = PresenterManager.getInstance()
+                .setmContext(this)
+                .setmIView(this);
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        if (flag == 0) {
+            jsonObject.put("headImg", imagePath);
+            presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
+                    .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+        } else {
+            jsonObject.put("subjectType", value);
+            presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
+                    .request(YXXConstants.INVOKE_API_SECOND_TIME);
+        }
+    }
+
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
         LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
-        LoginBean.getInstance().setmContext(this).saveLoginBean(loginBean);
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                LoginBean.getInstance()
+                        .setmContext(this)
+                        .setHeadImg(loginBean.getHeadImg())
+                        .save();
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                LoginBean.getInstance()
+                        .setmContext(this)
+                        .setSubjectType(loginBean.getSubjectType())
+                        .save();
+                mDialog.dismiss();
+                break;
+        }
         hideProgress();
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                mDialog.dismiss();
+                break;
+        }
         hideProgress();
     }
 
@@ -311,8 +373,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
                     //用户点击了同意授权
                     openCamera();
                 } else {
-                    //用户拒绝了授权
-                    toast("权限被拒绝");//"",Toast.LENGTH_SHORT).show();
+                    toast("权限被拒绝");
                 }
                 break;
             default:

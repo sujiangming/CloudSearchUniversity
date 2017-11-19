@@ -40,14 +40,16 @@ public class LoginBean implements Serializable {
     private boolean male;
     private String mobile;
     private String password;
-    private int ranking;
+    private String ranking;
     private String salt;
-    private int score;
+    private String score;
     private String username;
-    private String vipLevel;
+    private int vipLevel;
     private String cname;
     private String headImg;
     private String nickName;
+    private int subjectType;
+    private String address;
 
     private static final long serialVersionUID = 1L;
     private volatile static LoginBean instance = null;//volatile关键字来保证其线程间的可见性
@@ -118,139 +120,209 @@ public class LoginBean implements Serializable {
         }
     }
 
+    public String getVipLevelDesc() {
+        String desc = "";
+        switch (this.getVipLevel()) {
+            case 1:
+                desc = "普通会员";
+                break;
+            case 2:
+                desc = "银卡会员";
+                break;
+            case 3:
+                desc = "金卡会员";
+                break;
+            default:
+                desc = "游客";
+                break;
+        }
+        return desc;
+    }
+
+    public String getWlDesc() {
+        String desc = "";
+        switch (this.getSubjectType()) {
+            case 1:
+                desc = "文科";
+                break;
+            case 2:
+                desc = "理科";
+                break;
+            default:
+                desc = "未知";
+                break;
+        }
+        return desc;
+    }
+
     public boolean isAdministrator() {
         return administrator;
     }
 
-    public void setAdministrator(boolean administrator) {
+    public LoginBean setAdministrator(boolean administrator) {
         this.administrator = administrator;
+        return instance;
     }
 
     public boolean isBanned() {
         return banned;
     }
 
-    public void setBanned(boolean banned) {
+    public LoginBean setBanned(boolean banned) {
         this.banned = banned;
+        return instance;
     }
 
     public long getCreateDate() {
         return createDate;
     }
 
-    public void setCreateDate(long createDate) {
+    public LoginBean setCreateDate(long createDate) {
         this.createDate = createDate;
+        return instance;
     }
 
     public boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public LoginBean setEnabled(boolean enabled) {
         this.enabled = enabled;
+        return instance;
     }
 
     public String getLatestLoginIp() {
         return latestLoginIp;
     }
 
-    public void setLatestLoginIp(String latestLoginIp) {
+    public LoginBean setLatestLoginIp(String latestLoginIp) {
         this.latestLoginIp = latestLoginIp;
+        return instance;
     }
 
     public long getLatestLoginTime() {
         return latestLoginTime;
     }
 
-    public void setLatestLoginTime(long latestLoginTime) {
+    public LoginBean setLatestLoginTime(long latestLoginTime) {
         this.latestLoginTime = latestLoginTime;
+        return instance;
     }
 
     public boolean isMale() {
         return male;
     }
 
-    public void setMale(boolean male) {
+    public LoginBean setMale(boolean male) {
         this.male = male;
+        return instance;
     }
 
     public String getMobile() {
         return mobile;
     }
 
-    public void setMobile(String mobile) {
+    public LoginBean setMobile(String mobile) {
         this.mobile = mobile;
+        return instance;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public LoginBean setPassword(String password) {
         this.password = password;
+        return instance;
     }
 
-    public int getRanking() {
+    public String getRanking() {
         return ranking;
     }
 
-    public void setRanking(int ranking) {
+    public LoginBean setRanking(String ranking) {
         this.ranking = ranking;
+        return instance;
     }
 
     public String getSalt() {
         return salt;
     }
 
-    public void setSalt(String salt) {
+    public LoginBean setSalt(String salt) {
         this.salt = salt;
+        return instance;
     }
 
-    public int getScore() {
+    public String getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public LoginBean setScore(String score) {
         this.score = score;
+        return instance;
     }
 
     public String getUsername() {
         return username;
     }
 
-    public void setUsername(String username) {
+    public LoginBean setUsername(String username) {
         this.username = username;
+        return instance;
     }
 
-    public String getVipLevel() {
+    public int getVipLevel() {
         return vipLevel;
     }
 
-    public void setVipLevel(String vipLevel) {
+    public LoginBean setVipLevel(int vipLevel) {
         this.vipLevel = vipLevel;
+        return instance;
     }
 
     public String getCname() {
         return cname;
     }
 
-    public void setCname(String cname) {
+    public LoginBean setCname(String cname) {
         this.cname = cname;
+        return instance;
     }
 
     public String getHeadImg() {
         return headImg;
     }
 
-    public void setHeadImg(String headImg) {
+    public LoginBean setHeadImg(String headImg) {
         this.headImg = headImg;
+        return instance;
     }
 
     public String getNickName() {
         return nickName;
     }
 
-    public void setNickName(String nickName) {
+    public LoginBean setNickName(String nickName) {
         this.nickName = nickName;
+        return instance;
+    }
+
+    public int getSubjectType() {
+        return subjectType;
+    }
+
+    public LoginBean setSubjectType(int subjectType) {
+        this.subjectType = subjectType;
+        return instance;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public LoginBean setAddress(String address) {
+        this.address = address;
+        return instance;
     }
 }

@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 
 import com.gk.R;
+import com.gk.beans.AdsBean;
 import com.gk.beans.DaoMaster;
 import com.gk.beans.DaoSession;
 import com.gk.beans.LoginBean;
@@ -36,6 +37,7 @@ public class YXXApplication extends Application {
         initAppManager();
         initLoginBean();
         initImage();
+        initAdsBean();
     }
 
     public static YXXApplication getInstance() {
@@ -55,6 +57,14 @@ public class YXXApplication extends Application {
     private void initLoginBean() {
         LoginBean.getInstance().setmContext(getApplicationContext());
         LoginBean.getInstance().load();
+    }
+
+    /**
+     * 初始化AdsBean
+     */
+    private void initAdsBean() {
+        AdsBean.getInstance().setmContext(getApplicationContext());
+        AdsBean.getInstance().load();
     }
 
     /**

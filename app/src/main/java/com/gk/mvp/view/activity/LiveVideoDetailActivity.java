@@ -8,12 +8,16 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.CommonBean;
 import com.gk.beans.LiveBean;
+import com.gk.beans.LoginBean;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
@@ -42,32 +46,113 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
     @BindView(R.id.tv_zan)
     TextView tvZan;
 
+    @BindView(R.id.iv_zan)
+    ImageView ivZan;
+
     @BindView(R.id.tv_comment)
     TextView tvComment;
 
-    @OnClick(R.id.tv_zan)
-    public void tvZanClicked() {
+    @BindView(R.id.btn_comment)
+    Button btnComment;
+
+    @BindView(R.id.lv_comment)
+    ListView lvComment;
+
+    private boolean isTvZan = false;
+    private boolean isIvZan = false;
+
+
+    @OnClick({R.id.tv_zan, R.id.btn_comment, R.id.iv_zan})
+    public void tvZanClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_zan:
+                if (!isTvZan) {
+                    isTvZan = true;
+                    addZanInter();
+                    zanChangeStyle();
+                } else {
+                    toast("您已经点过赞了");
+                }
+                break;
+            case R.id.btn_comment:
+                addCommentInter();
+                break;
+            case R.id.iv_zan:
+                if (!isIvZan) {
+                    ivZan.setImageResource(R.drawable.zan_press3x);
+                    isIvZan = true;
+                    addZanInter();
+                } else {
+                    toast("您已经点过赞了");
+                }
+                break;
+        }
+    }
+
+    private OrientationUtils orientationUtils;
+    private boolean isPlay;
+    private boolean isPause;
+    private LiveBean liveBean;
+
+
+    private void getCommentInter() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("videoId", liveBean.getId());
+        PresenterManager.getInstance()
+                .setmContext(this)
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoCommentList(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+    }
+
+    private void addCommentInter() {
+        String edit = btnComment.getText().toString();
+        if (TextUtils.isEmpty(edit)) {
+            toast("请输入评论内容");
+            return;
+        }
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("videoId", liveBean.getId());
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("content", edit);
+        PresenterManager.getInstance()
+                .setmContext(this)
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).addVideoComment(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_SECOND_TIME);
+    }
+
+    private void addZanInter() {
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("videoId", liveBean.getId());
+        PresenterManager.getInstance()
+                .setmContext(this)
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).addVideoZan(jsonObject1.toJSONString()))
+                .request(YXXConstants.INVOKE_API_THREE_TIME);
+    }
+
+    private void zanChangeStyle() {
         Drawable drawable = getResources().getDrawable(R.drawable.zan_press3x);
         /// 这一步必须要做,否则不会显示.
         drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
         tvZan.setCompoundDrawables(drawable, null, null, null);
         String[] textArray = tvZan.getText().toString().split("  ");
         int count = Integer.valueOf(textArray[1]) + 1;
-        tvZan.setText(String.valueOf(count));
+        tvZan.setText("点赞:  " + count);
     }
 
-    private OrientationUtils orientationUtils;
-    private boolean isPlay;
-    private boolean isPause;
-
-    @Override
-    public int getResouceId() {
-        return R.layout.activity_live_detail;
+    private void addFocusInter() {
+        JSONObject jsonObject1 = new JSONObject();
+        jsonObject1.put("videoId", liveBean.getId());
+        PresenterManager.getInstance()
+                .setmContext(this)
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).addVideoAttention(jsonObject1.toJSONString()))
+                .request(YXXConstants.INVOKE_API_FORTH_TIME);
     }
 
-    @Override
-    protected void onCreateByMe(Bundle savedInstanceState) {
-        setStatusBarTransparent();
+    private void initVideo() {
         String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
         //增加封面
         ImageView imageView = new ImageView(this);
@@ -141,26 +226,42 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
         videoPlayerLiveDetail.getBackButton().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeActivity();
+                closeActivity(LiveVideoDetailActivity.this);
             }
         });
+    }
 
+    @Override
+    public int getResouceId() {
+        return R.layout.activity_live_detail;
+    }
 
-        LiveBean liveBean = (LiveBean) getIntent().getSerializableExtra("videoId");
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("videoId", liveBean.getId());
-        PresenterManager.getInstance()
-                .setmContext(this)
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoCommentList(jsonObject.toJSONString()))
-                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+    @Override
+    protected void onCreateByMe(Bundle savedInstanceState) {
+        setStatusBarTransparent();
+        initVideo();
+        liveBean = (LiveBean) getIntent().getSerializableExtra("videoId");
+        addFocusInter();
+        getCommentInter();
 
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
-
+        CommonBean commonBean = (CommonBean) t;
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                toast(commonBean.getMessage());
+                break;
+            case YXXConstants.INVOKE_API_THREE_TIME:
+                toast(commonBean.getMessage());
+                break;
+            case YXXConstants.INVOKE_API_FORTH_TIME:
+                toast(commonBean.getMessage());
+                break;
+        }
     }
 
     @Override

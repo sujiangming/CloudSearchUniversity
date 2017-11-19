@@ -161,7 +161,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
                 }
                 closeActivity();
                 break;
-            case YXXConstants.INVOKE_API_THIRD_TIME:
+            case YXXConstants.INVOKE_API_THREE_TIME:
                 break;
         }
         hideProgress();

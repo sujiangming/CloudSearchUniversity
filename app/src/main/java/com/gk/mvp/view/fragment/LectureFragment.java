@@ -73,6 +73,14 @@ public class LectureFragment extends SjmBaseFragment {
 
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            invoke(0);
+        }
+    }
+
     private void invoke(int page) {
         jsonObject.put("page", page);
         jsonObject.put("course", "");

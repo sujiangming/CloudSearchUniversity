@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.gk.R;
+import com.gk.beans.AdsBean;
 import com.gk.mvp.view.activity.IntelligentActivity;
 import com.gk.mvp.view.activity.InterestActivity;
 import com.gk.mvp.view.activity.LqRiskActivity;
@@ -43,10 +44,17 @@ public class HomeFragment extends SjmBaseFragment {
     }
 
     private void initBanner() {
-        List<Integer> imageList = new ArrayList<>();
-        imageList.add(R.drawable.banner_buy_vip);
-        imageList.add(R.drawable.banner_intelligent_wish);
-        imageList.add(R.drawable.bao_zhang);
+        List<String> imageList = new ArrayList<>();
+        List<AdsBean.MDataBean> mDataBeans = AdsBean.getInstance().getMData();
+        if (mDataBeans == null || mDataBeans.size() == 0) {
+            return;
+        }
+        for (int i = 0; i < mDataBeans.size(); i++) {
+            AdsBean.MDataBean mDataBean = mDataBeans.get(i);
+            if (mDataBean.getType() == 1) {
+                imageList.add(mDataBean.getUrl());
+            }
+        }
         banner.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
     }
 

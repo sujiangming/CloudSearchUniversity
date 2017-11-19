@@ -3,14 +3,19 @@ package com.gk.mvp.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.alibaba.fastjson.JSON;
 import com.gk.R;
-import com.gk.global.YXXApplication;
-import com.gk.global.YXXConstants;
+import com.gk.beans.AdsBean;
+import com.gk.beans.CommonBean;
 import com.gk.beans.DaoSession;
-import com.gk.beans.UserBean;
-import com.gk.beans.UserBeanDao;
+import com.gk.beans.LoginBean;
 import com.gk.beans.VersionBean;
 import com.gk.beans.VersionBeanDao;
+import com.gk.global.YXXApplication;
+import com.gk.global.YXXConstants;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
+import com.gk.mvp.presenter.PresenterManager;
 import com.gk.tools.PackageUtils;
 
 import java.util.List;
@@ -33,7 +38,7 @@ public class SplashActivity extends SjmBaseActivity {
         if (isNewVersionExit()) {
             openNewActivity(NewFeatureActivity.class);
         } else {
-            goMainActivity();
+            getAdsInfo();
         }
     }
 
@@ -55,10 +60,31 @@ public class SplashActivity extends SjmBaseActivity {
         return false;
     }
 
+    private void getAdsInfo() {
+        PresenterManager.getInstance()
+                .setmContext(this)
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList())
+                .request();
+    }
+
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        CommonBean commonBean = (CommonBean) t;
+        List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean.getData().toString(), AdsBean.MDataBean.class);
+        AdsBean.getInstance().setmContext(getApplicationContext()).saveAdsBean(mDataBeans);
+        goMainActivity();
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+        toast((String) t);
+        goMainActivity();
+    }
+
     private void goMainActivity() {
-        UserBeanDao userBeanDao = YXXApplication.getDaoSession().getUserBeanDao();
-        List<UserBean> userBeans = userBeanDao.loadAll();
-        if (userBeans != null && userBeans.size() > 0) {
+        LoginBean loginBean = LoginBean.getInstance();
+        if (loginBean != null && loginBean.getUsername() != null) {
             openNewActivity(MainActivity.class);
         } else {
             Intent intent = new Intent();

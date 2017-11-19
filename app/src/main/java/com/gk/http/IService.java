@@ -8,6 +8,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
@@ -100,4 +101,63 @@ public interface IService {
     @FormUrlEncoded
     @POST("app/api/video/addVideoComment")
     Call<CommonBean> addVideoComment(@Field("data") String data);
+
+    /**
+     * 增加视频点赞接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/video/addVideoZan")
+    Call<CommonBean> addVideoZan(@Field("data") String data);
+
+    /**
+     * 视频关注数增加
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/video/addVideoAttention")
+    Call<CommonBean> addVideoAttention(@Field("data") String data);
+
+    /**
+     * 获取广告
+     *
+     * @return
+     */
+    @GET("app/api/ads/getAdsInfoList")
+    Call<CommonBean> getAdsInfoList();
+
+    /**
+     * 增加专业列表
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/major/getMajorTypeList")
+    Call<CommonBean> getMajorTypeList(@Field("data") String data);
+
+    /**
+     * 增加专业信息
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/major/getMajorInfoList")
+    Call<CommonBean> getMajorInfoList(@Field("data") String data);
+
+    /**
+     * 增加专业查询接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST(" app/api/major/getMajorListByName")
+    Call<CommonBean> getMajorListByName(@Field("data") String data);
+
 }

@@ -11,6 +11,7 @@ import android.widget.ListView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LiveBean;
 import com.gk.http.IService;
@@ -55,6 +56,10 @@ public class LiveVideoFragment extends SjmBaseFragment {
 
     private List<LiveBean> liveBeanList = new ArrayList<>();
 
+    private int mPage = 0;
+
+    private RefreshLayout mRefreshlayout;
+
     @Override
     public int getResourceId() {
         return R.layout.fragment_live;
@@ -63,9 +68,30 @@ public class LiveVideoFragment extends SjmBaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        jsonObject.put("page", 0);
-        invoke(jsonObject.toJSONString());
+        invoke(0);
+    }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            invoke(0);
+        }
+    }
+
+    //如果你需要考虑更好的体验，可以这么操作
+    @Override
+    public void onStart() {
+        super.onStart();
+        //开始轮播
+        bannerLive.startAutoPlay();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        //结束轮播
+        bannerLive.stopAutoPlay();
     }
 
     @Override
@@ -74,10 +100,6 @@ public class LiveVideoFragment extends SjmBaseFragment {
         initBanner();
         liveVideoAdapter = new LiveVideoAdapter(getContext());
         liveList.setAdapter(liveVideoAdapter);
-//        liveVideoPresenter = new LiveVideoPresenter(getContext(), this);
-//        liveVideoAdapter = new LiveVideoAdapter(getContext());
-//        liveVideoPresenter.getData(0);
-
         //这个方法和将listView及其父元素隐藏掉的效果是一样的
         //View listEmptyView = View.inflate(getContext(), R.layout.error_tip, (ViewGroup) liveList.getParent().getParent());
         //liveList.setEmptyView(listEmptyView);
@@ -94,42 +116,63 @@ public class LiveVideoFragment extends SjmBaseFragment {
 
     }
 
-    private void invoke(String string) {
+    private void invoke(int page) {
         showProgress();
+        jsonObject.put("page", page);
         PresenterManager.getInstance()
                 .setmContext(getContext())
                 .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoList(string))
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoList(jsonObject.toJSONString()))
                 .request();
-    }
-
-    @Override
-    public <T> void fillWithNoData(T t, int order) {
-//        liveList.setEmptyView(linearLayout);
-//        liveList.setAdapter(null);
-        toast((String) t);
-        hideProgress();
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
-        liveBeanList = JSON.parseArray(commonBean.getData().toString(), LiveBean.class);
+        if (mPage == 0) {
+            liveBeanList = JSON.parseArray(commonBean.getData().toString(), LiveBean.class);
+            if (mRefreshlayout != null) {
+                mRefreshlayout.finishRefresh();
+            }
+
+        } else {
+            List<LiveBean> liveBeans = JSON.parseArray(commonBean.getData().toString(), LiveBean.class);
+            if (liveBeans != null) {
+                for (LiveBean liveBean : liveBeans) {
+                    liveBeanList.add(liveBean);
+                }
+            }
+            if (mRefreshlayout != null) {
+                mRefreshlayout.finishLoadmore();
+            }
+        }
         liveVideoAdapter.update(liveBeanList);
         hideProgress();
     }
 
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+        toast((String) t);
+        hideProgress();
+    }
+
     private void initBanner() {
-        List<Integer> imageList = new ArrayList<>();
-        imageList.add(R.drawable.banner_buy_vip);
-        imageList.add(R.drawable.banner_intelligent_wish);
-        imageList.add(R.drawable.bao_zhang);
+        List<String> imageList = new ArrayList<>();
+        List<AdsBean.MDataBean> mDataBeans = AdsBean.getInstance().getMData();
+        if (mDataBeans == null || mDataBeans.size() == 0) {
+            return;
+        }
+        for (int i = 0; i < mDataBeans.size(); i++) {
+            AdsBean.MDataBean mDataBean = mDataBeans.get(i);
+            if (mDataBean.getType() == 2) {
+                imageList.add(mDataBean.getUrl());
+            }
+        }
         bannerLive.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
         bannerLive.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
                 ToastUtils.toast(getContext(), "第 " + position + " 张图片");
-                //openNewActivity(LiveMainActivity.class);
             }
         });
     }
@@ -140,15 +183,16 @@ public class LiveVideoFragment extends SjmBaseFragment {
         smartRfLive.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                //liveVideoPresenter.getData(0);
-                refreshlayout.finishRefresh();
+                invoke(0);
+                mRefreshlayout = refreshlayout;
             }
         });
         smartRfLive.setOnLoadmoreListener(new OnLoadmoreListener() {
             @Override
             public void onLoadmore(RefreshLayout refreshlayout) {
-                //liveVideoPresenter.getData(1);
-                refreshlayout.finishLoadmore();
+                mPage++;
+                invoke(mPage);
+                mRefreshlayout = refreshlayout;
             }
         });
     }

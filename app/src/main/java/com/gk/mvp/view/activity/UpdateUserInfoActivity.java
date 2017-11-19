@@ -14,6 +14,9 @@ import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -50,14 +53,14 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
             return;
         }
         String value = etUserPwd.getText().toString();
-
+        try {
+            value = URLEncoder.encode(value, "utf-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         switch (requestCode) {
-            case 0:
-                break;
-            case 1:
-                break;
             case 2:
                 jsonObject.put("cname", value);
                 break;
@@ -70,8 +73,8 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
             case 5:
                 jsonObject.put("ranking", value);
                 break;
-            case 6:
-                jsonObject.put("subjectType", value);
+            case 7:
+                jsonObject.put("nickName", value);
                 break;
         }
         String content = jsonObject.toJSONString();
@@ -87,8 +90,26 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
         toast(commonBean.getMessage());
+        String result = etUserPwd.getText().toString();
+        switch (requestCode) {
+            case 2:
+                LoginBean.getInstance().setmContext(this).setCname(result).save();
+                break;
+            case 3:
+                LoginBean.getInstance().setmContext(this).setAddress(result).save();
+                break;
+            case 4:
+                LoginBean.getInstance().setmContext(this).setScore(result).save();
+                break;
+            case 5:
+                LoginBean.getInstance().setmContext(this).setRanking(result).save();
+                break;
+            case 7:
+                LoginBean.getInstance().setmContext(this).setNickName(result).save();
+                break;
+        }
         Intent intent = new Intent();
-        intent.putExtra("info", etUserPwd.getText().toString());
+        intent.putExtra("info", result);
         this.setResult(0, intent);
         closeActivity(this);
         hideProgress();

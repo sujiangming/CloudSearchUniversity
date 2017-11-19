@@ -125,9 +125,10 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
 
     }
 
+    public RefreshLayout mRefreshLayout;
+
     public void initSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout, boolean isLoadMore, final int page) {
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
-        smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
@@ -136,6 +137,7 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
             }
         });
         if (isLoadMore) {
+            smartRefreshLayout.setRefreshFooter(new ClassicsFooter(getContext()));
             smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
                 @Override
                 public void onLoadmore(RefreshLayout refreshlayout) {
