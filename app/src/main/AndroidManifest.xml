@@ -120,5 +120,13 @@
         <activity
             android:name=".mvp.view.activity.UpdateUserInfoActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.QWActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.view.activity.QWDetailActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 </manifest>

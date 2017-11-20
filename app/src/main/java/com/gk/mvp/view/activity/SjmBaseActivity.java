@@ -14,6 +14,12 @@ import com.gk.mvp.view.custom.SjmProgressBar;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.AppManager;
 import com.gk.tools.ToastUtils;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
+import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -61,7 +67,7 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
         topBar.getBackView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                closeActivity();
+                closeActivity(SjmBaseActivity.this);
             }
         });
     }
@@ -144,6 +150,47 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
 
     public void toast(String desc) {
         ToastUtils.toast(this, desc);
+    }
+
+    public void refresh() {
+
+    }
+
+    public void loadMore() {
+
+    }
+
+    private RefreshLayout mRefreshLayout;
+
+    public void initSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout, boolean isLoadMore) {
+        smartRefreshLayout.setRefreshHeader(new ClassicsHeader(this));
+        smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+                setmRefreshLayout(refreshlayout);
+                refresh();
+            }
+        });
+        if (isLoadMore) {
+            smartRefreshLayout.setRefreshFooter(new ClassicsFooter(this));
+            smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
+                @Override
+                public void onLoadmore(RefreshLayout refreshlayout) {
+                    setmRefreshLayout(refreshlayout);
+                    loadMore();
+                }
+            });
+        }
+    }
+
+    public RefreshLayout getmRefreshLayout() {
+        return mRefreshLayout;
+    }
+
+    public void setmRefreshLayout(RefreshLayout mRefreshLayout) {
+        if (this.mRefreshLayout == null) {
+            this.mRefreshLayout = mRefreshLayout;
+        }
     }
 
     /**

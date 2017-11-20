@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/space_12_dp">
+
+    <TextView
+        android:id="@+id/tv_top_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:background="@color/color808080" />
+
+    <TextView
+        android:id="@+id/tv_nick_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_12_dp"
+        android:text="阳台的懒猫"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_12_sp" />
+
+    <TextView
+        android:id="@+id/tv_time_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_12_dp"
+        android:text="2017年11月20日 19:20"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_12_sp" />
+
+    <com.gk.mvp.view.custom.CircleImageView
+        android:id="@+id/civ_header"
+        android:layout_width="@dimen/space_30_dp"
+        android:layout_height="@dimen/space_30_dp"
+        android:layout_below="@id/tv_nick_name"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_12_dp"
+        android:src="@drawable/ym" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_nick_name"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_10_dp"
+        android:layout_toRightOf="@id/civ_header"
+        android:lineSpacingExtra="@dimen/space_4_dp"
+        android:text="这是今天上午在我家阳台拍摄的乐湾国际绿色美景，再沏一壶茶，人生就是如此完美。家里……"
+        android:textColor="@color/color4a4a4a"
+        android:textSize="@dimen/font_14_sp" />
+</RelativeLayout>

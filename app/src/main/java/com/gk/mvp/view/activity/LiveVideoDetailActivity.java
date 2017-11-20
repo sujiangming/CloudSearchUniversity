@@ -1,5 +1,6 @@
 package com.gk.mvp.view.activity;
 
+import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -7,8 +8,7 @@ import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -51,7 +51,7 @@ import butterknife.OnClick;
  * Created by JDRY-SJM on 2017/9/23.
  */
 
-public class LiveVideoDetailActivity extends SjmBaseActivity {
+public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnLayoutChangeListener {
     @BindView(R.id.video_player_live_detail)
     StandardGSYVideoPlayer videoPlayerLiveDetail;
 
@@ -88,6 +88,9 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
     private boolean isTvZan = false;
     private boolean isIvZan = false;
 
+    private int screenHeight = 0;//屏幕高度
+    private int keyHeight = 0;//软件盘弹起后所占高度阀值
+
 
     @OnClick({R.id.tv_zan, R.id.btn_comment, R.id.iv_zan, R.id.tv_submit, R.id.tv_cancel})
     public void tvZanClicked(View view) {
@@ -102,7 +105,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
                 }
                 break;
             case R.id.btn_comment:
-                showWelcome();
+                includeComment.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_zan:
                 if (!isIvZan) {
@@ -117,7 +120,8 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
                 addCommentInter();
                 break;
             case R.id.tv_cancel:
-                hideWelcome();
+                includeComment.setVisibility(View.GONE);
+                hideSoftKey();
                 break;
         }
     }
@@ -129,27 +133,6 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
     private List<CommentVideoBean> commentVideoBeans = new ArrayList<>();
     private VideoCommentAadapter videoCommentAadapter;
 
-    private TranslateAnimation mShowAction;
-    private TranslateAnimation mHiddenAction;
-
-    private void hideWelcome() {
-        mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
-                0.0f, Animation.RELATIVE_TO_SELF, -1.0f);
-        mShowAction.setDuration(150);
-        includeComment.setAnimation(mShowAction);
-        includeComment.setVisibility(View.GONE);
-    }
-
-    private void showWelcome() {
-        mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
-                0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
-                Animation.RELATIVE_TO_SELF, -1.0f, Animation.RELATIVE_TO_SELF,
-                0.0f);
-        mHiddenAction.setDuration(150);
-        includeComment.setAnimation(mHiddenAction);
-        includeComment.setVisibility(View.VISIBLE);
-    }
 
     @Override
     public int getResouceId() {
@@ -159,9 +142,39 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         liveBean = (LiveBean) getIntent().getSerializableExtra("videoId");
+        initKeyBoardParameter();
         initVideo();
         addFocusInter();
         getCommentInter();
+    }
+
+    /**
+     * 初始化软键盘弹出和关闭时的参数
+     */
+    private void initKeyBoardParameter() {
+        //获取屏幕高度
+        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight / 3;
+    }
+
+    private void hideSoftKey() {
+        //隐藏软盘
+        InputMethodManager imm = (InputMethodManager) etComment.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(etComment.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        //editText失去焦点
+        etComment.clearFocus();
+        //清空数据
+        etComment.setHint("我来说两句");
+        etComment.setText("");
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+            etComment.setHint("我来说两句");
+            etComment.setText("");
+        }
     }
 
     private void getCommentInter() {
@@ -248,8 +261,9 @@ public class LiveVideoDetailActivity extends SjmBaseActivity {
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 toast(commonBean.getMessage());
-                hideWelcome();
                 getCommentInter();
+                includeComment.setVisibility(View.GONE);
+                hideSoftKey();
                 break;
             case YXXConstants.INVOKE_API_THREE_TIME:
                 toast(commonBean.getMessage());

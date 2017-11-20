@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/space_9_dp">
+
+    <TextView
+        android:id="@+id/tv_top_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:background="@color/color808080" />
+
+    <com.gk.mvp.view.custom.CircleImageView
+        android:id="@+id/civ_header"
+        android:layout_width="@dimen/space_30_dp"
+        android:layout_height="@dimen/space_30_dp"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_9_dp"
+        android:src="@drawable/ym" />
+
+    <TextView
+        android:id="@+id/tv_nick_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_7_dp"
+        android:layout_marginTop="@dimen/space_13_dp"
+        android:layout_toRightOf="@id/civ_header"
+        android:text="阳台的懒猫"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_12_sp" />
+
+    <TextView
+        android:id="@+id/tv_time_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_marginLeft="@dimen/space_7_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_13_dp"
+        android:text="2017年11月20日 19:20"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_12_sp" />
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/civ_header"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_8_dp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="这是今天上午在我家阳台拍摄的"
+        android:textColor="@color/color4a4a4a"
+        android:textSize="@dimen/font_16_sp" />
+
+    <TextView
+        android:id="@+id/tv_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_title"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_4_dp"
+        android:ellipsize="end"
+        android:lineSpacingExtra="@dimen/space_4_dp"
+        android:maxLines="2"
+        android:text="这是今天上午在我家阳台拍摄的乐湾国际绿色美景，再沏一壶茶，人生就是如此完美。家里……"
+        android:textColor="@color/color4a4a4a"
+        android:textSize="@dimen/font_14_sp" />
+
+    <TextView
+        android:id="@+id/tv_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_content"
+        android:layout_marginLeft="@dimen/space_30_dp"
+        android:layout_marginTop="@dimen/space_8_dp"
+        android:drawableLeft="@drawable/img_time"
+        android:drawablePadding="@dimen/space_4_dp"
+        android:gravity="center_vertical"
+        android:text="3小时前"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_12_sp" />
+
+    <TextView
+        android:layout_width="@dimen/space_1_px"
+        android:layout_height="@dimen/space_15_dp"
+        android:layout_below="@id/tv_content"
+        android:layout_marginLeft="@dimen/space_42_dp"
+        android:layout_marginTop="@dimen/space_10_dp"
+        android:layout_toRightOf="@id/tv_time"
+        android:background="@color/color808080" />
+
+    <TextView
+        android:id="@+id/tv_view_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="@dimen/space_8_dp"
+        android:drawableLeft="@drawable/img_eye3x"
+        android:drawablePadding="@dimen/space_4_dp"
+        android:gravity="center_vertical"
+        android:text="812"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_12_sp" />
+
+    <TextView
+        android:id="@+id/tv_right_v_line"
+        android:layout_width="@dimen/space_1_px"
+        android:layout_height="@dimen/space_15_dp"
+        android:layout_below="@id/tv_content"
+        android:layout_marginLeft="@dimen/space_42_dp"
+        android:layout_marginTop="@dimen/space_10_dp"
+        android:layout_toRightOf="@id/tv_view_count"
+        android:background="@color/color808080" />
+
+    <TextView
+        android:id="@+id/tv_comment_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_content"
+        android:layout_marginLeft="@dimen/space_42_dp"
+        android:layout_marginRight="@dimen/space_30_dp"
+        android:layout_marginTop="@dimen/space_8_dp"
+        android:layout_toRightOf="@id/tv_right_v_line"
+        android:drawableLeft="@drawable/img_word3x"
+        android:drawablePadding="@dimen/space_4_dp"
+        android:gravity="center_vertical"
+        android:text="123"
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_12_sp" />
+
+</RelativeLayout>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.gk.mvp.view.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_bar">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <com.gk.mvp.view.custom.CircleImageView
+                android:id="@+id/civ_header"
+                android:layout_width="@dimen/space_30_dp"
+                android:layout_height="@dimen/space_30_dp"
+                android:layout_marginLeft="@dimen/space_12_dp"
+                android:layout_marginTop="@dimen/space_9_dp"
+                android:src="@drawable/ym" />
+
+            <TextView
+                android:id="@+id/tv_nick_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_7_dp"
+                android:layout_marginTop="@dimen/space_13_dp"
+                android:layout_toRightOf="@id/civ_header"
+                android:text="阳台的懒猫"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:id="@+id/tv_time_right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_marginLeft="@dimen/space_7_dp"
+                android:layout_marginRight="@dimen/space_12_dp"
+                android:layout_marginTop="@dimen/space_13_dp"
+                android:text="2017年11月20日 19:20"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/civ_header"
+                android:layout_marginLeft="@dimen/space_12_dp"
+                android:layout_marginRight="@dimen/space_12_dp"
+                android:layout_marginTop="@dimen/space_8_dp"
+                android:text="这是今天上午在我家阳台拍摄的"
+                android:textColor="@color/color4a4a4a"
+                android:textSize="@dimen/font_16_sp" />
+
+            <TextView
+                android:id="@+id/tv_line"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1_px"
+                android:layout_below="@id/tv_title"
+                android:layout_marginTop="@dimen/space_12_dp"
+                android:background="@color/color2fa2cb" />
+
+            <TextView
+                android:id="@+id/tv_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_line"
+                android:layout_marginLeft="@dimen/space_12_dp"
+                android:layout_marginRight="@dimen/space_12_dp"
+                android:layout_marginTop="@dimen/space_12_dp"
+                android:lineSpacingExtra="@dimen/space_4_dp"
+                android:text="这是今天上午在我家阳台拍摄的乐湾国际绿色美景，再沏一壶茶，人生就是如此完美。家里……"
+                android:textColor="@color/color4a4a4a"
+                android:textSize="@dimen/font_14_sp" />
+
+            <TextView
+                android:id="@+id/tv_care"
+                android:layout_width="90dp"
+                android:layout_height="@dimen/space_30_dp"
+                android:layout_alignParentRight="true"
+                android:layout_below="@id/tv_content"
+                android:layout_marginLeft="@dimen/space_10_dp"
+                android:layout_marginRight="@dimen/space_12_dp"
+                android:layout_marginTop="@dimen/space_12_dp"
+                android:background="@drawable/intelligent_title3x"
+                android:gravity="center"
+                android:text="我要关注"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_14_sp" />
+
+            <TextView
+                android:id="@+id/tv_care_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_content"
+                android:layout_marginTop="@dimen/space_18_dp"
+                android:layout_toLeftOf="@id/tv_care"
+                android:text="1000"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:id="@+id/tv_care_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_content"
+                android:layout_marginRight="@dimen/space_2_dp"
+                android:layout_marginTop="@dimen/space_18_dp"
+                android:layout_toLeftOf="@id/tv_care_count"
+                android:drawableLeft="@drawable/img_word3x"
+                android:drawablePadding="@dimen/space_2_dp"
+                android:gravity="center_vertical"
+                android:text="关注"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:id="@+id/tv_scan_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_content"
+                android:layout_marginRight="@dimen/space_5_dp"
+                android:layout_marginTop="@dimen/space_18_dp"
+                android:layout_toLeftOf="@id/tv_care_desc"
+                android:text="110"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:id="@+id/tv_view_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_content"
+                android:layout_marginRight="@dimen/space_2_dp"
+                android:layout_marginTop="@dimen/space_18_dp"
+                android:layout_toLeftOf="@id/tv_scan_count"
+                android:drawableLeft="@drawable/img_eye3x"
+                android:drawablePadding="@dimen/space_2_dp"
+                android:gravity="center_vertical"
+                android:text="浏览"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_view_count"
+                android:layout_marginTop="@dimen/space_25_dp"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingRight="@dimen/space_12_dp">
+
+                <com.gk.mvp.view.custom.SjmListView
+                    android:id="@+id/lv_qw_jd"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:divider="@null"
+                    android:fastScrollEnabled="false"
+                    android:scrollbars="none"
+                    android:scrollingCache="false">
+
+                </com.gk.mvp.view.custom.SjmListView>
+            </LinearLayout>
+        </RelativeLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_40_dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorc8c7cc"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_5_dp"
+        android:paddingRight="@dimen/space_5_dp"
+        android:visibility="visible">
+
+        <Button
+            android:id="@+id/btn_comment"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_30_dp"
+            android:layout_weight="1"
+            android:background="@drawable/qw_jd_btn_bg"
+            android:text="我来说两句"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_16_sp" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/include_comment"
+        layout="@layout/video_comment_edit"
+        android:visibility="gone" />
+</RelativeLayout>

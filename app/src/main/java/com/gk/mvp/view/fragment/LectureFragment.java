@@ -102,12 +102,12 @@ public class LectureFragment extends SjmBaseFragment {
     }
 
     @Override
-    public void loadMore(int pageNum) {
+    public void loadMore() {
 
     }
 
     @Override
-    public void refresh(int pageNum) {
+    public void refresh() {
 
     }
 

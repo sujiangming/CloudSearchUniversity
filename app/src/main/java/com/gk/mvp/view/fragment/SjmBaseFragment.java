@@ -117,23 +117,23 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
         ToastUtils.toast(getContext(), desc);
     }
 
-    public void refresh(int pageNum) {
+    public void refresh() {
 
     }
 
-    public void loadMore(int pageNum) {
+    public void loadMore() {
 
     }
 
-    public RefreshLayout mRefreshLayout;
+    private RefreshLayout mRefreshLayout;
 
-    public void initSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout, boolean isLoadMore, final int page) {
+    public void initSmartRefreshLayout(SmartRefreshLayout smartRefreshLayout, boolean isLoadMore) {
         smartRefreshLayout.setRefreshHeader(new ClassicsHeader(getContext()));
         smartRefreshLayout.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-                refresh(page);
-                refreshlayout.finishRefresh();
+                setmRefreshLayout(refreshlayout);
+                refresh();
             }
         });
         if (isLoadMore) {
@@ -141,10 +141,20 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
             smartRefreshLayout.setOnLoadmoreListener(new OnLoadmoreListener() {
                 @Override
                 public void onLoadmore(RefreshLayout refreshlayout) {
-                    loadMore(page);
-                    refreshlayout.finishLoadmore();
+                    setmRefreshLayout(refreshlayout);
+                    loadMore();
                 }
             });
+        }
+    }
+
+    public RefreshLayout getmRefreshLayout() {
+        return mRefreshLayout;
+    }
+
+    public void setmRefreshLayout(RefreshLayout mRefreshLayout) {
+        if (this.mRefreshLayout == null) {
+            this.mRefreshLayout = mRefreshLayout;
         }
     }
 }

@@ -28,7 +28,7 @@
             android:layout_width="@dimen/space_30_dp"
             android:layout_height="@dimen/space_30_dp"
             android:layout_marginRight="@dimen/space_12_dp"
-            android:src="@drawable/ic_wish3x" />
+            android:src="@drawable/fill_wish" />
 
         <TextView
             android:layout_width="0dp"
@@ -63,7 +63,7 @@
             android:layout_width="@dimen/space_30_dp"
             android:layout_height="@dimen/space_30_dp"
             android:layout_marginRight="@dimen/space_12_dp"
-            android:src="@drawable/ic_wish3x" />
+            android:src="@drawable/open_vip" />
 
         <TextView
             android:layout_width="0dp"
@@ -98,7 +98,7 @@
             android:layout_width="@dimen/space_30_dp"
             android:layout_height="@dimen/space_30_dp"
             android:layout_marginRight="@dimen/space_12_dp"
-            android:src="@drawable/ic_wish3x" />
+            android:src="@drawable/yiwen" />
 
         <TextView
             android:layout_width="0dp"

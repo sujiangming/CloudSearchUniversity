@@ -339,6 +339,7 @@
                         app:drawable_width="30dp" />
 
                     <com.gk.mvp.view.custom.RichText
+                        android:id="@+id/rtv_qw"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:background="@drawable/menu_btn_press"
