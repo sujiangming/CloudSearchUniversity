@@ -2,6 +2,7 @@ package com.gk.mvp.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
@@ -12,14 +13,16 @@ import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.support.v7.widget.SearchView;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.mvp.view.adpater.ProfessionalParentAdapter;
 import com.gk.beans.FirstBean;
+import com.gk.beans.MajorTypeBean;
 import com.gk.beans.SecondBean;
 import com.gk.beans.ThirdBean;
+import com.gk.global.YXXConstants;
+import com.gk.mvp.presenter.MajorPresenter;
+import com.gk.mvp.view.adpater.ProfessionalParentAdapter;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
@@ -68,24 +71,96 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
     protected void onCreateByMe(Bundle savedInstanceState) {
         initData();
         initView();
+        new MajorPresenter(this);
     }
 
-    private void initQueryData() {
-        for (int i = 0; i < 20; ++i) {
-            stringList.add("电气工程及其自动化" + i);
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                List<MajorTypeBean> majorTypeBeanList = (List<MajorTypeBean>) t;
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                break;
         }
-        listView.setAdapter(adapter = new CommonAdapter<String>(this, R.layout.professional_query_item, stringList) {
-            @Override
-            protected void convert(ViewHolder viewHolder, String item, int position) {
-                viewHolder.setText(R.id.tv_zy_name, item);
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+
+    }
+
+    private void initData() {
+        for (int i = 0; i < 4; i++) {
+            FirstBean firstBean = new FirstBean();
+            ArrayList<SecondBean> mArrlistSecondBean = new ArrayList<SecondBean>();
+            if (i == 0) {
+                firstBean.setScore("80分");
+                firstBean.setTitle("KPI  关键能力");
+            } else if (i == 1) {
+                firstBean.setScore("10分");
+                firstBean.setTitle("API  工作态度");
+            } else if (i == 2) {
+                firstBean.setScore("10分");
+                firstBean.setTitle("LPI  团队建设");
+            } else if (i == 3) {
+                firstBean.setScore("5分");
+                firstBean.setTitle("WPI  特殊事件");
             }
-        });
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toast("当前点击第" + i + "个专业：" + stringList.get(i));
+            for (int j = 0; j < 3; j++) {
+                SecondBean secondBean = new SecondBean();
+                secondBean.setTitle("第" + i + "个二级标题");
+                ArrayList<ThirdBean> mArrlistBean = new ArrayList<ThirdBean>();
+                for (int k = 0; k < 2; k++) {
+                    ThirdBean thirdBean = new ThirdBean();
+                    thirdBean.setTitle("第" + k + "个三级标题");
+                    mArrlistBean.add(thirdBean);
+                }
+                secondBean.setSecondBean(mArrlistBean);
+                mArrlistSecondBean.add(secondBean);
             }
-        });
+            firstBean.setFirstData(mArrlistSecondBean);
+            mDatas.add(firstBean);
+
+            Log.e("xxx", mDatas.get(i).getTitle());
+        }
+    }
+
+    private void initView() {
+        mAdapter = new ProfessionalParentAdapter(this, mDatas);
+        expandList.setAdapter(mAdapter);
+        mAdapter.notifyDataSetChanged();
+        //设置点击父控件的监听
+        expandList.setOnGroupExpandListener(this);
+        //点击最里面的菜单的点击事件
+        mAdapter.setOnChildListener(this);
+    }
+
+    /**
+     * 保证listview只展开一项
+     *
+     * @param groupPosition
+     */
+    @Override
+    public void onGroupExpand(int groupPosition) {
+        Log.e("xxx", "onGroupExpand>>" + groupPosition);
+        for (int i = 0; i < mDatas.size(); i++) {
+            if (i != groupPosition) {
+                expandList.collapseGroup(i);
+            }
+        }
+    }
+
+    /***
+     * 点击最次级菜单的点击事件
+     * @param parentPosition
+     * @param childPosition
+     * @param childIndex
+     */
+    @Override
+    public void onclick(int parentPosition, int childPosition, int childIndex) {
+        Log.e("xxx", "点了" + "parentPosition>>" + "childPosition>>" + childPosition +
+                "childIndex>>" + childIndex);
     }
 
     @OnClick({R.id.iv_back, R.id.iv_search, R.id.tv_level_1, R.id.tv_level_2, R.id.back_image})
@@ -184,77 +259,22 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
         faultLevel = "02";
     }
 
-    private void initData() {
-        for (int i = 0; i < 4; i++) {
-            FirstBean firstBean = new FirstBean();
-            ArrayList<SecondBean> mArrlistSecondBean = new ArrayList<SecondBean>();
-            if (i == 0) {
-                firstBean.setScore("80分");
-                firstBean.setTitle("KPI  关键能力");
-            } else if (i == 1) {
-                firstBean.setScore("10分");
-                firstBean.setTitle("API  工作态度");
-            } else if (i == 2) {
-                firstBean.setScore("10分");
-                firstBean.setTitle("LPI  团队建设");
-            } else if (i == 3) {
-                firstBean.setScore("5分");
-                firstBean.setTitle("WPI  特殊事件");
-            }
-            for (int j = 0; j < 3; j++) {
-                SecondBean secondBean = new SecondBean();
-                secondBean.setTitle("第" + i + "个二级标题");
-                ArrayList<ThirdBean> mArrlistBean = new ArrayList<ThirdBean>();
-                for (int k = 0; k < 2; k++) {
-                    ThirdBean thirdBean = new ThirdBean();
-                    thirdBean.setTitle("第" + k + "个三级标题");
-                    mArrlistBean.add(thirdBean);
-                }
-                secondBean.setSecondBean(mArrlistBean);
-                mArrlistSecondBean.add(secondBean);
-            }
-            firstBean.setFirstData(mArrlistSecondBean);
-            mDatas.add(firstBean);
-
-            Log.e("xxx", mDatas.get(i).getTitle());
+    private void initQueryData() {
+        for (int i = 0; i < 20; ++i) {
+            stringList.add("电气工程及其自动化" + i);
         }
-    }
-
-    private void initView() {
-        mAdapter = new ProfessionalParentAdapter(this, mDatas);
-        expandList.setAdapter(mAdapter);
-        mAdapter.notifyDataSetChanged();
-        //设置点击父控件的监听
-        expandList.setOnGroupExpandListener(this);
-        //点击最里面的菜单的点击事件
-        mAdapter.setOnChildListener(this);
-    }
-
-    /**
-     * 保证listview只展开一项
-     *
-     * @param groupPosition
-     */
-    @Override
-    public void onGroupExpand(int groupPosition) {
-        Log.e("xxx", "onGroupExpand>>" + groupPosition);
-        for (int i = 0; i < mDatas.size(); i++) {
-            if (i != groupPosition) {
-                expandList.collapseGroup(i);
+        listView.setAdapter(adapter = new CommonAdapter<String>(this, R.layout.professional_query_item, stringList) {
+            @Override
+            protected void convert(ViewHolder viewHolder, String item, int position) {
+                viewHolder.setText(R.id.tv_zy_name, item);
             }
-        }
-    }
-
-    /***
-     * 点击最次级菜单的点击事件
-     * @param parentPosition
-     * @param childPosition
-     * @param childIndex
-     */
-    @Override
-    public void onclick(int parentPosition, int childPosition, int childIndex) {
-        Log.e("xxx", "点了" + "parentPosition>>" + "childPosition>>" + childPosition +
-                "childIndex>>" + childIndex);
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                toast("当前点击第" + i + "个专业：" + stringList.get(i));
+            }
+        });
     }
 
 }

@@ -133,12 +133,10 @@ public interface IService {
     /**
      * 增加专业列表
      *
-     * @param data
      * @return
      */
-    @FormUrlEncoded
-    @POST("app/api/major/getMajorTypeList")
-    Call<CommonBean> getMajorTypeList(@Field("data") String data);
+    @GET("app/api/major/getMajorTypeList")
+    Call<ResponseBody> getMajorTypeList();
 
     /**
      * 增加专业信息
@@ -159,5 +157,4 @@ public interface IService {
     @FormUrlEncoded
     @POST(" app/api/major/getMajorListByName")
     Call<CommonBean> getMajorListByName(@Field("data") String data);
-
 }
