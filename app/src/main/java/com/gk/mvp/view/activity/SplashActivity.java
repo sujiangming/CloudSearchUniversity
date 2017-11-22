@@ -35,6 +35,7 @@ public class SplashActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
+        setStatusBarTransparent();
         if (isNewVersionExit()) {
             openNewActivity(NewFeatureActivity.class);
         } else {

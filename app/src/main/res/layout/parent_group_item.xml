@@ -1,29 +1,35 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingLeft="10dp" >
+    android:paddingLeft="@dimen/space_16_dp">
+
+    <ImageView
+        android:id="@+id/kpi_back_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/up" />
 
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
+        android:layout_toRightOf="@id/kpi_back_img"
         android:gravity="center_vertical"
-        android:text="121"/>
+        android:text="一级目录"
+        android:textColor="@color/color353535"
+        android:textSize="@dimen/font_16_sp" />
+
     <TextView
         android:id="@+id/kpi_score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@id/title"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="10dp"
-        android:text="80分"/>
-    <ImageView
-        android:id="@+id/kpi_back_img"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/up"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="20dp"
-        />
+        android:layout_marginRight="@dimen/space_16_dp"
+        android:text="专业代码：001"
+        android:textColor="@color/color555555"
+        android:textSize="@dimen/font_12_sp" />
 </RelativeLayout>

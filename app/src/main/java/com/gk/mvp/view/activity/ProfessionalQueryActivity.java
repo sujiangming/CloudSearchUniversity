@@ -16,13 +16,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.beans.FirstBean;
-import com.gk.beans.MajorTypeBean;
-import com.gk.beans.SecondBean;
-import com.gk.beans.ThirdBean;
+import com.gk.beans.MajorBean;
+import com.gk.beans.MajorQueryBean;
 import com.gk.global.YXXConstants;
 import com.gk.mvp.presenter.MajorPresenter;
 import com.gk.mvp.view.adpater.ProfessionalParentAdapter;
+import com.gk.tools.YxxUtils;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
@@ -55,12 +54,23 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
     ListView listView;
     @BindView(R.id.searchview)
     SearchView searchView;
+    @BindView(R.id.ll_header)
+    LinearLayout llHeader;
+    @BindView(R.id.back_image)
+    ImageView backImage;
 
-    private ArrayList<FirstBean> mDatas = new ArrayList<FirstBean>();
     private ProfessionalParentAdapter mAdapter;
-    private String faultLevel = "01"; //默认为本科
-    private List<String> stringList = new ArrayList<>();
-    private CommonAdapter<String> adapter;
+    private List<String> nodesBeans = new ArrayList<>();
+    private CommonAdapter<MajorQueryBean.DataBean> adapter;
+    private TranslateAnimation mShowAction;
+    private TranslateAnimation mHiddenAction;
+
+    private List<List<MajorBean.DataBean.NodesBeanXX>> listList = new ArrayList<>();
+    private List<MajorBean.DataBean.NodesBeanXX> list = new ArrayList<>();
+    private List<MajorQueryBean.DataBean> listQuery = new ArrayList<>();
+
+    private MajorPresenter majorPresenter;
+    private int pageType = 1;//默认当前页面是本科页面 2 为专科页面
 
     @Override
     public int getResouceId() {
@@ -69,65 +79,34 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        initData();
-        initView();
-        new MajorPresenter(this);
+        showProgress();
+        majorPresenter = new MajorPresenter(this);
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                List<MajorTypeBean> majorTypeBeanList = (List<MajorTypeBean>) t;
+                listList = (List<List<MajorBean.DataBean.NodesBeanXX>>) t;
+                list = listList.get(0);//默认是本科
+                initView();
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
+                listQuery = (List<MajorQueryBean.DataBean>) t;
+                initQueryData();
                 break;
         }
+        hideProgress();
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-
-    }
-
-    private void initData() {
-        for (int i = 0; i < 4; i++) {
-            FirstBean firstBean = new FirstBean();
-            ArrayList<SecondBean> mArrlistSecondBean = new ArrayList<SecondBean>();
-            if (i == 0) {
-                firstBean.setScore("80分");
-                firstBean.setTitle("KPI  关键能力");
-            } else if (i == 1) {
-                firstBean.setScore("10分");
-                firstBean.setTitle("API  工作态度");
-            } else if (i == 2) {
-                firstBean.setScore("10分");
-                firstBean.setTitle("LPI  团队建设");
-            } else if (i == 3) {
-                firstBean.setScore("5分");
-                firstBean.setTitle("WPI  特殊事件");
-            }
-            for (int j = 0; j < 3; j++) {
-                SecondBean secondBean = new SecondBean();
-                secondBean.setTitle("第" + i + "个二级标题");
-                ArrayList<ThirdBean> mArrlistBean = new ArrayList<ThirdBean>();
-                for (int k = 0; k < 2; k++) {
-                    ThirdBean thirdBean = new ThirdBean();
-                    thirdBean.setTitle("第" + k + "个三级标题");
-                    mArrlistBean.add(thirdBean);
-                }
-                secondBean.setSecondBean(mArrlistBean);
-                mArrlistSecondBean.add(secondBean);
-            }
-            firstBean.setFirstData(mArrlistSecondBean);
-            mDatas.add(firstBean);
-
-            Log.e("xxx", mDatas.get(i).getTitle());
-        }
+        toast((String) t);
+        hideProgress();
     }
 
     private void initView() {
-        mAdapter = new ProfessionalParentAdapter(this, mDatas);
+        mAdapter = new ProfessionalParentAdapter(this, list);
         expandList.setAdapter(mAdapter);
         mAdapter.notifyDataSetChanged();
         //设置点击父控件的监听
@@ -143,8 +122,7 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
      */
     @Override
     public void onGroupExpand(int groupPosition) {
-        Log.e("xxx", "onGroupExpand>>" + groupPosition);
-        for (int i = 0; i < mDatas.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             if (i != groupPosition) {
                 expandList.collapseGroup(i);
             }
@@ -171,9 +149,15 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
                 break;
             case R.id.tv_level_1:
                 tvLevel1Click();
+                list = listList.get(0);
+                pageType = 1;
+                initView();
                 break;
             case R.id.tv_level_2:
                 tvLevel2Click();
+                list = listList.get(1);
+                pageType = 2;
+                initView();
                 break;
             case R.id.iv_search:
                 showSearch();
@@ -185,8 +169,38 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
         }
     }
 
-    private TranslateAnimation mShowAction;
-    private TranslateAnimation mHiddenAction;
+    private void tvLevel1Click() {
+        tvLevel1.setBackgroundResource(R.drawable.fault_level_left_press);
+        tvLevel1.setTextColor(0xFFFFFFFF);
+        tvLevel2.setBackgroundResource(R.drawable.fault_level_right_normal);
+        tvLevel2.setTextColor(0xFF555555);
+    }
+
+    private void tvLevel2Click() {
+        tvLevel1.setBackgroundResource(R.drawable.fault_level_left_normal);
+        tvLevel1.setTextColor(0xFF555555);
+        tvLevel2.setBackgroundResource(R.drawable.fault_level_right_press);
+        tvLevel2.setTextColor(0xFFFFFFFF);
+    }
+
+    /**
+     * 以下为搜索部分
+     */
+
+    private void initQueryData() {
+        listView.setAdapter(adapter = new CommonAdapter<MajorQueryBean.DataBean>(this, R.layout.professional_query_item, listQuery) {
+            @Override
+            protected void convert(ViewHolder viewHolder, MajorQueryBean.DataBean item, int position) {
+                viewHolder.setText(R.id.tv_zy_name, item.getMajorName());
+            }
+        });
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                toast("当前点击第" + i + "个专业：" + listQuery.get(i).getMajorName());
+            }
+        });
+    }
 
     private void showSearch() {
         mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
@@ -204,6 +218,7 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Log.d(TAG, "onQueryTextSubmit = " + s);
+                majorPresenter.queryMajorByName(YxxUtils.URLEncode(s), pageType);
                 if (searchView != null) {
                     // 得到输入管理对象
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -218,15 +233,14 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
 
             @Override
             public boolean onQueryTextChange(String s) {
-                Log.d(TAG, "onQueryTextChange = " + s);
-                initQueryData();
+                //initQueryData(s);
                 return true;
             }
         });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                stringList.clear();
+                nodesBeans.clear();
                 adapter.notifyDataSetChanged();
                 return true;
             }
@@ -242,39 +256,4 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
         llSearch.setAnimation(mHiddenAction);
         llSearch.setVisibility(View.GONE);
     }
-
-    private void tvLevel1Click() {
-        tvLevel1.setBackgroundResource(R.drawable.fault_level_left_press);
-        tvLevel1.setTextColor(0xFFFFFFFF);
-        tvLevel2.setBackgroundResource(R.drawable.fault_level_right_normal);
-        tvLevel2.setTextColor(0xFF555555);
-        faultLevel = "01";
-    }
-
-    private void tvLevel2Click() {
-        tvLevel1.setBackgroundResource(R.drawable.fault_level_left_normal);
-        tvLevel1.setTextColor(0xFF555555);
-        tvLevel2.setBackgroundResource(R.drawable.fault_level_right_press);
-        tvLevel2.setTextColor(0xFFFFFFFF);
-        faultLevel = "02";
-    }
-
-    private void initQueryData() {
-        for (int i = 0; i < 20; ++i) {
-            stringList.add("电气工程及其自动化" + i);
-        }
-        listView.setAdapter(adapter = new CommonAdapter<String>(this, R.layout.professional_query_item, stringList) {
-            @Override
-            protected void convert(ViewHolder viewHolder, String item, int position) {
-                viewHolder.setText(R.id.tv_zy_name, item);
-            }
-        });
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toast("当前点击第" + i + "个专业：" + stringList.get(i));
-            }
-        });
-    }
-
 }

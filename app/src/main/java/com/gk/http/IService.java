@@ -131,7 +131,7 @@ public interface IService {
     Call<CommonBean> getAdsInfoList();
 
     /**
-     * 增加专业列表
+     * 专业列表
      *
      * @return
      */
@@ -139,7 +139,7 @@ public interface IService {
     Call<ResponseBody> getMajorTypeList();
 
     /**
-     * 增加专业信息
+     * 专业信息
      *
      * @param data
      * @return
@@ -149,12 +149,12 @@ public interface IService {
     Call<CommonBean> getMajorInfoList(@Field("data") String data);
 
     /**
-     * 增加专业查询接口
+     * 专业查询接口
      *
      * @param data
      * @return
      */
     @FormUrlEncoded
     @POST(" app/api/major/getMajorListByName")
-    Call<CommonBean> getMajorListByName(@Field("data") String data);
+    Call<ResponseBody> getMajorListByName(@Field("data") String data);
 }

@@ -1,13 +1,17 @@
 package com.gk.mvp.model;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.gk.beans.MajorTypeBean;
+import com.gk.beans.MajorBean;
+import com.gk.beans.MajorQueryBean;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.IPresenterCallback;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.ResponseBody;
@@ -21,8 +25,9 @@ import retrofit2.Response;
 
 public class MajorModel {
 
-    private List<MajorTypeBean> list;
+    private MajorBean majorBean;
     private String errorMsg;
+    private MajorQueryBean majorQueryBean;
 
     public MajorModel(IPresenterCallback iPresenterCallback) {
         httpRequest(iPresenterCallback);
@@ -35,9 +40,8 @@ public class MajorModel {
                 if (response.isSuccessful()) {
                     try {
                         String body = response.body().string();
-                        JSONObject json = JSON.parseObject(body);
-                        list = JSON.parseArray(json.getString("data"), MajorTypeBean.class);
-                        iPresenterCallback.httpRequestSuccess(list, 1);
+                        majorBean = JSON.parseObject(body, MajorBean.class);
+                        handleData(iPresenterCallback);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -47,6 +51,53 @@ public class MajorModel {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 iPresenterCallback.httpRequestFailure(t, 1);
+            }
+        });
+    }
+
+    private void handleData(final IPresenterCallback iPresenterCallback) {
+        if (majorBean == null) {
+            return;
+        }
+        List<List<MajorBean.DataBean.NodesBeanXX>> listList = new ArrayList<>();
+        List<MajorBean.DataBean> bzTypeList = majorBean.getData();
+        for (MajorBean.DataBean dataBean : bzTypeList) {
+            String name = dataBean.getName();
+            if (name.equals("本科专业")) {
+                listList.add(0, dataBean.getNodes());
+                continue;
+            } else if (name.equals("专科专业")) {
+                listList.add(1, dataBean.getNodes());
+                continue;
+            } else {
+                continue;
+            }
+        }
+        iPresenterCallback.httpRequestSuccess(listList, 1);
+    }
+
+    public void httpQueryRequest(String key, int type, final IPresenterCallback iPresenterCallback) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("majorName", key);
+        jsonObject.put("type", type);
+        RetrofitUtil.getInstance().createReq(IService.class).getMajorListByName(jsonObject.toJSONString()).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        String body = response.body().string();
+                        Log.e("body", body);
+                        majorQueryBean = JSON.parseObject(body, MajorQueryBean.class);
+                        iPresenterCallback.httpRequestSuccess(majorQueryBean.getData(), 2);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                iPresenterCallback.httpRequestFailure(t, 2);
             }
         });
     }

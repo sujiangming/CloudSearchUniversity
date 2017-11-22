@@ -9,7 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.beans.SecondBean;
+import com.gk.beans.MajorBean;
 
 import java.util.ArrayList;
 
@@ -19,10 +19,10 @@ import java.util.ArrayList;
  */
 public class ProfessionalChildAdapter extends BaseExpandableListAdapter {
     private Context mContext;
-    private ArrayList<SecondBean> mDatas;
+    private ArrayList<MajorBean.DataBean.NodesBeanXX.NodesBeanX> mDatas;
     int mPosition;
 
-    public ProfessionalChildAdapter(Context context, ArrayList<SecondBean> data, int pos) {
+    public ProfessionalChildAdapter(Context context, ArrayList<MajorBean.DataBean.NodesBeanXX.NodesBeanX> data, int pos) {
         this.mContext = context;
         this.mDatas = data;
         this.mPosition = pos;
@@ -35,8 +35,8 @@ public class ProfessionalChildAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int childPosition) {
-        return mDatas.get(childPosition).getSecondBean() != null
-                ? mDatas.get(childPosition).getSecondBean().size() : 0;
+        return mDatas.get(childPosition).getNodes() != null
+                ? mDatas.get(childPosition).getNodes().size() : 0;
     }
 
     @Override
@@ -46,7 +46,7 @@ public class ProfessionalChildAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int parentPosition, int childPosition) {
-        return mDatas.get(parentPosition).getSecondBean().get(childPosition);
+        return mDatas.get(parentPosition).getNodes().get(childPosition);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class ProfessionalChildAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        holder.mChildGroupTV.setText(mDatas.get(parentPosition).getTitle());
+        holder.mChildGroupTV.setText(mDatas.get(parentPosition).getName());
         return view;
     }
 
@@ -120,7 +120,7 @@ public class ProfessionalChildAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (ChildHolder) view.getTag();
         }
-        holder.childChildTV.setText(mDatas.get(parentPosition).getSecondBean().get(childPosition).getTitle());
+        holder.childChildTV.setText(mDatas.get(parentPosition).getNodes().get(childPosition).getName());
         //holder.score.setVisibility(View.VISIBLE);
         return view;
     }
