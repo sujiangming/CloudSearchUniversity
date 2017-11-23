@@ -128,5 +128,9 @@
             android:name=".mvp.view.activity.QWDetailActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".mvp.view.activity.ProfessionalDetailActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 </manifest>

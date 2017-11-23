@@ -8,7 +8,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.LoginBean;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
+import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.mvp.view.custom.SjmListView;
 import com.gk.mvp.view.custom.TopBarView;
@@ -132,6 +137,16 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
                 toast("解答成功");
                 includeComment.setVisibility(View.GONE);
                 hideSoftKey();
+
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("username", LoginBean.getInstance().getUsername());
+                jsonObject.put("queId", "");//问题ID
+                jsonObject.put("ansContent", etComment.getText().toString());
+                PresenterManager.getInstance()
+                        .setmIView(this)
+                        .setCall(RetrofitUtil.getInstance()
+                                .createReq(IService.class).addAnswer(jsonObject.toJSONString()))
+                        .request();
                 break;
         }
     }

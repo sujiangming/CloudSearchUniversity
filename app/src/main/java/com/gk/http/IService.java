@@ -157,4 +157,79 @@ public interface IService {
     @FormUrlEncoded
     @POST(" app/api/major/getMajorListByName")
     Call<ResponseBody> getMajorListByName(@Field("data") String data);
+
+    /**
+     * 招生计划查询接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/university/getUniRecruitPlanList")
+    Call<CommonBean> getUniRecruitPlanList(@Field("data") String data);
+
+
+    /**
+     * 高校查询接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/university/getUniversityList")
+    Call<CommonBean> getUniversityList(@Field("data") String data);
+
+    /**
+     * 大学排名查询接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/university/getUniRankingList")
+    Call<CommonBean> getUniRankingList(@Field("data") String data);
+
+
+    /**
+     * 查询问题列表接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/authority/getQuestionList")
+    Call<CommonBean> getQuestionList(@Field("data") String data);
+
+    /**
+     * 发表问题接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/authority/addQuestion")
+    Call<CommonBean> addQuestion(@Field("data") String data);
+
+
+    /**
+     * 查询回答列表接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/authority/getAnswerList")
+    Call<CommonBean> getAnswerList(@Field("data") String data);
+
+    /**
+     * 发表回答接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/authority/addAnswer")
+    Call<CommonBean> addAnswer(@Field("data") String data);
+
+
 }

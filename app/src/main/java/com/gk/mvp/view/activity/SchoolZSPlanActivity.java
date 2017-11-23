@@ -3,8 +3,13 @@ package com.gk.mvp.view.activity;
 import android.os.Bundle;
 import android.widget.ListView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.SchoolZSBean;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
+import com.gk.mvp.presenter.PresenterManager;
+import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -46,6 +51,14 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         initSmartRefreshLayout();
         initListView();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("page", 0);
+        jsonObject.put("schoolName", YxxUtils.URLEncode("清华大学"));
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance()
+                        .createReq(IService.class).getUniRecruitPlanList(jsonObject.toJSONString()))
+                .request();
     }
 
     private void initListView() {

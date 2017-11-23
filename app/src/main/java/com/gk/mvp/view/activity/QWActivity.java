@@ -5,7 +5,11 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
+import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.adapter.abslistview.CommonAdapter;
@@ -58,6 +62,14 @@ public class QWActivity extends SjmBaseActivity {
                 openNewActivity(QWDetailActivity.class);
             }
         });
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("page", 0);
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance()
+                        .createReq(IService.class).getAnswerList(jsonObject.toJSONString()))
+                .request();
     }
 
     @Override

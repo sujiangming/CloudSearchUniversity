@@ -4,8 +4,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.CommonBean;
 import com.gk.beans.QuerySchoolBean;
+import com.gk.beans.SchoolRankBean;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
+import com.gk.mvp.presenter.PresenterManager;
+import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -47,6 +55,21 @@ public class SchoolRankActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         initSmartRefreshLayout();
         initListView();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("page", 0);
+        jsonObject.put("schoolName", YxxUtils.URLEncode("清华大学"));
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance()
+                        .createReq(IService.class).getUniRankingList(jsonObject.toJSONString()))
+                .request();
+    }
+
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        CommonBean commonBean = (CommonBean) t;
+        List<SchoolRankBean> list = JSON.parseArray(commonBean.getData().toString(), SchoolRankBean.class);
     }
 
     private void initListView() {

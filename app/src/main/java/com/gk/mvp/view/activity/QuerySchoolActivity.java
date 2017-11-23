@@ -9,10 +9,15 @@ import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.QuerySchoolBean;
 import com.gk.beans.SpinnerBean;
 import com.gk.global.YXXConstants;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
+import com.gk.mvp.presenter.PresenterManager;
+import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -68,6 +73,18 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         setSpinnerByArea(spinner3, initSpinnerData(YXXConstants.CLASSIFICATION));
         setSpinnerByArea(spinner4, initSpinnerData(YXXConstants.LEVEL));
         initListView();
+
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("page", 0);
+        jsonObject.put("schoolArea", YxxUtils.URLEncode("北京"));//学校地区
+        jsonObject.put("schoolCategory", "");//学校类别
+        jsonObject.put("schoolType", 1);//学校类型（1本科、2专业）
+        jsonObject.put("tese", "");//特色
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance()
+                        .createReq(IService.class).getUniversityList(jsonObject.toJSONString()))
+                .request();
     }
 
     private void initListView() {

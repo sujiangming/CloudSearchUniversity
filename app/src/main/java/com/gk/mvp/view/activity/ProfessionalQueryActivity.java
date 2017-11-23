@@ -139,6 +139,7 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
     public void onclick(int parentPosition, int childPosition, int childIndex) {
         Log.e("xxx", "点了" + "parentPosition>>" + "childPosition>>" + childPosition +
                 "childIndex>>" + childIndex);
+
     }
 
     @OnClick({R.id.iv_back, R.id.iv_search, R.id.tv_level_1, R.id.tv_level_2, R.id.back_image})

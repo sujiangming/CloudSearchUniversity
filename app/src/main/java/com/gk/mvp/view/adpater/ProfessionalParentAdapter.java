@@ -1,6 +1,7 @@
 package com.gk.mvp.view.adpater;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.beans.MajorBean;
+import com.gk.mvp.view.activity.ProfessionalDetailActivity;
 import com.gk.tools.ToastUtils;
 
 import java.util.ArrayList;
@@ -38,7 +40,7 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getChildrenCount(int parentPosition) {
-        return mData.get(parentPosition).getNodes() == null ? 0 :mData.get(parentPosition).getNodes().size();
+        return mData.get(parentPosition).getNodes() == null ? 0 : mData.get(parentPosition).getNodes().size();
     }
 
     @Override
@@ -152,6 +154,14 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
                     //点击三级菜单，跳转到编辑菜单界面
                     ToastUtils.toast(mContext, "你点的位置是:  " + "parentPosition>>" + parentPosition +
                             "childPosition>>" + childPosition + "childIndex>>" + childIndex);
+                    List<MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean> beans = childData.get(parentPosition).getNodes();
+                    if (beans != null && beans.size() > 0) {
+                        MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean nodesBean = beans.get(childIndex);
+                        Intent intent = new Intent();
+                        intent.setClass(mContext, ProfessionalDetailActivity.class);
+                        intent.putExtra("id", nodesBean.getId());
+                        mContext.startActivity(intent);
+                    }
                 }
                 return false;
             }
@@ -192,13 +202,6 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
         childListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int Position, long id) {
-//                if(isClick){
-//                    holder.mUpImg.setImageResource(R.drawable.dowm);
-//                    isClick = false;
-//                }else{
-//                    holder.mUpImg.setImageResource(R.drawable.up);
-//                    isClick = true;
-//                }
                 Log.e("Xxx", "恭喜你,点击了" + parentPosition + "childpos>>>" + childPosition);
                 return false;
             }
