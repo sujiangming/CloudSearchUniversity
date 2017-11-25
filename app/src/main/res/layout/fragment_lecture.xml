@@ -336,27 +336,32 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_msjt_part_1"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/space_1_px"
                 android:background="@android:color/white"
                 android:orientation="horizontal"
-                android:padding="@dimen/space_12_dp">
+                android:padding="@dimen/space_12_dp"
+                android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/ll_msjt_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_msjt_1"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
+                        android:id="@+id/tv_msjz_1"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -366,20 +371,23 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_msjt_2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_msjt_2"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
+                        android:id="@+id/tv_msjt_2"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -390,26 +398,31 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_msjt_part_2"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@android:color/white"
                 android:orientation="horizontal"
-                android:padding="@dimen/space_12_dp">
+                android:padding="@dimen/space_12_dp"
+                android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/ll_msjt_3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_msjt_3"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
+                        android:id="@+id/tv_msjt_3"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -419,20 +432,23 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_msjt_4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_msjt_4"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
+                        android:id="@+id/tv_msjt_4"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -474,27 +490,32 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_lszt_part_1"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/space_1_px"
                 android:background="@android:color/white"
                 android:orientation="horizontal"
-                android:padding="@dimen/space_12_dp">
+                android:padding="@dimen/space_12_dp"
+                android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/ll_lszt_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_lszt_1"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
+                        android:id="@+id/tv_lszt_1"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -504,20 +525,23 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_lszt_2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_lszt_2"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
+                        android:id="@+id/tv_lszt_2"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -528,26 +552,31 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_lszt_part_2"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@android:color/white"
                 android:orientation="horizontal"
-                android:padding="@dimen/space_12_dp">
+                android:padding="@dimen/space_12_dp"
+                android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/ll_lszt_3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_lszt_3"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="fitXY" />
 
                     <TextView
+                        android:id="@+id/tv_lszt_3"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -557,20 +586,23 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_lszt_4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_lszt_4"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="fitXY" />
 
                     <TextView
+                        android:id="@+id/tv_lszt_4"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -612,27 +644,32 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_mnsj_part_1"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/space_1_px"
                 android:background="@android:color/white"
                 android:orientation="horizontal"
-                android:padding="@dimen/space_12_dp">
+                android:padding="@dimen/space_12_dp"
+                android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/ll_mnsj_1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_mnsj_1"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
+                        android:id="@+id/tv_mnsj_1"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -642,20 +679,23 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_mnsj_2"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_mnsj_2"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
+                        android:id="@+id/tv_mnsj_2"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -666,26 +706,31 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_mnsj_part_2"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@android:color/white"
                 android:orientation="horizontal"
-                android:padding="@dimen/space_12_dp">
+                android:padding="@dimen/space_12_dp"
+                android:visibility="gone">
 
                 <LinearLayout
+                    android:id="@+id/ll_mnsj_3"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_mnsj_3"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
+                        android:id="@+id/tv_mnsj_3"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -695,20 +740,23 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_mnsj_4"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="25dp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="invisible">
 
                     <ImageView
+                        android:id="@+id/iv_mnsj_4"
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:scaleType="fitXY"
-                        android:src="@drawable/ym" />
+                        android:scaleType="centerCrop" />
 
                     <TextView
+                        android:id="@+id/tv_mnsj_4"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
@@ -719,28 +767,4 @@
             </LinearLayout>
         </LinearLayout>
     </ScrollView>
-
-    <!--<com.scwang.smartrefresh.layout.SmartRefreshLayout-->
-    <!--android:id="@+id/smart_rf_lecture"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="0dp"-->
-    <!--android:layout_marginTop="@dimen/space_20_dp"-->
-    <!--android:layout_weight="1"-->
-    <!--android:background="@android:color/white">-->
-
-    <!--<GridView-->
-    <!--android:id="@+id/gv_lecture"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:gravity="center"-->
-    <!--android:horizontalSpacing="12dp"-->
-    <!--android:numColumns="2"-->
-    <!--android:paddingLeft="12dp"-->
-    <!--android:paddingRight="12dp"-->
-    <!--android:paddingTop="12dp"-->
-    <!--android:scrollbars="none"-->
-    <!--android:stretchMode="columnWidth">-->
-
-    <!--</GridView>-->
-    <!--</com.scwang.smartrefresh.layout.SmartRefreshLayout>-->
 </LinearLayout>
