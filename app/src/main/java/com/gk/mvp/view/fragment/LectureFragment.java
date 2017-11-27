@@ -1,5 +1,6 @@
 package com.gk.mvp.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -16,6 +17,7 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.activity.MaterialListActivity;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.tools.GlideImageLoader;
 
@@ -379,6 +381,7 @@ public class LectureFragment extends SjmBaseFragment {
 
     @OnClick({R.id.rtv_all, R.id.rtv_yuwen, R.id.rtv_shuxue, R.id.rtv_english, R.id.rtv_wz, R.id.rtv_lz, R.id.rtv_wuli, R.id.rtv_huaxue, R.id.rtv_shengwu, R.id.rtv_dili, R.id.rtv_lish, R.id.rtv_zhengzhi, R.id.ll_msjt, R.id.ll_lszt, R.id.ll_mnsj})
     public void onViewClicked(View view) {
+        Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.rtv_all:
                 break;
@@ -405,28 +408,19 @@ public class LectureFragment extends SjmBaseFragment {
             case R.id.rtv_zhengzhi:
                 break;
             case R.id.ll_msjt:
-                jsonObject.put("type", 1);
-                PresenterManager.getInstance()
-                        .setmContext(getContext())
-                        .setmIView(this)
-                        .setCall(RetrofitUtil.getInstance().createReq(IService.class).getMaterialsByType(jsonObject.toJSONString()))
-                        .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+                intent.putExtra("type", 1);
+                intent.putExtra("course", "");
+                openNewActivityByIntent(MaterialListActivity.class, intent);
                 break;
             case R.id.ll_lszt:
-                jsonObject.put("type", 2);
-                PresenterManager.getInstance()
-                        .setmContext(getContext())
-                        .setmIView(this)
-                        .setCall(RetrofitUtil.getInstance().createReq(IService.class).getMaterialsByType(jsonObject.toJSONString()))
-                        .request(YXXConstants.INVOKE_API_SECOND_TIME);
+                intent.putExtra("type", 2);
+                intent.putExtra("course", "");
+                openNewActivityByIntent(MaterialListActivity.class, intent);
                 break;
             case R.id.ll_mnsj:
-                jsonObject.put("type", 3);
-                PresenterManager.getInstance()
-                        .setmContext(getContext())
-                        .setmIView(this)
-                        .setCall(RetrofitUtil.getInstance().createReq(IService.class).getMaterialsByType(jsonObject.toJSONString()))
-                        .request(YXXConstants.INVOKE_API_THREE_TIME);
+                intent.putExtra("type", 3);
+                intent.putExtra("course", "");
+                openNewActivityByIntent(MaterialListActivity.class, intent);
                 break;
         }
     }

@@ -110,6 +110,10 @@ public class LiveVideoFragment extends SjmBaseFragment {
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
+        if (commonBean.getData() == null) {
+            toast("没有数据");
+            return;
+        }
         liveBeanList = JSON.parseArray(commonBean.getData().toString(), LiveBean.class);
         liveVideoAdapter.update(liveBeanList);
         hideProgress();

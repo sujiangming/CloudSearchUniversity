@@ -1,6 +1,7 @@
 package com.gk.http;
 
 import com.gk.beans.CommonBean;
+import com.gk.beans.MaterialItemBean;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -80,7 +81,17 @@ public interface IService {
      */
     @FormUrlEncoded
     @POST("app/api/materials/getMaterialsByType")
-    Call<CommonBean> getMaterialsByType(@Field("data") String data);
+    Call<MaterialItemBean> getMaterialsByType(@Field("data") String data);
+
+    /**
+     * 通过资料类型查询列表
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/materials/getMaterialsByType")
+    Call<CommonBean> getMaterialsByType1(@Field("data") String data);
 
     /**
      * 获取评论列表

@@ -16,7 +16,7 @@ import com.gk.mvp.view.activity.SameScoreActivity;
 import com.gk.mvp.view.activity.SchoolRankActivity;
 import com.gk.mvp.view.activity.SchoolZSPlanActivity;
 import com.gk.mvp.view.activity.VIPActivity;
-import com.gk.mvp.view.activity.WishReportResultActivity;
+import com.gk.mvp.view.activity.WishReportEnterActivity;
 import com.gk.tools.GlideImageLoader;
 import com.youth.banner.Banner;
 
@@ -95,7 +95,7 @@ public class HomeFragment extends SjmBaseFragment {
                 openNewActivity(VIPActivity.class);
                 break;
             case R.id.rtv_wish_report:
-                openNewActivity(WishReportResultActivity.class);
+                openNewActivity(WishReportEnterActivity.class);
                 break;
             case R.id.rtv_same_rank:
                 openNewActivity(IntelligentActivity.class);

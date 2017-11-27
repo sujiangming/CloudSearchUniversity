@@ -11,8 +11,8 @@
     <string name="school_choice">招生计划</string>
     <string name="school_rank">大学排名</string>
     <string name="rick_evaluate">VIP系统</string>
-    <string name="wish_define_report">志愿定制报告</string>
-    <string name="wisdom_choose_school">智能择校</string>
+    <string name="wish_define_report">志愿报告</string>
+    <string name="wisdom_choose_school">智能海选</string>
     <string name="same_score_direction">同分去向</string>
     <string name="test_evaluate">测试评估</string>
     <string name="career_test">MBTI职业测试</string>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <com.gk.mvp.view.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:scaleType="fitXY"
+                android:src="@drawable/wish_report" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/space_25_dp"
+                android:layout_marginLeft="@dimen/space_12_dp"
+                android:layout_marginTop="@dimen/space_23_dp"
+                android:background="@drawable/intelligent_title3x"
+                android:gravity="center"
+                android:text="人工智能报告"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_14_sp" />
+
+            <RelativeLayout
+                android:layout_width="351dp"
+                android:layout_height="95dp"
+                android:layout_gravity="center"
+                android:background="@drawable/intelligent_bg3x">
+
+                <TextView
+                    android:id="@+id/tv_wish_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:text="志愿报告状态:"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_wish_report"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_wish_desc"
+                    android:text="不能生成"
+                    android:textColor="#ff0000"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <Button
+                    android:id="@+id/btn_rg"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_44_dp"
+                    android:layout_below="@id/tv_wish_report"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:layout_marginRight="@dimen/space_12_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:background="@drawable/mbti_btn_bg3x"
+                    android:text="立即生成"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/space_25_dp"
+                android:layout_marginLeft="@dimen/space_12_dp"
+                android:layout_marginTop="@dimen/space_23_dp"
+                android:background="@drawable/intelligent_title3x"
+                android:gravity="center"
+                android:text="专家审核报告"
+                android:textColor="@android:color/white"
+                android:textSize="@dimen/font_14_sp" />
+
+            <RelativeLayout
+                android:layout_width="351dp"
+                android:layout_height="95dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="@dimen/space_16_dp"
+                android:background="@drawable/intelligent_bg3x">
+
+                <TextView
+                    android:id="@+id/tv_wish_desc_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:text="志愿报告状态:"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_yh_level_low"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_wish_desc_1"
+                    android:text="会员等级低，不能生成"
+                    android:textColor="#ff0000"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <Button
+                    android:id="@+id/btn_zj"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_44_dp"
+                    android:layout_below="@id/tv_yh_level_low"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:layout_marginRight="@dimen/space_12_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:background="@drawable/mbti_btn_bg3x"
+                    android:text="立即生成"
+                    android:textColor="@android:color/white" />
+            </RelativeLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

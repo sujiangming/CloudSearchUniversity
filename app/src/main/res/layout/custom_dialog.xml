@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/space_12_dp">
+
+    <TextView
+        android:id="@+id/tv_dialog_title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_40_dp"
+        android:background="@color/colorNavigation"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/space_20_dp"
+        android:text="标题"
+        android:textColor="@color/color353535"
+        android:textSize="@dimen/font_16_sp" />
+
+    <TextView
+        android:id="@+id/tv_dialog_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_dialog_title"
+        android:padding="@dimen/space_20_dp"
+        android:text="会员等级太低，请立即升级!!!"
+        android:textColor="@android:color/holo_orange_light"
+        android:textSize="@dimen/font_14_sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:layout_below="@id/tv_dialog_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="取消"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_16_sp" />
+
+        <Button
+            android:id="@+id/btn_sumbit"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="确定"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_16_sp" />
+    </LinearLayout>
+
+
+</RelativeLayout>

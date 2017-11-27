@@ -98,6 +98,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".mvp.view.activity.WishReportEnterActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".mvp.view.activity.MBTIActivity"
             android:screenOrientation="portrait" />
 
@@ -132,5 +136,8 @@
             android:name=".mvp.view.activity.ProfessionalDetailActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".mvp.view.activity.MaterialListActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

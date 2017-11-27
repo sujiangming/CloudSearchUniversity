@@ -183,6 +183,19 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
         }
     }
 
+
+    public void stopRefreshLayout() {
+        if (mRefreshLayout != null) {
+            mRefreshLayout.finishRefresh();
+        }
+    }
+
+    public void stopRefreshLayoutLoadMore() {
+        if (mRefreshLayout != null) {
+            mRefreshLayout.finishLoadmore();
+        }
+    }
+
     public RefreshLayout getmRefreshLayout() {
         return mRefreshLayout;
     }
