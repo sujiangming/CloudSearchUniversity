@@ -1,152 +1,192 @@
 package com.gk.beans;
 
+import java.util.List;
+
 /**
  * Created by JDRY-SJM on 2017/11/23.
  */
 
 public class MajorInfoBean {
+    private int status;
+    private String message;
+    private List<DataBean> data;
 
-    /**
-     * capacityRequirements : 只要是个人
-     * developmentProspect : 非常好
-     * employPersonsRequire : 只要是个人
-     * graduationTo : 天桥下
-     * jobProspects : 非常好
-     * knowledgeSkills : 打农药坚持一个小时
-     * majorGoal : 未来国家主席
-     * majorId : 402881fb5fce47d2015fce6030ca0001
-     * majorName : 哲学
-     * majorProfile : 很好的专业
-     * minorCourses : 打王者农药
-     * necessaryCertificates : 傻逼证
-     * requiredCourse : 吃饭睡觉拉屎
-     * salary : 1000
-     */
-
-    private String capacityRequirements;
-    private String developmentProspect;
-    private String employPersonsRequire;
-    private String graduationTo;
-    private String jobProspects;
-    private String knowledgeSkills;
-    private String majorGoal;
-    private String majorId;
-    private String majorName;
-    private String majorProfile;
-    private String minorCourses;
-    private String necessaryCertificates;
-    private String requiredCourse;
-    private String salary;
-
-    public String getCapacityRequirements() {
-        return capacityRequirements;
+    public int getStatus() {
+        return status;
     }
 
-    public void setCapacityRequirements(String capacityRequirements) {
-        this.capacityRequirements = capacityRequirements;
+    public void setStatus(int status) {
+        this.status = status;
     }
 
-    public String getDevelopmentProspect() {
-        return developmentProspect;
+    public String getMessage() {
+        return message;
     }
 
-    public void setDevelopmentProspect(String developmentProspect) {
-        this.developmentProspect = developmentProspect;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getEmployPersonsRequire() {
-        return employPersonsRequire;
+    public List<DataBean> getData() {
+        return data;
     }
 
-    public void setEmployPersonsRequire(String employPersonsRequire) {
-        this.employPersonsRequire = employPersonsRequire;
+    public void setData(List<DataBean> data) {
+        this.data = data;
     }
 
-    public String getGraduationTo() {
-        return graduationTo;
-    }
+    public static class DataBean{
+        /**
+         * capacityRequirements : 只要是个人
+         * developmentProspect : 非常好
+         * employPersonsRequire : 只要是个人
+         * graduationTo : 天桥下
+         * jobProspects : 非常好
+         * knowledgeSkills : 打农药坚持一个小时
+         * majorGoal : 未来国家主席
+         * majorId : 402881fb5fce47d2015fce6030ca0001
+         * majorName : 哲学
+         * majorProfile : 很好的专业
+         * minorCourses : 打王者农药
+         * necessaryCertificates : 傻逼证
+         * requiredCourse : 吃饭睡觉拉屎
+         * salary : 1000
+         */
 
-    public void setGraduationTo(String graduationTo) {
-        this.graduationTo = graduationTo;
-    }
+        private String capacityRequirements;
+        private String developmentProspect;
+        private String employPersonsRequire;
+        private String graduationTo;
+        private String jobProspects;
+        private String knowledgeSkills;
+        private String majorGoal;
+        private String majorId;
+        private String majorName;
+        private String majorProfile;
+        private String minorCourses;
+        private String necessaryCertificates;
+        private String requiredCourse;
+        private String salary;
+        private String majorCode;
 
-    public String getJobProspects() {
-        return jobProspects;
-    }
+        public String getCapacityRequirements() {
+            return capacityRequirements;
+        }
 
-    public void setJobProspects(String jobProspects) {
-        this.jobProspects = jobProspects;
-    }
+        public void setCapacityRequirements(String capacityRequirements) {
+            this.capacityRequirements = capacityRequirements;
+        }
 
-    public String getKnowledgeSkills() {
-        return knowledgeSkills;
-    }
+        public String getDevelopmentProspect() {
+            return developmentProspect;
+        }
 
-    public void setKnowledgeSkills(String knowledgeSkills) {
-        this.knowledgeSkills = knowledgeSkills;
-    }
+        public void setDevelopmentProspect(String developmentProspect) {
+            this.developmentProspect = developmentProspect;
+        }
 
-    public String getMajorGoal() {
-        return majorGoal;
-    }
+        public String getEmployPersonsRequire() {
+            return employPersonsRequire;
+        }
 
-    public void setMajorGoal(String majorGoal) {
-        this.majorGoal = majorGoal;
-    }
+        public void setEmployPersonsRequire(String employPersonsRequire) {
+            this.employPersonsRequire = employPersonsRequire;
+        }
 
-    public String getMajorId() {
-        return majorId;
-    }
+        public String getGraduationTo() {
+            return graduationTo;
+        }
 
-    public void setMajorId(String majorId) {
-        this.majorId = majorId;
-    }
+        public void setGraduationTo(String graduationTo) {
+            this.graduationTo = graduationTo;
+        }
 
-    public String getMajorName() {
-        return majorName;
-    }
+        public String getJobProspects() {
+            return jobProspects;
+        }
 
-    public void setMajorName(String majorName) {
-        this.majorName = majorName;
-    }
+        public void setJobProspects(String jobProspects) {
+            this.jobProspects = jobProspects;
+        }
 
-    public String getMajorProfile() {
-        return majorProfile;
-    }
+        public String getKnowledgeSkills() {
+            return knowledgeSkills;
+        }
 
-    public void setMajorProfile(String majorProfile) {
-        this.majorProfile = majorProfile;
-    }
+        public void setKnowledgeSkills(String knowledgeSkills) {
+            this.knowledgeSkills = knowledgeSkills;
+        }
 
-    public String getMinorCourses() {
-        return minorCourses;
-    }
+        public String getMajorGoal() {
+            return majorGoal;
+        }
 
-    public void setMinorCourses(String minorCourses) {
-        this.minorCourses = minorCourses;
-    }
+        public void setMajorGoal(String majorGoal) {
+            this.majorGoal = majorGoal;
+        }
 
-    public String getNecessaryCertificates() {
-        return necessaryCertificates;
-    }
+        public String getMajorId() {
+            return majorId;
+        }
 
-    public void setNecessaryCertificates(String necessaryCertificates) {
-        this.necessaryCertificates = necessaryCertificates;
-    }
+        public void setMajorId(String majorId) {
+            this.majorId = majorId;
+        }
 
-    public String getRequiredCourse() {
-        return requiredCourse;
-    }
+        public String getMajorName() {
+            return majorName;
+        }
 
-    public void setRequiredCourse(String requiredCourse) {
-        this.requiredCourse = requiredCourse;
-    }
+        public void setMajorName(String majorName) {
+            this.majorName = majorName;
+        }
 
-    public String getSalary() {
-        return salary;
-    }
+        public String getMajorProfile() {
+            return majorProfile;
+        }
 
-    public void setSalary(String salary) {
-        this.salary = salary;
+        public void setMajorProfile(String majorProfile) {
+            this.majorProfile = majorProfile;
+        }
+
+        public String getMinorCourses() {
+            return minorCourses;
+        }
+
+        public void setMinorCourses(String minorCourses) {
+            this.minorCourses = minorCourses;
+        }
+
+        public String getNecessaryCertificates() {
+            return necessaryCertificates;
+        }
+
+        public void setNecessaryCertificates(String necessaryCertificates) {
+            this.necessaryCertificates = necessaryCertificates;
+        }
+
+        public String getRequiredCourse() {
+            return requiredCourse;
+        }
+
+        public void setRequiredCourse(String requiredCourse) {
+            this.requiredCourse = requiredCourse;
+        }
+
+        public String getSalary() {
+            return salary;
+        }
+
+        public void setSalary(String salary) {
+            this.salary = salary;
+        }
+
+        public String getMajorCode() {
+            return majorCode;
+        }
+
+        public void setMajorCode(String majorCode) {
+            this.majorCode = majorCode;
+        }
     }
 }

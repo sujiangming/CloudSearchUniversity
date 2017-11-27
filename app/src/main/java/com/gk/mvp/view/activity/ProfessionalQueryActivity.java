@@ -1,6 +1,7 @@
 package com.gk.mvp.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -199,6 +200,11 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 toast("当前点击第" + i + "个专业：" + listQuery.get(i).getMajorName());
+                Intent intent = new Intent();
+                intent.setClass(ProfessionalQueryActivity.this, ProfessionalDetailActivity.class);
+                intent.putExtra("id", listQuery.get(i).getMajorId());
+                startActivity(intent);
+
             }
         });
     }

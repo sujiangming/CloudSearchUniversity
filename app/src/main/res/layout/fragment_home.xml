@@ -307,6 +307,7 @@
                     android:background="@android:color/white">
 
                     <com.gk.mvp.view.custom.RichText
+                        android:id="@+id/rtv_gaokao_tiku"
                         android:layout_width="match_parent"
                         android:layout_height="80dp"
                         android:background="@drawable/menu_btn_press"

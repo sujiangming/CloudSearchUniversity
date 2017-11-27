@@ -2,18 +2,18 @@ package com.gk.mvp.view.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
-import com.gk.beans.QuerySchoolBean;
 import com.gk.beans.SchoolRankBean;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
-import com.gk.tools.YxxUtils;
+import com.gk.tools.GlideImageLoader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -44,7 +44,8 @@ public class SchoolRankActivity extends SjmBaseActivity {
         closeActivity();
     }
 
-    private List<QuerySchoolBean> schoolBeanList = new ArrayList<>();
+    private List<SchoolRankBean> schoolBeanList = new ArrayList<>();
+    private GlideImageLoader glideImageLoader = new GlideImageLoader();
 
     @Override
     public int getResouceId() {
@@ -54,11 +55,10 @@ public class SchoolRankActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         initSmartRefreshLayout();
-        initListView();
 
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("page", 0);
-        jsonObject.put("schoolName", YxxUtils.URLEncode("清华大学"));
+        jsonObject.put("schoolName", "");
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
@@ -69,45 +69,29 @@ public class SchoolRankActivity extends SjmBaseActivity {
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
-        List<SchoolRankBean> list = JSON.parseArray(commonBean.getData().toString(), SchoolRankBean.class);
+        schoolBeanList = JSON.parseArray(commonBean.getData().toString(), SchoolRankBean.class);
+        initListView();
     }
 
     private void initListView() {
-        for (int i = 0; i < 20; ++i) {
-            QuerySchoolBean querySchoolBean = new QuerySchoolBean();
-            querySchoolBean.setSchoolAddress("北京" + i);
-            querySchoolBean.setSchoolIcon(R.drawable.qinghuadaxue3x);
-            querySchoolBean.setSchoolLevel("本科" + i);
-            querySchoolBean.setSchoolName("清华大学" + i);
-            querySchoolBean.setSchoolType("综合");
-            String[] schoolMarks = new String[3];
-            for (int j = 0; j < 3; ++j) {
-                if (j == 0) {
-                    schoolMarks[j] = "985";
-                } else if (j == 1) {
-                    schoolMarks[j] = "211";
-                } else {
-                    schoolMarks[j] = "双一流";
-                }
-            }
-            querySchoolBean.setSchoolMark(schoolMarks);
-            schoolBeanList.add(querySchoolBean);
-        }
-        lvQuerySchool.setAdapter(new CommonAdapter<QuerySchoolBean>(this, R.layout.school_rank_list_item, schoolBeanList) {
+        lvQuerySchool.setAdapter(new CommonAdapter<SchoolRankBean>(this, R.layout.school_rank_list_item, schoolBeanList) {
             @Override
-            protected void convert(ViewHolder viewHolder, QuerySchoolBean item, int position) {
-                String[] marks = item.getSchoolMark();
+            protected void convert(ViewHolder viewHolder, SchoolRankBean item, int position) {
+                String isDoubleTop = item.getIsDoubleTop();
+                String isNef = item.getIsNef();
+                String isToo = item.getIsToo();
                 viewHolder.getView(R.id.tv_school_mark_0).setVisibility(View.VISIBLE);
                 viewHolder.getView(R.id.tv_school_mark_1).setVisibility(View.VISIBLE);
                 viewHolder.getView(R.id.tv_school_mark_2).setVisibility(View.VISIBLE);
-                viewHolder.setText(R.id.tv_school_mark_0, marks[0]);
-                viewHolder.setText(R.id.tv_school_mark_1, marks[1]);
-                viewHolder.setText(R.id.tv_school_mark_2, marks[2]);
-                viewHolder.setImageResource(R.id.iv_query_item, item.getSchoolIcon());
+                viewHolder.setText(R.id.tv_school_mark_0, "1".equals(isNef) ? "985" : "非985");
+                viewHolder.setText(R.id.tv_school_mark_1, "1".equals(isToo) ? "211" : "非211");
+                viewHolder.setText(R.id.tv_school_mark_2, isDoubleTop.equals("1") ? "双一流" : "非双一流");
+                ImageView imageView = viewHolder.getView(R.id.iv_query_item);
+                glideImageLoader.displayImage(SchoolRankActivity.this, item.getSchoolLogo(), imageView);
                 viewHolder.setText(R.id.tv_school_name, item.getSchoolName());
-                viewHolder.setText(R.id.tv_school_type, item.getSchoolType());
-                viewHolder.setText(R.id.tv_school_level, item.getSchoolLevel());
-                viewHolder.setText(R.id.tv_school_address, item.getSchoolAddress());
+                viewHolder.setText(R.id.tv_school_type, "1".equals(item.getSchoolType()) ? "本科" : "专科");
+                viewHolder.setText(R.id.tv_school_level, "1".equals(item.getSchoolCategory()) ? "综合类" : "教育类");
+                viewHolder.setText(R.id.tv_school_address, item.getSchoolArea());
             }
         });
     }

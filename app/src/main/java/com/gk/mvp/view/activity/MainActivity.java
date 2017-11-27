@@ -84,6 +84,10 @@ public class MainActivity extends SjmBaseActivity {
         }
     }
 
+    public LinearLayout getLlLesson(){
+        return llLesson;
+    }
+
     private FragmentManager fragmentManager;
     private LectureFragment lectureFragment = null;
     private HomeFragment homeFragment = null;
@@ -249,13 +253,12 @@ public class MainActivity extends SjmBaseActivity {
         }
     }
 
-    private void changeNavStyle(View view) {
+    public void changeNavStyle(View view) {
         String tag = (String) view.getTag();
         index = Integer.parseInt(tag);
         changeFragment(index);
         changeImageViewRes(index);
     }
-
 
     private void changeImageViewRes(int index) {
         imageViews[index].setImageResource(imageViewChangeRes[index]);

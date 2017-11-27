@@ -157,7 +157,7 @@ public interface IService {
      */
     @FormUrlEncoded
     @POST("app/api/major/getMajorInfoList")
-    Call<CommonBean> getMajorInfoList(@Field("data") String data);
+    Call<ResponseBody> getMajorInfoList(@Field("data") String data);
 
     /**
      * 专业查询接口
@@ -188,7 +188,7 @@ public interface IService {
      */
     @FormUrlEncoded
     @POST("app/api/university/getUniversityList")
-    Call<CommonBean> getUniversityList(@Field("data") String data);
+    Call<ResponseBody> getUniversityList(@Field("data") String data);
 
     /**
      * 大学排名查询接口

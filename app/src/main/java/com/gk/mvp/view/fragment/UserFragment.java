@@ -5,11 +5,13 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.gk.R;
+import com.gk.beans.LoginBean;
 import com.gk.mvp.view.activity.HelpCenterActivity;
 import com.gk.mvp.view.activity.PersonInfoActivity;
 import com.gk.mvp.view.activity.SetActivity;
 import com.gk.mvp.view.activity.WishReportActivity;
 import com.gk.mvp.view.custom.CircleImageView;
+import com.gk.tools.GlideImageLoader;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -37,9 +39,11 @@ public class UserFragment extends SjmBaseFragment {
         return R.layout.fragment_user;
     }
 
+    private GlideImageLoader glideImageLoader = new GlideImageLoader();
+
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
-
+        glideImageLoader.displayImage(getContext(), LoginBean.getInstance().getHeadImg(), ivUserHead);
     }
 
     @OnClick({R.id.rl_info, R.id.ll_wish_report, R.id.ll_vip_choose, R.id.ll_zj, R.id.ll_help_center, R.id.ll_contact_kf, R.id.ll_set})

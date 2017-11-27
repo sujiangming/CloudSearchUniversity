@@ -7,6 +7,9 @@ import com.gk.mvp.model.ModelManager;
 import com.gk.mvp.model.inter.IModel;
 import com.gk.mvp.view.IView;
 
+import java.io.IOException;
+
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -94,7 +97,7 @@ public class PresenterManager {
     }
 
     public PresenterManager request() {
-        ModelManager.getInstance(mCall).getServerData(new Callback<CommonBean>() {
+        ModelManager.getInstance(mCall, null).getServerData(new Callback<CommonBean>() {
             @Override
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                 CommonBean commonBean = response.body();
@@ -119,7 +122,7 @@ public class PresenterManager {
      */
     public PresenterManager request(int flag) {
         final int invokeFlag = flag;
-        ModelManager.getInstance(mCall).getServerData(new Callback<CommonBean>() {
+        ModelManager.getInstance(mCall, null).getServerData(new Callback<CommonBean>() {
             @Override
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                 CommonBean commonBean = response.body();
@@ -163,6 +166,38 @@ public class PresenterManager {
             mIView.fillWithData(commonBean, mOrder);
         } else {
             mIView.fillWithNoData(commonBean.getMessage(), mOrder);
+        }
+    }
+
+    public PresenterManager requestForResponseBody(int flag) {
+        final int invokeFlag = flag;
+        ModelManager.getInstance(null, mCall).getServerDataForResponseBody(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    ResponseBody responseBody = response.body();
+                    renderForResponseBody(responseBody, invokeFlag);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                mIView.fillWithNoData(t.getMessage(), invokeFlag);
+            }
+        });
+        return mInstance;
+    }
+
+    private void renderForResponseBody(ResponseBody responseBody, int flag) {
+        if (responseBody == null) {
+            mIView.fillWithNoData(errorInfo, flag);
+            return;
+        }
+        try {
+            String data = responseBody.string();
+            mIView.fillWithData(data, flag);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }

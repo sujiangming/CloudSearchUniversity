@@ -12,6 +12,7 @@ import com.gk.R;
 import com.gk.beans.MajorBean;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 二级菜单适配器
@@ -86,7 +87,18 @@ public class ProfessionalChildAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-        holder.mChildGroupTV.setText(mDatas.get(parentPosition).getName());
+        MajorBean.DataBean.NodesBeanXX.NodesBeanX nodesBeanX = mDatas.get(parentPosition);
+        if (nodesBeanX == null) {
+            return view;
+        }
+        holder.mChildGroupTV.setText(nodesBeanX.getName());
+        List<MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean> nodesBeanList = nodesBeanX.getNodes();
+        if (nodesBeanList == null || nodesBeanList.size() == 0) {
+            holder.mTvScore.setText("0");
+        } else {
+            holder.mTvScore.setText(String.valueOf(nodesBeanList.size()));
+        }
+
         return view;
     }
 

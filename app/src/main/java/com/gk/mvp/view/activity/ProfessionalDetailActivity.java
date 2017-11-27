@@ -4,14 +4,9 @@ import android.os.Bundle;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
-import com.gk.beans.CommonBean;
 import com.gk.beans.MajorInfoBean;
-import com.gk.http.IService;
-import com.gk.http.RetrofitUtil;
-import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.presenter.MajorDeatilPresenter;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 
@@ -103,32 +98,28 @@ public class ProfessionalDetailActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "专业详情", 0);
         pid = getIntent().getStringExtra("id");
-
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("majorTypeId", pid);
-        PresenterManager.getInstance()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class)
-                        .getMajorInfoList(jsonObject.toJSONString()))
-                .request();
+        MajorDeatilPresenter majorDeatilPresenter = new MajorDeatilPresenter(this);
+        majorDeatilPresenter.httpRequest(pid);
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
-        CommonBean commonBean = (CommonBean) t;
-        List<MajorInfoBean> list = JSON.parseArray(commonBean.getData().toString(), MajorInfoBean.class);
+        List<MajorInfoBean.DataBean> list = (List<MajorInfoBean.DataBean>) t;
         if (list == null || list.size() == 0) {
+            hideProgress();
             return;
         }
         initData(list.get(0));
+        hideProgress();
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-
+        toast((String) t);
+        hideProgress();
     }
 
-    private void initData(MajorInfoBean bean) {
+    private void initData(MajorInfoBean.DataBean bean) {
         tvMajorName.setText(bean.getMajorName());
         tvBriefContent.setText(bean.getMajorProfile());
         tvMbContent.setText(bean.getMajorGoal());
@@ -139,7 +130,8 @@ public class ProfessionalDetailActivity extends SjmBaseActivity {
         tvByContent.setText(bean.getGraduationTo());
         tvXzContent.setText(bean.getSalary());
         tvFzContent.setText(bean.getDevelopmentProspect());
-        //tvUnitContent.setText(bean);
+        tvMajorCode.setText("专业代码：" + bean.getMajorCode());
+        tvUnitContent.setText(bean.getJobProspects());
         tvAbilityContent.setText(bean.getCapacityRequirements());
 
     }

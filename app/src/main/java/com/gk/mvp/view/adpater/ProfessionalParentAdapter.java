@@ -138,6 +138,9 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
         final ArrayList<MajorBean.DataBean.NodesBeanXX.NodesBeanX> childData = new ArrayList<MajorBean.DataBean.NodesBeanXX.NodesBeanX>();
         final MajorBean.DataBean.NodesBeanXX.NodesBeanX secondNodesBeanX = getChild(parentPosition, childPosition);
         childData.add(secondNodesBeanX);
+        if (childData.size() == 0) {
+            return childListView;
+        }
         ProfessionalChildAdapter adapter = new ProfessionalChildAdapter(mContext, childData, parentPosition);
         childListView.setAdapter(adapter);
 
@@ -150,11 +153,13 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
             public boolean onChildClick(ExpandableListView arg0, View arg1,
                                         int groupIndex, int childIndex, long arg4) {
                 if (mListener != null) {
-                    mListener.onclick(parentPosition, childPosition, childIndex);
+                    //mListener.onclick(parentPosition, childPosition, childIndex);
                     //点击三级菜单，跳转到编辑菜单界面
-                    ToastUtils.toast(mContext, "你点的位置是:  " + "parentPosition>>" + parentPosition +
-                            "childPosition>>" + childPosition + "childIndex>>" + childIndex);
-                    List<MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean> beans = childData.get(parentPosition).getNodes();
+                    List<MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean> beans = childData.get(childPosition).getNodes();
+                    if (beans == null) {
+                        ToastUtils.toast(mContext, "没有数据");
+                        return false;
+                    }
                     if (beans != null && beans.size() > 0) {
                         MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean nodesBean = beans.get(childIndex);
                         Intent intent = new Intent();
@@ -173,10 +178,16 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
         childListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
-                Log.e("xxx", groupPosition + "onGroupExpand>>");
+                int mHeight = 0;
+                List<MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean> nodesBeanXES = secondNodesBeanX.getNodes();
+                if (nodesBeanXES == null || nodesBeanXES.size() == 0) {
+                    mHeight = 1;
+                } else {
+                    mHeight = nodesBeanXES.size() + 1;
+                }
                 AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT,
-                        (secondNodesBeanX.getNodes().size() + 1) * (int) mContext
+                        (mHeight) * (int) mContext
                                 .getResources().getDimension(R.dimen.space_50_dp));
                 childListView.setLayoutParams(lp);
             }
@@ -201,8 +212,12 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
          */
         childListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
-            public boolean onGroupClick(ExpandableListView parent, View v, int Position, long id) {
+            public boolean onGroupClick(ExpandableListView parent, View v, int position, long id) {
                 Log.e("Xxx", "恭喜你,点击了" + parentPosition + "childpos>>>" + childPosition);
+                List<MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean> nodesBeanXList = secondNodesBeanX.getNodes();
+                if(nodesBeanXList == null || nodesBeanXList.size() == 0){
+                    ToastUtils.toast(mContext, "该专业类型没有更多子类型专业了");
+                }
                 return false;
             }
         });
