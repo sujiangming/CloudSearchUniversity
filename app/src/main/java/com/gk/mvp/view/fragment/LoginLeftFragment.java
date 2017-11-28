@@ -139,23 +139,32 @@ public class LoginLeftFragment extends SjmBaseFragment {
                         .setmContext(getContext())
                         .setmIView(this)
                         .setCall(RetrofitUtil.getInstance().createReq(IService.class).verifyLogin(jsonObject.toJSONString()))
-                        .request(YXXConstants.INVOKE_API_SECOND_TIME);
+                        .requestForResponseBody(YXXConstants.INVOKE_API_SECOND_TIME);
                 break;
         }
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
-        CommonBean commonBean = (CommonBean) t;
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                CommonBean commonBean = (CommonBean) t;
                 verifyCodeBean = JSON.parseObject(commonBean.getData().toString(), VerifyCodeBean.class);
                 ToastUtils.toast(getContext(), "获取验证码成功~" + verifyCodeBean.getVerifyCode());
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
-                LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
-                loginBean.setmContext(getContext()).saveLoginBean(loginBean);
-                Log.e(LoginRightFragment.class.getName(), JSON.toJSONString(loginBean));
+                String data = (String) t;
+                JSONObject jsonObject = JSON.parseObject(data);
+                int status = jsonObject.getIntValue("status");
+                String msg = jsonObject.getString("message");
+                if (status == 0) {
+                    toast(msg);
+                    return;
+                }
+                String user = jsonObject.get("data").toString();
+                LoginBean loginBean = JSON.parseObject(user, LoginBean.class);
+                LoginBean.getInstance().saveLoginBean(loginBean);
+                Log.e(LoginLeftFragment.class.getName(), JSON.toJSONString(LoginBean.getInstance()));
                 if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
                     openNewActivity(MainActivity.class);
                 }

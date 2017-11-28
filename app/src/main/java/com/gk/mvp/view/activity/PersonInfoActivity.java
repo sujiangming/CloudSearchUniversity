@@ -307,13 +307,11 @@ public class PersonInfoActivity extends SjmBaseActivity {
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 LoginBean.getInstance()
-                        .setmContext(this)
                         .setHeadImg(loginBean.getHeadImg())
                         .save();
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 LoginBean.getInstance()
-                        .setmContext(this)
                         .setSubjectType(loginBean.getSubjectType())
                         .save();
                 mDialog.dismiss();

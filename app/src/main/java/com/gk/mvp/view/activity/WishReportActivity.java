@@ -47,6 +47,7 @@ public class WishReportActivity extends SjmBaseActivity {
             case R.id.ll_about:
                 break;
             case R.id.tv_upgrate_vip:
+                openNewActivity(VIPActivity.class);
                 break;
         }
     }

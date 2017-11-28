@@ -73,7 +73,7 @@ public class SplashActivity extends SjmBaseActivity {
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
         List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean.getData().toString(), AdsBean.MDataBean.class);
-        AdsBean.getInstance().setmContext(getApplicationContext()).saveAdsBean(mDataBeans);
+        AdsBean.getInstance().saveAdsBean(mDataBeans);
         goMainActivity();
     }
 

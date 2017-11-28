@@ -118,7 +118,7 @@ public class AccountSaveActivity extends SjmBaseActivity {
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 LoginBean.getInstance().setPassword(newPwd1);
-                LoginBean.getInstance().setmContext(this).save();
+                LoginBean.getInstance().save();
                 Log.e(AccountSaveActivity.class.getName(), JSON.toJSONString(LoginBean.getInstance()));
                 toast(commonBean.getMessage());
                 closeActivity(this);

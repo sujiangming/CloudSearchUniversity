@@ -7,13 +7,10 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -143,9 +140,16 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
     protected void onCreateByMe(Bundle savedInstanceState) {
         liveBean = (LiveBean) getIntent().getSerializableExtra("videoId");
         initKeyBoardParameter();
+        initData();
         initVideo();
         addFocusInter();
         getCommentInter();
+    }
+
+    private void initData() {
+        tvVideoCount.setText("播放次数：" + liveBean.getAttentionNum());
+        tvZan.setText("点赞:  " + liveBean.getZanNum());
+        tvVideoName.setText(liveBean.getVideoName());
     }
 
     /**
@@ -245,6 +249,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 commentVideoBeans = JSON.parseArray(commonBean.getData().toString(), CommentVideoBean.class);
+                tvComment.setText("评论:  " + commentVideoBeans.size());
                 lvComment.setAdapter(new CommonAdapter<CommentVideoBean>(this, R.layout.video_comment, commentVideoBeans) {
                     @Override
                     protected void convert(ViewHolder viewHolder, CommentVideoBean item, int position) {
@@ -280,7 +285,8 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
     }
 
     private void initVideo() {
-        String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
+        //String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
+        String url = liveBean.getVideoUrl();
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
@@ -293,7 +299,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         new GSYVideoOptionBuilder()
                 .setThumbImageView(imageView)
                 .setUrl(url)
-                .setVideoTitle(liveBean.getVideoName() == null ? "视频名称" : liveBean.getVideoName())
+                .setVideoTitle(liveBean.getVideoName())
                 .setCacheWithPlay(true)
                 .setIsTouchWiget(true)
                 .setRotateViewAuto(false)
@@ -347,28 +353,6 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                 closeActivity(LiveVideoDetailActivity.this);
             }
         });
-    }
-
-    public void setListViewHeightBasedOnChildren(ListView listView) {
-        // 获取ListView对应的Adapter
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0, len = listAdapter.getCount(); i < len; i++) {
-            // listAdapter.getCount()返回数据项的数目
-            View listItem = listAdapter.getView(i, null, listView);
-            // 计算子项View 的宽高
-            listItem.measure(0, 0);
-            // 统计所有子项的总高度
-            totalHeight += listItem.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
     }
 
     @Override

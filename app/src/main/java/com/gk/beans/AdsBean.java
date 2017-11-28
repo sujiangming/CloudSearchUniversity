@@ -1,9 +1,9 @@
 package com.gk.beans;
 
-import android.content.Context;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.tools.JdryPersistence;
 
@@ -19,7 +19,6 @@ public class AdsBean implements Serializable {
 
     private static final long serialVersionUID = 2L;
     private volatile static AdsBean instance = null;//volatile关键字来保证其线程间的可见性
-    private Context mContext;
 
     private AdsBean() {
     }
@@ -35,14 +34,9 @@ public class AdsBean implements Serializable {
         return instance;
     }
 
-    public AdsBean setmContext(Context context) {
-        this.mContext = context;
-        return instance;
-    }
-
     public void load() {  // 加载本地数据
         try {
-            String objectStr = JdryPersistence.getObject(mContext, YXXConstants.ADS_INFO_SERIALIZE_KEY);
+            String objectStr = JdryPersistence.getObject(YXXApplication.getInstance().getApplicationContext(), YXXConstants.ADS_INFO_SERIALIZE_KEY);
             if (null == objectStr || "".equals(objectStr)) {
                 return;
             }
@@ -61,7 +55,7 @@ public class AdsBean implements Serializable {
 
     public void save() {
         try {
-            JdryPersistence.saveObject(mContext, JSON.toJSONString(this.getMData()), YXXConstants.ADS_INFO_SERIALIZE_KEY);
+            JdryPersistence.saveObject(YXXApplication.getInstance().getApplicationContext(), JSON.toJSONString(this.getMData()), YXXConstants.ADS_INFO_SERIALIZE_KEY);
         } catch (Exception e) {
             e.printStackTrace();
         }

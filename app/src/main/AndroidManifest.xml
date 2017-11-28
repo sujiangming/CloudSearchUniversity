@@ -139,5 +139,9 @@
         <activity
             android:name=".mvp.view.activity.MaterialListActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.MultiItemRvActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

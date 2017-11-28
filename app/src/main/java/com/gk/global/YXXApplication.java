@@ -55,7 +55,6 @@ public class YXXApplication extends Application {
      * 初始化LoginBean
      */
     private void initLoginBean() {
-        LoginBean.getInstance().setmContext(getApplicationContext());
         LoginBean.getInstance().load();
     }
 
@@ -63,7 +62,6 @@ public class YXXApplication extends Application {
      * 初始化AdsBean
      */
     private void initAdsBean() {
-        AdsBean.getInstance().setmContext(getApplicationContext());
         AdsBean.getInstance().load();
     }
 

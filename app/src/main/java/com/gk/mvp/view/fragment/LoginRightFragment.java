@@ -133,9 +133,9 @@ public class LoginRightFragment extends SjmBaseFragment {
 
     @Override
     public <T> void fillWithData(T t, int order) {
-        CommonBean commonBean = (CommonBean) t;
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                CommonBean commonBean = (CommonBean) t;
                 SaltBean saltBean = JSON.parseObject(commonBean.getData().toString(), SaltBean.class);
                 String pwd = userName + saltBean.getSalt() + password;// + password;
                 JSONObject jsonObject = new JSONObject();
@@ -149,9 +149,18 @@ public class LoginRightFragment extends SjmBaseFragment {
                         .request(YXXConstants.INVOKE_API_SECOND_TIME);
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
-                LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
-                loginBean.setmContext(getContext()).saveLoginBean(loginBean);
-                Log.e(LoginRightFragment.class.getName(),JSON.toJSONString(loginBean));
+                String data = (String) t;
+                JSONObject json = JSON.parseObject(data);
+                int status = json.getIntValue("status");
+                String msg = json.getString("message");
+                if (status == 0) {
+                    toast(msg);
+                    return;
+                }
+                String user = json.get("data").toString();
+                LoginBean loginBean = JSON.parseObject(user, LoginBean.class);
+                loginBean.setPassword(password);
+                LoginBean.getInstance().saveLoginBean(loginBean);
                 if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
                     openNewActivity(MainActivity.class);
                 }

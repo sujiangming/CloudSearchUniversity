@@ -93,19 +93,19 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
         String result = etUserPwd.getText().toString();
         switch (requestCode) {
             case 2:
-                LoginBean.getInstance().setmContext(this).setCname(result).save();
+                LoginBean.getInstance().setCname(result).save();
                 break;
             case 3:
-                LoginBean.getInstance().setmContext(this).setAddress(result).save();
+                LoginBean.getInstance().setAddress(result).save();
                 break;
             case 4:
-                LoginBean.getInstance().setmContext(this).setScore(result).save();
+                LoginBean.getInstance().setScore(result).save();
                 break;
             case 5:
-                LoginBean.getInstance().setmContext(this).setRanking(result).save();
+                LoginBean.getInstance().setRanking(result).save();
                 break;
             case 7:
-                LoginBean.getInstance().setmContext(this).setNickName(result).save();
+                LoginBean.getInstance().setNickName(result).save();
                 break;
         }
         Intent intent = new Intent();

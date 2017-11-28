@@ -30,7 +30,7 @@ public interface IService {
 
     @FormUrlEncoded
     @POST("app/login/verifyLogin")
-    Call<CommonBean> verifyLogin(@Field("data") String jsonParameter);
+    Call<ResponseBody> verifyLogin(@Field("data") String jsonParameter);
 
     @FormUrlEncoded
     @POST("app/login/getVerifyCode")

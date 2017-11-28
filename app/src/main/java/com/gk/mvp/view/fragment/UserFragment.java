@@ -7,6 +7,7 @@ import android.widget.TextView;
 import com.gk.R;
 import com.gk.beans.LoginBean;
 import com.gk.mvp.view.activity.HelpCenterActivity;
+import com.gk.mvp.view.activity.MultiItemRvActivity;
 import com.gk.mvp.view.activity.PersonInfoActivity;
 import com.gk.mvp.view.activity.SetActivity;
 import com.gk.mvp.view.activity.WishReportActivity;
@@ -63,6 +64,7 @@ public class UserFragment extends SjmBaseFragment {
                 openNewActivity(HelpCenterActivity.class);
                 break;
             case R.id.ll_contact_kf:
+                openNewActivity(MultiItemRvActivity.class);
                 break;
             case R.id.ll_set:
                 openNewActivity(SetActivity.class);
