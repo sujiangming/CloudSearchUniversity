@@ -84,7 +84,7 @@ public class MainActivity extends SjmBaseActivity {
         }
     }
 
-    public LinearLayout getLlLesson(){
+    public LinearLayout getLlLesson() {
         return llLesson;
     }
 

@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
     <LinearLayout
+        android:id="@+id/ll_top_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_44_dp"
         android:background="@color/colorNavigation"
@@ -28,6 +28,8 @@
             android:layout_height="@dimen/space_30_dp"
             android:layout_weight="1"
             android:background="@color/colorNavigation"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             app:iconifiedByDefault="false"
             app:queryBackground="@android:color/white"
             app:queryHint="请输入关键字" />
@@ -35,146 +37,89 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_choose"
         android:layout_width="match_parent"
         android:layout_height="53dp"
+        android:layout_below="@id/ll_top_bar"
         android:background="#F0EFF3"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/spinner1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@android:color/white"
+            android:drawableRight="@drawable/arrow_down3x"
+            android:ellipsize="end"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/space_12_dp">
+            android:maxLines="1"
+            android:paddingRight="@dimen/space_12_dp"
+            android:text="所在地"
+            android:textColor="@color/color353535" />
 
-            <Spinner
-                android:id="@+id/spinner1"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:dropDownVerticalOffset="44dp"
-                android:dropDownWidth="100dp"
-                android:gravity="center_vertical|left"
-                android:paddingLeft="@dimen/space_12_dp"
-                android:popupBackground="#ffffff"
-                android:spinnerMode="dropdown" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginBottom="1dp"
-                android:src="@drawable/arrow_down3x" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/spinner2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/space_2_dp"
+            android:layout_marginRight="@dimen/space_2_dp"
             android:layout_weight="1"
             android:background="@android:color/white"
+            android:drawableRight="@drawable/arrow_down3x"
+            android:ellipsize="end"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/space_12_dp">
+            android:maxLines="1"
+            android:paddingRight="@dimen/space_12_dp"
+            android:text="高校类型"
+            android:textColor="@color/color353535" />
 
-            <Spinner
-                android:id="@+id/spinner2"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:dropDownVerticalOffset="44dp"
-                android:dropDownWidth="100dp"
-                android:gravity="center"
-                android:paddingLeft="@dimen/space_12_dp"
-                android:popupBackground="#ffffff"
-                android:spinnerMode="dropdown" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginBottom="1dp"
-                android:src="@drawable/arrow_down3x" />
-
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/spinner3"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/space_2_dp"
+            android:layout_marginRight="@dimen/space_2_dp"
             android:layout_weight="1"
             android:background="@android:color/white"
+            android:drawableRight="@drawable/arrow_down3x"
+            android:ellipsize="end"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/space_12_dp">
+            android:maxLines="1"
+            android:paddingRight="@dimen/space_12_dp"
+            android:text="重点院校"
+            android:textColor="@color/color353535" />
 
-            <Spinner
-                android:id="@+id/spinner3"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:dropDownVerticalOffset="44dp"
-                android:dropDownWidth="100dp"
-                android:gravity="center"
-                android:paddingLeft="@dimen/space_12_dp"
-                android:popupBackground="#ffffff"
-                android:spinnerMode="dropdown" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginBottom="1dp"
-                android:src="@drawable/arrow_down3x" />
-        </LinearLayout>
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/spinner4"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/space_2_dp"
             android:layout_weight="1"
             android:background="@android:color/white"
+            android:drawableRight="@drawable/arrow_down3x"
+            android:ellipsize="end"
             android:gravity="center"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/space_12_dp">
-
-            <Spinner
-                android:id="@+id/spinner4"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@android:color/transparent"
-                android:dropDownVerticalOffset="44dp"
-                android:dropDownWidth="100dp"
-                android:gravity="center"
-                android:paddingLeft="@dimen/space_12_dp"
-                android:popupBackground="#ffffff"
-                android:spinnerMode="dropdown" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="right|center_vertical"
-                android:layout_marginBottom="1dp"
-                android:src="@drawable/arrow_down3x" />
-        </LinearLayout>
+            android:maxLines="1"
+            android:paddingRight="@dimen/space_12_dp"
+            android:text="批次"
+            android:textColor="@color/color353535" />
 
     </LinearLayout>
+
+    <TextView
+        android:layout_below="@id/ll_choose"
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:background="@color/color353535" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
         android:id="@+id/smart_rf_query_school"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_line"
         android:background="@color/colorF0EFF3"
-        android:paddingTop="@dimen/space_10_dp">
+        android:paddingTop="@dimen/space_12_dp">
 
         <ListView
             android:id="@+id/lv_query_school"
@@ -185,4 +130,59 @@
 
         </ListView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_choose"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="98dp"
+        android:background="@color/color80000000"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <GridView
+            android:id="@+id/gv_channel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F0EFF3"
+            android:numColumns="5"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:paddingTop="10dp"
+            android:scrollbars="vertical" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/gv_channel"
+            android:background="@color/colorF0EFF3"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/space_20_dp"
+            android:paddingTop="@dimen/space_20_dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/space_20_dp"
+                android:layout_marginLeft="@dimen/space_20_dp"
+                android:text="支持多选"
+                android:textColor="@color/color353535"
+                android:textSize="@dimen/font_12_sp" />
+
+            <Button
+                android:id="@+id/btn_choose"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_35_dp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/space_10_dp"
+                android:layout_marginRight="@dimen/space_12_dp"
+                android:background="@drawable/more_data_bg"
+                android:text="确定"
+                android:textColor="@android:color/white" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+</RelativeLayout>

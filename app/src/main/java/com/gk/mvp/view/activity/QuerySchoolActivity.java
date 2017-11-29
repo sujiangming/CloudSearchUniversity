@@ -1,31 +1,34 @@
 package com.gk.mvp.view.activity;
 
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Spinner;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.QuerySchoolBean;
-import com.gk.beans.SpinnerBean;
+import com.gk.beans.UniversityAreaEnum;
+import com.gk.beans.UniversityFeatureEnum;
+import com.gk.beans.UniversityLevelEnum;
+import com.gk.beans.UniversityTypeEnum;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.GridViewChooseAdapter;
 import com.gk.tools.GlideImageLoader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.scwang.smartrefresh.layout.api.RefreshLayout;
-import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
-import com.scwang.smartrefresh.layout.header.ClassicsHeader;
-import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
-import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
@@ -41,27 +44,115 @@ import butterknife.OnClick;
 
 public class QuerySchoolActivity extends SjmBaseActivity {
     @BindView(R.id.spinner1)
-    Spinner spinner1;
+    TextView spinner1;
     @BindView(R.id.spinner2)
-    Spinner spinner2;
+    TextView spinner2;
     @BindView(R.id.spinner3)
-    Spinner spinner3;
+    TextView spinner3;
     @BindView(R.id.spinner4)
-    Spinner spinner4;
+    TextView spinner4;
     @BindView(R.id.lv_query_school)
     ListView lvQuerySchool;
     @BindView(R.id.smart_rf_query_school)
     SmartRefreshLayout smartRfQuerySchool;
+    @BindView(R.id.back_image)
+    ImageView backImage;
+    @BindView(R.id.searchview)
+    SearchView searchview;
+    @BindView(R.id.gv_channel)
+    GridView gvChannel;
+    @BindView(R.id.btn_choose)
+    Button btnChoose;
+    @BindView(R.id.rl_choose)
+    RelativeLayout rlChoose;
 
-    @OnClick(R.id.back_image)
-    public void onClickView() {
-        closeActivity();
+    @OnClick({R.id.back_image, R.id.spinner1, R.id.spinner2, R.id.spinner3, R.id.spinner4, R.id.btn_choose})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.back_image:
+                closeActivity(this);
+                break;
+            case R.id.spinner1:
+//                if (rlChoose.getVisibility() == View.VISIBLE) {
+//                    return;
+//                }
+                rlChoose.setVisibility(View.VISIBLE);
+                gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityAreaEnum.getAreaList(), 1);
+                initGridViewAdapter();
+                type = 1;
+                break;
+            case R.id.spinner2:
+//                if (rlChoose.getVisibility() == View.VISIBLE) {
+//                    return;
+//                }
+                rlChoose.setVisibility(View.VISIBLE);
+                gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityTypeEnum.getUniversityList(), 2);
+                initGridViewAdapter();
+                type = 2;
+                break;
+            case R.id.spinner3:
+//                if (rlChoose.getVisibility() == View.VISIBLE) {
+//                    return;
+//                }
+                rlChoose.setVisibility(View.VISIBLE);
+                rlChoose.setVisibility(View.VISIBLE);
+                gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityFeatureEnum.getUniversityFeatureList(), 3);
+                initGridViewAdapter();
+                type = 3;
+                break;
+            case R.id.spinner4:
+//                if (rlChoose.getVisibility() == View.VISIBLE) {
+//                    return;
+//                }
+                rlChoose.setVisibility(View.VISIBLE);
+                gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityLevelEnum.getUniversityLevelList(), 4);
+                initGridViewAdapter();
+                type = 4;
+                break;
+            case R.id.btn_choose:
+                String str = "";
+                String strName = "";
+                rlChoose.setVisibility(View.GONE);
+                queryIndexList = gridViewChooseAdapter.getCheckedArray();
+                if (queryIndexList != null) {
+                    for (int i = 0; i < queryIndexList.size(); i++) {
+                        Log.e("queryIndex:", queryIndexList.get(i));
+                        gridViewChooseAdapter.getIsCheck().set(i, false);
+                        if (i == queryIndexList.size() - 1) {
+                            str += queryIndexList.get(i);
+                            strName += getEnumName(Integer.valueOf(queryIndexList.get(i)));
+                        } else {
+                            str += queryIndexList.get(i) + ",";
+                            strName += getEnumName(Integer.valueOf(queryIndexList.get(i))) + ",";
+                        }
+                    }
+                }
+                Log.e("str:", str);
+                if (!strName.equals("")) {
+                    setEnumName(strName);
+                }
+                if (type == 1) {
+                    invoke(str, "", "", "");
+                } else if (type == 2) {
+                    invoke("", str, "", "");
+                } else if (type == 3) {
+                    invoke("", "", str, "");
+                } else {
+                    invoke("", "", "", str);
+                }
+                break;
+        }
     }
 
-    private SpinnerBean spinnerBeanSelected = null;
-    private SpinnerBean[] spinnerBeans = null;
     private List<QuerySchoolBean.DataBean> schoolBeanList = new ArrayList<>();
     private GlideImageLoader glideImageLoader = new GlideImageLoader();
+    private JSONObject jsonObject = new JSONObject();
+    private int mPage = 0;
+    private boolean isLoadMore = false;
+    private GridViewChooseAdapter gridViewChooseAdapter;
+    private List<String> queryIndexList;
+    private int type = 1;
+
 
     @Override
     public int getResouceId() {
@@ -70,19 +161,104 @@ public class QuerySchoolActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        initSmartRefreshLayout();
-        setSpinnerByArea(spinner1, initSpinnerData(YXXConstants.PROVINCES));
-        setSpinnerByArea(spinner2, initSpinnerData(YXXConstants.FEATURES));
-        setSpinnerByArea(spinner3, initSpinnerData(YXXConstants.CLASSIFICATION));
-        setSpinnerByArea(spinner4, initSpinnerData(YXXConstants.LEVEL));
-        initListView();
+        initSmartRefreshLayout(smartRfQuerySchool, true);
+        invoke("", "", "", "");
+        showSearch();
+    }
 
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("page", 0);
-        jsonObject.put("schoolArea", "");//学校地区
-        jsonObject.put("schoolCategory", "");//学校类别
-        jsonObject.put("schoolType", "");//学校类型（1本科、2专业）
-        jsonObject.put("tese", "");//特色
+    private String getEnumName(int index) {
+        String name = "";
+        if (type == 1) {
+            name = UniversityAreaEnum.getName(index);
+        } else if (type == 2) {
+            name = UniversityTypeEnum.getName(index);
+        } else if (type == 3) {
+            name = UniversityFeatureEnum.getName(index);
+        } else {
+            name = UniversityLevelEnum.getName(index);
+        }
+        return name;
+    }
+
+    private void setEnumName(String name) {
+        if (type == 1) {
+            spinner1.setText(name);
+        } else if (type == 2) {
+            spinner2.setText(name);
+        } else if (type == 3) {
+            spinner3.setText(name);
+        } else {
+            spinner4.setText(name);
+        }
+    }
+
+    private int getSearchIndex(String name) {
+        int ret = 0;
+        if (type == 1) {
+            ret = UniversityAreaEnum.getIndex(name);
+        } else if (type == 2) {
+            ret = UniversityTypeEnum.getIndex(name);
+        } else if (type == 3) {
+            ret = UniversityFeatureEnum.getIndex(name);
+        } else {
+            ret = UniversityLevelEnum.getIndex(name);
+        }
+        return ret;
+    }
+
+    private void initGridViewAdapter() {
+        gvChannel.setAdapter(gridViewChooseAdapter);
+        gvChannel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                gridViewChooseAdapter.choiceState(i, view);
+            }
+        });
+    }
+
+    private void showSearch() {
+        searchview.setSubmitButtonEnabled(true);
+        searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            private String TAG = getClass().getSimpleName();
+
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Log.d(TAG, "onQueryTextSubmit = " + s);
+                int index = getSearchIndex(s);
+                if (searchview != null) {
+                    // 得到输入管理对象
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    if (imm != null) {
+                        // 这将让键盘在所有的情况下都被隐藏，但是一般我们在点击搜索按钮后，输入法都会乖乖的自动隐藏的。
+                        imm.hideSoftInputFromWindow(searchview.getWindowToken(), 0); // 输入法如果是显示状态，那么就隐藏输入法
+                    }
+                }
+                searchview.clearFocus(); // 不获取焦点
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                //initQueryData(s);
+                return true;
+            }
+        });
+        searchview.setOnCloseListener(new SearchView.OnCloseListener() {
+            @Override
+            public boolean onClose() {
+                //nodesBeans.clear();
+                //adapter.notifyDataSetChanged();
+                return true;
+            }
+        });
+    }
+
+    private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese) {
+        jsonObject.put("page", mPage);
+        jsonObject.put("schoolArea", schoolArea);//学校地区
+        jsonObject.put("schoolCategory", schoolCategory);//学校类别
+        jsonObject.put("schoolType", schoolType);//学校类型（1本科、2专业）
+        jsonObject.put("tese", tese);//特色
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
@@ -91,23 +267,57 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     }
 
     @Override
+    public void refresh() {
+        mPage = 0;
+        isLoadMore = false;
+        invoke("", "", "", "");
+
+    }
+
+    @Override
+    public void loadMore() {
+        mPage++;
+        isLoadMore = true;
+        invoke("", "", "", "");
+    }
+
+    @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         String data = (String) t;
         if (data == null || "".equals(data)) {
+            toast("没有相关数据");
             return;
         }
         QuerySchoolBean querySchoolBean = JSON.parseObject(data, QuerySchoolBean.class);
-        if (querySchoolBean == null) {
+        if (mPage == 0 && !isLoadMore) {
+            schoolBeanList = querySchoolBean.getData();
+            initListView();
+            stopRefreshLayout();
             return;
         }
-        schoolBeanList = querySchoolBean.getData();
-        initListView();
+        if (isLoadMore) {
+            stopRefreshLayoutLoadMore();
+            List<QuerySchoolBean.DataBean> dataBeans = querySchoolBean.getData();
+            if (data == null) {
+                toast("没有更多数据了");
+                return;
+            }
+            schoolBeanList.addAll(dataBeans);
+            initListView();
+            lvQuerySchool.smoothScrollByOffset(lvQuerySchool.getHeight());
+        }
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-
+        toast((String) t);
+        hideProgress();
+        if (isLoadMore) {
+            stopRefreshLayoutLoadMore();
+        } else {
+            stopRefreshLayout();
+        }
     }
 
     private void initListView() {
@@ -133,65 +343,5 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         });
     }
 
-    private void initSmartRefreshLayout() {
-        smartRfQuerySchool.setRefreshHeader(new ClassicsHeader(this));
-        smartRfQuerySchool.setRefreshFooter(new ClassicsFooter(this));
-        smartRfQuerySchool.setEnableLoadmore(true);
-        smartRfQuerySchool.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                refreshlayout.finishRefresh();
-            }
-        });
-        smartRfQuerySchool.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                refreshlayout.finishLoadmore();
-            }
-        });
-    }
 
-    private SpinnerBean[] initSpinnerData(String[] strings) {
-        int len = strings.length;
-        SpinnerBean[] spinnerBeenArray = new SpinnerBean[len];
-        for (int i = 0; i < len; ++i) {
-            SpinnerBean spinnerBean = new SpinnerBean();
-            spinnerBean.index = i;
-            spinnerBean.deptId = "addressID" + i;
-            spinnerBean.deptName = strings[i];
-            spinnerBeenArray[i] = spinnerBean;
-        }
-        return spinnerBeenArray;
-    }
-
-    private void setSpinnerByArea(final Spinner spinner, final SpinnerBean[] spinnerBeanList) {
-        ArrayAdapter<SpinnerBean> mArrayAdapter = new ArrayAdapter<SpinnerBean>(this, R.layout.trans_activity_spinner, spinnerBeanList) {
-            @Override
-            public View getDropDownView(int position, View convertView, ViewGroup parent) {
-                if (convertView == null) {
-                    convertView = getLayoutInflater().inflate(R.layout.trans_activity_spinner_item, parent, false);
-                }
-                TextView spinnerText = (TextView) convertView.findViewById(R.id.trans_spinner_textView);
-                spinnerText.setText(getItem(position).deptName);
-
-                return convertView;
-            }
-        };
-        spinner.setAdapter(mArrayAdapter);
-        spinner.setSelection(0);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                TextView textView = (TextView) view;
-                textView.setTextColor(0xFF302f30);
-                spinnerBeanSelected = spinnerBeanList[position];
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-    }
 }

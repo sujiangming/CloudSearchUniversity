@@ -37,4 +37,5 @@
     <color name="colorf2f2f2">#f2f2f2</color>
     <color name="colorF0F0F0">#F0F0F0</color>
     <color name="colorf8f8ff">#f8f8ff</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>
