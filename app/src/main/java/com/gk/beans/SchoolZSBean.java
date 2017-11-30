@@ -5,27 +5,26 @@ package com.gk.beans;
  */
 
 public class SchoolZSBean {
-    private int bKeNum;
-    private int zKeNum;
+    /**
+     * advanceBatch : 100
+     * area : 贵州
+     * id : 2c948a825fc4e360015fc4e640ba0001
+     * schoolLogo : http://101.132.143.37/file/university/007BF78D89C14E619A164838B0E485A4.png
+     * specializedSubject : 100
+     * undergraduate : 100
+     * uniId : 2c948a825fb579f7015fb57fc1bf0001
+     * yearPlan : 2017
+     */
+
+    private int advanceBatch;
+    private String area;
+    private String id;
+    private String schoolLogo;
+    private int specializedSubject;
+    private int undergraduate;
+    private String uniId;
+    private String yearPlan;
     private String schoolName;
-    private String zsPlanNum;
-    private String zsAddress;
-
-    public int getbKeNum() {
-        return bKeNum;
-    }
-
-    public void setbKeNum(int bKeNum) {
-        this.bKeNum = bKeNum;
-    }
-
-    public int getzKeNum() {
-        return zKeNum;
-    }
-
-    public void setzKeNum(int zKeNum) {
-        this.zKeNum = zKeNum;
-    }
 
     public String getSchoolName() {
         return schoolName;
@@ -35,19 +34,67 @@ public class SchoolZSBean {
         this.schoolName = schoolName;
     }
 
-    public String getZsPlanNum() {
-        return zsPlanNum;
+    public int getAdvanceBatch() {
+        return advanceBatch;
     }
 
-    public void setZsPlanNum(String zsPlanNum) {
-        this.zsPlanNum = zsPlanNum;
+    public void setAdvanceBatch(int advanceBatch) {
+        this.advanceBatch = advanceBatch;
     }
 
-    public String getZsAddress() {
-        return zsAddress;
+    public String getArea() {
+        return area;
     }
 
-    public void setZsAddress(String zsAddress) {
-        this.zsAddress = zsAddress;
+    public void setArea(String area) {
+        this.area = area;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getSchoolLogo() {
+        return schoolLogo;
+    }
+
+    public void setSchoolLogo(String schoolLogo) {
+        this.schoolLogo = schoolLogo;
+    }
+
+    public int getSpecializedSubject() {
+        return specializedSubject;
+    }
+
+    public void setSpecializedSubject(int specializedSubject) {
+        this.specializedSubject = specializedSubject;
+    }
+
+    public int getUndergraduate() {
+        return undergraduate;
+    }
+
+    public void setUndergraduate(int undergraduate) {
+        this.undergraduate = undergraduate;
+    }
+
+    public String getUniId() {
+        return uniId;
+    }
+
+    public void setUniId(String uniId) {
+        this.uniId = uniId;
+    }
+
+    public String getYearPlan() {
+        return yearPlan;
+    }
+
+    public void setYearPlan(String yearPlan) {
+        this.yearPlan = yearPlan;
     }
 }
