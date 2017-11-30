@@ -61,7 +61,7 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
     ImageView backImage;
 
     private ProfessionalParentAdapter mAdapter;
-    private List<String> nodesBeans = new ArrayList<>();
+    //private List<String> nodesBeans = new ArrayList<>();
     private CommonAdapter<MajorQueryBean.DataBean> adapter;
     private TranslateAnimation mShowAction;
     private TranslateAnimation mHiddenAction;
@@ -247,7 +247,7 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                nodesBeans.clear();
+                //nodesBeans.clear();
                 adapter.notifyDataSetChanged();
                 return true;
             }

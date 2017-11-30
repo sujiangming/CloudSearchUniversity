@@ -94,6 +94,16 @@ public interface IService {
     Call<MaterialItemBean> getMaterialsByCourse(@Field("data") String data);
 
     /**
+     * 通过资料名称获取资料列表（模糊查询)
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/materials/getMaterialsByName")
+    Call<CommonBean> getMaterialsByName(@Field("data") String data);
+
+    /**
      * 获取评论列表
      *
      * @param data

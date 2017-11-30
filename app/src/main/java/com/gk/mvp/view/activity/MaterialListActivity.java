@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
+import com.gk.beans.CourseTypeEnum;
 import com.gk.beans.MaterialItemBean;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
@@ -20,7 +21,6 @@ import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 
 import butterknife.BindView;
@@ -85,23 +85,42 @@ public class MaterialListActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithData(T t, int order) {
+        hideProgress();
+        if (isLoadMore) {
+            stopRefreshLayoutLoadMore();
+        } else {
+            stopRefreshLayout();
+        }
         CommonBean commonBean = (CommonBean) t;
         List<MaterialItemBean.DataBean> beanList = JSON.parseArray(commonBean.getData().toString(), MaterialItemBean.DataBean.class);
-        if (beanList == null) {
+        if (beanList == null || beanList.size() == 0) {
             return;
         }
         if (isLoadMore) {
             list.addAll(beanList);
         } else {
-            //beanList.removeAll(list);
-            list.addAll(beanList);
-            removeDuplicate(list);
+            if (beanList == null || beanList.size() == 0) {
+                toast("已经扯到底啦");
+                return;
+            }
+            if (isLoadMore) {
+                list.addAll(beanList);
+            } else {
+                int currentSize = list.size();
+                list.addAll(beanList);
+                list = removeDuplicate(list);
+                int afterSize = list.size();
+                if (currentSize == afterSize) {
+                    return;
+                }
+            }
         }
         lvMaterial.setAdapter(new CommonAdapter<MaterialItemBean.DataBean>(this, R.layout.material_item, list) {
             @Override
             protected void convert(ViewHolder viewHolder, MaterialItemBean.DataBean item, int position) {
                 viewHolder.setText(R.id.tv_live_title, item.getName());
                 viewHolder.setText(R.id.tv_time_content, JdryTime.getFullTimeBySec(item.getUploadTime()));
+                viewHolder.setText(R.id.tv_km_content, CourseTypeEnum.getSubjectTypeName(item.getCourse()));
                 switch (type) {
                     case 1:
                         viewHolder.setText(R.id.tv_type_content, "名师讲堂");
@@ -116,12 +135,6 @@ public class MaterialListActivity extends SjmBaseActivity {
                 imageLoader.displayImage(MaterialListActivity.this, item.getLogo(), (ImageView) viewHolder.getView(R.id.iv_item));
             }
         });
-        hideProgress();
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-        } else {
-            stopRefreshLayout();
-        }
     }
 
     @Override
@@ -149,10 +162,14 @@ public class MaterialListActivity extends SjmBaseActivity {
         invoke();
     }
 
-    public List removeDuplicate(List list) {
-        HashSet h = new HashSet(list);
-        list.clear();
-        list.addAll(h);
+    public List<MaterialItemBean.DataBean> removeDuplicate(List<MaterialItemBean.DataBean> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = list.size() - 1; j > i; j--) {
+                if (list.get(j).getId().equals(list.get(i).getId())) {
+                    list.remove(j);
+                }
+            }
+        }
         return list;
     }
 

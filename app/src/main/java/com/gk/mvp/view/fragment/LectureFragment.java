@@ -19,6 +19,7 @@ import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.CourseListActivity;
 import com.gk.mvp.view.activity.MaterialListActivity;
+import com.gk.mvp.view.activity.MaterialQueryActivity;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.tools.GlideImageLoader;
 
@@ -380,10 +381,13 @@ public class LectureFragment extends SjmBaseFragment {
         }
     }
 
-    @OnClick({R.id.rtv_all, R.id.rtv_yuwen, R.id.rtv_shuxue, R.id.rtv_english, R.id.rtv_wz, R.id.rtv_lz, R.id.rtv_wuli, R.id.rtv_huaxue, R.id.rtv_shengwu, R.id.rtv_dili, R.id.rtv_lish, R.id.rtv_zhengzhi, R.id.ll_msjt, R.id.ll_lszt, R.id.ll_mnsj})
+    @OnClick({R.id.ll_search, R.id.rtv_all, R.id.rtv_yuwen, R.id.rtv_shuxue, R.id.rtv_english, R.id.rtv_wz, R.id.rtv_lz, R.id.rtv_wuli, R.id.rtv_huaxue, R.id.rtv_shengwu, R.id.rtv_dili, R.id.rtv_lish, R.id.rtv_zhengzhi, R.id.ll_msjt, R.id.ll_lszt, R.id.ll_mnsj})
     public void onViewClicked(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
+            case R.id.ll_search:
+                openNewActivity(MaterialQueryActivity.class);
+                break;
             case R.id.rtv_all:
                 break;
             case R.id.rtv_yuwen:
