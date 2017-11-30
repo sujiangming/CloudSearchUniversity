@@ -64,7 +64,7 @@ public interface IService {
     Call<CommonBean> getVideoList(@Field("data") String data);
 
     /**
-     * 获取资料列表
+     * 获取首页-资料-资料列表
      *
      * @param data
      * @return
@@ -74,24 +74,24 @@ public interface IService {
     Call<CommonBean> getMaterialsList(@Field("data") String data);
 
     /**
-     * 通过资料类型查询列表
+     * 获取资料类型（名师讲堂、历史真题、模拟试卷）列表
      *
      * @param data
      * @return
      */
     @FormUrlEncoded
     @POST("app/api/materials/getMaterialsByType")
-    Call<MaterialItemBean> getMaterialsByType(@Field("data") String data);
+    Call<CommonBean> getMaterialsByType(@Field("data") String data);
 
     /**
-     * 通过资料类型查询列表
+     * 获取科目（语文、数学、英语等）资料列表
      *
      * @param data
      * @return
      */
     @FormUrlEncoded
-    @POST("app/api/materials/getMaterialsByType")
-    Call<CommonBean> getMaterialsByType1(@Field("data") String data);
+    @POST("app/api/materials/getMaterialsByCourse")
+    Call<MaterialItemBean> getMaterialsByCourse(@Field("data") String data);
 
     /**
      * 获取评论列表

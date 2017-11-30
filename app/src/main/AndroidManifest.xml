@@ -141,6 +141,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".mvp.view.activity.CourseListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".mvp.view.activity.MultiItemRvActivity"
             android:screenOrientation="portrait" />
     </application>

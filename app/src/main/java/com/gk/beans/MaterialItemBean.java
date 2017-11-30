@@ -39,13 +39,13 @@ public class MaterialItemBean {
         /**
          * attentionNum : 0
          * course : yuwen
-         * fileName : 2017年事业单位综合能力试题及答案.docx
-         * fileUrl : http://192.168.1.123:8080/file/materials/590F9DED92CC4275B45B25C52837ED2F.docx
-         * id : 2c948a825fb5b5ee015fb5bd86a70000
-         * logo : http://192.168.1.123:8080/file/
-         * name : xxx
-         * type : 3
-         * uploadTime : 1510582618000
+         * fileName : 2017-10-17到2017-10-24 (小1班)的出勤明细.xls
+         * fileUrl : http://101.132.143.37/file/materials/908145A1D2E840E7995939129B17148C.xls
+         * id : 2c948a825f96cbbf015f96d6378e0000
+         * logo : http://101.132.143.37/file/child/2AE90EBB9DE943AD938D48BB5EB63427.png
+         * name : 高考语文
+         * type : 1
+         * uploadTime : 1510581567000
          */
 
         private int attentionNum;
@@ -55,7 +55,7 @@ public class MaterialItemBean {
         private String id;
         private String logo;
         private String name;
-        private String type;
+        private int type;
         private long uploadTime;
 
         public int getAttentionNum() {
@@ -114,11 +114,11 @@ public class MaterialItemBean {
             this.name = name;
         }
 
-        public String getType() {
+        public int getType() {
             return type;
         }
 
-        public void setType(String type) {
+        public void setType(int type) {
             this.type = type;
         }
 

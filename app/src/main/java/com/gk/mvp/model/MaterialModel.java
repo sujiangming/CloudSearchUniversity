@@ -16,43 +16,44 @@ import retrofit2.Response;
  */
 
 public class MaterialModel {
-    private MaterialItemBean materialItemBean;
     private JSONObject jsonObject;
-    private IPresenterCallback<MaterialItemBean> iPresenterCallback;
+    private IPresenterCallback iPresenterCallback;
+    private MaterialItemBean materialItemBean;
 
-    public MaterialModel(IPresenterCallback<MaterialItemBean> iPresenterCallback) {
+    public MaterialModel(IPresenterCallback iPresenterCallback) {
         this.iPresenterCallback = iPresenterCallback;
         jsonObject = new JSONObject();
+        materialItemBean = new MaterialItemBean();
     }
 
     /**
      * 获取资料类型列表（分页查询）
      *
      * @param page   分页
-     * @param type   1 名师讲堂 2历年真题 3模拟真题
      * @param course 课程名称 比如语文
      */
-    public void httpRequestMaterialsByType(int page, int type, String course) {
+    public void httpRequestMaterialsByCourse(int page, String course) {
         jsonObject.put("page", page);
-        jsonObject.put("type", type);
         jsonObject.put("course", course);
         RetrofitUtil.getInstance()
                 .createReq(IService.class)
-                .getMaterialsByType(jsonObject.toJSONString())
+                .getMaterialsByCourse(jsonObject.toJSONString())
                 .enqueue(new Callback<MaterialItemBean>() {
                     @Override
                     public void onResponse(Call<MaterialItemBean> call, Response<MaterialItemBean> response) {
                         if (response.isSuccessful()) {
                             materialItemBean = response.body();
                             iPresenterCallback.httpRequestSuccess(materialItemBean, YXXConstants.INVOKE_API_DEFAULT_TIME);
+                        } else {
+                            materialItemBean.setMessage(response.message());
+                            iPresenterCallback.httpRequestFailure(materialItemBean, YXXConstants.INVOKE_API_DEFAULT_TIME);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<MaterialItemBean> call, Throwable t) {
-                        MaterialItemBean itemBean = new MaterialItemBean();
-                        itemBean.setMessage(t.getMessage());
-                        iPresenterCallback.httpRequestFailure(itemBean, YXXConstants.INVOKE_API_DEFAULT_TIME);
+                        materialItemBean.setMessage(t.getMessage());
+                        iPresenterCallback.httpRequestFailure(materialItemBean, YXXConstants.INVOKE_API_DEFAULT_TIME);
                     }
                 });
     }

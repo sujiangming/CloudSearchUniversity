@@ -100,8 +100,12 @@ public class PresenterManager {
         ModelManager.getInstance(mCall, null).getServerData(new Callback<CommonBean>() {
             @Override
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                CommonBean commonBean = response.body();
-                render(commonBean);
+                if (response.isSuccessful()) {
+                    CommonBean commonBean = response.body();
+                    render(commonBean);
+                } else {
+                    mIView.fillWithNoData(response.message(), mOrder);
+                }
             }
 
             @Override
@@ -111,6 +115,18 @@ public class PresenterManager {
             }
         });
         return mInstance;
+    }
+
+    private void render(CommonBean commonBean) {
+        if (commonBean == null) {
+            mIView.fillWithNoData(errorInfo, mOrder);
+            return;
+        }
+        if (commonBean.getStatus() == 1) {
+            mIView.fillWithData(commonBean, mOrder);
+        } else {
+            mIView.fillWithNoData(commonBean.getMessage(), mOrder);
+        }
     }
 
     /**
@@ -125,8 +141,12 @@ public class PresenterManager {
         ModelManager.getInstance(mCall, null).getServerData(new Callback<CommonBean>() {
             @Override
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                CommonBean commonBean = response.body();
-                render(commonBean, invokeFlag);
+                if (response.isSuccessful()) {
+                    CommonBean commonBean = response.body();
+                    render(commonBean, invokeFlag);
+                } else {
+                    mIView.fillWithNoData(response.message(), invokeFlag);
+                }
             }
 
             @Override
@@ -154,18 +174,6 @@ public class PresenterManager {
             mIView.fillWithData(commonBean, flag);
         } else {
             mIView.fillWithNoData(commonBean.getMessage(), flag);
-        }
-    }
-
-    private void render(CommonBean commonBean) {
-        if (commonBean == null) {
-            mIView.fillWithNoData(errorInfo, mOrder);
-            return;
-        }
-        if (commonBean.getStatus() == 1) {
-            mIView.fillWithData(commonBean, mOrder);
-        } else {
-            mIView.fillWithNoData(commonBean.getMessage(), mOrder);
         }
     }
 

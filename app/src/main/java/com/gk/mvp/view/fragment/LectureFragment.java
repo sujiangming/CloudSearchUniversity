@@ -17,6 +17,7 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.activity.CourseListActivity;
 import com.gk.mvp.view.activity.MaterialListActivity;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.tools.GlideImageLoader;
@@ -386,26 +387,48 @@ public class LectureFragment extends SjmBaseFragment {
             case R.id.rtv_all:
                 break;
             case R.id.rtv_yuwen:
+                intent.putExtra("course", "yuwen");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_shuxue:
+                intent.putExtra("course", "shuxue");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_english:
+                intent.putExtra("course", "yingyu");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_wz:
+                intent.putExtra("course", "wenzong");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_lz:
+                intent.putExtra("course", "lizong");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_wuli:
+                intent.putExtra("course", "wuli");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_huaxue:
+                intent.putExtra("course", "huaxue");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_shengwu:
+                intent.putExtra("course", "shengwu");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_dili:
+                intent.putExtra("course", "dili");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_lish:
+                intent.putExtra("course", "lishi");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_zhengzhi:
+                intent.putExtra("course", "zhengzhi");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.ll_msjt:
                 intent.putExtra("type", 1);

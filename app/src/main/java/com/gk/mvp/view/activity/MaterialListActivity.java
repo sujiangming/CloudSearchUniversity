@@ -54,15 +54,23 @@ public class MaterialListActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        setTopBar(topBar, "资料列表", 0);
         initSmartRefreshLayout(smartMaterial, true);
         type = getIntent().getIntExtra("type", 0);
         course = getIntent().getStringExtra("course");
+        setTitleByType();
         showProgress();
-//        materialPresenter = new MaterialPresenter(this);
-//        materialPresenter.httpRequestMaterialsByType(page, type, course);
         invoke();
 
+    }
+
+    private void setTitleByType() {
+        if (type == 1) {
+            setTopBar(topBar, "名师讲堂", 0);
+        } else if (type == 2) {
+            setTopBar(topBar, "历史真题", 0);
+        } else {
+            setTopBar(topBar, "模拟试卷", 0);
+        }
     }
 
     private void invoke() {
@@ -71,7 +79,7 @@ public class MaterialListActivity extends SjmBaseActivity {
         jsonObject.put("course", course);
         PresenterManager.getInstance()
                 .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getMaterialsByType1(jsonObject.toJSONString()))
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getMaterialsByType(jsonObject.toJSONString()))
                 .request();
     }
 

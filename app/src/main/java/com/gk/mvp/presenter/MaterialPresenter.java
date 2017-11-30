@@ -1,6 +1,5 @@
 package com.gk.mvp.presenter;
 
-import com.gk.beans.MaterialItemBean;
 import com.gk.mvp.model.MaterialModel;
 import com.gk.mvp.view.IView;
 
@@ -8,7 +7,7 @@ import com.gk.mvp.view.IView;
  * Created by JDRY-SJM on 2017/11/26.
  */
 
-public class MaterialPresenter implements IPresenterCallback<MaterialItemBean> {
+public class MaterialPresenter<MaterialItemBean> implements IPresenterCallback<MaterialItemBean> {
 
     private IView iView;
     private MaterialModel materialModel;
@@ -18,19 +17,20 @@ public class MaterialPresenter implements IPresenterCallback<MaterialItemBean> {
         this.materialModel = new MaterialModel(this);
     }
 
-    public void httpRequestMaterialsByType(int page, int type, String course) {
-        materialModel.httpRequestMaterialsByType(page, type, course);
+    public void httpRequestMaterialsByCourse(int page, String course) {
+        this.iView.showProgress();
+        materialModel.httpRequestMaterialsByCourse(page, course);
     }
 
     @Override
-    public void httpRequestSuccess(MaterialItemBean materialItemBean, int order) {
-        iView.fillWithData(materialItemBean.getData(), order);
+    public void httpRequestSuccess(MaterialItemBean o, int order) {
+        this.iView.hideProgress();
+        iView.fillWithData(o, order);
     }
 
     @Override
-    public void httpRequestFailure(MaterialItemBean materialItemBean, int order) {
-        iView.fillWithNoData(materialItemBean, order);
+    public void httpRequestFailure(MaterialItemBean o, int order) {
+        this.iView.hideProgress();
+        iView.fillWithNoData(o, order);
     }
-
-
 }
