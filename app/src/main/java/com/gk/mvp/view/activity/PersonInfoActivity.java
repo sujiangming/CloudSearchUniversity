@@ -186,7 +186,6 @@ public class PersonInfoActivity extends SjmBaseActivity {
                     public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
 
                     }
-
                     @Override
                     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
                         switch (index) {

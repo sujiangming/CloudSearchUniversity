@@ -25,7 +25,6 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.listener.SjmStandardVideoAllCallBackListener;
 import com.gk.mvp.presenter.PresenterManager;
-import com.gk.mvp.view.adpater.VideoCommentAadapter;
 import com.gk.mvp.view.custom.SjmListView;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryTime;
@@ -128,7 +127,6 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
     private boolean isPause;
     private LiveBean liveBean;
     private List<CommentVideoBean> commentVideoBeans = new ArrayList<>();
-    private VideoCommentAadapter videoCommentAadapter;
 
 
     @Override

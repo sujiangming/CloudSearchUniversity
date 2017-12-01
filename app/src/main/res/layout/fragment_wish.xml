@@ -50,12 +50,13 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <TextView
+                    android:id="@+id/tv_score"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:hint="无"
                     android:paddingRight="@dimen/space_11_dp"
-                    android:text="无"
                     android:textColor="@color/color8f8e94"
                     android:textSize="@dimen/font_16_sp" />
 
@@ -90,12 +91,13 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <TextView
+                    android:id="@+id/tv_rank"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:hint="无"
                     android:paddingRight="@dimen/space_11_dp"
-                    android:text="无"
                     android:textColor="@color/color8f8e94"
                     android:textSize="@dimen/font_16_sp" />
 
@@ -125,12 +127,13 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <TextView
+                    android:id="@+id/tv_wenli"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:hint="未选择"
                     android:paddingRight="@dimen/space_11_dp"
-                    android:text="无"
                     android:textColor="@color/color8f8e94"
                     android:textSize="@dimen/font_16_sp" />
 
@@ -165,12 +168,13 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <TextView
+                    android:id="@+id/tv_yixiang"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:hint="未选择"
                     android:paddingRight="@dimen/space_11_dp"
-                    android:text="已选0个"
                     android:textColor="@color/color8f8e94"
                     android:textSize="@dimen/font_16_sp" />
 
@@ -205,12 +209,13 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <TextView
+                    android:id="@+id/tv_province"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:hint="未选择"
                     android:paddingRight="@dimen/space_11_dp"
-                    android:text="已选0个"
                     android:textColor="@color/color8f8e94"
                     android:textSize="@dimen/font_16_sp" />
 
@@ -245,12 +250,13 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <TextView
+                    android:id="@+id/tv_status"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="right"
+                    android:hint="未完成"
                     android:paddingRight="@dimen/space_11_dp"
-                    android:text="未完成"
                     android:textColor="@color/color8f8e94"
                     android:textSize="@dimen/font_16_sp" />
 
@@ -285,6 +291,7 @@
                     app:drawable_src="@drawable/ic_vip_wish" />
 
                 <com.gk.mvp.view.custom.RichText
+                    android:id="@+id/rtv_zj"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/space_30_dp"
@@ -309,4 +316,9 @@
         android:text="@string/main_tab_txt3"
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_16_sp" />
+
+    <include
+        android:id="@+id/et_content"
+        layout="@layout/common_edit"
+        android:visibility="gone" />
 </FrameLayout>

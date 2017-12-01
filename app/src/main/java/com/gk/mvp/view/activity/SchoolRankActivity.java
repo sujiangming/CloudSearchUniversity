@@ -35,7 +35,7 @@ import butterknife.OnClick;
  * Created by JDRY-SJM on 2017/9/27.
  */
 
-public class SchoolRankActivity extends SjmBaseActivity {
+public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayoutChangeListener {
     @BindView(R.id.lv_query_school)
     ListView lvQuerySchool;
 
@@ -70,6 +70,7 @@ public class SchoolRankActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         initSmartRefreshLayout(smartRfQuerySchool, true);
+        initKeyBoardParameter();
         jsonObject = new JSONObject();
         invoke();
         showSearch();
@@ -97,7 +98,7 @@ public class SchoolRankActivity extends SjmBaseActivity {
                 isSearch = true;
                 invoke();
                 if (searchView != null) {
-                    closeKeySoftInput();
+                    hideSoftKey();
                 }
                 searchView.clearFocus(); // 不获取焦点
                 return true;
@@ -109,7 +110,7 @@ public class SchoolRankActivity extends SjmBaseActivity {
                     searchKey = "";
                     isSearch = false;
                     invoke();
-                    closeKeySoftInput();
+                    hideSoftKey();
                 }
                 return true;
             }
@@ -121,19 +122,37 @@ public class SchoolRankActivity extends SjmBaseActivity {
                 searchKey = "";
                 isSearch = false;
                 invoke();
-                closeKeySoftInput();
+                hideSoftKey();
                 return true;
             }
         });
     }
 
-    private void closeKeySoftInput() {
-        // 得到输入管理对象
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        if (imm != null) {
-            // 这将让键盘在所有的情况下都被隐藏，但是一般我们在点击搜索按钮后，输入法都会乖乖的自动隐藏的。
-            imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0); // 输入法如果是显示状态，那么就隐藏输入法
-            imm.hideSoftInputFromWindow(searchView.getWindowToken(),InputMethodManager.HIDE_NOT_ALWAYS);
+    private int screenHeight = 0;//屏幕高度
+    private int keyHeight = 0;//软件盘弹起后所占高度阀值
+
+    /**
+     * 初始化软键盘弹出和关闭时的参数
+     */
+    private void initKeyBoardParameter() {
+        //获取屏幕高度
+        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight / 3;
+    }
+
+    private void hideSoftKey() {
+        //隐藏软盘
+        InputMethodManager imm = (InputMethodManager) searchView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(searchView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        //editText失去焦点
+        searchView.clearFocus();
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+            searchView.clearFocus();
         }
     }
 

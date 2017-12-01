@@ -65,8 +65,9 @@
                     android:textSize="@dimen/font_14_sp" />
 
                 <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:id="@+id/iv_level"
+                    android:layout_width="@dimen/space_30_dp"
+                    android:layout_height="@dimen/space_30_dp"
                     android:layout_centerVertical="true"
                     android:layout_toRightOf="@+id/tv_user_level"
                     android:paddingTop="@dimen/space_7_dp"

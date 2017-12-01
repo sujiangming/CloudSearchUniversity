@@ -1,6 +1,9 @@
 package com.gk.beans;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
+import com.gk.R;
 import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.tools.JdryPersistence;
@@ -76,6 +79,9 @@ public class LoginBean implements Serializable {
     private int vipLevel;
     private String weixin;
     private String wlDesc;
+    private String wishUniversity;
+    private String wishProvince;
+    private String heartTest;
 
     private static final long serialVersionUID = 1L;
     private volatile static LoginBean instance = null;//volatile关键字来保证其线程间的可见性
@@ -91,6 +97,7 @@ public class LoginBean implements Serializable {
                 }
             }
         }
+        Log.e(LoginBean.class.getName(), JSON.toJSONString(instance));
         return instance;
     }
 
@@ -141,8 +148,10 @@ public class LoginBean implements Serializable {
 
     public void saveLoginBean(LoginBean loginBean) {
         //setInstance(loginBean);
+        Log.e(LoginBean.class.getName() + "-saveLoginBean:", JSON.toJSONString(instance));
         instance = loginBean;
         save();
+        Log.e(LoginBean.class.getName() + "-saveLoginBean:", JSON.toJSONString(LoginBean.getInstance()));
     }
 
     public void save() {
@@ -186,6 +195,25 @@ public class LoginBean implements Serializable {
                 break;
         }
         return desc;
+    }
+
+    public int getLevelImage() {
+        int imageIndex = 0;
+        switch (this.getVipLevel()) {
+            case 1:
+                imageIndex = R.drawable.you_ke; //"普通会员";
+                break;
+            case 2:
+                imageIndex = R.drawable.vip_silver3x; //"银卡会员";
+                break;
+            case 3:
+                imageIndex = R.drawable.vip3x; //"金卡会员";
+                break;
+            default:
+                imageIndex = R.drawable.pu_user; //"游客";
+                break;
+        }
+        return imageIndex;
     }
 
     public boolean isAdministrator() {
@@ -449,5 +477,35 @@ public class LoginBean implements Serializable {
 
     public void setWlDesc(String wlDesc) {
         this.wlDesc = wlDesc;
+    }
+
+    public String getWishUniversity() {
+        return wishUniversity;
+    }
+
+    public LoginBean setWishUniversity(String wishUniversity) {
+        this.wishUniversity = wishUniversity;
+        return instance;
+    }
+
+    public String getWishProvince() {
+        return wishProvince;
+    }
+
+    public LoginBean setWishProvince(String wishProvince) {
+        this.wishProvince = wishProvince;
+        return instance;
+    }
+
+    public String getHeartTest() {
+        return heartTest;
+    }
+
+    public void setHeartTest(String heartTest) {
+        this.heartTest = heartTest;
+    }
+
+    public static long getSerialVersionUID() {
+        return serialVersionUID;
     }
 }

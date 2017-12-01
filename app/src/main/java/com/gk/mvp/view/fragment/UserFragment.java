@@ -2,6 +2,7 @@ package com.gk.mvp.view.fragment;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gk.R;
@@ -34,6 +35,8 @@ public class UserFragment extends SjmBaseFragment {
     TextView tvUserScore;
     @BindView(R.id.textView)
     TextView textView;
+    @BindView(R.id.iv_level)
+    ImageView ivLevel;
 
     @Override
     public int getResourceId() {
@@ -44,7 +47,21 @@ public class UserFragment extends SjmBaseFragment {
 
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
         glideImageLoader.displayImage(getContext(), LoginBean.getInstance().getHeadImg(), ivUserHead);
+        initData();
+    }
+
+    private void initData() {
+        LoginBean loginBean = LoginBean.getInstance();
+        tvUserName.setText(loginBean.getCname());
+        tvUserScore.setText("高考分数：" + loginBean.getScore());
+        ivLevel.setImageResource(loginBean.getLevelImage());
     }
 
     @OnClick({R.id.rl_info, R.id.ll_wish_report, R.id.ll_vip_choose, R.id.ll_zj, R.id.ll_help_center, R.id.ll_contact_kf, R.id.ll_set})
