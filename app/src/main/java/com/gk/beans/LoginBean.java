@@ -144,14 +144,14 @@ public class LoginBean implements Serializable {
         this.setSchool(loginBean.getSchool());
         this.setDepts(loginBean.getDepts());
         this.setWeixin(loginBean.getWeixin());
+        this.setWlDesc(loginBean.getWlDesc());
     }
 
     public void saveLoginBean(LoginBean loginBean) {
-        //setInstance(loginBean);
-        Log.e(LoginBean.class.getName() + "-saveLoginBean:", JSON.toJSONString(instance));
-        instance = loginBean;
+        Log.e(LoginBean.class.getName() + "-before-saveLoginBean:", JSON.toJSONString(instance));
+        setInstance(loginBean);
         save();
-        Log.e(LoginBean.class.getName() + "-saveLoginBean:", JSON.toJSONString(LoginBean.getInstance()));
+        Log.e(LoginBean.class.getName() + "-after-saveLoginBean:", JSON.toJSONString(LoginBean.getInstance()));
     }
 
     public void save() {
