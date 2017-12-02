@@ -80,7 +80,7 @@ public class LoginBean implements Serializable {
     private String weixin;
     private String wlDesc;
     private String wishUniversity;
-    private String wishProvince;
+    private Integer[] wishProvince;
     private String heartTest;
 
     private static final long serialVersionUID = 1L;
@@ -487,11 +487,11 @@ public class LoginBean implements Serializable {
         return instance;
     }
 
-    public String getWishProvince() {
+    public Integer[] getWishProvince() {
         return wishProvince;
     }
 
-    public LoginBean setWishProvince(String wishProvince) {
+    public LoginBean setWishProvince(Integer[] wishProvince) {
         this.wishProvince = wishProvince;
         return instance;
     }

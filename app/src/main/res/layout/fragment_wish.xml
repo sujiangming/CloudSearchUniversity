@@ -321,4 +321,10 @@
         android:id="@+id/et_content"
         layout="@layout/common_edit"
         android:visibility="gone" />
+
+    <include
+        android:id="@+id/choose_province"
+        layout="@layout/choose_province_dialog"
+        android:visibility="gone" />
+
 </FrameLayout>

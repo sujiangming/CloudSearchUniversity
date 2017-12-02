@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -16,12 +17,16 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
+import com.gk.beans.UniversityAreaEnum;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.VIPActivity;
 import com.gk.mvp.view.custom.RichText;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -51,8 +56,22 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     TextView tvStatus;
     @BindView(R.id.et_content)
     View rlContent;
-    @BindView(R.id.et_comment)
+    @BindView(R.id.et_school_1)
     EditText etComment;
+    @BindView(R.id.et_school_2)
+    EditText etComment2;
+    @BindView(R.id.et_school_3)
+    EditText etComment3;
+    @BindView(R.id.et_school_4)
+    EditText etComment4;
+    @BindView(R.id.et_school_5)
+    EditText etComment5;
+
+    @BindView(R.id.lv_province)
+    LinearLayout listView;
+
+    @BindView(R.id.choose_province)
+    View chooseProvince;
 
     private LoginBean loginBean = LoginBean.getInstance();
     private DialogInterface mDialog;
@@ -63,6 +82,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private String etHitStr = "请输入内容";
     private String emptyStr = "";
     private JSONObject jsonObject = new JSONObject();
+    private List<String> areaNameList;
 
     @Override
     public int getResourceId() {
@@ -85,7 +105,8 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
-    @OnClick({R.id.tv_score, R.id.tv_rank, R.id.tv_wenli, R.id.tv_yixiang, R.id.tv_province, R.id.tv_status, R.id.tv_cancel, R.id.tv_submit, R.id.rich_wish, R.id.rtv_zj})
+    @OnClick({R.id.tv_score, R.id.tv_rank, R.id.tv_wenli, R.id.tv_yixiang, R.id.tv_province, R.id.tv_status, R.id.tv_cancel, R.id.tv_submit, R.id.rich_wish, R.id.rtv_zj
+            , R.id.tv_cancel_province, R.id.tv_submit_province})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_score:
@@ -102,8 +123,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 showEditDialog();
                 break;
             case R.id.tv_province:
-                requestCode = 5;
-                showEditDialog();
+                showMultiChoiceDialog();
                 break;
             case R.id.tv_status:
                 break;
@@ -117,6 +137,16 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
             case R.id.rich_wish:
             case R.id.rtv_zj:
                 openNewActivity(VIPActivity.class);
+                break;
+            case R.id.tv_cancel_province:
+                hideEditDialogProvince();
+                hideSoftKey();
+                break;
+            case R.id.tv_submit_province:
+                Integer[] choiceArray = yourChoices.toArray(new Integer[yourChoices.size()]);
+                LoginBean.getInstance().setWishProvince(choiceArray).save();
+                hideEditDialogProvince();
+                tvProvince.setText("已选" + yourChoices.size() + "个");
                 break;
         }
     }
@@ -138,6 +168,52 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private void hideEditDialog() {
         if (rlContent.getVisibility() == View.VISIBLE) {
             rlContent.setVisibility(View.GONE);
+        }
+    }
+
+    private void showEditDialogProvince() {
+        if (chooseProvince.getVisibility() == View.GONE) {
+            chooseProvince.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideEditDialogProvince() {
+        if (chooseProvince.getVisibility() == View.VISIBLE) {
+            chooseProvince.setVisibility(View.GONE);
+        }
+    }
+
+    List<Integer> yourChoices = new ArrayList<>();
+
+    private void showMultiChoiceDialog() {
+        showEditDialogProvince();
+        final String[] items = YXXConstants.PROVINCES;
+        for (int i = 0; i < items.length; ++i) {
+            View view = View.inflate(getContext(), R.layout.province_item, null);
+            TextView textView = view.findViewById(R.id.tv_province_name);
+            textView.setText(items[i]);
+            final ImageView checkBox = view.findViewById(R.id.check_box);
+            final int finalI = i;
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String tag = (String) view.getTag();
+                    if ("0".equals(tag)) {
+                        if (yourChoices.size() >= 5) {
+                            toast("您最多只能选择五个意向省份");
+                            return;
+                        }
+                        checkBox.setImageResource(R.drawable.gouxuan);
+                        yourChoices.add(UniversityAreaEnum.getIndex(items[finalI]));
+                        view.setTag("1");
+                    } else {
+                        checkBox.setImageResource(R.drawable.not_gouxuan);
+                        yourChoices.remove(finalI);
+                        view.setTag("0");
+                    }
+                }
+            });
+            listView.addView(view);
         }
     }
 
@@ -202,12 +278,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     hideEditDialog();
                     hideSoftKey();
                     tvYixiang.setText(text);
-                    break;
-                case 5:
-                    LoginBean.getInstance().setWishProvince(text).save();
-                    hideEditDialog();
-                    hideSoftKey();
-                    tvProvince.setText(text);
                     break;
             }
             return;

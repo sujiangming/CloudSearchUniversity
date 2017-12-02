@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/space_50_dp">
+
+    <TextView
+        android:id="@+id/tv_province_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingLeft="@dimen/space_10_dp"
+        android:paddingRight="@dimen/space_10_dp"
+        android:text="北京"
+        android:textColor="@color/color555555"
+        android:textSize="@dimen/font_14_sp" />
+
+    <ImageView
+        android:id="@+id/check_box"
+        android:layout_width="@dimen/space_30_dp"
+        android:layout_height="@dimen/space_30_dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:background="@drawable/not_gouxuan"
+        android:tag="0" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="@dimen/space_10_dp"
+        android:background="@color/color878787" />
+</RelativeLayout>
