@@ -1,9 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingBottom="@dimen/space_16_dp">
+    android:orientation="vertical">
 
     <com.gk.mvp.view.custom.TopBarView
         android:id="@+id/top_bar"
@@ -13,10 +12,38 @@
     <android.support.v7.widget.RecyclerView
         android:id="@+id/id_recyclerview"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_bar"
+        android:paddingBottom="@dimen/space_40_dp"
         android:paddingLeft="@dimen/space_16_dp"
         android:paddingRight="@dimen/space_16_dp"
         android:paddingTop="@dimen/space_5_dp" />
 
-</LinearLayout>
+    <LinearLayout
+        android:id="@+id/ll_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_40_dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorc8c7cc"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_5_dp"
+        android:paddingRight="@dimen/space_5_dp"
+        android:visibility="visible">
+
+        <Button
+            android:id="@+id/btn_comment"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_30_dp"
+            android:layout_weight="1"
+            android:background="@drawable/qw_jd_btn_bg"
+            android:text="我来说两句"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_16_sp" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/include_comment"
+        layout="@layout/video_comment_edit"
+        android:visibility="gone" />
+</RelativeLayout>

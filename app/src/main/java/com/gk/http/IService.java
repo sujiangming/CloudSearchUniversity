@@ -222,15 +222,24 @@ public interface IService {
     Call<CommonBean> getQuestionList(@Field("data") String data);
 
     /**
-     * 发表问题接口
+     * 增加浏览问题数量
      *
      * @param data
      * @return
      */
     @FormUrlEncoded
-    @POST("app/api/authority/addQuestion")
-    Call<CommonBean> addQuestion(@Field("data") String data);
+    @POST("app/api/authority/addViewTimes")
+    Call<CommonBean> addViewTimes(@Field("data") String data);
 
+    /**
+     * 增加关注问题数量
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/authority/addAttentionTimes")
+    Call<CommonBean> addAttentionTimes(@Field("data") String data);
 
     /**
      * 查询回答列表接口
@@ -252,5 +261,34 @@ public interface IService {
     @POST("app/api/authority/addAnswer")
     Call<CommonBean> addAnswer(@Field("data") String data);
 
+    /**
+     * 获取客服对话列表接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/sys/getMyMessageList")
+    Call<CommonBean> getMyMessageList(@Field("data") String data);
 
+
+    /**
+     * 联系客服发送消息接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/sys/sendMessage")
+    Call<CommonBean> sendMessage(@Field("data") String data);
+
+    /**
+     * 同分去向接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/university/getSameScoreDirection")
+    Call<CommonBean> getSameScoreDirection(@Field("data") String data);
 }

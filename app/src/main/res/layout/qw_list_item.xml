@@ -73,39 +73,40 @@
         android:textSize="@dimen/font_14_sp" />
 
     <TextView
-        android:id="@+id/tv_time"
+        android:id="@+id/tv_attention"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_content"
         android:layout_marginLeft="@dimen/space_30_dp"
         android:layout_marginTop="@dimen/space_8_dp"
-        android:drawableLeft="@drawable/img_time"
+        android:drawableLeft="@drawable/attention_count"
         android:drawablePadding="@dimen/space_4_dp"
         android:gravity="center_vertical"
-        android:text="3小时前"
+        android:text="关注"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
     <TextView
+        android:id="@+id/tv_line_1"
         android:layout_width="@dimen/space_1_px"
         android:layout_height="@dimen/space_15_dp"
         android:layout_below="@id/tv_content"
         android:layout_marginLeft="@dimen/space_42_dp"
         android:layout_marginTop="@dimen/space_10_dp"
-        android:layout_toRightOf="@id/tv_time"
+        android:layout_toRightOf="@id/tv_attention"
         android:background="@color/color808080" />
 
     <TextView
-        android:id="@+id/tv_view_count"
+        android:id="@+id/tv_reply_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_content"
         android:layout_centerInParent="true"
         android:layout_marginTop="@dimen/space_8_dp"
-        android:drawableLeft="@drawable/img_eye3x"
+        android:drawableLeft="@drawable/reply"
         android:drawablePadding="@dimen/space_4_dp"
         android:gravity="center_vertical"
-        android:text="812"
+        android:text="回复"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -116,22 +117,21 @@
         android:layout_below="@id/tv_content"
         android:layout_marginLeft="@dimen/space_42_dp"
         android:layout_marginTop="@dimen/space_10_dp"
-        android:layout_toRightOf="@id/tv_view_count"
+        android:layout_toRightOf="@id/tv_reply_count"
         android:background="@color/color808080" />
 
     <TextView
-        android:id="@+id/tv_comment_count"
+        android:id="@+id/tv_scan_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
         android:layout_below="@id/tv_content"
-        android:layout_marginLeft="@dimen/space_42_dp"
         android:layout_marginRight="@dimen/space_30_dp"
         android:layout_marginTop="@dimen/space_8_dp"
-        android:layout_toRightOf="@id/tv_right_v_line"
-        android:drawableLeft="@drawable/img_word3x"
+        android:drawableLeft="@drawable/liulan"
         android:drawablePadding="@dimen/space_4_dp"
         android:gravity="center_vertical"
-        android:text="123"
+        android:text="浏览"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 

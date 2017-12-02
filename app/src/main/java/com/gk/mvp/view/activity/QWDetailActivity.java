@@ -2,21 +2,31 @@ package com.gk.mvp.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
+import com.gk.beans.QWAnsBean;
+import com.gk.beans.QWListBean;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.mvp.view.custom.SjmListView;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.tools.GlideImageLoader;
+import com.gk.tools.JdryTime;
+import com.gk.tools.YxxUtils;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
@@ -67,7 +77,11 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
 
     private int screenHeight = 0;//屏幕高度
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
-    private List<String> stringList = new ArrayList<>();
+    private QWListBean qwListBean;
+    private List<QWAnsBean> qwAnsBeans = new ArrayList<>();
+    private GlideImageLoader imageLoader = new GlideImageLoader();
+    private JSONObject jsonObject = new JSONObject();
+    private int addAnsFlag = 0;
 
     @Override
     public int getResouceId() {
@@ -77,19 +91,101 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "问答详情", 0);
+        qwListBean = (QWListBean) getIntent().getSerializableExtra("bean");
         initKeyBoardParameter();
-        for (int i = 0; i < 20; i++) {
-            stringList.add("权威解答-" + i);
+        initData();
+    }
+
+    private void initData() {
+        if (qwListBean == null) {
+            return;
         }
-        lvQwJd.setAdapter(new CommonAdapter<String>(this, R.layout.qw_detail_item, stringList) {
+        jsonObject.put("queId", qwListBean.getQueId());
+        imageLoader.displayImage(this, qwListBean.getHeadImg(), civHeader);
+        tvNickName.setText(qwListBean.getNickName() == null ? "未知" : qwListBean.getNickName());
+        tvTimeRight.setText(JdryTime.getDayHourMinBySec(qwListBean.getQueTime()));
+        tvContent.setText(qwListBean.getQueContent());
+        tvTitle.setText(qwListBean.getQueTitle());
+        tvScanCount.setText(qwListBean.getViewTimes() + "");
+        tvCareCount.setText(qwListBean.getAttentionTimes() + "");
+        addViewTimes();
+        getAnswerList();
+    }
+
+    private void initAdapter() {
+        lvQwJd.setAdapter(new CommonAdapter<QWAnsBean>(this, R.layout.qw_detail_item, qwAnsBeans) {
             @Override
-            protected void convert(ViewHolder viewHolder, String item, int position) {
+            protected void convert(ViewHolder viewHolder, QWAnsBean item, int position) {
                 if (position == 0) {
                     viewHolder.setBackgroundColor(R.id.tv_top_line, 0x00000000);
                 }
-                viewHolder.setText(R.id.tv_nick_name, item);
+                viewHolder.setText(R.id.tv_nick_name, item.getNickName());
+                viewHolder.setText(R.id.tv_time_right, JdryTime.getDayHourMinBySec(item.getAnsTime()));
+                viewHolder.setText(R.id.tv_content, item.getAnsContent());
+                imageLoader.displayImage(QWDetailActivity.this, item.getHeadImg(), (ImageView) viewHolder.getView(R.id.civ_header));
             }
         });
+    }
+
+    private void getAnswerList() {
+        showProgress();
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance()
+                        .createReq(IService.class).getAnswerList(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+    }
+
+    private void addViewTimes() {
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance()
+                        .createReq(IService.class).addViewTimes(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_THREE_TIME);
+    }
+
+    private void addAttentionTimes() {
+        showProgress();
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance()
+                        .createReq(IService.class).addAttentionTimes(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_FORTH_TIME);
+    }
+
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        CommonBean commonBean = (CommonBean) t;
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                qwAnsBeans = JSON.parseArray(commonBean.getData().toString(), QWAnsBean.class);
+                initAdapter();
+                if (addAnsFlag == 1) {
+                    hideSoftKey();
+                }
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                toast(commonBean.getMessage());
+                getAnswerList();
+                break;
+            case YXXConstants.INVOKE_API_THREE_TIME: //增加浏览次数
+                tvScanCount.setText((qwListBean.getViewTimes() + 1) + "");
+                break;
+            case YXXConstants.INVOKE_API_FORTH_TIME: //我的关注接口
+                toast(commonBean.getMessage());
+                tvCareCount.setText((qwListBean.getAttentionTimes() + 1) + "");
+                break;
+        }
+        hideProgress();
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+        toast((String) t);
+        hideProgress();
+        if (order == YXXConstants.INVOKE_API_SECOND_TIME) {
+            hideSoftKey();
+        }
     }
 
     /**
@@ -121,7 +217,7 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
         }
     }
 
-    @OnClick({R.id.btn_comment, R.id.tv_cancel, R.id.tv_submit})
+    @OnClick({R.id.btn_comment, R.id.tv_care, R.id.tv_cancel, R.id.tv_submit})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_comment:
@@ -129,24 +225,28 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
                 etComment.setFocusable(true);
                 etComment.setFocusableInTouchMode(true);
                 break;
+            case R.id.tv_care:
+                addAttentionTimes();
+                break;
             case R.id.tv_cancel:
                 includeComment.setVisibility(View.GONE);
                 hideSoftKey();
                 break;
             case R.id.tv_submit:
-                toast("解答成功");
                 includeComment.setVisibility(View.GONE);
-                hideSoftKey();
-
-                JSONObject jsonObject = new JSONObject();
+                if (TextUtils.isEmpty(etComment.getText())) {
+                    toast("请输入内容");
+                    return;
+                }
+                showProgress();
+                addAnsFlag = 1;
                 jsonObject.put("username", LoginBean.getInstance().getUsername());
-                jsonObject.put("queId", "");//问题ID
-                jsonObject.put("ansContent", etComment.getText().toString());
+                jsonObject.put("ansContent", YxxUtils.URLEncode(etComment.getText().toString()));
                 PresenterManager.getInstance()
                         .setmIView(this)
                         .setCall(RetrofitUtil.getInstance()
                                 .createReq(IService.class).addAnswer(jsonObject.toJSONString()))
-                        .request();
+                        .request(YXXConstants.INVOKE_API_SECOND_TIME);
                 break;
         }
     }

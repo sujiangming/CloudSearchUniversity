@@ -30,6 +30,7 @@
             android:paddingTop="@dimen/space_12_dp">
 
             <TextView
+                android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="贵州"
@@ -37,6 +38,7 @@
                 android:textSize="@dimen/font_18_sp" />
 
             <TextView
+                android:id="@+id/tv_weli"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/space_25_dp"
@@ -45,6 +47,7 @@
                 android:textSize="@dimen/font_18_sp" />
 
             <TextView
+                android:id="@+id/tv_score"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/space_24_dp"
@@ -71,16 +74,22 @@
             android:textColor="@color/color4a4a4a"
             android:textSize="@dimen/font_14_sp" />
 
-        <ListView
-            android:id="@+id/lv_same_score"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/smart_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:paddingBottom="75dp"
-            android:paddingTop="@dimen/space_10_dp">
+            android:paddingBottom="@dimen/space_50_dp">
 
-        </ListView>
+            <ListView
+                android:id="@+id/lv_same_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:dividerHeight="0dp"
+                android:paddingTop="@dimen/space_10_dp">
+
+            </ListView>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
     </LinearLayout>
 
     <RelativeLayout

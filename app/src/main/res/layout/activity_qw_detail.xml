@@ -105,7 +105,7 @@
                 android:layout_below="@id/tv_content"
                 android:layout_marginTop="@dimen/space_18_dp"
                 android:layout_toLeftOf="@id/tv_care"
-                android:text="1000"
+                android:text="0"
                 android:textColor="@color/color808080"
                 android:textSize="@dimen/font_12_sp" />
 
@@ -117,7 +117,7 @@
                 android:layout_marginRight="@dimen/space_2_dp"
                 android:layout_marginTop="@dimen/space_18_dp"
                 android:layout_toLeftOf="@id/tv_care_count"
-                android:drawableLeft="@drawable/img_word3x"
+                android:drawableLeft="@drawable/attention_count"
                 android:drawablePadding="@dimen/space_2_dp"
                 android:gravity="center_vertical"
                 android:text="关注"
@@ -132,7 +132,7 @@
                 android:layout_marginRight="@dimen/space_5_dp"
                 android:layout_marginTop="@dimen/space_18_dp"
                 android:layout_toLeftOf="@id/tv_care_desc"
-                android:text="110"
+                android:text="0"
                 android:textColor="@color/color808080"
                 android:textSize="@dimen/font_12_sp" />
 
@@ -144,7 +144,7 @@
                 android:layout_marginRight="@dimen/space_2_dp"
                 android:layout_marginTop="@dimen/space_18_dp"
                 android:layout_toLeftOf="@id/tv_scan_count"
-                android:drawableLeft="@drawable/img_eye3x"
+                android:drawableLeft="@drawable/liulan"
                 android:drawablePadding="@dimen/space_2_dp"
                 android:gravity="center_vertical"
                 android:text="浏览"

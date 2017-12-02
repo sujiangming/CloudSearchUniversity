@@ -5,22 +5,31 @@ package com.gk.beans;
  */
 
 public class SameScoreItem {
-    private String name;
-    private boolean isMoreData;
+    private int highestScore;
+    private int lowestScore;
+    private String schoolName;
 
-    public String getName() {
-        return name;
+    public int getHighestScore() {
+        return highestScore;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setHighestScore(int highestScore) {
+        this.highestScore = highestScore;
     }
 
-    public boolean isMoreData() {
-        return isMoreData;
+    public int getLowestScore() {
+        return lowestScore;
     }
 
-    public void setMoreData(boolean moreData) {
-        isMoreData = moreData;
+    public void setLowestScore(int lowestScore) {
+        this.lowestScore = lowestScore;
+    }
+
+    public String getSchoolName() {
+        return schoolName;
+    }
+
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 }
