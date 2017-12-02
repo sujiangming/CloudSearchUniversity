@@ -108,43 +108,42 @@ public class LoginBean implements Serializable {
                 return;
             }
             LoginBean loginBean = JSON.parseObject(objectStr, LoginBean.class);
-            setInstance(loginBean);
+            instance = loginBean;
+            save();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     private void setInstance(LoginBean loginBean) {
-        this.setAdministrator(loginBean.isAdministrator());
-        this.setCreateDate(loginBean.getCreateDate());
-        this.setEnabled(loginBean.isEnabled());
-        this.setMale(loginBean.isMale());
-        this.setMobile(loginBean.getMobile());
-        this.setPassword(loginBean.getPassword());
-        this.setSalt(loginBean.getSalt());
-        this.setUsername(loginBean.getUsername());
-        this.setBanned(loginBean.isBanned());
-        this.setLatestLoginIp(loginBean.getLatestLoginIp());
-        this.setLatestLoginTime(loginBean.getLatestLoginTime());
-        this.setRanking(loginBean.getRanking());
-        this.setScore(loginBean.getScore());
-        this.setVipLevel(loginBean.getVipLevel());
-        this.setCname(loginBean.getCname());
-        this.setHeadImg(loginBean.getHeadImg());
-        this.setNickName(loginBean.getNickName());
         this.setAddress(loginBean.getAddress());
+        this.setAdministrator(loginBean.isAdministrator());
+        this.setBanned(loginBean.isBanned());
         this.setBirthday(loginBean.getBirthday());
         this.setClassGrade(loginBean.getClassGrade());
-        this.setNation(loginBean.getNation());
         this.setCompanyId(loginBean.getCompanyId());
-        this.setEmail(loginBean.getEmail());
-        this.setEname(loginBean.getEname());
-        this.setRoles(loginBean.getRoles());
-        this.setType(loginBean.getType());
-        this.setSchool(loginBean.getSchool());
+        this.setCreateDate(loginBean.getCreateDate());
         this.setDepts(loginBean.getDepts());
+        this.setEmail(loginBean.getEmail());
+        this.setEnabled(loginBean.isEnabled());
+        this.setEname(loginBean.getEname());
+        this.setHeadImg(loginBean.getHeadImg());
+        this.setLatestLoginIp(loginBean.getLatestLoginIp());
+        this.setLatestLoginTime(loginBean.getLatestLoginTime());
+        this.setMale(loginBean.isMale());
+        this.setMobile(loginBean.getMobile());
+        this.setNation(loginBean.getNation());
+        this.setNickName(loginBean.getNickName());
+        this.setRanking(loginBean.getRanking());
+        this.setRoles(loginBean.getRoles());
+        this.setSalt(loginBean.getSalt());
+        this.setSchool(loginBean.getSchool());
+        this.setScore(loginBean.getScore());
+        this.setSubjectType(loginBean.getSubjectType());
+        this.setType(loginBean.getType());
+        this.setUsername(loginBean.getUsername());
+        this.setVipLevel(loginBean.getVipLevel());
         this.setWeixin(loginBean.getWeixin());
-        this.setWlDesc(loginBean.getWlDesc());
     }
 
     public void saveLoginBean(LoginBean loginBean) {
@@ -501,8 +500,9 @@ public class LoginBean implements Serializable {
         return heartTest;
     }
 
-    public void setHeartTest(String heartTest) {
+    public LoginBean setHeartTest(String heartTest) {
         this.heartTest = heartTest;
+        return instance;
     }
 
     public static long getSerialVersionUID() {
