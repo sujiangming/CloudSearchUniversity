@@ -89,7 +89,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private String emptyStr = "";
     private JSONObject jsonObject = new JSONObject();
     private List<String> areaNameList;
-    private EditText[] editTexts = {et_comment_common, et_school_1, et_school_2, et_school_3, et_school_4, et_school_5};
+    private EditText[] editTexts;
 
     @Override
     public int getResourceId() {
@@ -98,6 +98,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
 
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
+        editTexts = new EditText[]{et_comment_common, et_school_1, et_school_2, et_school_3, et_school_4, et_school_5};
         initData();
         initKeyBoardParameter();
     }
@@ -106,13 +107,13 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         if (loginBean != null) {
             tvScore.setText(loginBean.getScore() == null ? emptyStr : loginBean.getScore());
             tvRank.setText(loginBean.getRanking() == null ? emptyStr : loginBean.getRanking());
-            tvProvince.setText(loginBean.getAddress() == null ? emptyStr : loginBean.getAddress());
+            tvProvince.setText(loginBean.getWishProvince() == null ? emptyStr : "已选" + loginBean.getWishProvince().length + "个");
             tvWenli.setText(loginBean.getWlDesc());
-            tvYixiang.setText(loginBean.getSchool() == null ? emptyStr : loginBean.getSchool());
+            tvYixiang.setText(loginBean.getWishUniversity() == null ? emptyStr : "已选" + loginBean.getWishUniversity().length + "个");
         }
     }
 
-    @OnClick({R.id.tv_score, R.id.tv_rank, R.id.tv_wenli, R.id.tv_yixiang, R.id.tv_province, R.id.tv_status, R.id.tv_cancel, R.id.tv_submit, R.id.rich_wish, R.id.rtv_zj
+    @OnClick({R.id.tv_score, R.id.tv_rank, R.id.tv_wenli, R.id.tv_yixiang, R.id.tv_province, R.id.tv_status, R.id.rich_wish, R.id.rtv_zj
             , R.id.tv_cancel_common, R.id.tv_submit_common, R.id.tv_cancel_university,
             R.id.tv_submit_university, R.id.tv_cancel_province, R.id.tv_submit_province})
     public void onViewClicked(View view) {
@@ -135,11 +136,11 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 break;
             case R.id.tv_status:
                 break;
-            case R.id.tv_cancel:
+            case R.id.tv_cancel_common:
                 hideEditDialog();
                 hideSoftKey();
                 break;
-            case R.id.tv_submit:
+            case R.id.tv_submit_common:
                 invokeService(0, 0);
                 break;
             case R.id.rich_wish:
@@ -171,15 +172,19 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 }
                 String[] chooseSchools = universities.toArray(new String[universities.size()]);
                 LoginBean.getInstance().setWishUniversity(chooseSchools).save();
-                hideEditDialogProvince();
+                hideEditDialogUniversity();
                 tvProvince.setText("已选" + chooseSchools.length + "个");
                 hideSoftKey();
                 break;
             case R.id.tv_cancel_province:
                 hideEditDialogProvince();
                 hideSoftKey();
+                yourChoicesName.clear();
                 break;
             case R.id.tv_submit_province:
+                for (int i = 0; i < yourChoicesName.size(); i++) {
+                    yourChoices.add(UniversityAreaEnum.getIndex(yourChoicesName.get(i)));
+                }
                 Integer[] choiceArray = yourChoices.toArray(new Integer[yourChoices.size()]);
                 LoginBean.getInstance().setWishProvince(choiceArray).save();
                 hideEditDialogProvince();
@@ -239,6 +244,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     }
 
     List<Integer> yourChoices = new ArrayList<>();
+    List<String> yourChoicesName = new ArrayList<>();
 
     private void showMultiChoiceDialog() {
         showEditDialogProvince();
@@ -254,16 +260,16 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 public void onClick(View view) {
                     String tag = (String) view.getTag();
                     if ("0".equals(tag)) {
-                        if (yourChoices.size() >= 5) {
+                        if (yourChoicesName.size() >= 5) {
                             toast("您最多只能选择五个意向省份");
                             return;
                         }
                         checkBox.setImageResource(R.drawable.gouxuan);
-                        yourChoices.add(UniversityAreaEnum.getIndex(items[finalI]));
+                        yourChoicesName.add(items[finalI]);
                         view.setTag("1");
                     } else {
                         checkBox.setImageResource(R.drawable.not_gouxuan);
-                        yourChoices.remove(UniversityAreaEnum.getIndex(items[finalI]));
+                        yourChoicesName.remove(items[finalI]);
                         view.setTag("0");
                     }
                 }
@@ -371,15 +377,17 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         switch (requestCode) {
             case 1:
                 LoginBean.getInstance().setScore(loginBean.getScore()).save();
+                hideEditDialog();
                 break;
             case 2:
                 LoginBean.getInstance().setRanking(loginBean.getRanking()).save();
+                hideEditDialog();
                 break;
             case 3:
+                mDialog.dismiss();
                 LoginBean.getInstance().setSubjectType(loginBean.getSubjectType()).save();
                 break;
         }
-        mDialog.dismiss();
         hideProgress();
         hideSoftKey();
     }
@@ -387,7 +395,15 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     @Override
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
-        mDialog.dismiss();
+        switch (requestCode) {
+            case 1:
+            case 2:
+                hideEditDialog();
+                break;
+            case 3:
+                mDialog.dismiss();
+                break;
+        }
         hideProgress();
         hideSoftKey();
     }
