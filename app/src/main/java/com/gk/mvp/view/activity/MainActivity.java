@@ -88,6 +88,10 @@ public class MainActivity extends SjmBaseActivity {
         return llLesson;
     }
 
+    public LinearLayout getLlVideo() {
+        return llLive;
+    }
+
     private FragmentManager fragmentManager;
     private LectureFragment lectureFragment = null;
     private HomeFragment homeFragment = null;

@@ -18,9 +18,12 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.LiveVideoDetailActivity;
+import com.gk.mvp.view.activity.MainActivity;
+import com.gk.mvp.view.activity.MaterialListActivity;
+import com.gk.mvp.view.activity.QuerySchoolActivity;
+import com.gk.mvp.view.activity.WishReportEnterActivity;
 import com.gk.mvp.view.adpater.LiveVideoAdapter;
 import com.gk.tools.GlideImageLoader;
-import com.gk.tools.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
@@ -41,7 +44,7 @@ import butterknife.BindView;
 
 public class LiveVideoFragment extends SjmBaseFragment {
     @BindView(R.id.banner_live)
-    Banner bannerLive;
+    Banner banner;
     @BindView(R.id.live_list)
     ListView liveList;
     @BindView(R.id.smart_rf_live)
@@ -81,11 +84,6 @@ public class LiveVideoFragment extends SjmBaseFragment {
         initBanner();
         liveVideoAdapter = new LiveVideoAdapter(getContext());
         liveList.setAdapter(liveVideoAdapter);
-        //这个方法和将listView及其父元素隐藏掉的效果是一样的
-        //View listEmptyView = View.inflate(getContext(), R.layout.error_tip, (ViewGroup) liveList.getParent().getParent());
-        //liveList.setEmptyView(listEmptyView);
-        //如果下行代码放在这里的话，每次进来都预先会看到无数据的提示信息
-        //liveList.setEmptyView(linearLayout);
         liveList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -126,24 +124,56 @@ public class LiveVideoFragment extends SjmBaseFragment {
     }
 
     private void initBanner() {
-        List<String> imageList = new ArrayList<>();
-        List<AdsBean.MDataBean> mDataBeans = AdsBean.getInstance().getMData();
+        List<AdsBean.MDataBean> mDataBeans = AdsBean.getInstance().getVideoPageAds();
         if (mDataBeans == null || mDataBeans.size() == 0) {
             return;
         }
+        final List<String> imageList = new ArrayList<>();
+        final List<String> imageNameList = new ArrayList<>();
+        final List<String> imageRedirectUrlList = new ArrayList<>();
         for (int i = 0; i < mDataBeans.size(); i++) {
-            AdsBean.MDataBean mDataBean = mDataBeans.get(i);
-            if (mDataBean.getType() == 2) {
-                imageList.add(mDataBean.getUrl());
-            }
+            imageList.add(mDataBeans.get(i).getUrl());
+            imageNameList.add(mDataBeans.get(i).getName());
+            imageRedirectUrlList.add(mDataBeans.get(i).getRedirectUrl());
         }
-        bannerLive.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
-        bannerLive.setOnBannerListener(new OnBannerListener() {
+        banner.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
+        banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                ToastUtils.toast(getContext(), "第 " + position + " 张图片");
+                goActivityByRedirectUrl(imageRedirectUrlList.get(position));
             }
         });
+    }
+
+    private void goActivityByRedirectUrl(String redirectUr) {
+        Intent intent = new Intent();
+        switch (redirectUr) {
+            case "schoolList"://大学列表
+                openNewActivityByIntent(QuerySchoolActivity.class, intent);
+                break;
+            case "schoolVideoList"://视频列表
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.changeNavStyle(mainActivity.getLlVideo());
+                break;
+            case "pastQuestion"://历史真题
+                intent.putExtra("type", 2);
+                intent.putExtra("course", "");
+                openNewActivityByIntent(MaterialListActivity.class, intent);
+                break;
+            case "simulationQuestion"://模拟试卷
+                intent.putExtra("type", 3);
+                intent.putExtra("course", "");
+                openNewActivityByIntent(MaterialListActivity.class, intent);
+                break;
+            case "teacherRoom"://名师讲堂
+                intent.putExtra("type", 1);
+                intent.putExtra("course", "");
+                openNewActivityByIntent(MaterialListActivity.class, intent);
+                break;
+            case "applicationPaper"://志愿报告
+                openNewActivity(WishReportEnterActivity.class);
+                break;
+        }
     }
 
     private void initSmartRefreshLayout() {

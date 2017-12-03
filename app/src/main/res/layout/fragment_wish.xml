@@ -318,8 +318,13 @@
         android:textSize="@dimen/font_16_sp" />
 
     <include
-        android:id="@+id/et_content"
-        layout="@layout/common_edit"
+        android:id="@+id/common_info_edit"
+        layout="@layout/common_info_edit"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/university_edit"
+        layout="@layout/common_university_edit"
         android:visibility="gone" />
 
     <include

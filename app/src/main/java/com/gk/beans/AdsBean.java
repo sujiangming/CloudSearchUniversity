@@ -8,6 +8,7 @@ import com.gk.global.YXXConstants;
 import com.gk.tools.JdryPersistence;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -69,6 +70,26 @@ public class AdsBean implements Serializable {
         this.mData = mData;
     }
 
+    public List<MDataBean> getShouYeAds() {
+        List<MDataBean> list = new ArrayList<>();
+        for (MDataBean md : mData) {
+            if (md.getType() == 1) {//首页广告图片
+                list.add(md);
+            }
+        }
+        return list;
+    }
+
+    public List<MDataBean> getVideoPageAds() {
+        List<MDataBean> list = new ArrayList<>();
+        for (MDataBean md : mData) {
+            if (md.getType() == 2) {//首页广告图片
+                list.add(md);
+            }
+        }
+        return list;
+    }
+
     public static class MDataBean implements Serializable {
         /**
          * id : 2c948a825fba8f33015fbaafb16d001e
@@ -81,6 +102,7 @@ public class AdsBean implements Serializable {
         private String name;
         private int type;
         private String url;
+        private String redirectUrl;
 
         public String getId() {
             return id;
@@ -112,6 +134,14 @@ public class AdsBean implements Serializable {
 
         public void setUrl(String url) {
             this.url = url;
+        }
+
+        public String getRedirectUrl() {
+            return redirectUrl;
+        }
+
+        public void setRedirectUrl(String redirectUrl) {
+            this.redirectUrl = redirectUrl;
         }
     }
 }

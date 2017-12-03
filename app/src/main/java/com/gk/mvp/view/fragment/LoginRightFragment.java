@@ -149,8 +149,8 @@ public class LoginRightFragment extends SjmBaseFragment {
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
-                loginBean.setPassword(password);
                 LoginBean.getInstance().saveLoginBean(loginBean);
+                LoginBean.getInstance().setPassword(password).save();
                 if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
                     openNewActivity(MainActivity.class);
                 }

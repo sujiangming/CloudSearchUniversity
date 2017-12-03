@@ -1,5 +1,6 @@
 package com.gk.mvp.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -10,6 +11,7 @@ import com.gk.mvp.view.activity.InterestActivity;
 import com.gk.mvp.view.activity.LqRiskActivity;
 import com.gk.mvp.view.activity.MBTIActivity;
 import com.gk.mvp.view.activity.MainActivity;
+import com.gk.mvp.view.activity.MaterialListActivity;
 import com.gk.mvp.view.activity.ProfessionalQueryActivity;
 import com.gk.mvp.view.activity.QWActivity;
 import com.gk.mvp.view.activity.QuerySchoolActivity;
@@ -20,6 +22,7 @@ import com.gk.mvp.view.activity.VIPActivity;
 import com.gk.mvp.view.activity.WishReportEnterActivity;
 import com.gk.tools.GlideImageLoader;
 import com.youth.banner.Banner;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,18 +49,56 @@ public class HomeFragment extends SjmBaseFragment {
     }
 
     private void initBanner() {
-        List<String> imageList = new ArrayList<>();
-        List<AdsBean.MDataBean> mDataBeans = AdsBean.getInstance().getMData();
+        List<AdsBean.MDataBean> mDataBeans = AdsBean.getInstance().getShouYeAds();
         if (mDataBeans == null || mDataBeans.size() == 0) {
             return;
         }
+        final List<String> imageList = new ArrayList<>();
+        final List<String> imageNameList = new ArrayList<>();
+        final List<String> imageRedirectUrlList = new ArrayList<>();
         for (int i = 0; i < mDataBeans.size(); i++) {
-            AdsBean.MDataBean mDataBean = mDataBeans.get(i);
-            if (mDataBean.getType() == 1) {
-                imageList.add(mDataBean.getUrl());
-            }
+            imageList.add(mDataBeans.get(i).getUrl());
+            imageNameList.add(mDataBeans.get(i).getName());
+            imageRedirectUrlList.add(mDataBeans.get(i).getRedirectUrl());
         }
         banner.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
+        banner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                goActivityByRedirectUrl(imageRedirectUrlList.get(position));
+            }
+        });
+    }
+
+    private void goActivityByRedirectUrl(String redirectUr) {
+        Intent intent = new Intent();
+        switch (redirectUr) {
+            case "schoolList"://大学列表
+                openNewActivityByIntent(QuerySchoolActivity.class, intent);
+                break;
+            case "schoolVideoList"://视频列表
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.changeNavStyle(mainActivity.getLlLesson());
+                break;
+            case "pastQuestion"://历史真题
+                intent.putExtra("type", 2);
+                intent.putExtra("course", "");
+                openNewActivityByIntent(MaterialListActivity.class, intent);
+                break;
+            case "simulationQuestion"://模拟试卷
+                intent.putExtra("type", 3);
+                intent.putExtra("course", "");
+                openNewActivityByIntent(MaterialListActivity.class, intent);
+                break;
+            case "teacherRoom"://名师讲堂
+                intent.putExtra("type", 1);
+                intent.putExtra("course", "");
+                openNewActivityByIntent(MaterialListActivity.class, intent);
+                break;
+            case "applicationPaper"://志愿报告
+                openNewActivity(WishReportEnterActivity.class);
+                break;
+        }
     }
 
     //如果你需要考虑更好的体验，可以这么操作

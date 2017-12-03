@@ -79,7 +79,7 @@ public class LoginBean implements Serializable {
     private int vipLevel;
     private String weixin;
     private String wlDesc;
-    private String wishUniversity;
+    private String[] wishUniversity;
     private Integer[] wishProvince;
     private String heartTest;
 
@@ -478,11 +478,11 @@ public class LoginBean implements Serializable {
         this.wlDesc = wlDesc;
     }
 
-    public String getWishUniversity() {
+    public String[] getWishUniversity() {
         return wishUniversity;
     }
 
-    public LoginBean setWishUniversity(String wishUniversity) {
+    public LoginBean setWishUniversity(String[] wishUniversity) {
         this.wishUniversity = wishUniversity;
         return instance;
     }

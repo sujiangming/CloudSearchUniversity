@@ -54,21 +54,27 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     TextView tvProvince;
     @BindView(R.id.tv_status)
     TextView tvStatus;
-    @BindView(R.id.et_content)
-    View rlContent;
+    @BindView(R.id.et_comment_common)
+    EditText et_comment_common;
     @BindView(R.id.et_school_1)
-    EditText etComment;
+    EditText et_school_1;
     @BindView(R.id.et_school_2)
-    EditText etComment2;
+    EditText et_school_2;
     @BindView(R.id.et_school_3)
-    EditText etComment3;
+    EditText et_school_3;
     @BindView(R.id.et_school_4)
-    EditText etComment4;
+    EditText et_school_4;
     @BindView(R.id.et_school_5)
-    EditText etComment5;
+    EditText et_school_5;
 
     @BindView(R.id.lv_province)
     LinearLayout listView;
+
+    @BindView(R.id.common_info_edit)
+    View commonInfoEdit;
+
+    @BindView(R.id.university_edit)
+    View universityEdit;
 
     @BindView(R.id.choose_province)
     View chooseProvince;
@@ -83,6 +89,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private String emptyStr = "";
     private JSONObject jsonObject = new JSONObject();
     private List<String> areaNameList;
+    private EditText[] editTexts = {et_comment_common, et_school_1, et_school_2, et_school_3, et_school_4, et_school_5};
 
     @Override
     public int getResourceId() {
@@ -106,7 +113,8 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     }
 
     @OnClick({R.id.tv_score, R.id.tv_rank, R.id.tv_wenli, R.id.tv_yixiang, R.id.tv_province, R.id.tv_status, R.id.tv_cancel, R.id.tv_submit, R.id.rich_wish, R.id.rtv_zj
-            , R.id.tv_cancel_province, R.id.tv_submit_province})
+            , R.id.tv_cancel_common, R.id.tv_submit_common, R.id.tv_cancel_university,
+            R.id.tv_submit_university, R.id.tv_cancel_province, R.id.tv_submit_province})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_score:
@@ -120,7 +128,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 break;
             case R.id.tv_yixiang:
                 requestCode = 4;
-                showEditDialog();
+                showEditDialogUniversity();
                 break;
             case R.id.tv_province:
                 showMultiChoiceDialog();
@@ -138,6 +146,35 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
             case R.id.rtv_zj:
                 openNewActivity(VIPActivity.class);
                 break;
+            case R.id.tv_cancel_university:
+                hideEditDialogUniversity();
+                hideSoftKey();
+                break;
+            case R.id.tv_submit_university:
+                List<String> universities = new ArrayList<>();
+
+                String school1 = et_school_1.getText().toString();
+                String school2 = et_school_2.getText().toString();
+                String school3 = et_school_3.getText().toString();
+                String school4 = et_school_4.getText().toString();
+                String school5 = et_school_5.getText().toString();
+
+                setSchoolName(universities, school1);
+                setSchoolName(universities, school2);
+                setSchoolName(universities, school3);
+                setSchoolName(universities, school4);
+                setSchoolName(universities, school5);
+
+                if (universities.size() == 0) {
+                    toast("请输入一个您中意的学校");
+                    return;
+                }
+                String[] chooseSchools = universities.toArray(new String[universities.size()]);
+                LoginBean.getInstance().setWishUniversity(chooseSchools).save();
+                hideEditDialogProvince();
+                tvProvince.setText("已选" + chooseSchools.length + "个");
+                hideSoftKey();
+                break;
             case R.id.tv_cancel_province:
                 hideEditDialogProvince();
                 hideSoftKey();
@@ -151,6 +188,12 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
+    private void setSchoolName(List<String> list, String str) {
+        if (!TextUtils.isEmpty(str)) {
+            list.add(str);
+        }
+    }
+
     private void updateInfo(View view, int key) {
         TextView textView = (TextView) view;
         if (TextUtils.isEmpty(textView.getText())) {
@@ -160,14 +203,26 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     }
 
     private void showEditDialog() {
-        if (rlContent.getVisibility() == View.GONE) {
-            rlContent.setVisibility(View.VISIBLE);
+        if (commonInfoEdit.getVisibility() == View.GONE) {
+            commonInfoEdit.setVisibility(View.VISIBLE);
         }
     }
 
     private void hideEditDialog() {
-        if (rlContent.getVisibility() == View.VISIBLE) {
-            rlContent.setVisibility(View.GONE);
+        if (commonInfoEdit.getVisibility() == View.VISIBLE) {
+            commonInfoEdit.setVisibility(View.GONE);
+        }
+    }
+
+    private void showEditDialogUniversity() {
+        if (universityEdit.getVisibility() == View.GONE) {
+            universityEdit.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideEditDialogUniversity() {
+        if (universityEdit.getVisibility() == View.VISIBLE) {
+            universityEdit.setVisibility(View.GONE);
         }
     }
 
@@ -208,7 +263,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                         view.setTag("1");
                     } else {
                         checkBox.setImageResource(R.drawable.not_gouxuan);
-                        yourChoices.remove(finalI);
+                        yourChoices.remove(UniversityAreaEnum.getIndex(items[finalI]));
                         view.setTag("0");
                     }
                 }
@@ -251,14 +306,24 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     }
 
     private void hideSoftKey() {
-        //隐藏软盘
-        InputMethodManager imm = (InputMethodManager) etComment.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(etComment.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        //editText失去焦点
-        etComment.clearFocus();
-        //清空数据
-        etComment.setHint(etHitStr);
-        etComment.setText(emptyStr);
+        for (EditText editText : editTexts) {
+            //隐藏软盘
+            InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            //editText失去焦点
+            editText.clearFocus();
+            //清空数据
+            editText.setHint(etHitStr);
+            editText.setText(emptyStr);
+        }
+    }
+
+    private void clearAllEditView() {
+        for (EditText editText : editTexts) {
+            //清空数据
+            editText.setHint(etHitStr);
+            editText.setText(emptyStr);
+        }
     }
 
     /**
@@ -268,18 +333,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
      */
     private void invokeService(int flag, int value) {
         if (flag == 0 && isNull()) {
-            return;
-        }
-        String text = etComment.getText().toString();
-        if (requestCode >= 4) {
-            switch (requestCode) {
-                case 4:
-                    LoginBean.getInstance().setWishUniversity(text).save();
-                    hideEditDialog();
-                    hideSoftKey();
-                    tvYixiang.setText(text);
-                    break;
-            }
+            toast(etHitStr);
             return;
         }
         showProgress();
@@ -289,10 +343,10 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         switch (requestCode) {
             case 1:
-                jsonObject.put("score", etComment.getText().toString());
+                jsonObject.put("score", et_comment_common.getText().toString());
                 break;
             case 2:
-                jsonObject.put("ranking", etComment.getText().toString());
+                jsonObject.put("ranking", et_comment_common.getText().toString());
                 break;
             case 3:
                 jsonObject.put("subjectType", value);
@@ -303,7 +357,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     }
 
     private boolean isNull() {
-        if (TextUtils.isEmpty(etComment.getText())) {
+        if (TextUtils.isEmpty(et_comment_common.getText())) {
             toast(etHitStr);
             return true;
         }
@@ -341,8 +395,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
-            etComment.setHint(etHitStr);
-            etComment.setText(emptyStr);
+            clearAllEditView();
         }
     }
 }

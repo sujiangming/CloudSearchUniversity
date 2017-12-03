@@ -151,5 +151,10 @@
         <activity
             android:name=".mvp.view.activity.MultiItemRvActivity"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.AdsDeatilActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 </manifest>
