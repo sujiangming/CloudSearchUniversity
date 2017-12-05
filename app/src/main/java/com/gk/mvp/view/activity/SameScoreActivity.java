@@ -61,12 +61,6 @@ public class SameScoreActivity extends SjmBaseActivity {
         tvSameTop10.setVisibility(View.GONE);
         relativeLayout.setVisibility(View.GONE);
         lvSameScore.setPadding(0, 0, 0, 0);
-//        for (int i = 10; i < 50; ++i) {
-//            SameScoreItem sameScoreItem = new SameScoreItem();
-//            sameScoreItem.setName("清华大学" + i);
-//            sameScoreItem.setMoreData(true);
-//            stringList.add(sameScoreItem);
-//        }
         adapter.notifyDataSetChanged();
     }
 

@@ -71,6 +71,9 @@ public class AdsBean implements Serializable {
     }
 
     public List<MDataBean> getShouYeAds() {
+        if (mData == null || mData.size() == 0) {
+            return null;
+        }
         List<MDataBean> list = new ArrayList<>();
         for (MDataBean md : mData) {
             if (md.getType() == 1) {//首页广告图片
@@ -81,6 +84,9 @@ public class AdsBean implements Serializable {
     }
 
     public List<MDataBean> getVideoPageAds() {
+        if (mData == null || mData.size() == 0) {
+            return null;
+        }
         List<MDataBean> list = new ArrayList<>();
         for (MDataBean md : mData) {
             if (md.getType() == 2) {//首页广告图片

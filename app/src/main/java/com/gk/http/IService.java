@@ -291,4 +291,22 @@ public interface IService {
     @FormUrlEncoded
     @POST("app/api/university/getSameScoreDirection")
     Call<CommonBean> getSameScoreDirection(@Field("data") String data);
+
+
+    /**
+     * 心理测试霍兰德试题接口
+     *
+     * @return
+     */
+    @GET("app/api/career/getCareerTestHld")
+    Call<CommonBean> getCareerTestHld();
+
+    /**
+     * 心理测试 MBTI试题接口
+     *
+     * @return
+     */
+    @GET("app/api/career/getCareerTestMbti")
+    Call<CommonBean> getCareerTestMbti();
+
 }

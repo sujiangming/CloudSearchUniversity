@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/space_5_dp"
+    android:paddingLeft="@dimen/space_12_dp"
+    android:paddingRight="@dimen/space_12_dp"
+    android:paddingTop="@dimen/space_5_dp">
+
+    <TextView
+        android:id="@+id/tv_ti_mu_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="开始哭是靠山"
+        android:textColor="@color/color353535"
+        android:textSize="@dimen/font_14_sp" />
+
+    <Button
+        android:id="@+id/btn_ti_mu_no"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:background="@color/colorNavigation"
+        android:text="否"
+        android:textColor="@color/color555555"
+        android:textSize="@dimen/font_14_sp" />
+
+    <Button
+        android:id="@+id/btn_ti_mu_yes"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/space_30_dp"
+        android:layout_marginLeft="@dimen/space_5_dp"
+        android:background="@color/colorNavigation"
+        android:text="是"
+        android:textColor="@color/color555555"
+        android:textSize="@dimen/font_14_sp" />
+</LinearLayout>

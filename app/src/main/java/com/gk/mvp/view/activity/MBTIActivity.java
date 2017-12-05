@@ -29,5 +29,6 @@ public class MBTIActivity extends SjmBaseActivity {
     @OnClick(R.id.btn_mbti_test)
     public void onViewClicked() {
         toast("开始测试");
+        openNewActivity(HLDTestDetailActivity.class);
     }
 }

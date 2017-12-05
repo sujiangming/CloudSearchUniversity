@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.VerifyCodeBean;
@@ -22,6 +23,8 @@ import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.tools.ToastUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -144,6 +147,15 @@ public class LoginLeftFragment extends SjmBaseFragment {
         }
     }
 
+    private void getAdsInfo() {
+        showProgress();
+        PresenterManager.getInstance()
+                .setmContext(getContext())
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList())
+                .request(YXXConstants.INVOKE_API_THREE_TIME);
+    }
+
     @Override
     public <T> void fillWithData(T t, int order) {
         switch (order) {
@@ -165,12 +177,14 @@ public class LoginLeftFragment extends SjmBaseFragment {
                 LoginBean loginBean = JSON.parseObject(user, LoginBean.class);
                 LoginBean.getInstance().saveLoginBean(loginBean);
                 Log.e(LoginLeftFragment.class.getName(), JSON.toJSONString(LoginBean.getInstance()));
-                if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
-                    openNewActivity(MainActivity.class);
-                }
-                closeActivity();
+                getAdsInfo();
                 break;
             case YXXConstants.INVOKE_API_THREE_TIME:
+                CommonBean commonBean1 = (CommonBean) t;
+                List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean1.getData().toString(), AdsBean.MDataBean.class);
+                AdsBean.getInstance().saveAdsBean(mDataBeans);
+                openNewActivity(MainActivity.class);
+                closeActivity();
                 break;
         }
         hideProgress();

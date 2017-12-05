@@ -17,6 +17,10 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        greendao {
+            //每次新增表或者新增字段或者删除表，都需要更改这个地方的数值，只认正整数
+            schemaVersion 1
+        }
     }
 }
 

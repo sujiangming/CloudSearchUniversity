@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <com.gk.mvp.view.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_ti_mu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_10_dp"
+        android:text="一共有5道题，共1页"
+        android:textColor="@color/color19B4D4"
+        android:textSize="@dimen/font_14_sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_10_dp"
+        android:progressDrawable="@drawable/same_score_progress" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingBottom="@dimen/space_5_dp"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp"
+        android:paddingTop="@dimen/space_5_dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_5_dp"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_5_dp">
+
+                <TextView
+                    android:id="@+id/tv_ti_mu_content_0"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="开始哭是靠了时间的老师老实交代时间段老师的就是的申领单申领单历史上领导历史大事电力建设的收"
+                    android:textColor="@color/color353535"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <RadioGroup
+                    android:id="@+id/radio_group_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/btn_ti_mu_no_0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:textColor="@color/color555555"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <RadioButton
+                        android:id="@+id/btn_ti_mu_yes_0"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_5_dp"
+                        android:text="是"
+                        android:textColor="@color/color555555"
+                        android:textSize="@dimen/font_14_sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1_px"
+                android:layout_marginTop="@dimen/space_5_dp"
+                android:background="@color/color555555" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_5_dp"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_5_dp">
+
+                <TextView
+                    android:id="@+id/tv_ti_mu_content_1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="开始哭是靠山"
+                    android:textColor="@color/color353535"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <RadioGroup
+                    android:id="@+id/radio_group_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/btn_ti_mu_no_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:textColor="@color/color555555"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <RadioButton
+                        android:id="@+id/btn_ti_mu_yes_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_5_dp"
+                        android:text="是"
+                        android:textColor="@color/color555555"
+                        android:textSize="@dimen/font_14_sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1_px"
+                android:layout_marginTop="@dimen/space_5_dp"
+                android:background="@color/color555555" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_5_dp"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_5_dp">
+
+                <TextView
+                    android:id="@+id/tv_ti_mu_content_2"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="开始哭是靠山"
+                    android:textColor="@color/color353535"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <RadioGroup
+                    android:id="@+id/radio_group_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/btn_ti_mu_no_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:textColor="@color/color555555"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <RadioButton
+                        android:id="@+id/btn_ti_mu_yes_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_5_dp"
+                        android:text="是"
+                        android:textColor="@color/color555555"
+                        android:textSize="@dimen/font_14_sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1_px"
+                android:layout_marginTop="@dimen/space_5_dp"
+                android:background="@color/color555555" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_5_dp"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_5_dp">
+
+                <TextView
+                    android:id="@+id/tv_ti_mu_content_3"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="开始哭是靠山"
+                    android:textColor="@color/color353535"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <RadioGroup
+                    android:id="@+id/radio_group_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/btn_ti_mu_no_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:textColor="@color/color555555"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <RadioButton
+                        android:id="@+id/btn_ti_mu_yes_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_5_dp"
+                        android:text="是"
+                        android:textColor="@color/color555555"
+                        android:textSize="@dimen/font_14_sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1_px"
+                android:layout_marginTop="@dimen/space_5_dp"
+                android:background="@color/color555555" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/space_5_dp"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_5_dp">
+
+                <TextView
+                    android:id="@+id/tv_ti_mu_content_4"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="开始哭是靠山"
+                    android:textColor="@color/color353535"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <RadioGroup
+                    android:id="@+id/radio_group_4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/btn_ti_mu_no_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="否"
+                        android:textColor="@color/color555555"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <RadioButton
+                        android:id="@+id/btn_ti_mu_yes_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_5_dp"
+                        android:text="是"
+                        android:textColor="@color/color555555"
+                        android:textSize="@dimen/font_14_sp" />
+                </RadioGroup>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1_px"
+                android:layout_marginTop="@dimen/space_5_dp"
+                android:background="@color/color555555" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/btn_next"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/space_35_dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_12_dp"
+        android:background="@drawable/more_data_bg"
+        android:text="下一页"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/font_14_sp" />
+
+</LinearLayout>

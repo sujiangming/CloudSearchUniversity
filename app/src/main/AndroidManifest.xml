@@ -156,5 +156,9 @@
             android:name=".mvp.view.activity.AdsDeatilActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".mvp.view.activity.HLDTestDetailActivity"
+            android:screenOrientation="portrait" />
+
     </application>
 </manifest>
