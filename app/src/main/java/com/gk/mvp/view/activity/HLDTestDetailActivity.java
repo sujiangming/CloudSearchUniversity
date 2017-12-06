@@ -4,7 +4,10 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
+import android.view.KeyEvent;
+import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -41,46 +44,9 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
     ProgressBar progressBar;
     @BindView(R.id.btn_next)
     Button btnNext;
-    @BindView(R.id.tv_ti_mu_content_0)
-    TextView tvTiMuContent0;
-    @BindView(R.id.btn_ti_mu_no_0)
-    RadioButton btnTiMuNo0;
-    @BindView(R.id.btn_ti_mu_yes_0)
-    RadioButton btnTiMuYes0;
-    @BindView(R.id.radio_group_0)
-    RadioGroup radioGroup0;
-    @BindView(R.id.tv_ti_mu_content_1)
-    TextView tvTiMuContent1;
-    @BindView(R.id.btn_ti_mu_no_1)
-    RadioButton btnTiMuNo1;
-    @BindView(R.id.btn_ti_mu_yes_1)
-    RadioButton btnTiMuYes1;
-    @BindView(R.id.radio_group_1)
-    RadioGroup radioGroup1;
-    @BindView(R.id.tv_ti_mu_content_2)
-    TextView tvTiMuContent2;
-    @BindView(R.id.btn_ti_mu_no_2)
-    RadioButton btnTiMuNo2;
-    @BindView(R.id.btn_ti_mu_yes_2)
-    RadioButton btnTiMuYes2;
-    @BindView(R.id.radio_group_2)
-    RadioGroup radioGroup2;
-    @BindView(R.id.tv_ti_mu_content_3)
-    TextView tvTiMuContent3;
-    @BindView(R.id.btn_ti_mu_no_3)
-    RadioButton btnTiMuNo3;
-    @BindView(R.id.btn_ti_mu_yes_3)
-    RadioButton btnTiMuYes3;
-    @BindView(R.id.radio_group_3)
-    RadioGroup radioGroup3;
-    @BindView(R.id.tv_ti_mu_content_4)
-    TextView tvTiMuContent4;
-    @BindView(R.id.btn_ti_mu_no_4)
-    RadioButton btnTiMuNo4;
-    @BindView(R.id.btn_ti_mu_yes_4)
-    RadioButton btnTiMuYes4;
-    @BindView(R.id.radio_group_4)
-    RadioGroup radioGroup4;
+
+    @BindView(R.id.ll_hld_item)
+    LinearLayout layout;
 
     @OnClick(R.id.btn_next)
     public void nextBtnClick() {
@@ -88,26 +54,27 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
             toast("您还有题没有答，请您答完！");
             return;
         }
+        currentPage++;
         if (currentPage > pageCount) {
             toast("已作答完毕");
+            closeActivity(this);
             return;
         }
-        ++currentPage;
-        clearSelected();
-        currentShowPage = currentPage + 1;
+        if (currentPage == (pageCount - 1)) {
+            btnNext.setText("提  交");
+        }
         updatePage();
-        initData(tableList = getFiveRec());
+        tableList = getFiveRec();
+        createUI();
     }
 
-    private TextView[] textViews;
-    private RadioGroup[] radioGroups;
+    private List<RadioGroup> radioGroups = new ArrayList<>();
     private List<HLDTestBean> list = new ArrayList<>();
     private List<HLDTable> tableList = new ArrayList<>();
     private HLDTableDao hldTableDao = YXXApplication.getDaoSession().getHLDTableDao();
     private int pageCount = 0;
-    private int currentPage = 0;
-    private int currentFinishNum = -1;
-    private int currentShowPage = 1;
+    private int currentPage = 1;
+    private int tmpSum = 0;
 
 
     @Override
@@ -124,15 +91,7 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "霍兰德心里测试题", 0);
-        textViews = new TextView[]{tvTiMuContent0, tvTiMuContent1, tvTiMuContent2, tvTiMuContent3, tvTiMuContent4};
-        radioGroups = new RadioGroup[]{radioGroup0, radioGroup1, radioGroup2, radioGroup3, radioGroup4};
         httpRequest();
-        btnChange(radioGroup0);
-        btnChange(radioGroup1);
-        btnChange(radioGroup2);
-        btnChange(radioGroup3);
-        btnChange(radioGroup4);
-
     }
 
     private void httpRequest() {
@@ -152,6 +111,8 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
             return;
         }
         list = hldTestBeans;
+        hldTableDao.deleteAll();
+        getFiveRecList();
         for (HLDTestBean h : list) {
             HLDTable hldTable = new HLDTable();
             hldTable.setHldId(h.getId());
@@ -166,9 +127,11 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         } else {
             pageCount = list.size() / 5 + 1;
         }
+        getFiveRecList();
         updatePage();
-        initData(tableList = getFiveRec());
-        progressBar.setMax(list.size() - 2);
+        tableList = getFiveRec();
+        createUI();
+        progressBar.setMax(list.size());
         hideProgress();
     }
 
@@ -178,22 +141,90 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         hideProgress();
     }
 
+    private void createUI() {
+
+        radioGroups.clear();
+        layout.removeAllViews();
+
+        for (int i = 0; i < tableList.size(); i++) {
+            HLDTable hldTable = tableList.get(i);
+            View view = View.inflate(this, R.layout.hld_item, null);
+            TextView textView = view.findViewById(R.id.tv_ti_mu_content_0);
+            RadioGroup radioGroup = view.findViewById(R.id.radio_group_0);
+            radioGroup.setTag(hldTable.getHldId());
+            textView.setText(hldTable.getTitle());
+            btnChange(radioGroup, i);
+            radioGroups.add(radioGroup);
+            layout.addView(view);
+
+        }
+    }
+
+    private String tagIndex = null;
+
+    private void btnChange(RadioGroup radioGroup, final int pos) {
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+                switch (checkId) {
+                    case R.id.btn_ti_mu_no_0:
+                        selectRadioButton(pos, false);
+                        updateProgressBar();
+                        break;
+                    case R.id.btn_ti_mu_yes_0:
+                        selectRadioButton(pos, true);
+                        updateProgressBar();
+                        break;
+                }
+            }
+        });
+    }
+
     private void updatePage() {
-        tvTiMu.setText("一共" + list.size() + "道题，共" + pageCount + "页，" + "当前是第" + currentShowPage + "页，答题进度如下");
+        tvTiMu.setText("一共" + list.size() + "道题，共" + pageCount + "页，" + "当前是第" + currentPage + "页，答题进度如下");
     }
 
     public List<HLDTable> getFiveRec() {
         List<HLDTable> listMsg = hldTableDao.queryBuilder()
-                .offset(currentPage * 5).limit(5).list();
+                .offset((currentPage - 1) * 5).limit(5).list();
         return listMsg;
     }
 
-    private void initData(List<HLDTable> listMsg) {
-        int size = listMsg.size();
-        for (int i = 0; i < size; i++) {
-            textViews[i].setText(listMsg.get(i).getTitle());
-        }
+    public List<HLDTable> getFiveRecList() {
+        List<HLDTable> listMsg = hldTableDao.loadAll();
+        Log.e("List<HLDTable> size:", "总数：" + listMsg.size());
+        return listMsg;
     }
+
+    private boolean isSelected() {
+        for (RadioGroup radio : radioGroups) {
+            RadioButton radioButton = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
+            if (radioButton == null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    private void selectRadioButton(int pos, boolean isSelect) {
+        HLDTable hldTable = tableList.get(pos);
+
+        Log.e("before hldTable :", JSON.toJSONString(hldTable));
+
+        hldTable.setIsSelected(isSelect);
+        hldTableDao.update(hldTable);
+
+        Log.e("after hldTable :", JSON.toJSONString(tableList.get(pos)));
+
+        getFiveRecList();
+    }
+
+    private void updateProgressBar() {
+        tmpSum++;
+        Log.e("tmpSum", tmpSum + "");
+        progressBar.setProgress(tmpSum);
+    }
+
 
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -216,82 +247,12 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         dialog.show();
     }
 
-    private void btnChange(RadioGroup radioGroup) {
-        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
-                switch (checkId) {
-                    case R.id.btn_ti_mu_no_0:
-                        selectRadioButton(0, false);
-                        break;
-                    case R.id.btn_ti_mu_yes_0:
-                        selectRadioButton(0, true);
-                        break;
-                    case R.id.btn_ti_mu_no_1:
-                        selectRadioButton(1, false);
-                        break;
-                    case R.id.btn_ti_mu_yes_1:
-                        selectRadioButton(1, true);
-                        break;
-                    case R.id.btn_ti_mu_no_2:
-                        selectRadioButton(2, false);
-                        break;
-                    case R.id.btn_ti_mu_yes_2:
-                        selectRadioButton(2, true);
-                        break;
-                    case R.id.btn_ti_mu_no_3:
-                        selectRadioButton(3, false);
-                        break;
-                    case R.id.btn_ti_mu_yes_3:
-                        selectRadioButton(3, true);
-                        break;
-                    case R.id.btn_ti_mu_no_4:
-                        selectRadioButton(4, false);
-                        break;
-                    case R.id.btn_ti_mu_yes_4:
-                        selectRadioButton(4, true);
-                        break;
-                }
-            }
-        });
-    }
-
-    private void clearSelected() {
-        int tmp = 0;
-        for (RadioGroup radio : radioGroups) {
-            radio.clearCheck();
-            updateProgressBar(tmp);
-            tmp++;
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+            showDialog();
         }
-    }
-
-    private boolean isSelected() {
-        for (RadioGroup radio : radioGroups) {
-            RadioButton radioButton = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
-            if (radioButton == null) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    private void selectRadioButton(int pos, boolean isSelect) {
-        HLDTable hldTable = tableList.get(pos);
-        hldTable.setIsSelected(isSelect);
-        hldTableDao.insertOrReplace(hldTable);
-        countFinishTiMu(pos);
-    }
-
-    private void countFinishTiMu(int pos) {
-        if (pos != currentFinishNum) {
-            currentFinishNum++;
-            Log.e("currentFinishNum", currentFinishNum + "");
-        }
-        updateProgressBar(currentFinishNum);
-    }
-
-    private void updateProgressBar(int num) {
-        progressBar.setProgress(num);
+        return super.onKeyDown(keyCode, event);
     }
 
 }

@@ -62,4 +62,6 @@ dependencies {
     compile 'com.android.support:support-v4:26.1.0'
     compile 'com.baoyz.actionsheet:library:1.1.4'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
+    //微信集成
+    compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
 }
