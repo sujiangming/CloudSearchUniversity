@@ -311,11 +311,39 @@ public interface IService {
     Call<CommonBean> getCareerTestMbti();
 
     /**
-     * 获取微信调用接口
+     * 获取微信调用access_token接口
      *
      * @return
      */
     @GET
     Call<ResponseBody> getAccessToken(@Url String url);
+
+    /**
+     * 获取微信调用用户信息接口
+     *
+     * @return
+     */
+    @GET
+    Call<ResponseBody> getWXUserInfo(@Url String url);
+
+    /**
+     * 微信登录接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/login/weixinLogin")
+    Call<CommonBean> weixinLogin(@Field("data") String data);
+
+    /**
+     * 微信绑定登录接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/login/userBindingWeixin")
+    Call<CommonBean> userBindingWeixin(@Field("data") String data);
 
 }

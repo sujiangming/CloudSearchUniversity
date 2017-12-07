@@ -159,6 +159,17 @@
         <activity
             android:name=".mvp.view.activity.HLDTestDetailActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.view.activity.MBTITestDetailActivity"
+            android:screenOrientation="portrait" />
 
+        <!--微信-->
+        <!--注册微信回调 WXEntryActivity -->
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent" />
     </application>
 </manifest>

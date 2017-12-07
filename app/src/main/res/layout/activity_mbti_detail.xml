@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.gk.mvp.view.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_ti_mu"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/space_10_dp"
+        android:text="一共有5道题，共1页"
+        android:textColor="@color/color19B4D4"
+        android:textSize="@dimen/font_14_sp" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_10_dp"
+        android:progressDrawable="@drawable/same_score_progress" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorF0EFF3"
+        android:paddingBottom="@dimen/space_5_dp"
+        android:paddingTop="@dimen/space_5_dp">
+
+        <LinearLayout
+            android:id="@+id/ll_hld_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingBottom="@dimen/space_12_dp"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_12_dp"
+                android:text="开设的申领单"
+                android:textColor="@color/color353535"
+                android:textSize="@dimen/font_14_sp" />
+
+            <TextView
+                android:id="@+id/tv_select_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12_dp"
+                android:background="@android:color/white"
+                android:paddingBottom="@dimen/space_12_dp"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_12_dp"
+                android:text="开设的申领单"
+                android:textColor="@color/color353535"
+                android:textSize="@dimen/font_14_sp" />
+
+            <TextView
+                android:id="@+id/tv_select_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12_dp"
+                android:background="@android:color/white"
+                android:paddingBottom="@dimen/space_12_dp"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_12_dp"
+                android:text="开设的申领单"
+                android:textColor="@color/color353535"
+                android:textSize="@dimen/font_14_sp" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
