@@ -25,12 +25,12 @@
 
     <TextView
         android:id="@+id/tv_student_name"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/iv_blue_line"
         android:layout_marginTop="@dimen/space_10_dp"
         android:paddingLeft="@dimen/space_15_dp"
-        android:text="姓名：   张三"
+        android:text="姓名：   "
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -41,7 +41,7 @@
         android:layout_below="@id/tv_student_name"
         android:layout_marginTop="@dimen/space_5_dp"
         android:paddingLeft="@dimen/space_15_dp"
-        android:text="生源地：  贵州"
+        android:text="生源地：  "
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -52,7 +52,7 @@
         android:layout_below="@id/tv_student_address"
         android:layout_marginTop="@dimen/space_5_dp"
         android:paddingLeft="@dimen/space_15_dp"
-        android:text="成绩：  550分   28645名"
+        android:text="成绩：  "
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -63,7 +63,7 @@
         android:layout_below="@id/tv_student_score_and_rank"
         android:layout_marginTop="@dimen/space_5_dp"
         android:paddingLeft="@dimen/space_15_dp"
-        android:text="文理科：  理科"
+        android:text="文理科：  "
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -74,7 +74,7 @@
         android:layout_below="@id/tv_wen_li_ke"
         android:layout_marginTop="@dimen/space_5_dp"
         android:paddingLeft="@dimen/space_15_dp"
-        android:text="意向省市：  北京、上海、山东"
+        android:text="意向省市：  "
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -85,7 +85,7 @@
         android:layout_below="@id/tv_wish_province"
         android:layout_marginTop="@dimen/space_5_dp"
         android:paddingLeft="@dimen/space_15_dp"
-        android:text="意向专业：  机械工程，电子，计算机"
+        android:text="意向专业：  "
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -107,7 +107,6 @@
         android:layout_below="@id/tv_wish_zy"
         android:layout_marginTop="@dimen/space_5_dp"
         android:layout_toRightOf="@id/tv_mind_test"
-        android:text="  创新能力强，动手能力强，具有较强的逻辑思维能力"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 </RelativeLayout>

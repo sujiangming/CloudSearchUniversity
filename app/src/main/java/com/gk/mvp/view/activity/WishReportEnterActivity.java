@@ -52,7 +52,8 @@ public class WishReportEnterActivity extends SjmBaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_rg:
-                vipAuth();
+                //vipAuth();  fix me
+                openNewActivity(WishReportResultActivity.class);
                 break;
             case R.id.btn_zj:
                 vipAuth();

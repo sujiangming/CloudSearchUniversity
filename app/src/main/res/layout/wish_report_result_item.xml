@@ -16,11 +16,13 @@
         android:text="本科第一批"
         android:textColor="@color/color302f30"
         android:textSize="@dimen/font_16_sp"
+        android:visibility="gone"
         app:drawable_height="@dimen/space_21_dp"
         app:drawable_location="left"
         app:drawable_src="@drawable/wish_result_icon3x" />
 
     <TextView
+        android:id="@+id/tv_tuijuan_size"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/space_21_dp"
         android:layout_toRightOf="@id/rtv_bk"
@@ -28,7 +30,8 @@
         android:paddingLeft="@dimen/space_5_dp"
         android:text="(推荐志愿6个）"
         android:textColor="@color/color808080"
-        android:textSize="@dimen/font_12_sp" />
+        android:textSize="@dimen/font_12_sp"
+        android:visibility="gone" />
 
     <TextView
         android:id="@+id/tv_wish_bk_1"
@@ -42,6 +45,7 @@
         android:textSize="@dimen/font_14_sp" />
 
     <TextView
+        android:id="@+id/tv_tiaoji"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
@@ -51,7 +55,6 @@
         android:text="服从调剂"
         android:textColor="@color/color555555"
         android:textSize="@dimen/font_12_sp" />
-
 
     <TableLayout
         android:id="@+id/table"
@@ -97,88 +100,18 @@
             android:layout_height="wrap_content"
             android:scaleType="fitXY"
             android:src="@drawable/my_wish_line3x" />
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"
-            android:layout_marginTop="@dimen/space_4_dp"
-            android:paddingTop="@dimen/space_5_dp">
-
-            <TextView
-                android:id="@+id/tv_left_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="1、土木工程"
-                android:textColor="@color/color808080"
-                android:textSize="@dimen/font_12_sp" />
-
-            <TextView
-                android:id="@+id/tv_right_1"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="2、计算机科学与技术"
-                android:textColor="@color/color808080"
-                android:textSize="@dimen/font_12_sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"
-            android:layout_marginTop="1dp"
-            android:paddingTop="@dimen/space_5_dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="3、岩土工程"
-                android:textColor="@color/color808080"
-                android:textSize="@dimen/font_12_sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="4、软件工程"
-                android:textColor="@color/color808080"
-                android:textSize="@dimen/font_12_sp" />
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"
-            android:layout_marginTop="1dp"
-            android:paddingTop="@dimen/space_5_dp">
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="5、法学"
-                android:textColor="@color/color808080"
-                android:textSize="@dimen/font_12_sp" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="1dp"
-                android:layout_weight="1"
-                android:gravity="right"
-                android:text="6、数学与应用数学"
-                android:textColor="@color/color808080"
-                android:textSize="@dimen/font_12_sp" />
-        </TableRow>
     </TableLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_tuijuan_zy"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/table"
+        android:layout_marginLeft="@dimen/space_30_dp"
+        android:layout_marginRight="@dimen/space_25_dp"
+        android:layout_marginTop="@dimen/space_4_dp"
+        android:orientation="vertical">
+
+    </LinearLayout>
+
 </RelativeLayout>

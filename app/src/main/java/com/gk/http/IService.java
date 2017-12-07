@@ -346,4 +346,49 @@ public interface IService {
     @POST("app/login/userBindingWeixin")
     Call<CommonBean> userBindingWeixin(@Field("data") String data);
 
+    /**
+     * 生成志愿报告接口
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/report/generate")
+    Call<CommonBean> generateWishReport(@Field("data") String data);
+
+    /**
+     * 录取风险接口
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/adrisk/evaluateReport")
+    Call<CommonBean> evaluateReport(@Field("data") String data);
+
+    /**
+     * 更新考生意向高校接口
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/intent/updateUserIntentSch")
+    Call<CommonBean> updateUserIntentSch(@Field("data") String data);
+
+    /**
+     * 更新考生意向省份接口
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/intent/updateUserIntentArea")
+    Call<CommonBean> updateUserIntentArea(@Field("data") String data);
+
+    /**
+     * 忘记密码接口
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/login/forgetPassword")
+    Call<CommonBean> forgetPassword(@Field("data") String data);
+
 }
