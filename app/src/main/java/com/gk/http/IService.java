@@ -14,6 +14,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Url;
 
 /**
  * Created by JDRY_SJM on 2017/4/17.
@@ -308,5 +309,13 @@ public interface IService {
      */
     @GET("app/api/career/getCareerTestMbti")
     Call<CommonBean> getCareerTestMbti();
+
+    /**
+     * 获取微信调用接口
+     *
+     * @return
+     */
+    @GET
+    Call<ResponseBody> getAccessToken(@Url String url);
 
 }

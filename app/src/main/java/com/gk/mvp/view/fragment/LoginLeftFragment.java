@@ -17,12 +17,14 @@ import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.VerifyCodeBean;
+import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.tools.ToastUtils;
+import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import java.util.List;
 
@@ -45,6 +47,22 @@ public class LoginLeftFragment extends SjmBaseFragment {
     TextView tvLogin;
     @BindView(R.id.tv_ps)
     TextView tvPs;
+
+    @OnClick(R.id.rtv_weixin_login)
+    public void weixinLogin() {
+        wxLogin();
+    }
+
+    public void wxLogin() {
+        if (!YXXApplication.sApi.isWXAppInstalled()) {
+            toast("您还未安装微信客户端");
+            return;
+        }
+        final SendAuth.Req req = new SendAuth.Req();
+        req.scope = "snsapi_userinfo";
+        req.state = "diandi_wx_login";
+        YXXApplication.sApi.sendReq(req);
+    }
 
     private String descPrefix = "温馨提示：未注册云寻校的手机，登录时将自动注册，且代表您已同意";
     private boolean isLogin = false;

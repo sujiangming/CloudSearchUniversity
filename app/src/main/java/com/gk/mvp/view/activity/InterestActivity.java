@@ -23,11 +23,12 @@ public class InterestActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        setTopBar(topBar, "兴趣测试", 0);
+        setTopBar(topBar, "霍兰德性格测试", 0);
     }
 
     @OnClick(R.id.btn_mbti_test)
     public void onViewClicked() {
         toast("开始测试");
+        openNewActivity(HLDTestDetailActivity.class);
     }
 }

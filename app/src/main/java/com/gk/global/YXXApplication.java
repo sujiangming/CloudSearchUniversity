@@ -12,6 +12,9 @@ import com.gk.beans.LoginBean;
 import com.gk.listener.GlidePauseOnScrollListener;
 import com.gk.load.GlideImageLoader;
 import com.gk.tools.AppManager;
+import com.gk.wxapi.Constant;
+import com.gk.wxapi.WXEntryActivity;
+import com.tencent.mm.opensdk.openapi.IWXAPI;
 
 import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
@@ -28,11 +31,13 @@ public class YXXApplication extends Application {
     private static DaoSession daoSession;
     private static FunctionConfig functionConfig;
     private static CoreConfig coreConfig;
+    public static IWXAPI sApi;
 
     @Override
     public void onCreate() {
         super.onCreate();
         instance = this;
+        sApi = WXEntryActivity.initWeiXin(this, Constant.WECHAT_APPID);
         setupGreenDao();
         initAppManager();
         initLoginBean();
