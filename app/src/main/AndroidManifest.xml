@@ -163,6 +163,22 @@
             android:name=".mvp.view.activity.MBTITestDetailActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".mvp.view.activity.RiskTestMajorSchoolActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.RiskChooseSchoolActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.RiskQueryMajorActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.LqRiskTestResultActivity"
+            android:screenOrientation="portrait" />
+
         <!--微信-->
         <!--注册微信回调 WXEntryActivity -->
         <activity

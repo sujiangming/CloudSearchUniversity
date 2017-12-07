@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/ll_top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:background="@color/colorNavigation"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back_image"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/back_and_set"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:scaleType="centerInside"
+            android:src="@drawable/back_arrow" />
+
+        <android.support.v7.widget.SearchView
+            android:id="@+id/searchview"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_30_dp"
+            android:layout_weight="1"
+            android:background="@color/colorNavigation"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            app:iconifiedByDefault="false"
+            app:queryBackground="@android:color/white"
+            app:queryHint="请输入关键字" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:layout_below="@id/ll_top_bar"
+        android:background="@color/color353535" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_rf_query_school"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_line"
+        android:background="@color/colorF0EFF3"
+        android:paddingTop="@dimen/space_12_dp">
+
+        <ListView
+            android:id="@+id/lv_query_school"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/colorF0EFF3"
+            android:dividerHeight="@dimen/space_1_px">
+
+        </ListView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</RelativeLayout>

@@ -2,13 +2,11 @@ package com.gk.mvp.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.beans.LoginBean;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 
@@ -19,7 +17,7 @@ import butterknife.OnClick;
  * Created by JDRY-SJM on 2017/11/2.
  */
 
-public class LqRiskActivity extends SjmBaseActivity {
+public class LqRiskTestResultActivity extends SjmBaseActivity {
     @BindView(R.id.top_bar)
     TopBarView topBar;
     @BindView(R.id.tv_level_1)
@@ -32,9 +30,6 @@ public class LqRiskActivity extends SjmBaseActivity {
     RichText tvStudentScore;
     @BindView(R.id.tv_student_mb)
     RichText tvStudentMb;
-    @BindView(R.id.tv_wen_li_desc)
-    TextView tv_wen_li_desc;
-
 
     @BindView(R.id.tv_test_desc)
     TextView tv_test_desc;
@@ -49,8 +44,6 @@ public class LqRiskActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "录取测试", 0);
-        tvStudentScore.setText(LoginBean.getInstance().getScore());
-        tv_wen_li_desc.setText(LoginBean.getInstance().getAddress() + "|" + LoginBean.getInstance().getWlDesc());
     }
 
     @OnClick({R.id.tv_level_1, R.id.tv_level_2, R.id.ll_aim, R.id.btn_lq_risk_test})
@@ -63,10 +56,8 @@ public class LqRiskActivity extends SjmBaseActivity {
                 tvLevel2Click();
                 break;
             case R.id.ll_aim://进入高校和专业查询的页面
-                openWin();
                 break;
             case R.id.btn_lq_risk_test://立即测试
-                rightNowTest();
                 break;
 
         }
@@ -80,7 +71,6 @@ public class LqRiskActivity extends SjmBaseActivity {
         tvLevel2.setTextColor(0xFF555555);
         faultLevel = 1;
         tv_test_desc.setText("目标高校");
-        tvStudentMb.setHint("请选择目标高校");
     }
 
     private void tvLevel2Click() {
@@ -91,7 +81,6 @@ public class LqRiskActivity extends SjmBaseActivity {
         tvLevel2.setTextColor(0xFFFFFFFF);
         faultLevel = 2;
         tv_test_desc.setText("目标专业");
-        tvStudentMb.setHint("请选择目标专业");
     }
 
     private void openWin() {
@@ -102,25 +91,6 @@ public class LqRiskActivity extends SjmBaseActivity {
         } else {//进入专业查询页面
             intent.setClass(this, RiskQueryMajorActivity.class);
             startActivityForResult(intent, 119);
-        }
-    }
-
-    private void rightNowTest() {
-        if (TextUtils.isEmpty(tvStudentMb.getText())) {
-            toast("请选择目标学校或目标专业");
-            return;
-        }
-        openNewActivity(LqRiskTestResultActivity.class);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == 110) {//高校选择返回结果
-            String schoolName = data.getStringExtra("schoolName");
-            tvStudentMb.setText(schoolName);
-        } else {
-            String schoolName = data.getStringExtra("schoolName");
-            tvStudentMb.setText(schoolName);
         }
     }
 }

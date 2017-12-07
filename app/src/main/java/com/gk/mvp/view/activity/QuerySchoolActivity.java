@@ -73,27 +73,18 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 closeActivity(this);
                 break;
             case R.id.spinner1:
-//                if (rlChoose.getVisibility() == View.VISIBLE) {
-//                    return;
-//                }
                 rlChoose.setVisibility(View.VISIBLE);
                 gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityAreaEnum.getAreaList(), 1);
                 initGridViewAdapter();
                 type = 1;
                 break;
             case R.id.spinner2:
-//                if (rlChoose.getVisibility() == View.VISIBLE) {
-//                    return;
-//                }
                 rlChoose.setVisibility(View.VISIBLE);
                 gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityTypeEnum.getUniversityList(), 2);
                 initGridViewAdapter();
                 type = 2;
                 break;
             case R.id.spinner3:
-//                if (rlChoose.getVisibility() == View.VISIBLE) {
-//                    return;
-//                }
                 rlChoose.setVisibility(View.VISIBLE);
                 rlChoose.setVisibility(View.VISIBLE);
                 gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityFeatureEnum.getUniversityFeatureList(), 3);
@@ -101,9 +92,6 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 type = 3;
                 break;
             case R.id.spinner4:
-//                if (rlChoose.getVisibility() == View.VISIBLE) {
-//                    return;
-//                }
                 rlChoose.setVisibility(View.VISIBLE);
                 gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityLevelEnum.getUniversityLevelList(), 4);
                 initGridViewAdapter();

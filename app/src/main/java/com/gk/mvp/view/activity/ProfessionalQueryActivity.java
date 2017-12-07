@@ -61,7 +61,6 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
     ImageView backImage;
 
     private ProfessionalParentAdapter mAdapter;
-    //private List<String> nodesBeans = new ArrayList<>();
     private CommonAdapter<MajorQueryBean.DataBean> adapter;
     private TranslateAnimation mShowAction;
     private TranslateAnimation mHiddenAction;

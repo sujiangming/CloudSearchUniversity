@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.gk.mvp.view.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:layout_below="@id/top_bar"
+        android:background="@color/color353535" />
+
+    <TextView
+        android:id="@+id/tv_major_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tv_line"
+        android:background="@color/colorF0EFF3"
+        android:padding="@dimen/space_12_dp"
+        android:text="专业名称"
+        android:textColor="@color/color353535"
+        android:textSize="@dimen/font_16_sp" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/smart_rf_query_school"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tv_major_name"
+        android:background="@color/colorF0EFF3"
+        android:paddingTop="@dimen/space_12_dp">
+
+        <ListView
+            android:id="@+id/lv_query_school"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@color/colorF0EFF3"
+            android:dividerHeight="@dimen/space_1_px">
+
+        </ListView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+
+</RelativeLayout>

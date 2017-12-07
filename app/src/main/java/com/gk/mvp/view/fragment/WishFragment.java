@@ -377,15 +377,18 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         switch (requestCode) {
             case 1:
                 LoginBean.getInstance().setScore(loginBean.getScore()).save();
+                tvScore.setText(loginBean.getScore());
                 hideEditDialog();
                 break;
             case 2:
                 LoginBean.getInstance().setRanking(loginBean.getRanking()).save();
+                tvRank.setText(loginBean.getRanking());
                 hideEditDialog();
                 break;
             case 3:
                 mDialog.dismiss();
                 LoginBean.getInstance().setSubjectType(loginBean.getSubjectType()).save();
+                tvWenli.setText(loginBean.getWlDesc());
                 break;
         }
         hideProgress();

@@ -54,6 +54,7 @@
         android:src="@drawable/lq_yx3x" />
 
     <TextView
+        android:id="@+id/tv_wen_li_desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -66,7 +67,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_44_dp"
         android:layout_marginTop="@dimen/space_20_dp"
-        android:background="@android:color/white"
+        android:background="@drawable/menu_btn_press"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/space_20_dp"
@@ -85,12 +86,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/menu_btn_press"
-            android:clickable="true"
             android:drawablePadding="@dimen/space_15_dp"
             android:gravity="center_vertical|right"
+            android:hint="650分"
             android:paddingRight="@dimen/space_11_dp"
-            android:text="650分"
             android:textColor="@color/color8f8e94"
             android:textSize="@dimen/font_16_sp"
             app:drawable_height="@dimen/space_25_dp"
@@ -100,16 +99,19 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/ll_aim"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_44_dp"
         android:layout_marginTop="@dimen/space_20_dp"
-        android:background="@android:color/white"
+        android:background="@drawable/menu_btn_press"
+        android:clickable="true"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/space_20_dp"
         android:paddingRight="@dimen/space_10_dp">
 
         <TextView
+            android:id="@+id/tv_test_desc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -121,13 +123,11 @@
             android:id="@+id/tv_student_mb"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@drawable/menu_btn_press"
-            android:clickable="true"
+            android:layout_weight="2"
             android:drawablePadding="@dimen/space_15_dp"
             android:gravity="center_vertical|right"
+            android:hint="请输入目标高校"
             android:paddingRight="@dimen/space_11_dp"
-            android:text="650分"
             android:textColor="@color/color8f8e94"
             android:textSize="@dimen/font_16_sp"
             app:drawable_height="@dimen/space_25_dp"
