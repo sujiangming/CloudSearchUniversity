@@ -164,15 +164,15 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".mvp.view.activity.RiskTestMajorSchoolActivity"
+            android:name=".mvp.view.activity.LqRiskTestMajorSchoolActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".mvp.view.activity.RiskChooseSchoolActivity"
+            android:name=".mvp.view.activity.LqRiskChooseSchoolActivity"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".mvp.view.activity.RiskQueryMajorActivity"
+            android:name=".mvp.view.activity.LqRiskQueryMajorActivity"
             android:screenOrientation="portrait" />
 
         <activity

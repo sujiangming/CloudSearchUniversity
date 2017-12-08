@@ -82,6 +82,7 @@ public class LoginBean implements Serializable {
     private String[] wishUniversity;
     private Integer[] wishProvince;
     private String heartTest;
+    private boolean hasReport;
 
     private static final long serialVersionUID = 1L;
     private volatile static LoginBean instance = null;//volatile关键字来保证其线程间的可见性
@@ -505,7 +506,12 @@ public class LoginBean implements Serializable {
         return instance;
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
+    public boolean isHasReport() {
+        return hasReport;
+    }
+
+    public LoginBean setHasReport(boolean hasReport) {
+        this.hasReport = hasReport;
+        return instance;
     }
 }

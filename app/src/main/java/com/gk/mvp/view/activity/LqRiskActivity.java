@@ -97,10 +97,10 @@ public class LqRiskActivity extends SjmBaseActivity {
     private void openWin() {
         Intent intent = new Intent();
         if (faultLevel == 1) { //进入高校查询页面
-            intent.setClass(this, RiskChooseSchoolActivity.class);
+            intent.setClass(this, LqRiskChooseSchoolActivity.class);
             startActivityForResult(intent, 110);
         } else {//进入专业查询页面
-            intent.setClass(this, RiskQueryMajorActivity.class);
+            intent.setClass(this, LqRiskQueryMajorActivity.class);
             startActivityForResult(intent, 119);
         }
     }
@@ -110,7 +110,10 @@ public class LqRiskActivity extends SjmBaseActivity {
             toast("请选择目标学校或目标专业");
             return;
         }
-        openNewActivity(LqRiskTestResultActivity.class);
+        Intent intent = new Intent();
+        intent.putExtra("flag", faultLevel);
+        intent.putExtra("aim", tvStudentMb.getText().toString());
+        openNewActivityByIntent(LqRiskTestResultActivity.class, intent);
     }
 
     @Override

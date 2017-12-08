@@ -103,6 +103,14 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         initKeyBoardParameter();
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            initData();
+        }
+    }
+
     private void initData() {
         if (loginBean != null) {
             tvScore.setText(loginBean.getScore() == null ? emptyStr : loginBean.getScore());

@@ -1,17 +1,26 @@
 package com.gk.mvp.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
-import com.gk.mvp.view.custom.RichText;
+import com.gk.beans.CommonBean;
+import com.gk.beans.LoginBean;
+import com.gk.beans.LuQuRiskBean;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
+import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.tools.GlideImageLoader;
+
+import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by JDRY-SJM on 2017/11/2.
@@ -20,77 +29,99 @@ import butterknife.OnClick;
 public class LqRiskTestResultActivity extends SjmBaseActivity {
     @BindView(R.id.top_bar)
     TopBarView topBar;
-    @BindView(R.id.tv_level_1)
-    TextView tvLevel1;
-    @BindView(R.id.tv_level_2)
-    TextView tvLevel2;
-    @BindView(R.id.iv_lq)
-    ImageView imageView;
-    @BindView(R.id.tv_student_score)
-    RichText tvStudentScore;
-    @BindView(R.id.tv_student_mb)
-    RichText tvStudentMb;
+    @BindView(R.id.tv_my_score)
+    TextView tvMyScore;
+    @BindView(R.id.tv_my_aim_university)
+    TextView tvMyAimUniversity;
+    @BindView(R.id.tv_chart)
+    TextView tvChart;
+    @BindView(R.id.tv_tag_1)
+    TextView tvTag1;
+    @BindView(R.id.tv_lq_data)
+    TextView tvLqData;
+    @BindView(R.id.tv_zy_data)
+    TextView tvZyData;
+    @BindView(R.id.tv_td_data)
+    TextView tvTdData;
+    @BindView(R.id.tv_zx_data)
+    TextView tvZxData;
+    @BindView(R.id.tv_other_data)
+    TextView tvOtherData;
+    @BindView(R.id.ll_tuijuan_list)
+    LinearLayout llTuijuanList;
 
-    @BindView(R.id.tv_test_desc)
-    TextView tv_test_desc;
-
-    private int faultLevel = 1; //默认显示高校
+    private String valueDesc;
+    private int flag = 0;
 
     @Override
     public int getResouceId() {
-        return R.layout.activity_lq_risk_test;
+        return R.layout.activity_risk_result_detail;
     }
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        setTopBar(topBar, "录取测试", 0);
+        setTopBar(topBar, "录取风险", 0);
+        flag = getIntent().getIntExtra("flag", 0);
+        valueDesc = getIntent().getStringExtra("aim");
+        httpRequest();
     }
 
-    @OnClick({R.id.tv_level_1, R.id.tv_level_2, R.id.ll_aim, R.id.btn_lq_risk_test})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_level_1:
-                tvLevel1Click();
-                break;
-            case R.id.tv_level_2:
-                tvLevel2Click();
-                break;
-            case R.id.ll_aim://进入高校和专业查询的页面
-                break;
-            case R.id.btn_lq_risk_test://立即测试
-                break;
-
+    private void httpRequest() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("score", LoginBean.getInstance().getScore());
+        jsonObject.put("subjectName", LoginBean.getInstance().getSubjectType());
+        if (flag == 1) {
+            jsonObject.put("intentSch", valueDesc);
+            jsonObject.put("intentMajor", "");
+        } else {
+            jsonObject.put("intentSch", "");
+            jsonObject.put("intentMajor", valueDesc);
         }
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class)
+                        .evaluateReport(jsonObject.toJSONString()))
+                .request();
     }
 
-    private void tvLevel1Click() {
-        imageView.setImageResource(R.drawable.lq_yx3x);
-        tvLevel1.setBackgroundResource(R.drawable.fault_level_left_press);
-        tvLevel1.setTextColor(0xFFFFFFFF);
-        tvLevel2.setBackgroundResource(R.drawable.fault_level_right_normal);
-        tvLevel2.setTextColor(0xFF555555);
-        faultLevel = 1;
-        tv_test_desc.setText("目标高校");
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        CommonBean commonBean = (CommonBean) t;
+        LuQuRiskBean luQuRiskBean = JSON.parseObject(commonBean.getData().toString(), LuQuRiskBean.class);
+        if (luQuRiskBean == null) {
+            return;
+        }
+        initData(luQuRiskBean);
+        addTuiJianUniversity(luQuRiskBean.getRecommendSchs());
     }
 
-    private void tvLevel2Click() {
-        imageView.setImageResource(R.drawable.lq_zy3x);
-        tvLevel1.setBackgroundResource(R.drawable.fault_level_left_normal);
-        tvLevel1.setTextColor(0xFF555555);
-        tvLevel2.setBackgroundResource(R.drawable.fault_level_right_press);
-        tvLevel2.setTextColor(0xFFFFFFFF);
-        faultLevel = 2;
-        tv_test_desc.setText("目标专业");
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+
     }
 
-    private void openWin() {
-        Intent intent = new Intent();
-        if (faultLevel == 1) { //进入高校查询页面
-            intent.setClass(this, RiskChooseSchoolActivity.class);
-            startActivityForResult(intent, 110);
-        } else {//进入专业查询页面
-            intent.setClass(this, RiskQueryMajorActivity.class);
-            startActivityForResult(intent, 119);
+    private void initData(LuQuRiskBean luQuRiskBean) {
+        tvMyScore.setText("我的成绩：" + LoginBean.getInstance().getScore() + "分");
+        tvMyAimUniversity.setText("目标院校： " + (LoginBean.getInstance().getWishUniversity() == null ? "清华大学" : "贵州大学"));
+        tvChart.setText(luQuRiskBean.getAdmissionProbability());
+
+    }
+
+    private void addTuiJianUniversity(List<LuQuRiskBean.RecommendSchsBean> recommendSchsBeans) {
+        if (recommendSchsBeans == null || recommendSchsBeans.size() == 0) {
+            return;
+        }
+        GlideImageLoader imageLoader = new GlideImageLoader();
+        for (int i = 0; i < recommendSchsBeans.size(); i++) {
+            LuQuRiskBean.RecommendSchsBean bean = recommendSchsBeans.get(i);
+            View view = View.inflate(this, R.layout.risk_result_item, null);
+            TextView textView = view.findViewById(R.id.tv_university_name);
+            ImageView ivLogo = view.findViewById(R.id.iv_logo);
+
+            textView.setText(bean.getSchoolName());
+            imageLoader.displayImage(this, bean.getSchoolLogo(), ivLogo);
+
+            llTuijuanList.addView(view);
         }
     }
 }

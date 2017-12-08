@@ -6,10 +6,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gk.R;
+import com.gk.beans.LoginBean;
 import com.gk.mvp.view.custom.TopBarView;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by JDRY-SJM on 2017/11/1.
@@ -37,18 +37,48 @@ public class WishReportActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "志愿报告", 0);
+        tvHyLevel.setText(LoginBean.getInstance().getVipLevelDesc() == null ? "普通会员" : LoginBean.getInstance().getVipLevelDesc());
+        initData();
     }
 
-    @OnClick({R.id.ll_account, R.id.ll_about, R.id.tv_upgrate_vip})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.ll_account:
+    private void initData() {
+        switch (LoginBean.getInstance().getVipLevel()) {//1普通、2银卡、3金卡
+            case 1:
+                tvReportStatus.setText("不能生成");
+                tvUpgrateVip.setText("升级为VIP");
+                tvUpgrateVip.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        openNewActivity(VIPActivity.class);
+                    }
+                });
                 break;
-            case R.id.ll_about:
+            case 2:
+            case 3:
+                initDataAndAddListener();
                 break;
-            case R.id.tv_upgrate_vip:
-                openNewActivity(VIPActivity.class);
-                break;
+        }
+    }
+
+    private void initDataAndAddListener() {
+        if (LoginBean.getInstance().isHasReport()) {//已经生成报告的情况
+            tvReportStatus.setText("已经生成");
+            tvUpgrateVip.setText("立即查看");
+            tvUpgrateVip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openNewActivity(WishReportResultActivity.class);
+                }
+            });
+        } else {
+            tvReportStatus.setText("还未生成");
+            tvUpgrateVip.setText("立即生成");
+            tvUpgrateVip.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    openNewActivity(WishReportEnterActivity.class);
+                }
+            });
         }
     }
 }

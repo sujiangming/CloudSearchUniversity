@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <com.gk.mvp.view.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </com.gk.mvp.view.custom.TopBarView>
+
+    <TextView
+        android:id="@+id/tv_line"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:background="@color/color353535" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/space_10_dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_my_score"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_12_dp"
+                android:text="我的成绩：650分"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:id="@+id/tv_my_aim_university"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:paddingBottom="@dimen/space_12_dp"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_2_dp"
+                android:text="目标院校： 清华大学"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_12_sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="234dp"
+                android:layout_marginTop="@dimen/space_10_dp"
+                android:background="@color/colorWhite">
+
+                <TextView
+                    android:id="@+id/tv_lq_fx_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableLeft="@drawable/right_fiil_arrow"
+                    android:drawablePadding="@dimen/space_5_dp"
+                    android:paddingLeft="@dimen/space_12_dp"
+                    android:paddingTop="@dimen/space_7_dp"
+                    android:text="录取分析"
+                    android:textColor="@color/color555555"
+                    android:textSize="@dimen/font_12_sp" />
+
+                <TextView
+                    android:id="@+id/tv_line_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/space_1_px"
+                    android:layout_below="@id/tv_lq_fx_desc"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:background="#979797" />
+
+                <TextView
+                    android:id="@+id/tv_chart"
+                    android:layout_width="90dp"
+                    android:layout_height="90dp"
+                    android:layout_below="@id/tv_line_1"
+                    android:layout_marginLeft="@dimen/space_15_dp"
+                    android:layout_marginTop="@dimen/space_7_dp"
+                    android:background="@drawable/luqu_risk_bg3x"
+                    android:gravity="center"
+                    android:text="90%"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_12_sp" />
+
+                <TextView
+                    android:id="@+id/tv_b_y_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_line_1"
+                    android:layout_marginLeft="@dimen/space_15_dp"
+                    android:layout_marginTop="@dimen/space_15_dp"
+                    android:layout_toRightOf="@+id/tv_chart"
+                    android:text="保一保"
+                    android:textColor="@color/color555555"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:id="@+id/tv_risk_desc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_b_y_b"
+                    android:layout_marginLeft="@dimen/space_15_dp"
+                    android:layout_toRightOf="@+id/tv_chart"
+                    android:text="录取概率加高，可作为保底院校"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_10_sp" />
+
+                <TextView
+                    android:id="@+id/tv_tag_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_risk_desc"
+                    android:layout_marginLeft="@dimen/space_15_dp"
+                    android:layout_marginTop="@dimen/space_10_dp"
+                    android:layout_toRightOf="@+id/tv_chart"
+                    android:background="@drawable/risk_bg3x"
+                    android:gravity="center"
+                    android:text="录取数据"
+                    android:textColor="#2fa2cb"
+                    android:textSize="@dimen/font_10_sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_risk_desc"
+                    android:layout_marginLeft="@dimen/space_15_dp"
+                    android:layout_marginTop="@dimen/space_10_dp"
+                    android:layout_toRightOf="@+id/tv_tag_1"
+                    android:background="@drawable/risk_bg3x"
+                    android:gravity="center"
+                    android:text="招生计划"
+                    android:textColor="#2fa2cb"
+                    android:textSize="@dimen/font_10_sp" />
+
+                <TextView
+                    android:id="@+id/tv_lq_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_chart"
+                    android:layout_marginLeft="@dimen/space_35_dp"
+                    android:layout_marginTop="@dimen/space_15_dp"
+                    android:drawableLeft="@drawable/blue_circle_0"
+                    android:drawablePadding="@dimen/space_5_dp"
+                    android:text="录取数据：高校录取平均分、最低分、最高分、录取人数"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_10_sp" />
+
+                <TextView
+                    android:id="@+id/tv_zy_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_lq_data"
+                    android:layout_marginLeft="@dimen/space_35_dp"
+                    android:layout_marginTop="@dimen/space_2_dp"
+                    android:drawableLeft="@drawable/blue_circle"
+                    android:drawablePadding="@dimen/space_5_dp"
+                    android:text="专业数据：专业录取平均分、最低分、最高分、录取人数"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_10_sp" />
+
+                <TextView
+                    android:id="@+id/tv_td_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_zy_data"
+                    android:layout_marginLeft="@dimen/space_35_dp"
+                    android:layout_marginTop="@dimen/space_2_dp"
+                    android:drawableLeft="@drawable/blue_circle_2"
+                    android:drawablePadding="@dimen/space_5_dp"
+                    android:text="投档数据：历年投档数据，投档档次"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_10_sp" />
+
+                <TextView
+                    android:id="@+id/tv_zx_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_td_data"
+                    android:layout_marginLeft="@dimen/space_35_dp"
+                    android:layout_marginTop="@dimen/space_2_dp"
+                    android:drawableLeft="@drawable/red_circle"
+                    android:drawablePadding="@dimen/space_5_dp"
+                    android:text="录取走向：历年考生录取走向数据"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_10_sp" />
+
+                <TextView
+                    android:id="@+id/tv_other_data"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_zx_data"
+                    android:layout_marginLeft="@dimen/space_35_dp"
+                    android:layout_marginTop="@dimen/space_2_dp"
+                    android:drawableLeft="@drawable/red_circle"
+                    android:drawablePadding="@dimen/space_5_dp"
+                    android:text="其他数据：招生计划、报考趋势、院校热度、专业热度、报考难度"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_10_sp" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_tuijuan_desc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_10_dp"
+                android:background="@color/colorWhite"
+                android:drawableLeft="@drawable/right_fiil_arrow"
+                android:drawablePadding="@dimen/space_5_dp"
+                android:paddingBottom="@dimen/space_7_dp"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_7_dp"
+                android:text="相关推荐"
+                android:textColor="@color/color555555"
+                android:textSize="@dimen/font_12_sp" />
+
+            <TextView
+                android:id="@+id/tv_line_2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/space_1_px"
+                android:background="#979797" />
+
+            <LinearLayout
+                android:id="@+id/ll_tuijuan_list"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@color/colorWhite"
+                android:orientation="vertical">
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

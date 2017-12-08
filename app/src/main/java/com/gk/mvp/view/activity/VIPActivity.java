@@ -1,7 +1,9 @@
 package com.gk.mvp.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import com.gk.R;
 import com.gk.mvp.view.custom.TopBarView;
@@ -18,21 +20,14 @@ public class VIPActivity extends SjmBaseActivity {
     @BindView(R.id.tv_top_bar)
     TopBarView tvTopBar;
 
-    @Override
-    public int getResouceId() {
-        return R.layout.activity_vip;
-    }
+    @BindView(R.id.ll_gold)
+    LinearLayout llGold;
 
-    @Override
-    protected void onCreateByMe(Bundle savedInstanceState) {
-        tvTopBar.getTitleView().setText("VIP服务");
-        tvTopBar.getBackView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                closeActivity();
-            }
-        });
-    }
+    @BindView(R.id.ll_silve)
+    LinearLayout llSilve;
+
+    private String form = null;
+
 
     @OnClick({R.id.tv_open_gold, R.id.tv_open_silver})
     public void onViewClicked(View view) {
@@ -46,4 +41,28 @@ public class VIPActivity extends SjmBaseActivity {
         }
     }
 
+    @Override
+    public int getResouceId() {
+        return R.layout.activity_vip;
+    }
+
+    @Override
+    protected void onCreateByMe(Bundle savedInstanceState) {
+        setTopBar(tvTopBar, "VIP服务", 0);
+        initUIByForm();
+    }
+
+    private void initUIByForm() {
+        Intent intent = getIntent();
+        if (intent != null) {
+            form = intent.getStringExtra("form");
+            if (form != null) {
+                if (form.equals("vip_choose")) {
+                    llGold.setVisibility(View.GONE);
+                } else {
+                    llSilve.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
 }

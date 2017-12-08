@@ -1,5 +1,6 @@
 package com.gk.mvp.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.gk.mvp.view.activity.HelpCenterActivity;
 import com.gk.mvp.view.activity.MultiItemRvActivity;
 import com.gk.mvp.view.activity.PersonInfoActivity;
 import com.gk.mvp.view.activity.SetActivity;
+import com.gk.mvp.view.activity.VIPActivity;
 import com.gk.mvp.view.activity.WishReportActivity;
 import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.tools.GlideImageLoader;
@@ -74,8 +76,14 @@ public class UserFragment extends SjmBaseFragment {
                 openNewActivity(WishReportActivity.class);
                 break;
             case R.id.ll_vip_choose:
+                Intent intent = new Intent();
+                intent.putExtra("form", "vip_choose");
+                openNewActivityByIntent(VIPActivity.class, intent);
                 break;
             case R.id.ll_zj:
+                Intent intent1 = new Intent();
+                intent1.putExtra("form", "vip_zj");
+                openNewActivityByIntent(VIPActivity.class, intent1);
                 break;
             case R.id.ll_help_center:
                 openNewActivity(HelpCenterActivity.class);
