@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
@@ -30,28 +29,41 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tv_my_score"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
-                android:paddingLeft="@dimen/space_12_dp"
-                android:paddingTop="@dimen/space_12_dp"
-                android:text="我的成绩：650分"
-                android:textColor="@color/color808080"
-                android:textSize="@dimen/font_12_sp" />
+                android:orientation="vertical"
+                android:padding="@dimen/space_12_dp">
 
-            <TextView
-                android:id="@+id/tv_my_aim_university"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
-                android:paddingBottom="@dimen/space_12_dp"
-                android:paddingLeft="@dimen/space_12_dp"
-                android:paddingTop="@dimen/space_2_dp"
-                android:text="目标院校： 清华大学"
-                android:textColor="@color/color808080"
-                android:textSize="@dimen/font_12_sp" />
+                <TextView
+                    android:id="@+id/tv_my_score"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:text="我的成绩：650分"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_12_sp" />
+
+                <TextView
+                    android:id="@+id/tv_my_aim_major"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:text="目标专业： 金融工程"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_12_sp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_my_aim_university"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/colorWhite"
+                    android:text="目标院校： 清华大学"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_12_sp" />
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"

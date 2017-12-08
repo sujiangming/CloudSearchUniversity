@@ -4,11 +4,11 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:orientation="horizontal"
-    android:paddingBottom="10dp"
-    android:paddingTop="10dp">
+    android:paddingBottom="12dp"
+    android:paddingTop="12dp">
 
     <ImageView
-        android:id="@+id/iv_item"
+        android:id="@+id/iv_logo"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_centerVertical="true"
@@ -16,7 +16,7 @@
         android:src="@drawable/ysf_message_file_icon_mp4" />
 
     <TextView
-        android:id="@+id/tv_live_title"
+        android:id="@+id/tv_university_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/iv_item"
@@ -24,12 +24,12 @@
         android:maxLines="1"
         android:paddingLeft="@dimen/space_16_dp"
         android:paddingRight="@dimen/space_16_dp"
-        android:text="直播视频01"
+        android:text="清华大学"
         android:textColor="@color/color353535"
         android:textSize="18sp" />
 
     <TextView
-        android:id="@+id/tv_teacher"
+        android:id="@+id/tv_major_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_live_title"

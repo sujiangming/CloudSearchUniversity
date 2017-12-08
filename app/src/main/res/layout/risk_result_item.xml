@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/space_60_dp"
+    android:layout_height="wrap_content"
     android:background="@drawable/bottom_border"
     android:gravity="center_vertical"
     android:orientation="horizontal"
@@ -20,8 +20,10 @@
         android:layout_weight="1"
         android:ellipsize="end"
         android:maxLines="1"
+        android:paddingBottom="@dimen/space_20_dp"
         android:paddingLeft="@dimen/space_20_dp"
         android:paddingRight="@dimen/space_20_dp"
+        android:paddingTop="@dimen/space_20_dp"
         android:text="清华大学"
         android:textColor="@color/color302f30"
         android:textSize="@dimen/font_14_sp" />

@@ -45,6 +45,8 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
     TextView tvTdData;
     @BindView(R.id.tv_zx_data)
     TextView tvZxData;
+    @BindView(R.id.tv_my_aim_major)
+    TextView tv_my_aim_major;
     @BindView(R.id.tv_other_data)
     TextView tvOtherData;
     @BindView(R.id.ll_tuijuan_list)
@@ -67,6 +69,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
     }
 
     private void httpRequest() {
+        showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("score", LoginBean.getInstance().getScore());
         jsonObject.put("subjectName", LoginBean.getInstance().getSubjectType());
@@ -86,25 +89,39 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithData(T t, int order) {
+        hideProgress();
         CommonBean commonBean = (CommonBean) t;
         LuQuRiskBean luQuRiskBean = JSON.parseObject(commonBean.getData().toString(), LuQuRiskBean.class);
         if (luQuRiskBean == null) {
             return;
         }
         initData(luQuRiskBean);
-        addTuiJianUniversity(luQuRiskBean.getRecommendSchs());
+        initAddViews(luQuRiskBean.getRecommendSchs());
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-
+        toast((String) t);
+        hideProgress();
     }
 
     private void initData(LuQuRiskBean luQuRiskBean) {
         tvMyScore.setText("我的成绩：" + LoginBean.getInstance().getScore() + "分");
-        tvMyAimUniversity.setText("目标院校： " + (LoginBean.getInstance().getWishUniversity() == null ? "清华大学" : "贵州大学"));
+        tvMyAimUniversity.setText("目标院校： " + valueDesc);
         tvChart.setText(luQuRiskBean.getAdmissionProbability());
+        if (flag == 2) {
+            tv_my_aim_major.setVisibility(View.VISIBLE);
+            tv_my_aim_major.setText("目标专业： " + valueDesc);
+        }
+    }
 
+    private void initAddViews(List<LuQuRiskBean.RecommendSchsBean> recommendSchsBeans) {
+        llTuijuanList.removeAllViews();
+        if (flag == 1) {
+            addTuiJianUniversity(recommendSchsBeans);
+        } else {
+            addTuiJianMajorUniversity(recommendSchsBeans);
+        }
     }
 
     private void addTuiJianUniversity(List<LuQuRiskBean.RecommendSchsBean> recommendSchsBeans) {
@@ -121,6 +138,24 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
             textView.setText(bean.getSchoolName());
             imageLoader.displayImage(this, bean.getSchoolLogo(), ivLogo);
 
+            llTuijuanList.addView(view);
+        }
+    }
+
+    private void addTuiJianMajorUniversity(List<LuQuRiskBean.RecommendSchsBean> recommendSchsBeans) {
+        if (recommendSchsBeans == null || recommendSchsBeans.size() == 0) {
+            return;
+        }
+        GlideImageLoader imageLoader = new GlideImageLoader();
+        for (int i = 0; i < recommendSchsBeans.size(); i++) {
+            LuQuRiskBean.RecommendSchsBean bean = recommendSchsBeans.get(i);
+            View view = View.inflate(this, R.layout.risk_major_query_item, null);
+            TextView tv_university_name = view.findViewById(R.id.tv_university_name);
+            TextView tv_major_name = view.findViewById(R.id.tv_major_name);
+            ImageView ivLogo = view.findViewById(R.id.iv_logo);
+            tv_university_name.setText(bean.getSchoolName());
+            tv_major_name.setText(bean.getSchoolMajor());
+            imageLoader.displayImage(this, bean.getSchoolLogo(), ivLogo);
             llTuijuanList.addView(view);
         }
     }
