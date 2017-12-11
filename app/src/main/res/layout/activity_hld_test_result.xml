@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.gk.mvp.view.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorWhite">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:id="@+id/rl_up"
+                android:layout_width="match_parent"
+                android:layout_height="196dp"
+                android:background="@drawable/hld_result_bg3x"
+                android:clipChildren="false">
+
+                <TextView
+                    android:id="@+id/tv_desc_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="55dp"
+                    android:layout_marginTop="33dp"
+                    android:text="您 是"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/iv_1"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="@dimen/space_50_dp"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:layout_toRightOf="@id/tv_desc_0"
+                    android:background="@drawable/white_circle3x"
+                    android:gravity="center"
+                    android:text="I"
+                    android:textColor="#2fa2cb"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/iv_2"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="@dimen/space_50_dp"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:layout_toRightOf="@id/iv_1"
+                    android:background="@drawable/white_circle3x"
+                    android:gravity="center"
+                    android:text="S"
+                    android:textColor="#2fa2cb"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/iv_3"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="@dimen/space_50_dp"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:layout_toRightOf="@id/iv_2"
+                    android:background="@drawable/white_circle3x"
+                    android:gravity="center"
+                    android:text="E"
+                    android:textColor="#2fa2cb"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/tv_desc_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_15_dp"
+                    android:layout_marginTop="33dp"
+                    android:layout_toRightOf="@id/iv_3"
+                    android:text="型 人"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/tv_for_iv_1"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_1"
+                    android:layout_marginLeft="@dimen/space_15_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_desc_0"
+                    android:text="研究"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/tv_for_iv_2"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_2"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_for_iv_1"
+                    android:text="社会"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/tv_for_iv_3"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_3"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_for_iv_2"
+                    android:text="事业"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/tv_jielun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_for_iv_1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:paddingLeft="@dimen/space_20_dp"
+                    android:paddingRight="@dimen/space_20_dp"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+                    android:text="喜欢钻研思考"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_type_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/rl_up"
+                android:background="@drawable/hld_tv_bg3x"
+                android:gravity="center_vertical"
+                android:paddingBottom="@dimen/space_10_dp"
+                android:paddingLeft="@dimen/space_10_dp"
+                android:paddingRight="@dimen/space_10_dp"
+                android:paddingTop="@dimen/space_10_dp"
+                android:text="喜欢智力的、抽象的、分析的、独立的定向任务，要求具备智力或分析才能，并将其用于观察、估测、衡量、形成理论、最终解决问题的工作，并具备相应的能力。"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_14_sp"
+                android:visibility="visible" />
+
+            <TextView
+                android:id="@+id/tv_hld_type"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/space_25_dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="185dp"
+                android:background="@drawable/hld_result_btn_bg3x"
+                android:gravity="center"
+                android:text="研究性"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_14_sp" />
+
+            <TextView
+                android:id="@+id/tv_has_xq"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_below="@id/tv_type_content"
+                android:layout_marginTop="@dimen/space_20_dp"
+                android:background="#e8ecee"
+                android:drawableRight="@drawable/down_arrow3x"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/space_16_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:text="我有什么样的兴趣"
+                android:textColor="@color/color030303"
+                android:textSize="@dimen/font_17_sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_hld_xg_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_has_xq"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/space_30_dp"
+                android:paddingLeft="@dimen/space_20_dp"
+                android:paddingRight="@dimen/space_20_dp"
+                android:paddingTop="@dimen/space_30_dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableBottom="@drawable/hld_xu_xian_3x"
+                    android:drawablePadding="@dimen/space_8_dp"
+                    android:gravity="center"
+                    android:text="我的兴趣分布图"
+                    android:textColor="@color/color808080"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <com.github.mikephil.charting.charts.RadarChart
+                    android:id="@+id/chart1"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="@dimen/space_25_dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:gravity="center"
+                    android:text="我的测试结果"
+                    android:textColor="@color/color555555"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/tv_test_result"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_24_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:text="ISE（研究83+社会56+企业60）"
+                    android:textColor="@android:color/black"
+                    android:textSize="@dimen/font_20_sp" />
+
+                <LinearLayout
+                    android:id="@+id/ll_xg_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <!--<include layout="@layout/hld_result_xg_item" />-->
+
+                    <!--<include layout="@layout/hld_result_xg_item" />-->
+
+                    <!--<include layout="@layout/hld_result_xg_item" />-->
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_fit_career"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_below="@id/ll_hld_xg_container"
+                android:layout_marginTop="@dimen/space_20_dp"
+                android:background="#e8ecee"
+                android:drawableRight="@drawable/down_arrow3x"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/space_16_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:text="我的性格有什么适合的职业？"
+                android:textColor="@color/color030303"
+                android:textSize="@dimen/font_17_sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_xg_fit_career"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_fit_career"
+                android:orientation="vertical">
+
+                <!--<include layout="@layout/hld_result_xg_fit_item" />-->
+
+                <!--<include layout="@layout/hld_result_xg_fit_item" />-->
+
+            </LinearLayout>
+
+        </RelativeLayout>
+    </ScrollView>
+</LinearLayout>

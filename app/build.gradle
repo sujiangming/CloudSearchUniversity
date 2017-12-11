@@ -19,7 +19,7 @@ android {
         }
         greendao {
             //每次新增表或者新增字段或者删除表，都需要更改这个地方的数值，只认正整数
-            schemaVersion 1
+            schemaVersion 2
         }
     }
 }
@@ -64,4 +64,7 @@ dependencies {
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //微信集成
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
+    implementation files('libs/alipaySdk-20170922.jar')
+    //PMAndroidChart
+    compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
 }

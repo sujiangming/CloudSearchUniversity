@@ -79,9 +79,9 @@ public class LoginBean implements Serializable {
     private int vipLevel;
     private String weixin;
     private String wlDesc;
-    private String[] wishUniversity;
-    private Integer[] wishProvince;
-    private String heartTest;
+    private String wishUniversity;
+    private String wishProvince;
+    private String isHeartTest;
     private boolean hasReport;
 
     private static final long serialVersionUID = 1L;
@@ -479,30 +479,30 @@ public class LoginBean implements Serializable {
         this.wlDesc = wlDesc;
     }
 
-    public String[] getWishUniversity() {
+    public String getWishUniversity() {
         return wishUniversity;
     }
 
-    public LoginBean setWishUniversity(String[] wishUniversity) {
+    public LoginBean setWishUniversity(String wishUniversity) {
         this.wishUniversity = wishUniversity;
         return instance;
     }
 
-    public Integer[] getWishProvince() {
+    public String getWishProvince() {
         return wishProvince;
     }
 
-    public LoginBean setWishProvince(Integer[] wishProvince) {
+    public LoginBean setWishProvince(String wishProvince) {
         this.wishProvince = wishProvince;
         return instance;
     }
 
     public String getHeartTest() {
-        return heartTest;
+        return isHeartTest;
     }
 
     public LoginBean setHeartTest(String heartTest) {
-        this.heartTest = heartTest;
+        this.isHeartTest = heartTest;
         return instance;
     }
 

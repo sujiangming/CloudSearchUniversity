@@ -17,7 +17,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
-import com.gk.beans.UniversityAreaEnum;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
@@ -115,9 +114,9 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         if (loginBean != null) {
             tvScore.setText(loginBean.getScore() == null ? emptyStr : loginBean.getScore());
             tvRank.setText(loginBean.getRanking() == null ? emptyStr : loginBean.getRanking());
-            tvProvince.setText(loginBean.getWishProvince() == null ? emptyStr : "已选" + loginBean.getWishProvince().length + "个");
+            tvProvince.setText(loginBean.getWishProvince() == null ? emptyStr : "已选" + loginBean.getWishProvince().split(",").length + "个");
             tvWenli.setText(loginBean.getWlDesc());
-            tvYixiang.setText(loginBean.getWishUniversity() == null ? emptyStr : "已选" + loginBean.getWishUniversity().length + "个");
+            tvYixiang.setText(loginBean.getWishUniversity() == null ? emptyStr : "已选" + loginBean.getWishUniversity().split(",").length + "个");
         }
     }
 
@@ -178,10 +177,18 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     toast("请输入一个您中意的学校");
                     return;
                 }
-                String[] chooseSchools = universities.toArray(new String[universities.size()]);
-                LoginBean.getInstance().setWishUniversity(chooseSchools).save();
+                String schoolsValue = "";
+                for (int i = 0; i < universities.size(); i++) {
+                    if (i == (universities.size() - 1)) {
+                        schoolsValue += universities.get(i);
+                    } else {
+                        schoolsValue += universities.get(i) + ",";
+                    }
+                }
+                //String[] chooseSchools = universities.toArray(new String[universities.size()]);
+                LoginBean.getInstance().setWishUniversity(schoolsValue).save();
                 hideEditDialogUniversity();
-                tvProvince.setText("已选" + chooseSchools.length + "个");
+                tvYixiang.setText("已选" + universities.size() + "个");
                 hideSoftKey();
                 break;
             case R.id.tv_cancel_province:
@@ -190,13 +197,18 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 yourChoicesName.clear();
                 break;
             case R.id.tv_submit_province:
+                String provinceStr = "";
                 for (int i = 0; i < yourChoicesName.size(); i++) {
-                    yourChoices.add(UniversityAreaEnum.getIndex(yourChoicesName.get(i)));
+                    if (i == (yourChoicesName.size() - 1)) {
+                        provinceStr += yourChoicesName.get(i);
+                    } else {
+                        provinceStr += yourChoicesName.get(i) + ",";
+                    }
                 }
-                Integer[] choiceArray = yourChoices.toArray(new Integer[yourChoices.size()]);
-                LoginBean.getInstance().setWishProvince(choiceArray).save();
+                //Integer[] choiceArray = yourChoices.toArray(new Integer[yourChoices.size()]);
+                LoginBean.getInstance().setWishProvince(provinceStr).save();
                 hideEditDialogProvince();
-                tvProvince.setText("已选" + yourChoices.size() + "个");
+                tvProvince.setText("已选" + yourChoicesName.size() + "个");
                 break;
         }
     }
@@ -251,7 +263,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
-    List<Integer> yourChoices = new ArrayList<>();
+    List<String> yourChoices = new ArrayList<>();
     List<String> yourChoicesName = new ArrayList<>();
 
     private void showMultiChoiceDialog() {

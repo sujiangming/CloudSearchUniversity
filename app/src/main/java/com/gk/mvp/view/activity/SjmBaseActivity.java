@@ -3,6 +3,7 @@ package com.gk.mvp.view.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +39,9 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
     public AppManager appManager = AppManager.getAppManager();
 
     private SjmProgressBar jdryProgressBar;
+
+    protected Typeface mTfRegular;
+    protected Typeface mTfLight;
 
     /**
      * 设置状态栏透明
@@ -86,6 +90,8 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getResouceId());
+        mTfRegular = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
+        mTfLight = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
         unbinder = ButterKnife.bind(this);
         onCreateByMe(savedInstanceState);
         appManager.addActivity(this);

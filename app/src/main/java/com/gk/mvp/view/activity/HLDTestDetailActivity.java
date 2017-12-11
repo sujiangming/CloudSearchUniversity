@@ -57,6 +57,7 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         currentPage++;
         if (currentPage > pageCount) {
             toast("已作答完毕");
+            openNewActivity(HLDTestResultActivity.class);
             closeActivity(this);
             return;
         }
@@ -119,6 +120,7 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
             hldTable.setInterestType(h.getInterestType());
             hldTable.setTitle(h.getTitle());
             hldTable.setIsSelected(false);
+            hldTable.setClicked(false);
             hldTableDao.insertOrReplace(hldTable);
         }
         int tmp = list.size() % 5;
@@ -160,20 +162,20 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         }
     }
 
-    private String tagIndex = null;
-
     private void btnChange(RadioGroup radioGroup, final int pos) {
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+                HLDTable hldTable = tableList.get(pos);
+                if (!hldTable.isClicked()) {
+                    updateProgressBar();
+                }
                 switch (checkId) {
                     case R.id.btn_ti_mu_no_0:
                         selectRadioButton(pos, false);
-                        updateProgressBar();
                         break;
                     case R.id.btn_ti_mu_yes_0:
                         selectRadioButton(pos, true);
-                        updateProgressBar();
                         break;
                 }
             }
@@ -212,6 +214,8 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         Log.e("before hldTable :", JSON.toJSONString(hldTable));
 
         hldTable.setIsSelected(isSelect);
+        hldTable.setClicked(true);//被选择了一次
+
         hldTableDao.update(hldTable);
 
         Log.e("after hldTable :", JSON.toJSONString(tableList.get(pos)));

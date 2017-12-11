@@ -303,6 +303,17 @@ public interface IService {
     Call<CommonBean> getCareerTestHld();
 
     /**
+     * 心理测试 生成霍兰德测试报告接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/career/getHldTestReport")
+    Call<CommonBean> getHldTestReport(@Field("data") String data);
+
+
+    /**
      * 心理测试 MBTI试题接口
      *
      * @return
@@ -348,6 +359,7 @@ public interface IService {
 
     /**
      * 生成志愿报告接口
+     *
      * @param data
      * @return
      */
@@ -357,6 +369,7 @@ public interface IService {
 
     /**
      * 录取风险接口
+     *
      * @param data
      * @return
      */
@@ -366,6 +379,7 @@ public interface IService {
 
     /**
      * 更新考生意向高校接口
+     *
      * @param data
      * @return
      */
@@ -375,6 +389,7 @@ public interface IService {
 
     /**
      * 更新考生意向省份接口
+     *
      * @param data
      * @return
      */
@@ -384,11 +399,23 @@ public interface IService {
 
     /**
      * 忘记密码接口
+     *
      * @param data
      * @return
      */
     @FormUrlEncoded
     @POST("app/login/forgetPassword")
     Call<CommonBean> forgetPassword(@Field("data") String data);
+
+    /**
+     * VIP充值 生成签名订单接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/order/addUserOrder")
+    Call<CommonBean> addUserOrder(@Field("data") String data);
+
 
 }
