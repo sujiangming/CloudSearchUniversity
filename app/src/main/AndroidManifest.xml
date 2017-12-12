@@ -172,6 +172,10 @@
             android:screenOrientation="portrait" />
 
         <activity
+            android:name=".mvp.view.activity.MBTITestResultActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
             android:name=".mvp.view.activity.LqRiskTestMajorSchoolActivity"
             android:screenOrientation="portrait" />
 

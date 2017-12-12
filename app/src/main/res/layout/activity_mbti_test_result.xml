@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.gk.mvp.view.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/colorWhite">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:id="@+id/rl_up"
+                android:layout_width="match_parent"
+                android:layout_height="255dp"
+                android:background="@drawable/mbti_up_bg3x"
+                android:clipChildren="false">
+
+                <TextView
+                    android:id="@+id/tv_desc_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="18dp"
+                    android:layout_marginTop="33dp"
+                    android:text="您 是"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/iv_1"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="@dimen/space_50_dp"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:layout_toRightOf="@id/tv_desc_0"
+                    android:background="@drawable/white_circle3x"
+                    android:gravity="center"
+                    android:text="I"
+                    android:textColor="#d47a3e"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/iv_2"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="@dimen/space_50_dp"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:layout_toRightOf="@id/iv_1"
+                    android:background="@drawable/white_circle3x"
+                    android:gravity="center"
+                    android:text="N"
+                    android:textColor="#6897e6"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/iv_3"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="@dimen/space_50_dp"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:layout_toRightOf="@id/iv_2"
+                    android:background="@drawable/white_circle3x"
+                    android:gravity="center"
+                    android:text="T"
+                    android:textColor="#ed4923"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/iv_4"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="@dimen/space_50_dp"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:layout_toRightOf="@id/iv_3"
+                    android:background="@drawable/white_circle3x"
+                    android:gravity="center"
+                    android:text="J"
+                    android:textColor="#711dd3"
+                    android:textSize="35sp" />
+
+                <TextView
+                    android:id="@+id/tv_desc_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/space_15_dp"
+                    android:layout_marginTop="33dp"
+                    android:layout_toRightOf="@id/iv_4"
+                    android:text="型 人"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/tv_for_iv_1"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_1"
+                    android:layout_marginLeft="@dimen/space_15_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_desc_0"
+                    android:text="外向"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/tv_for_iv_2"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_2"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_for_iv_1"
+                    android:text="情感"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/tv_for_iv_3"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_3"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_for_iv_2"
+                    android:text="直觉"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/tv_for_iv_4"
+                    android:layout_width="@dimen/space_50_dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/iv_4"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:layout_marginTop="@dimen/space_5_dp"
+                    android:layout_toRightOf="@id/tv_for_iv_3"
+                    android:text="判断"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <TextView
+                    android:id="@+id/tv_jielun"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/tv_for_iv_1"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/space_20_dp"
+                    android:paddingLeft="@dimen/space_20_dp"
+                    android:paddingRight="@dimen/space_20_dp"
+                    android:scrollbars="vertical"
+                    android:singleLine="false"
+                    android:text="喜欢钻研思考"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="24sp" />
+
+                <TextView
+                    android:id="@+id/tv_tz_1"
+                    android:layout_width="68dp"
+                    android:layout_height="@dimen/space_21_dp"
+                    android:layout_below="@id/tv_jielun"
+                    android:layout_marginLeft="40dp"
+                    android:layout_marginTop="33dp"
+                    android:background="@drawable/mbti_border_radius_3x"
+                    android:gravity="center"
+                    android:text="独立自主"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_12_sp" />
+
+                <TextView
+                    android:id="@+id/tv_tz_2"
+                    android:layout_width="68dp"
+                    android:layout_height="@dimen/space_21_dp"
+                    android:layout_below="@id/tv_jielun"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="33dp"
+                    android:layout_toRightOf="@id/tv_tz_1"
+                    android:background="@drawable/mbti_border_radius_3x"
+                    android:gravity="center"
+                    android:text="思维严谨"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_12_sp" />
+
+                <TextView
+                    android:id="@+id/tv_tz_3"
+                    android:layout_width="68dp"
+                    android:layout_height="@dimen/space_21_dp"
+                    android:layout_below="@id/tv_jielun"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="33dp"
+                    android:layout_toRightOf="@id/tv_tz_2"
+                    android:background="@drawable/mbti_border_radius_3x"
+                    android:gravity="center"
+                    android:text="原则性强"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_12_sp" />
+
+                <TextView
+                    android:id="@+id/tv_tz_4"
+                    android:layout_width="68dp"
+                    android:layout_height="@dimen/space_21_dp"
+                    android:layout_below="@id/tv_jielun"
+                    android:layout_marginLeft="@dimen/space_10_dp"
+                    android:layout_marginTop="33dp"
+                    android:layout_toRightOf="@id/tv_tz_3"
+                    android:background="@drawable/mbti_border_radius_3x"
+                    android:gravity="center"
+                    android:text="精于理论"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_12_sp" />
+
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/tv_has_xq"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_marginTop="@dimen/space_20_dp"
+                android:background="#e8ecee"
+                android:drawableRight="@drawable/down_arrow3x"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/space_16_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:text="我有什么样的兴趣"
+                android:textColor="@color/color030303"
+                android:textSize="@dimen/font_17_sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_hld_xg_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_has_xq"
+                android:gravity="center_horizontal"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/space_15_dp"
+                android:paddingLeft="@dimen/space_15_dp"
+                android:paddingRight="@dimen/space_15_dp"
+                android:paddingTop="@dimen/space_30_dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/hld_tv_bg3x"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/space_15_dp"
+                    android:paddingLeft="@dimen/space_15_dp"
+                    android:paddingRight="@dimen/space_15_dp"
+                    android:paddingTop="@dimen/space_30_dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableBottom="@drawable/hld_xu_xian_3x"
+                        android:drawablePadding="@dimen/space_8_dp"
+                        android:gravity="center"
+                        android:text="各性格倾向得分"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_17_sp" />
+
+                    <TextView
+                        android:id="@+id/tv_xg_score_desc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/space_12_dp"
+                        android:text="我的性格测试结果为INTJ，四种性格倾向用条形图显示如下，条形图越长，该性格的倾向就越明显。"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_18_dp"
+                    android:gravity="center"
+                    android:text="MBTI性格倾向明显程度示意图"
+                    android:textColor="@color/color2fa2cb"
+                    android:textSize="@dimen/font_17_sp" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_horizontal"
+                    android:paddingBottom="@dimen/space_15_dp"
+                    android:paddingTop="@dimen/space_15_dp">
+
+
+                    <TextView
+                        android:id="@+id/tv_xg_desc_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="外向（E）"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <TextView
+                        android:id="@+id/tv_xg_desc_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_xg_desc_1"
+                        android:layout_marginTop="@dimen/space_5_dp"
+                        android:text="实感（S）"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <TextView
+                        android:id="@+id/tv_xg_desc_3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_xg_desc_2"
+                        android:layout_marginTop="@dimen/space_5_dp"
+                        android:text="思考（T）"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <TextView
+                        android:id="@+id/tv_xg_desc_4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_xg_desc_3"
+                        android:layout_marginTop="@dimen/space_5_dp"
+                        android:text="判断（J）"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_1_left"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="95dp"
+                        android:layout_height="@dimen/space_8_dp"
+                        android:layout_marginTop="@dimen/space_5_dp"
+                        android:layout_toRightOf="@id/tv_xg_desc_1"
+                        android:progressDrawable="@drawable/mbti__progress_1" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_2_left"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="95dp"
+                        android:layout_height="@dimen/space_8_dp"
+                        android:layout_below="@id/progressBar_1_left"
+                        android:layout_marginTop="@dimen/space_16_dp"
+                        android:layout_toRightOf="@id/tv_xg_desc_1"
+                        android:progressDrawable="@drawable/mbti__progress_2" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_3_left"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="95dp"
+                        android:layout_height="@dimen/space_8_dp"
+                        android:layout_below="@id/progressBar_2_left"
+                        android:layout_marginTop="@dimen/space_16_dp"
+                        android:layout_toRightOf="@id/tv_xg_desc_1"
+                        android:progressDrawable="@drawable/mbti__progress_3" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_4_left"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="95dp"
+                        android:layout_height="@dimen/space_8_dp"
+                        android:layout_below="@id/progressBar_3_left"
+                        android:layout_marginTop="@dimen/space_16_dp"
+                        android:layout_toRightOf="@id/tv_xg_desc_1"
+                        android:progressDrawable="@drawable/mbti__progress_4" />
+
+                    <TextView
+                        android:id="@+id/tv_center_line"
+                        android:layout_width="@dimen/space_5_dp"
+                        android:layout_height="90dp"
+                        android:layout_marginLeft="@dimen/space_3_dp"
+                        android:layout_marginRight="@dimen/space_3_dp"
+                        android:layout_toRightOf="@id/progressBar_1_left"
+                        android:background="@color/color979797" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_1_right"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="95dp"
+                        android:layout_height="@dimen/space_8_dp"
+                        android:layout_marginTop="@dimen/space_5_dp"
+                        android:layout_toRightOf="@id/tv_center_line"
+                        android:progressDrawable="@drawable/mbti__progress_1" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_2_right"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="95dp"
+                        android:layout_height="@dimen/space_8_dp"
+                        android:layout_below="@id/progressBar_1_right"
+                        android:layout_marginTop="@dimen/space_16_dp"
+                        android:layout_toRightOf="@id/tv_center_line"
+                        android:progressDrawable="@drawable/mbti__progress_2" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_3_right"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="95dp"
+                        android:layout_height="@dimen/space_8_dp"
+                        android:layout_below="@id/progressBar_2_right"
+                        android:layout_marginTop="@dimen/space_16_dp"
+                        android:layout_toRightOf="@id/tv_center_line"
+                        android:progressDrawable="@drawable/mbti__progress_3" />
+
+                    <ProgressBar
+                        android:id="@+id/progressBar_4_right"
+                        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+                        android:layout_width="95dp"
+                        android:layout_height="@dimen/space_8_dp"
+                        android:layout_below="@id/progressBar_3_right"
+                        android:layout_marginTop="@dimen/space_16_dp"
+                        android:layout_toRightOf="@id/tv_center_line"
+                        android:progressDrawable="@drawable/mbti__progress_4" />
+
+                    <TextView
+                        android:id="@+id/tv_xg_desc_1_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/space_4_dp"
+                        android:layout_toRightOf="@id/progressBar_1_right"
+                        android:text="内向（E）"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <TextView
+                        android:id="@+id/tv_xg_desc_2_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_xg_desc_1_right"
+                        android:layout_marginLeft="@dimen/space_4_dp"
+                        android:layout_marginTop="@dimen/space_5_dp"
+                        android:layout_toRightOf="@+id/progressBar_2_right"
+                        android:text="直觉（N）"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <TextView
+                        android:id="@+id/tv_xg_desc_3_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_xg_desc_2_right"
+                        android:layout_marginLeft="@dimen/space_4_dp"
+                        android:layout_marginTop="@dimen/space_5_dp"
+                        android:layout_toRightOf="@+id/progressBar_3_right"
+                        android:text="情感（F）"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <TextView
+                        android:id="@+id/tv_xg_desc_4_right"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_xg_desc_3_right"
+                        android:layout_marginLeft="@dimen/space_4_dp"
+                        android:layout_marginTop="@dimen/space_5_dp"
+                        android:layout_toRightOf="@+id/progressBar_4_right"
+                        android:text="知觉（P）"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_center_line"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/space_12_dp"
+                        android:paddingRight="@dimen/space_15_dp"
+                        android:paddingTop="@dimen/space_12_dp"
+                        android:text="强  明显  中等  轻微  中等  明显  强"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="155dp"
+                    android:clipChildren="false">
+
+                    <TextView
+                        android:id="@+id/tv_my_xg"
+                        android:layout_width="match_parent"
+                        android:layout_height="143dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/hld_tv_bg3x"
+                        android:gravity="center_vertical"
+                        android:paddingBottom="@dimen/space_15_dp"
+                        android:paddingLeft="@dimen/space_12_dp"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:paddingTop="@dimen/space_15_dp"
+                        android:text="在实现自己的想法和达成自己的目标时有创新的想法和非凡的动力。能很快洞察到外界事物间的规律并形成长期的远景计划。一旦决定做一件事就会开始规划并直到完成为止。多疑、独立，对于自己和他人能力和表现的要求都非常高。"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                    <TextView
+                        android:id="@+id/tv_hld_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/space_25_dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/hld_result_btn_bg3x"
+                        android:gravity="center"
+                        android:text="我的性格"
+                        android:textColor="@color/color808080"
+                        android:textSize="@dimen/font_14_sp" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_fit_career"
+                android:layout_width="match_parent"
+                android:layout_height="55dp"
+                android:layout_below="@id/ll_hld_xg_container"
+                android:layout_marginTop="@dimen/space_20_dp"
+                android:background="#e8ecee"
+                android:drawableRight="@drawable/down_arrow3x"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/space_16_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:text="我的性格有什么适合的职业？"
+                android:textColor="@color/color030303"
+                android:textSize="@dimen/font_17_sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_xg_fit_career"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_fit_career"
+                android:orientation="vertical">
+
+                <!--<include layout="@layout/hld_result_xg_fit_item" />-->
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

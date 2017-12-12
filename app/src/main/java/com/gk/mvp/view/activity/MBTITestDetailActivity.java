@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by JDRY-SJM on 2017/12/4.
@@ -57,16 +56,6 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
     public void onBackPressed() {
         super.onBackPressed();
         showDialog();
-    }
-
-    @OnClick({R.id.tv_select_1, R.id.tv_select_2})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.tv_select_1:
-                break;
-            case R.id.tv_select_2:
-                break;
-        }
     }
 
     @Override
@@ -157,10 +146,11 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setTitle("温馨提示");
-        builder.setMessage("您已经答题完毕，可以退出了");
+        builder.setMessage("您已经答题完毕，是否生成测试报告？");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                openNewActivity(MBTITestResultActivity.class);
                 closeActivity(MBTITestDetailActivity.this);
             }
         });
