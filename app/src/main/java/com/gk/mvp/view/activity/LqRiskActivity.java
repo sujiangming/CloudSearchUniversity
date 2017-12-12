@@ -35,7 +35,6 @@ public class LqRiskActivity extends SjmBaseActivity {
     @BindView(R.id.tv_wen_li_desc)
     TextView tv_wen_li_desc;
 
-
     @BindView(R.id.tv_test_desc)
     TextView tv_test_desc;
 
@@ -118,6 +117,9 @@ public class LqRiskActivity extends SjmBaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
         if (resultCode == 110) {//高校选择返回结果
             String schoolName = data.getStringExtra("schoolName");
             tvStudentMb.setText(schoolName);

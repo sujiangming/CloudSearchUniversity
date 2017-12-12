@@ -3,6 +3,7 @@
     android:id="@+id/tv_zy_name"
     android:layout_width="match_parent"
     android:layout_height="@dimen/space_44_dp"
+    android:background="@android:color/white"
     android:gravity="center_vertical"
     android:paddingLeft="@dimen/space_12_dp"
     android:text="搜索结果"

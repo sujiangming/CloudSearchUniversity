@@ -158,11 +158,7 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-        } else {
-            stopRefreshLayout();
-        }
+        stopLayoutRefreshByTag(isLoadMore);
     }
 
     private void initListView() {
