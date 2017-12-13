@@ -201,7 +201,7 @@ public class LoginBean implements Serializable {
         int imageIndex = 0;
         switch (this.getVipLevel()) {
             case 1:
-                imageIndex = R.drawable.you_ke; //"普通会员";
+                imageIndex = R.drawable.pu_user; //"普通会员";
                 break;
             case 2:
                 imageIndex = R.drawable.vip_silver3x; //"银卡会员";

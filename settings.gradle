@@ -1,1 +1,1 @@
-include ':app', ':pay_app'
+include ':app'

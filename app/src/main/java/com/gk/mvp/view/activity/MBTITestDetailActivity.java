@@ -13,7 +13,10 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.gk.R;
 import com.gk.beans.CommonBean;
+import com.gk.beans.MBITTbale;
+import com.gk.beans.MBITTbaleDao;
 import com.gk.beans.MBITTestBean;
+import com.gk.global.YXXApplication;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
@@ -112,29 +115,43 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
         tvSelect1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (page == list.size()) {
-                    finishDialog();
-                    return;
-                }
-                MBITTestBean mbitTestBean = list.get(page);
-                initData(mbitTestBean);
-                page++;
-                updateProgressBar();
+                selectItem(1);
             }
         });
         tvSelect2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (page == list.size()) {
-                    finishDialog();
-                    return;
-                }
-                MBITTestBean mbitTestBean = list.get(page);
-                initData(mbitTestBean);
-                page++;
-                updateProgressBar();
+                selectItem(2);
             }
         });
+    }
+
+    /**
+     * type 表示选择是A还是B： 1 选择A 2 选择B
+     * @param type
+     */
+    private void selectItem(int type) {
+        if (page == list.size()) {
+            finishDialog();
+            return;
+        }
+        MBITTestBean mbitTestBean = list.get(page);
+        initData(mbitTestBean);
+        page++;
+        updateProgressBar();
+        updateTable(mbitTestBean, type);
+    }
+
+    private void updateTable(MBITTestBean mbitTestBean, int type) {
+        MBITTbaleDao mbitTbaleDao = YXXApplication.getDaoSession().getMBITTbaleDao();
+        MBITTbale table = new MBITTbale();
+        table.setMbitId(mbitTestBean.getId());
+        if (type == 1) {
+            table.setSelectItem(mbitTestBean.getAMaping());
+        } else {
+            table.setSelectItem(mbitTestBean.getBMaping());
+        }
+        mbitTbaleDao.insertOrReplace(table);
     }
 
     private void updateProgressBar() {

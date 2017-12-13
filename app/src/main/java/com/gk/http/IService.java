@@ -322,6 +322,16 @@ public interface IService {
     Call<CommonBean> getCareerTestMbti();
 
     /**
+     * 心理测试 生成MBTI测试报告接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/career/getMbtiTestReport")
+    Call<CommonBean> getMbtiTestReport(@Field("data") String data);
+
+    /**
      * 获取微信调用access_token接口
      *
      * @return

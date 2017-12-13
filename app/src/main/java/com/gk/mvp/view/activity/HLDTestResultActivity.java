@@ -410,8 +410,8 @@ public class HLDTestResultActivity extends SjmBaseActivity {
             TextView tv_hld_xg_feature = view.findViewById(R.id.tv_hld_xg_feature);
             if (i == 0) {
                 tv_hld_xg_desc.setText(hldReportBean.getCareerType().replace(",", "") + "人的职业性格特征");
-                String tz = "1、" + hldReportBean.getCareerTypicalOne() + "\n 2、" + hldReportBean.getCareerTypicalTwo()
-                        + "\n 3、" + hldReportBean.getCareerTypicalThree();
+                String tz = "1、" + hldReportBean.getCareerTypicalOne() + "\n2、" + hldReportBean.getCareerTypicalTwo()
+                        + "\n3、" + hldReportBean.getCareerTypicalThree();
                 tv_hld_xg_feature.setText(tz);
             } else {
                 tv_hld_xg_desc.setText("推荐职业");
@@ -421,9 +421,9 @@ public class HLDTestResultActivity extends SjmBaseActivity {
                     String[] strings = recommond.split(",");
                     for (int j = 0; j < strings.length; j++) {
                         if (j == (strings.length - 1)) {
-                            values.append(strings[j]);
+                            values.append(j + "、").append(strings[j]);
                         } else {
-                            values.append(j + "、").append(strings[j]).append("\n ");
+                            values.append(j + "、").append(strings[j]).append("\n");
                         }
                     }
                 }
