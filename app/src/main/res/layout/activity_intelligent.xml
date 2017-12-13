@@ -167,6 +167,7 @@
                     android:textSize="@dimen/font_14_sp" />
 
                 <Button
+                    android:id="@+id/btn_1"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_44_dp"
                     android:layout_below="@id/tv_wish_report"
@@ -218,6 +219,7 @@
                     android:textSize="@dimen/font_14_sp" />
 
                 <Button
+                    android:id="@+id/btn_2"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/space_44_dp"
                     android:layout_below="@id/tv_yh_level_low"

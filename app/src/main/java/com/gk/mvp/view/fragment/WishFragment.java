@@ -185,7 +185,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                         schoolsValue += universities.get(i) + ",";
                     }
                 }
-                //String[] chooseSchools = universities.toArray(new String[universities.size()]);
                 LoginBean.getInstance().setWishUniversity(schoolsValue).save();
                 hideEditDialogUniversity();
                 tvYixiang.setText("已选" + universities.size() + "个");
@@ -205,7 +204,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                         provinceStr += yourChoicesName.get(i) + ",";
                     }
                 }
-                //Integer[] choiceArray = yourChoices.toArray(new Integer[yourChoices.size()]);
                 LoginBean.getInstance().setWishProvince(provinceStr).save();
                 hideEditDialogProvince();
                 tvProvince.setText("已选" + yourChoicesName.size() + "个");
@@ -263,7 +261,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
-    List<String> yourChoices = new ArrayList<>();
     List<String> yourChoicesName = new ArrayList<>();
 
     private void showMultiChoiceDialog() {

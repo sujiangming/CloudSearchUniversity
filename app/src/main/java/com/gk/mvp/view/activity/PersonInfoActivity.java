@@ -10,8 +10,12 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
@@ -33,6 +37,7 @@ import com.gk.tools.GlideImageLoader;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -97,7 +102,11 @@ public class PersonInfoActivity extends SjmBaseActivity {
     }
 
 
-    @OnClick({R.id.iv_user_head, R.id.tv_user_cname, R.id.tv_user_nick_name, R.id.tv_vip_level, R.id.tv_student_source, R.id.tv_student_score, R.id.tv_student_rank, R.id.tv_wen_li_ke})
+    @OnClick({R.id.iv_user_head, R.id.tv_user_cname,
+            R.id.tv_user_nick_name, R.id.tv_vip_level,
+            R.id.tv_student_source, R.id.tv_student_score,
+            R.id.tv_student_rank, R.id.tv_wen_li_ke,
+            R.id.tv_cancel_province, R.id.tv_submit_province})
     public void onViewClicked(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
@@ -105,38 +114,103 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 showPhoto();
                 break;
             case R.id.tv_vip_level:
-                intent.setClass(this, VIPActivity.class);
-                intent.putExtra(CODE_KEY, 1);
-                startActivityForResult(intent, 1);
+                showVipDialog();
                 break;
             case R.id.tv_user_cname:
-                intent.setClass(this, UpdateUserInfoActivity.class);
-                intent.putExtra(CODE_KEY, 2);
-                startActivityForResult(intent, 2);
+                if (TextUtils.isEmpty(tvUserCname.getText())) {
+                    intent.setClass(this, UpdateUserInfoActivity.class);
+                    intent.putExtra(CODE_KEY, 2);
+                    startActivityForResult(intent, 2);
+                }
                 break;
             case R.id.tv_student_source:
-                intent.setClass(this, UpdateUserInfoActivity.class);
-                intent.putExtra(CODE_KEY, 3);
-                startActivityForResult(intent, 3);
+                if (TextUtils.isEmpty(tvStudentSource.getText())) {
+                    showMultiChoiceDialog();
+                }
                 break;
             case R.id.tv_student_score:
-                intent.setClass(this, UpdateUserInfoActivity.class);
-                intent.putExtra(CODE_KEY, 4);
-                startActivityForResult(intent, 4);
+                if (TextUtils.isEmpty(tvStudentScore.getText())) {
+                    intent.setClass(this, UpdateUserInfoActivity.class);
+                    intent.putExtra(CODE_KEY, 4);
+                    startActivityForResult(intent, 4);
+                }
                 break;
             case R.id.tv_student_rank:
-                intent.setClass(this, UpdateUserInfoActivity.class);
-                intent.putExtra(CODE_KEY, 5);
-                startActivityForResult(intent, 5);
+                if (TextUtils.isEmpty(tvStudentRank.getText())) {
+                    intent.setClass(this, UpdateUserInfoActivity.class);
+                    intent.putExtra(CODE_KEY, 5);
+                    startActivityForResult(intent, 5);
+                }
                 break;
             case R.id.tv_wen_li_ke:
-                showDialog();
+                if (TextUtils.isEmpty(tvWenLiKe.getText())) {
+                    showDialog();
+                }
                 break;
             case R.id.tv_user_nick_name:
                 intent.setClass(this, UpdateUserInfoActivity.class);
                 intent.putExtra(CODE_KEY, 7);
                 startActivityForResult(intent, 7);
                 break;
+            case R.id.tv_cancel_province:
+                hideEditDialogProvince();
+                yourChoicesName.clear();
+                break;
+            case R.id.tv_submit_province:
+                invokeService(2, 0, yourChoicesName.get(0));
+                break;
+        }
+    }
+
+    @BindView(R.id.choose_province)
+    View chooseProvince;
+
+    @BindView(R.id.lv_province)
+    LinearLayout listView;
+
+    List<String> yourChoicesName = new ArrayList<>();
+
+    private void showEditDialogProvince() {
+        if (chooseProvince.getVisibility() == View.GONE) {
+            chooseProvince.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void hideEditDialogProvince() {
+        if (chooseProvince.getVisibility() == View.VISIBLE) {
+            chooseProvince.setVisibility(View.GONE);
+        }
+    }
+
+    private void showMultiChoiceDialog() {
+        showEditDialogProvince();
+        final String[] items = YXXConstants.PROVINCES;
+        for (int i = 0; i < items.length; ++i) {
+            View view = View.inflate(this, R.layout.province_item, null);
+            TextView textView = view.findViewById(R.id.tv_province_name);
+            textView.setText(items[i]);
+            final ImageView checkBox = view.findViewById(R.id.check_box);
+            final int finalI = i;
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String tag = (String) view.getTag();
+                    if ("0".equals(tag)) {
+                        if (yourChoicesName.size() >= 1) {
+                            toast("生源地只能是一个");
+                            return;
+                        }
+                        checkBox.setImageResource(R.drawable.gouxuan);
+                        yourChoicesName.add(items[finalI]);
+                        view.setTag("1");
+                    } else {
+                        checkBox.setImageResource(R.drawable.not_gouxuan);
+                        yourChoicesName.remove(items[finalI]);
+                        view.setTag("0");
+                    }
+                }
+            });
+            listView.addView(view);
         }
     }
 
@@ -186,6 +260,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
                     public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
 
                     }
+
                     @Override
                     public void onOtherButtonClick(ActionSheet actionSheet, int index) {
                         switch (index) {
@@ -252,6 +327,31 @@ public class PersonInfoActivity extends SjmBaseActivity {
         });
     }
 
+    private void showVipDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_alert);
+        builder.setTitle("温馨提示");
+        builder.setMessage("您需要升级为金卡或者银卡会员吗？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent intent = new Intent();
+                intent.setClass(PersonInfoActivity.this, VIPActivity.class);
+                intent.putExtra(CODE_KEY, 1);
+                startActivityForResult(intent, 1);
+                closeActivity(PersonInfoActivity.this);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
     private void showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("文理科选择");
@@ -292,10 +392,14 @@ public class PersonInfoActivity extends SjmBaseActivity {
             jsonObject.put("headImg", imagePath);
             presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
                     .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
-        } else {
+        } else if (flag == 1) {
             jsonObject.put("subjectType", value);
             presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
                     .request(YXXConstants.INVOKE_API_SECOND_TIME);
+        } else {
+            jsonObject.put("address", value);
+            presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
+                    .request(YXXConstants.INVOKE_API_THREE_TIME);
         }
     }
 
@@ -314,6 +418,11 @@ public class PersonInfoActivity extends SjmBaseActivity {
                         .setSubjectType(loginBean.getSubjectType())
                         .save();
                 mDialog.dismiss();
+                break;
+            case YXXConstants.INVOKE_API_THREE_TIME:
+                LoginBean.getInstance().setWishProvince(yourChoicesName.get(0)).save();
+                tvStudentSource.setText(yourChoicesName.get(0));
+                hideEditDialogProvince();
                 break;
         }
         hideProgress();

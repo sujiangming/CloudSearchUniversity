@@ -49,19 +49,22 @@ public class UserFragment extends SjmBaseFragment {
 
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
-
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
         glideImageLoader.displayImage(getContext(), LoginBean.getInstance().getHeadImg(), ivUserHead);
         initData();
     }
 
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden) {
+            glideImageLoader.displayImage(getContext(), LoginBean.getInstance().getHeadImg(), ivUserHead);
+            initData();
+        }
+    }
+
     private void initData() {
         LoginBean loginBean = LoginBean.getInstance();
-        tvUserName.setText(loginBean.getCname());
+        tvUserName.setText(loginBean.getCname() == null ? loginBean.getUsername() : loginBean.getCname());
         tvUserScore.setText("高考分数：" + loginBean.getScore());
         ivLevel.setImageResource(loginBean.getLevelImage());
     }

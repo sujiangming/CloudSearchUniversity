@@ -133,6 +133,8 @@ public class MaterialQueryActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithData(T t, int order) {
+        searchView.setQueryHint("请输入关键字");
+        searchView.clearFocus();
         hideProgress();
         stopLayoutRefreshByTag(isLoadMore);
         CommonBean commonBean = (CommonBean) t;
