@@ -109,7 +109,119 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         textViews = new TextView[]{tv1, tv2, tv3};
         textViewType = new TextView[]{tvForIv1, tvForIv2, tvForIv3};
         httpRequest();
+    }
+
+    private void httpRequest() {
+        showProgress();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("answers", getSelectedAnswer());
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class)
+                        .getHldTestReport(jsonObject.toJSONString()))
+                .request();
+    }
+
+    private String getSelectedAnswer() {
+        HLDTableDao hldTableDao = YXXApplication.getDaoSession().getHLDTableDao();
+        List<HLDTable> tableList = hldTableDao.queryBuilder().where(HLDTableDao.Properties.IsSelected.eq(true)).list();
+        if (tableList == null || tableList.size() == 0) {
+            return null;
+        }
+        StringBuffer answerStr = new StringBuffer();
+
+        for (int i = 0; i < tableList.size(); i++) {
+            if (i == (tableList.size() - 1)) {
+                answerStr.append(tableList.get(i).getInterestType());
+            } else {
+                answerStr.append(tableList.get(i).getInterestType()).append(",");
+            }
+        }
+
+        return answerStr.toString();
+    }
+
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        hideProgress();
+        CommonBean commonBean = (CommonBean) t;
+        hldReportBean = JSON.parseObject(commonBean.getData().toString(), HldReportBean.class);
+        if (hldReportBean == null) {
+            return;
+        }
         initData();
+        initCommon();
+        addCommonSubView();
+        addTypicalSubView();
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+        toast((String) t);
+        hideProgress();
+    }
+
+    private void initCommon() {
+        tvJielun.setText(hldReportBean.getCareerTypical());
+        tvHldType.setText(hldReportBean.getCareerAlphabet());
+        tvTypeContent.setText(hldReportBean.getCareerFeature());
+        tv_test_result.setText(hldReportBean.getCareerTestResults());
+    }
+
+    private void addCommonSubView() {
+        String careerType = hldReportBean.getCareerType();
+        if (careerType == null) {
+            return;
+        }
+        String[] strings = careerType.split(",");
+        for (int i = 0; i < strings.length; i++) {
+            textViews[i].setText(strings[i]);
+            textViewType[i].setText(HLDTypeEnum.getName(strings[i]));
+            View view = View.inflate(this, R.layout.hld_result_xg_item, null);
+            ImageView imageView = view.findViewById(R.id.iv_hld_xg);
+            TextView textView = view.findViewById(R.id.tv_hld_xg_desc);
+            imageView.setImageResource(HLDImageTypeEnum.getImageRes(strings[i]));
+            if (i == 0) {
+                textView.setText(hldReportBean.getCareerCommonOne());
+            } else if (i == 1) {
+                textView.setText(hldReportBean.getCareerCommonTwo());
+            } else {
+                textView.setText(hldReportBean.getCareerCommonThree());
+            }
+
+            llXgList.addView(view);
+        }
+    }
+
+    private void addTypicalSubView() {
+        for (int i = 0; i < 2; i++) {
+            View view = View.inflate(this, R.layout.hld_result_xg_fit_item, null);
+            TextView tv_hld_xg_desc = view.findViewById(R.id.tv_hld_xg_desc);
+            TextView tv_hld_xg_feature = view.findViewById(R.id.tv_hld_xg_feature);
+            if (i == 0) {
+                tv_hld_xg_desc.setText(hldReportBean.getCareerType().replace(",", "") + "人的职业性格特征");
+                String tz = "1、" + hldReportBean.getCareerTypicalOne() + "\n2、" + hldReportBean.getCareerTypicalTwo()
+                        + "\n3、" + hldReportBean.getCareerTypicalThree();
+                tv_hld_xg_feature.setText(tz);
+            } else {
+                tv_hld_xg_desc.setText("推荐职业");
+                String recommond = hldReportBean.getRecommendOccupation();
+                StringBuffer values = new StringBuffer("");
+                if (recommond != null) {
+                    String[] strings = recommond.split(",");
+                    for (int j = 0; j < strings.length; j++) {
+                        if (j == (strings.length - 1)) {
+                            values.append(j + "、").append(strings[j]);
+                        } else {
+                            values.append(j + "、").append(strings[j]).append("\n");
+                        }
+                    }
+                }
+                tv_hld_xg_feature.setText(values.toString());
+            }
+            llXgFitCareer.addView(view);
+        }
     }
 
     private void initData() {
@@ -143,7 +255,7 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         xAxis.setXOffset(0f);
         xAxis.setValueFormatter(new IAxisValueFormatter() {
 
-            private String[] mActivities = new String[]{"Burger", "Steak", "Salad", "Pasta", "Pizza"};
+            private String[] mActivities = new String[]{"A 艺术", "S 社会", "E 企业", "C 传统", "R 实际", "I 研究"};
 
             @Override
             public String getFormattedValue(float value, AxisBase axis) {
@@ -169,6 +281,47 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         l.setXEntrySpace(7f);
         l.setYEntrySpace(5f);
         l.setTextColor(Color.WHITE);
+    }
+
+    public void setData() {
+
+        float mult = 80;
+        float min = 20;
+
+        int[] scores = new int[]{hldReportBean.getCareerA(), hldReportBean.getCareerS(), hldReportBean.getCareerE()
+                , hldReportBean.getCareerC(), hldReportBean.getCareerR(), hldReportBean.getCareerI()};
+
+        int cnt = scores.length;
+
+        ArrayList<RadarEntry> entries2 = new ArrayList<RadarEntry>();
+
+        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
+        // the chart.
+        for (int i = 0; i < cnt; i++) {
+            float val2 = (float) (Math.random() * mult) + min + scores[i];
+            entries2.add(new RadarEntry(val2));
+        }
+
+        RadarDataSet set2 = new RadarDataSet(entries2, "得分分布");
+        set2.setColor(Color.rgb(121, 162, 175));
+        set2.setFillColor(Color.rgb(121, 162, 175));
+        set2.setDrawFilled(true);
+        set2.setFillAlpha(180);
+        set2.setLineWidth(2f);
+        set2.setDrawHighlightCircleEnabled(true);
+        set2.setDrawHighlightIndicators(false);
+
+        ArrayList<IRadarDataSet> sets = new ArrayList<IRadarDataSet>();
+        sets.add(set2);
+
+        RadarData data = new RadarData(sets);
+        data.setValueTypeface(mTfLight);
+        data.setValueTextSize(8f);
+        data.setDrawValues(false);
+        data.setValueTextColor(Color.WHITE);
+
+        mChart.setData(data);
+        mChart.invalidate();
     }
 
     @Override
@@ -270,166 +423,4 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         return true;
     }
 
-    public void setData() {
-
-        float mult = 80;
-        float min = 20;
-        int cnt = 5;
-
-        ArrayList<RadarEntry> entries1 = new ArrayList<RadarEntry>();
-        ArrayList<RadarEntry> entries2 = new ArrayList<RadarEntry>();
-
-        // NOTE: The order of the entries when being added to the entries array determines their position around the center of
-        // the chart.
-        for (int i = 0; i < cnt; i++) {
-            float val1 = (float) (Math.random() * mult) + min;
-            entries1.add(new RadarEntry(val1));
-
-            float val2 = (float) (Math.random() * mult) + min;
-            entries2.add(new RadarEntry(val2));
-        }
-
-        RadarDataSet set1 = new RadarDataSet(entries1, "Last Week");
-        set1.setColor(Color.rgb(103, 110, 129));
-        set1.setFillColor(Color.rgb(103, 110, 129));
-        set1.setDrawFilled(true);
-        set1.setFillAlpha(180);
-        set1.setLineWidth(2f);
-        set1.setDrawHighlightCircleEnabled(true);
-        set1.setDrawHighlightIndicators(false);
-
-        RadarDataSet set2 = new RadarDataSet(entries2, "This Week");
-        set2.setColor(Color.rgb(121, 162, 175));
-        set2.setFillColor(Color.rgb(121, 162, 175));
-        set2.setDrawFilled(true);
-        set2.setFillAlpha(180);
-        set2.setLineWidth(2f);
-        set2.setDrawHighlightCircleEnabled(true);
-        set2.setDrawHighlightIndicators(false);
-
-        ArrayList<IRadarDataSet> sets = new ArrayList<IRadarDataSet>();
-        sets.add(set1);
-        sets.add(set2);
-
-        RadarData data = new RadarData(sets);
-        data.setValueTypeface(mTfLight);
-        data.setValueTextSize(8f);
-        data.setDrawValues(false);
-        data.setValueTextColor(Color.WHITE);
-
-        mChart.setData(data);
-        mChart.invalidate();
-    }
-
-    private void httpRequest() {
-        showProgress();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", LoginBean.getInstance().getUsername());
-        jsonObject.put("answers", getSelectedAnswer());
-        PresenterManager.getInstance()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class)
-                        .getHldTestReport(jsonObject.toJSONString()))
-                .request();
-    }
-
-    private String getSelectedAnswer() {
-        HLDTableDao hldTableDao = YXXApplication.getDaoSession().getHLDTableDao();
-        List<HLDTable> tableList = hldTableDao.queryBuilder().where(HLDTableDao.Properties.IsSelected.eq(true)).list();
-        if (tableList == null || tableList.size() == 0) {
-            return null;
-        }
-        StringBuffer answerStr = new StringBuffer();
-
-        for (int i = 0; i < tableList.size(); i++) {
-            if (i == (tableList.size() - 1)) {
-                answerStr.append(tableList.get(i).getInterestType());
-            } else {
-                answerStr.append(tableList.get(i).getInterestType()).append(",");
-            }
-        }
-
-        return answerStr.toString();
-    }
-
-    @Override
-    public <T> void fillWithData(T t, int order) {
-        hideProgress();
-        CommonBean commonBean = (CommonBean) t;
-        hldReportBean = JSON.parseObject(commonBean.getData().toString(), HldReportBean.class);
-        if (hldReportBean == null) {
-            return;
-        }
-        initCommon();
-        addCommonSubView();
-        addTypicalSubView();
-    }
-
-    @Override
-    public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
-        hideProgress();
-    }
-
-    private void initCommon() {
-        tvJielun.setText(hldReportBean.getCareerTypical());
-        tvHldType.setText(hldReportBean.getCareerAlphabet());
-        tvTypeContent.setText(hldReportBean.getCareerFeature());
-        tv_test_result.setText(hldReportBean.getCareerTestResults());
-    }
-
-    private void addCommonSubView() {
-        String careerType = hldReportBean.getCareerType();
-        if (careerType == null) {
-            return;
-        }
-        String[] strings = careerType.split(",");
-        for (int i = 0; i < strings.length; i++) {
-            textViews[i].setText(strings[i]);
-            textViewType[i].setText(HLDTypeEnum.getName(strings[i]));
-            View view = View.inflate(this, R.layout.hld_result_xg_item, null);
-            ImageView imageView = view.findViewById(R.id.iv_hld_xg);
-            TextView textView = view.findViewById(R.id.tv_hld_xg_desc);
-            imageView.setImageResource(HLDImageTypeEnum.getImageRes(strings[i]));
-            if (i == 0) {
-                textView.setText(hldReportBean.getCareerCommonOne());
-            } else if (i == 1) {
-                textView.setText(hldReportBean.getCareerCommonTwo());
-            } else {
-                textView.setText(hldReportBean.getCareerCommonThree());
-            }
-
-            llXgList.addView(view);
-        }
-    }
-
-    private void addTypicalSubView() {
-        for (int i = 0; i < 2; i++) {
-            View view = View.inflate(this, R.layout.hld_result_xg_fit_item, null);
-            TextView tv_hld_xg_desc = view.findViewById(R.id.tv_hld_xg_desc);
-            TextView tv_hld_xg_feature = view.findViewById(R.id.tv_hld_xg_feature);
-            if (i == 0) {
-                tv_hld_xg_desc.setText(hldReportBean.getCareerType().replace(",", "") + "人的职业性格特征");
-                String tz = "1、" + hldReportBean.getCareerTypicalOne() + "\n2、" + hldReportBean.getCareerTypicalTwo()
-                        + "\n3、" + hldReportBean.getCareerTypicalThree();
-                tv_hld_xg_feature.setText(tz);
-            } else {
-                tv_hld_xg_desc.setText("推荐职业");
-                String recommond = hldReportBean.getRecommendOccupation();
-                StringBuffer values = new StringBuffer("");
-                if (recommond != null) {
-                    String[] strings = recommond.split(",");
-                    for (int j = 0; j < strings.length; j++) {
-                        if (j == (strings.length - 1)) {
-                            values.append(j + "、").append(strings[j]);
-                        } else {
-                            values.append(j + "、").append(strings[j]).append("\n");
-                        }
-                    }
-                }
-                tv_hld_xg_feature.setText(values.toString());
-            }
-            llXgFitCareer.addView(view);
-        }
-    }
 }

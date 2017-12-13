@@ -199,6 +199,7 @@ public class MBTITestResultActivity extends SjmBaseActivity {
             }
         }
         tvXgScoreDesc.setText("我的性格测试结果为" + mbtiResultBean.getCareerType().replace(",", "") + "，四种性格倾向用条形图显示如下，条形图越长，该性格的倾向就越明显。");
+        tvMyXg.setText(mbtiResultBean.getMyFeature());
     }
 
     private void initProgressBars() {

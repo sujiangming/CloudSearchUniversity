@@ -19,7 +19,7 @@ android {
         }
         greendao {
             //每次新增表或者新增字段或者删除表，都需要更改这个地方的数值，只认正整数
-            schemaVersion 2
+            schemaVersion 3
         }
     }
     //关于超过64K方法分Dex的解决办法

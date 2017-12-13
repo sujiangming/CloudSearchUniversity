@@ -1,12 +1,13 @@
 package com.gk.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by JDRY-SJM on 2017/11/26.
  */
 
-public class MaterialItemBean {
+public class MaterialItemBean implements Serializable{
     private int status;
     private String message;
     private List<DataBean> data;
@@ -35,7 +36,7 @@ public class MaterialItemBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * attentionNum : 0
          * course : yuwen

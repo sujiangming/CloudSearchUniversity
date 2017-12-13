@@ -1,7 +1,11 @@
 package com.gk.mvp.view.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -15,12 +19,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gk.R;
+import com.gk.beans.LoginBean;
 import com.gk.global.YXXConstants;
 import com.gk.mvp.view.fragment.HomeFragment;
 import com.gk.mvp.view.fragment.LectureFragment;
 import com.gk.mvp.view.fragment.LiveVideoFragment;
 import com.gk.mvp.view.fragment.UserFragment;
 import com.gk.mvp.view.fragment.WishFragment;
+import com.gk.tools.GlideImageLoader;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -62,6 +70,8 @@ public class MainActivity extends SjmBaseActivity {
     ImageView ivTabWish;
     @BindView(R.id.welcome)
     View welcomeView;
+    @BindView(R.id.iv_user_head)
+    ImageView ivUserHeader;
 
     @OnClick({R.id.ll_home, R.id.ll_live, R.id.ll_wish, R.id.ll_lesson, R.id.ll_user})
     public void onViewClicked(View view) {
@@ -103,6 +113,7 @@ public class MainActivity extends SjmBaseActivity {
     private int[] imageViewChangeRes = {R.drawable.shouye_press, R.drawable.zhibo_press, R.drawable.gaokaozhiyuan_selected3x, R.drawable.gaokao_press, R.drawable.my_press};
 
     private int index = 0;
+    private GlideImageLoader glideImageLoader = new GlideImageLoader();
 
     @Override
     public int getResouceId() {
@@ -272,6 +283,67 @@ public class MainActivity extends SjmBaseActivity {
                 imageViews[i].setImageResource(imageViewNormalRes[i]);
             }
         }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        getPersimmions();
+        glideImageLoader.displayImage(this, LoginBean.getInstance().getHeadImg(), ivUserHeader);
+    }
+
+    private String permissionInfo;
+    private final int SDK_PERMISSION_REQUEST = 127;
+
+    @TargetApi(26)
+    private void getPersimmions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ArrayList<String> permissions = new ArrayList<String>();
+            /***
+             * 定位权限为必须权限，用户如果禁止，则每次进入都会申请
+             */
+            // 读写SD卡权限
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            }
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.CAMERA);
+            }
+            /*
+             * 读写权限和电话状态权限非必要权限(建议授予)只会申请一次，用户同意或者禁止，只会弹一次
+			 */
+            // 读取电话状态权限
+            if (addPermission(permissions, Manifest.permission.READ_PHONE_STATE)) {
+                permissionInfo += "Manifest.permission.READ_PHONE_STATE Deny \n";
+            }
+
+            if (permissions.size() > 0) {
+                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
+            }
+        }
+    }
+
+    @TargetApi(26)
+    private boolean addPermission(ArrayList<String> permissionsList, String permission) {
+        if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) { // 如果应用没有获得对应权限,则添加到列表中,准备批量申请
+            if (shouldShowRequestPermissionRationale(permission)) {
+                return true;
+            } else {
+                permissionsList.add(permission);
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    @TargetApi(26)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
     private long exitTime = 0;

@@ -1,6 +1,17 @@
 package com.gk.mvp.view.activity;
 
+import android.Manifest;
+import android.annotation.TargetApi;
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
+import android.os.Looper;
+import android.util.Log;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 
@@ -10,20 +21,38 @@ import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.CourseTypeEnum;
 import com.gk.beans.MaterialItemBean;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
+import com.gk.http.download.DownloadApi;
+import com.gk.http.download.DownloadProgressHandler;
+import com.gk.http.download.ProgressHelper;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.JdryFileUtil;
 import com.gk.tools.JdryTime;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import okhttp3.OkHttpClient;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by JDRY-SJM on 2017/11/26.
@@ -135,6 +164,12 @@ public class MaterialListActivity extends SjmBaseActivity {
                 imageLoader.displayImage(MaterialListActivity.this, item.getLogo(), (ImageView) viewHolder.getView(R.id.iv_item));
             }
         });
+        lvMaterial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                openOrDownloadFile(list.get(i));
+            }
+        });
     }
 
     @Override
@@ -173,4 +208,144 @@ public class MaterialListActivity extends SjmBaseActivity {
         return list;
     }
 
+    private String permissionInfo;
+    private final int SDK_PERMISSION_REQUEST = 127;
+
+    @TargetApi(26)
+    private void getPersimmions() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ArrayList<String> permissions = new ArrayList<String>();
+            /***
+             * 定位权限为必须权限，用户如果禁止，则每次进入都会申请
+             */
+            // 读写SD卡权限
+            if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
+            }
+            if (checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.READ_EXTERNAL_STORAGE);
+            }
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                permissions.add(Manifest.permission.CAMERA);
+            }
+            /*
+             * 读写权限和电话状态权限非必要权限(建议授予)只会申请一次，用户同意或者禁止，只会弹一次
+			 */
+            // 读取电话状态权限
+            if (addPermission(permissions, Manifest.permission.READ_PHONE_STATE)) {
+                permissionInfo += "Manifest.permission.READ_PHONE_STATE Deny \n";
+            }
+
+            if (permissions.size() > 0) {
+                requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
+            }
+        }
+    }
+
+    @TargetApi(26)
+    private boolean addPermission(ArrayList<String> permissionsList, String permission) {
+        if (checkSelfPermission(permission) != PackageManager.PERMISSION_GRANTED) { // 如果应用没有获得对应权限,则添加到列表中,准备批量申请
+            if (shouldShowRequestPermissionRationale(permission)) {
+                return true;
+            } else {
+                permissionsList.add(permission);
+                return false;
+            }
+        } else {
+            return true;
+        }
+    }
+
+    @TargetApi(26)
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+    }
+
+    private void openOrDownloadFile(MaterialItemBean.DataBean dataBean) {
+        File file = new File(Environment.getExternalStorageDirectory() + "/Download/", dataBean.getFileName());
+        if (file.exists()) {
+            openFile(file.getAbsolutePath());
+        } else {
+            retrofitDownload(dataBean);
+        }
+    }
+
+    private void retrofitDownload(final MaterialItemBean.DataBean dataBean) {
+        //监听下载进度
+        final ProgressDialog dialog = new ProgressDialog(this);
+        dialog.setProgressNumberFormat("%1d KB/%2d KB");
+        dialog.setTitle("下载");
+        dialog.setMessage("正在下载，请稍后...");
+        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        dialog.setCancelable(false);
+        dialog.show();
+
+        Retrofit.Builder retrofitBuilder = new Retrofit.Builder()
+                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl(YXXConstants.HOST);//"http://msoftdl.360.cn"
+        OkHttpClient.Builder builder = ProgressHelper.addProgress(null);
+        DownloadApi retrofit = retrofitBuilder
+                .client(builder.build())
+                .build().create(DownloadApi.class);
+
+        ProgressHelper.setProgressHandler(new DownloadProgressHandler() {
+            @Override
+            protected void onProgress(long bytesRead, long contentLength, boolean done) {
+                Log.e("是否在主线程中运行", String.valueOf(Looper.getMainLooper() == Looper.myLooper()));
+                Log.e("onProgress", String.format("%d%% done\n", (100 * bytesRead) / contentLength));
+                Log.e("done", "--->" + String.valueOf(done));
+                dialog.setMax((int) (contentLength / 1024));
+                dialog.setProgress((int) (bytesRead / 1024));
+                if (done) {
+                    dialog.dismiss();
+                    toast("下载成功！");
+                }
+            }
+        });
+        Call<ResponseBody> call = retrofit.retrofitDownload(dataBean.getFileUrl());
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    File file = new File(Environment.getExternalStorageDirectory() + "/Download/", dataBean.getFileName());
+                    String fileAbsolutePath = file.getAbsolutePath();
+                    try {
+                        InputStream is = response.body().byteStream();
+                        FileOutputStream fos = new FileOutputStream(file);
+                        BufferedInputStream bis = new BufferedInputStream(is);
+                        byte[] buffer = new byte[1024];
+                        int len;
+                        while ((len = bis.read(buffer)) != -1) {
+                            fos.write(buffer, 0, len);
+                            fos.flush();
+                        }
+                        fos.close();
+                        bis.close();
+                        is.close();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    openFile(fileAbsolutePath);
+                } else {
+                    toast(response.message());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                toast(t.getMessage());
+            }
+        });
+    }
+
+    private void openFile(String fileAbsolutePath) {
+        Intent intent = JdryFileUtil.openFile(fileAbsolutePath);
+        if (intent == null) {
+            toast("该文件已损坏");
+            return;
+        }
+        startActivity(intent);
+    }
 }

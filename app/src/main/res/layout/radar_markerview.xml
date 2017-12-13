@@ -13,7 +13,7 @@
         android:layout_marginTop="3dp"
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
-        android:text=""
+        android:text="雷达图"
         android:textSize="10dp"
         android:textColor="@android:color/white"
         android:ellipsize="end"

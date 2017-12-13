@@ -61,7 +61,7 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
             closeActivity(this);
             return;
         }
-        if (currentPage == (pageCount - 1)) {
+        if (currentPage == pageCount) {
             btnNext.setText("提  交");
         }
         updatePage();
