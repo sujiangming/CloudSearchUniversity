@@ -136,10 +136,14 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 break;
             case R.id.tv_yixiang:
                 requestCode = 4;
-                showEditDialogUniversity();
+                editUniversity();
                 break;
             case R.id.tv_province:
-                showMultiChoiceDialog();
+                if (TextUtils.isEmpty(tvProvince.getText())) {
+                    showMultiChoiceDialog();
+                } else {
+                    showProvincesDialog();
+                }
                 break;
             case R.id.tv_status:
                 break;
@@ -160,7 +164,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 break;
             case R.id.tv_submit_university:
                 List<String> universities = new ArrayList<>();
-
                 String school1 = et_school_1.getText().toString();
                 String school2 = et_school_2.getText().toString();
                 String school3 = et_school_3.getText().toString();
@@ -209,6 +212,20 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 tvProvince.setText("已选" + yourChoicesName.size() + "个");
                 break;
         }
+    }
+
+    private void editUniversity() {
+        if (!TextUtils.isEmpty(tvYixiang.getText())) {
+            String[] wishUniversitys = LoginBean.getInstance().getWishUniversity().split(",");
+            tvYixiang.setText("已选" + wishUniversitys.length + "个");
+            EditText[] editTexts = {et_school_1, et_school_2, et_school_3, et_school_4, et_school_5};
+            for (int i = 0; i < wishUniversitys.length; i++) {
+                editTexts[i].setText(wishUniversitys[i]);
+            }
+            showEditDialogUniversity();
+            return;
+        }
+        showEditDialogUniversity();
     }
 
     private void setSchoolName(List<String> list, String str) {
@@ -293,6 +310,21 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
             });
             listView.addView(view);
         }
+    }
+
+    private void showProvincesDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("温馨提示");
+        builder.setMessage("您已选：" + LoginBean.getInstance().getWishProvince());
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void showDialog() {

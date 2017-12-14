@@ -109,7 +109,7 @@
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".mvp.view.activity.InterestActivity"
+            android:name=".mvp.view.activity.HldInterestActivity"
             android:screenOrientation="portrait" />
 
         <activity

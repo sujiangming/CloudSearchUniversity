@@ -173,18 +173,35 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_mbti_test"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginBottom="@dimen/space_12_dp"
-                android:layout_marginLeft="@dimen/space_10_dp"
-                android:layout_marginRight="@dimen/space_10_dp"
-                android:layout_marginTop="@dimen/space_12_dp"
-                android:background="@drawable/mbti_btn_bg3x"
-                android:text="开始测试"
-                android:textColor="@android:color/white"
-                android:textSize="@dimen/font_20_sp" />
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:padding="@dimen/space_12_dp">
+
+                <Button
+                    android:id="@+id/btn_mbti_test"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/space_44_dp"
+                    android:layout_weight="1"
+                    android:background="@color/color19B4D4"
+                    android:text="开始测试"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_20_sp" />
+
+                <Button
+                    android:id="@+id/btn_mbti_query"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/space_44_dp"
+                    android:layout_marginLeft="@dimen/space_12_dp"
+                    android:layout_weight="1"
+                    android:background="@color/color808080"
+                    android:text="查看结果"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_20_sp"
+                    android:visibility="gone" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

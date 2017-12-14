@@ -312,6 +312,16 @@ public interface IService {
     @POST("app/api/career/getHldTestReport")
     Call<CommonBean> getHldTestReport(@Field("data") String data);
 
+    /**
+     * 心理测试 通过用户查询霍兰德测试报告接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/career/getHldTestReportByUser")
+    Call<CommonBean> getHldTestReportByUser(@Field("data") String data);
+
 
     /**
      * 心理测试 MBTI试题接口
@@ -330,6 +340,17 @@ public interface IService {
     @FormUrlEncoded
     @POST("app/api/career/getMbtiTestReport")
     Call<CommonBean> getMbtiTestReport(@Field("data") String data);
+
+    /**
+     * 心理测试 通过用户查询MBTI测试报告接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/career/getMbtiTestReportByUser")
+    Call<CommonBean> getMbtiTestReportByUser(@Field("data") String data);
+
 
     /**
      * 获取微信调用access_token接口

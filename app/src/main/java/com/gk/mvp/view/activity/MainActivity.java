@@ -72,6 +72,8 @@ public class MainActivity extends SjmBaseActivity {
     View welcomeView;
     @BindView(R.id.iv_user_head)
     ImageView ivUserHeader;
+    @BindView(R.id.tv_welcome)
+    TextView tvWelcome;
 
     @OnClick({R.id.ll_home, R.id.ll_live, R.id.ll_wish, R.id.ll_lesson, R.id.ll_user})
     public void onViewClicked(View view) {
@@ -290,6 +292,8 @@ public class MainActivity extends SjmBaseActivity {
         super.onStart();
         getPersimmions();
         glideImageLoader.displayImage(this, LoginBean.getInstance().getHeadImg(), ivUserHeader);
+        String userCname = LoginBean.getInstance().getCname() == null ? LoginBean.getInstance().getUsername() : LoginBean.getInstance().getCname();
+        tvWelcome.setText(userCname + ",欢迎回来！");
     }
 
     private String permissionInfo;

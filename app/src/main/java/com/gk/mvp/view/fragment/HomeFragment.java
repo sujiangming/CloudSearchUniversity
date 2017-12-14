@@ -6,8 +6,8 @@ import android.view.View;
 
 import com.gk.R;
 import com.gk.beans.AdsBean;
+import com.gk.mvp.view.activity.HldInterestActivity;
 import com.gk.mvp.view.activity.IntelligentActivity;
-import com.gk.mvp.view.activity.InterestActivity;
 import com.gk.mvp.view.activity.LqRiskActivity;
 import com.gk.mvp.view.activity.MBTIActivity;
 import com.gk.mvp.view.activity.MainActivity;
@@ -149,7 +149,7 @@ public class HomeFragment extends SjmBaseFragment {
                 openNewActivity(MBTIActivity.class);
                 break;
             case R.id.rtv_interest:
-                openNewActivity(InterestActivity.class);
+                openNewActivity(HldInterestActivity.class);
                 break;
             case R.id.rtv_lq_risk:
                 openNewActivity(LqRiskActivity.class);

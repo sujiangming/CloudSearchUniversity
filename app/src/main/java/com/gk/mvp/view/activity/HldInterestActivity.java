@@ -8,8 +8,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
+import com.gk.beans.HldReportBean;
 import com.gk.beans.LoginBean;
-import com.gk.beans.MBTIResultBean;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
@@ -22,7 +22,7 @@ import butterknife.OnClick;
  * Created by JDRY-SJM on 2017/11/2.
  */
 
-public class MBTIActivity extends SjmBaseActivity {
+public class HldInterestActivity extends SjmBaseActivity {
     @BindView(R.id.top_bar)
     TopBarView topBar;
     @BindView(R.id.btn_mbti_test)
@@ -32,12 +32,12 @@ public class MBTIActivity extends SjmBaseActivity {
 
     @Override
     public int getResouceId() {
-        return R.layout.activity_mbti_test;
+        return R.layout.activity_interest_test;
     }
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        setTopBar(topBar, "MBTI性格测试", 0);
+        setTopBar(topBar, "霍兰德性格测试", 0);
         httpReqest();
     }
 
@@ -45,10 +45,10 @@ public class MBTIActivity extends SjmBaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_mbti_test:
-                openNewActivity(MBTITestDetailActivity.class);
+                openNewActivity(HLDTestDetailActivity.class);
                 break;
             case R.id.btn_mbti_query:
-                openNewActivity(MBTITestResultActivity.class);
+                openNewActivity(HLDTestResultActivity.class);
                 break;
         }
     }
@@ -66,7 +66,7 @@ public class MBTIActivity extends SjmBaseActivity {
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
-        MBTIResultBean hldReportBean = JSON.parseObject(commonBean.getData().toString(), MBTIResultBean.class);
+        HldReportBean hldReportBean = JSON.parseObject(commonBean.getData().toString(), HldReportBean.class);
         if (hldReportBean == null || hldReportBean.getId() == null) {
             return;
         }
