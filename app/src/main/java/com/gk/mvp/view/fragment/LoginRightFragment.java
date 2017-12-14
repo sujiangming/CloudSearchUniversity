@@ -16,11 +16,11 @@ import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.SaltBean;
-import com.gk.beans.VerifyCodeBean;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.activity.ForgetPasswordActivity;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.tools.MD5Util;
 
@@ -28,9 +28,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by JDRY-SJM on 2017/10/9.
@@ -112,15 +109,15 @@ public class LoginRightFragment extends SjmBaseFragment {
 
     @OnClick({R.id.tv_login, R.id.tv_forget_pwd})
     public void onViewClicked(View view) {
-        userName = etUserPhone.getText().toString();
-        if (userName.isEmpty()) {
-            toast("请输入手机号");
-            return;
-        }
-        JSONObject jsonObject = new JSONObject();
         switch (view.getId()) {
             case R.id.tv_login:
                 showProgress();
+                userName = etUserPhone.getText().toString();
+                if (userName.isEmpty()) {
+                    toast("请输入手机号");
+                    return;
+                }
+                JSONObject jsonObject = new JSONObject();
                 password = etUserPwd.getText().toString();
                 if (password.isEmpty()) {
                     toast("请输入密码");
@@ -134,7 +131,7 @@ public class LoginRightFragment extends SjmBaseFragment {
                         .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
                 break;
             case R.id.tv_forget_pwd:
-                getVerifyCode();
+                openNewActivity(ForgetPasswordActivity.class);
                 break;
         }
     }
@@ -146,49 +143,6 @@ public class LoginRightFragment extends SjmBaseFragment {
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList())
                 .request(YXXConstants.INVOKE_API_THREE_TIME);
-    }
-
-    private void getVerifyCode() {
-        final JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", userName);
-        RetrofitUtil.getInstance()
-                .createReq(IService.class)
-                .getVerityfyCode(jsonObject.toJSONString())
-                .enqueue(new Callback<CommonBean>() {
-                    @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                        if (response.isSuccessful()) {
-                            CommonBean commonBean = response.body();
-                            VerifyCodeBean verifyCodeBean = JSON.parseObject(commonBean.getData().toString(), VerifyCodeBean.class);
-                            jsonObject.put("verifyCode", verifyCodeBean.getVerifyCode());
-                            forgetPassword(jsonObject.toJSONString());
-                        } else {
-                            toast(response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
-                        toast(t.getMessage());
-                    }
-                });
-    }
-
-    private void forgetPassword(String para) {
-        RetrofitUtil.getInstance()
-                .createReq(IService.class)
-                .forgetPassword(para)
-                .enqueue(new Callback<CommonBean>() {
-                    @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                        toast(response.message());
-                    }
-
-                    @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
-                        toast(t.getMessage());
-                    }
-                });
     }
 
     @Override

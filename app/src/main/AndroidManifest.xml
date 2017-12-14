@@ -195,6 +195,10 @@
             android:name=".mvp.view.activity.LqRiskTestResultActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".mvp.view.activity.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+
         <!--微信-->
         <!--注册微信回调 WXEntryActivity -->
         <activity
