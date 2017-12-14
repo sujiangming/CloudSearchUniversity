@@ -60,7 +60,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
         }
         final SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
-        req.state = "diandi_wx_login";
+        req.state = "yxx_wx_login";
         YXXApplication.sApi.sendReq(req);
     }
 

@@ -59,7 +59,7 @@ public class HldInterestActivity extends SjmBaseActivity {
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
-                        .getHldTestReportByUser(jsonObject.toJSONString()))
+                        .getMbtiTestReportByUser(jsonObject.toJSONString()))
                 .request();
     }
 

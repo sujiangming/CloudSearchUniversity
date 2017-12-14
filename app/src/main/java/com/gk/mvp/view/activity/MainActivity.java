@@ -181,7 +181,7 @@ public class MainActivity extends SjmBaseActivity {
         protected Object doInBackground(Object[] params) {
             try {
                 //线程睡眠5秒，模拟耗时操作，这里面的内容Android系统会自动为你启动一个新的线程执行
-                Thread.sleep(1000);
+                Thread.sleep(2000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

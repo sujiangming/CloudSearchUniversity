@@ -8,11 +8,18 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.gk.beans.CommonBean;
+import com.gk.beans.LoginBean;
+import com.gk.beans.VerifyCodeBean;
 import com.gk.beans.WeiXin;
 import com.gk.beans.WeiXinToken;
+import com.gk.beans.WeiXinUserInfo;
 import com.gk.global.YXXApplication;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
+import com.gk.mvp.view.activity.MainActivity;
+import com.gk.tools.ToastUtils;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -66,6 +73,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         Log.d("ansen", "WXEntryActivity onNewIntent");
     }
 
+    // 微信发送请求到第三方应用时，会回调到该方法
     @Override
     public void onReq(BaseReq req) {
         Log.d("ansen", "WXEntryActivity onReq:" + req);
@@ -79,19 +87,20 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         }
     }
 
+    // 第三方应用发送到微信的请求处理后的响应结果，会回调到该方法
     @Override
     public void onResp(BaseResp resp) {
+        Log.e(WXEntryActivity.class.getName(), JSON.toJSONString(resp));
         if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {//分享
             Log.d("ansen", "微信分享操作.....");
             WeiXin weiXin = new WeiXin(2, resp.errCode, "");
-            //EventBus.getDefault().post(weiXin);
         } else if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {//登陆
             Log.d("ansen", "微信登录操作.....");
             SendAuth.Resp authResp = (SendAuth.Resp) resp;
-            WeiXin weiXin = new WeiXin(1, resp.errCode, authResp.code);
-            getAccessToken(weiXin.getCode());
+            //WeiXin weiXin = new WeiXin(1, resp.errCode, authResp.code);
+            getAccessToken(authResp.code);
         }
-        //finish();
+        // finish();
     }
 
     /**
@@ -138,13 +147,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         if (validateSuccess(response)) {
             // 使用Gson解析返回的授权口令信息
             WeiXinToken tokenInfo = JSON.parseObject(response, WeiXinToken.class);
-            Log.e("",tokenInfo.toString());
+            Log.e("", tokenInfo.toString());
             // 保存信息到手机本地
             //saveAccessInfotoLocation(tokenInfo);
             // 获取用户信息
             getUserInfo(tokenInfo.getAccess_token(), tokenInfo.getOpenid());
         } else {
-            Log.d("error response",response);
+            Log.d("error response", response);
         }
     }
 
@@ -160,7 +169,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 || (!"errcode".contains(response) && !errFlag.contains(response));
     }
 
-    private void getUserInfo(String access_token, String openid){
+    private void getUserInfo(String access_token, String openid) {
         String url = "https://api.weixin.qq.com/sns/userinfo?" +
                 "access_token=" + access_token +
                 "&openid=" + openid;
@@ -170,12 +179,25 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 ResponseBody responseBody;
                 if (response.isSuccessful()) {
                     responseBody = response.body();
-                    try {
-                        processGetAccessTokenResult(responseBody.string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                    if (responseBody != null) {
+                        try {
+                            String bodyString = responseBody.string();
+                            WeiXinUserInfo weiXinUserInfo = JSON.parseObject(bodyString, WeiXinUserInfo.class);
+                            //调用微信登录接口
+                            weixinLogin(weiXinUserInfo.getOpenid());
+                            //将头像和uninID上传服务器
+                            if (LoginBean.getInstance().getHeadImg() == null && LoginBean.getInstance().getNickName() == null) {
+                                updateUserInfo(weiXinUserInfo.getHeadimgurl(), weiXinUserInfo.getNickname(), weiXinUserInfo.getUnionid());
+                            } else if (LoginBean.getInstance().getHeadImg() == null && LoginBean.getInstance().getNickName() != null) {
+                                updateUserInfo(weiXinUserInfo.getHeadimgurl(), null, weiXinUserInfo.getUnionid());
+                            } else {
+                                updateUserInfo(null, weiXinUserInfo.getNickname(), weiXinUserInfo.getUnionid());
+                            }
+
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                     }
-                    //finish();
                 } else {
                     responseBody = response.errorBody();
                 }
@@ -188,4 +210,147 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         });
     }
 
- }
+    /**
+     * 微信登录接口
+     *
+     * @param weixinNo
+     */
+    private void weixinLogin(final String weixinNo) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("weixin", weixinNo);
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .weixinLogin(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
+                            LoginBean.getInstance().setWeixin(loginBean.getWeixin());
+                            LoginBean.getInstance().save();
+                            Intent intent = new Intent();
+                            intent.setClass(WXEntryActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            getVerityfyCode(weixinNo);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        ToastUtils.toast(WXEntryActivity.this, t.getMessage());
+                    }
+                });
+    }
+
+    /**
+     * 获取验证码接口，获取验证码作为微信绑定登录接口中的参数
+     */
+    private void getVerityfyCode(final String weixinNo) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .getVerityfyCode(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            VerifyCodeBean verifyCodeBean = JSON.parseObject(commonBean.getData().toString(), VerifyCodeBean.class);
+                            Log.e("微信绑定登录接口获取验证码成功~", verifyCodeBean.getVerifyCode());
+                            userBindingWeixin(weixinNo, verifyCodeBean.getVerifyCode());
+                        } else {
+                            ToastUtils.toast(WXEntryActivity.this, response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        ToastUtils.toast(WXEntryActivity.this, t.getMessage());
+                    }
+                });
+    }
+
+    /**
+     * 微信绑定登录接口
+     *
+     * @param weixinNo
+     */
+    private void userBindingWeixin(String weixinNo, String verifyCode) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("weixin", weixinNo);
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("verifyCode", verifyCode);
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .weixinLogin(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
+                            LoginBean.getInstance().setWeixin(loginBean.getWeixin());
+                            LoginBean.getInstance().save();
+                            Intent intent = new Intent();
+                            intent.setClass(WXEntryActivity.this, MainActivity.class);
+                            startActivity(intent);
+                            finish();
+                        } else {
+                            ToastUtils.toast(WXEntryActivity.this, response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        ToastUtils.toast(WXEntryActivity.this, t.getMessage());
+                    }
+                });
+    }
+
+    /**
+     * 保存微信头像和昵称
+     *
+     * @param imagePath
+     * @param nickName
+     * @param unionid
+     */
+    private void updateUserInfo(final String imagePath, final String nickName, final String unionid) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        if (imagePath != null) {
+            jsonObject.put("headImg", imagePath);
+        }
+        if (nickName != null) {
+            jsonObject.put("nickName", nickName);
+        }
+
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .updateUserInfo(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            if (imagePath != null) {
+                                LoginBean.getInstance().setHeadImg(imagePath);
+                            }
+                            if (nickName != null) {
+                                LoginBean.getInstance().setNickName(nickName);
+                            }
+                            LoginBean.getInstance().setWeiXinUnionid(unionid);
+                            LoginBean.getInstance().save();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+
+                    }
+                });
+    }
+
+}

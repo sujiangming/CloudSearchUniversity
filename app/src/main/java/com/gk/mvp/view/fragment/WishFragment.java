@@ -29,6 +29,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -139,11 +142,12 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 editUniversity();
                 break;
             case R.id.tv_province:
-                if (TextUtils.isEmpty(tvProvince.getText())) {
-                    showMultiChoiceDialog();
-                } else {
-                    showProvincesDialog();
-                }
+//                if (TextUtils.isEmpty(tvProvince.getText())) {
+//                    showMultiChoiceDialog();
+//                } else {
+//                    showProvincesDialog();
+//                }
+                showMultiChoiceDialog();
                 break;
             case R.id.tv_status:
                 break;
@@ -188,6 +192,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                         schoolsValue += universities.get(i) + ",";
                     }
                 }
+                updateWishUniversity(schoolsValue);
                 LoginBean.getInstance().setWishUniversity(schoolsValue).save();
                 hideEditDialogUniversity();
                 tvYixiang.setText("已选" + universities.size() + "个");
@@ -207,6 +212,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                         provinceStr += yourChoicesName.get(i) + ",";
                     }
                 }
+                updateUserIntentArea(provinceStr);
                 LoginBean.getInstance().setWishProvince(provinceStr).save();
                 hideEditDialogProvince();
                 tvProvince.setText("已选" + yourChoicesName.size() + "个");
@@ -465,5 +471,53 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
             clearAllEditView();
         }
+    }
+
+    private void updateWishUniversity(String intentSch) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("intentSch", intentSch);
+        RetrofitUtil.getInstance().createReq(IService.class)
+                .updateUserIntentSch(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            toast(commonBean.getMessage());
+                        } else {
+                            toast(response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        toast(t.getMessage());
+                    }
+                });
+    }
+
+    private void updateUserIntentArea(String intentArea) {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("intentArea", intentArea);
+        RetrofitUtil.getInstance().createReq(IService.class)
+                .updateUserIntentArea(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            toast(commonBean.getMessage());
+                        } else {
+                            toast(response.message());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        toast(t.getMessage());
+                    }
+                });
     }
 }

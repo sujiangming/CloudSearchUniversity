@@ -83,6 +83,8 @@ public class LoginBean implements Serializable {
     private String wishProvince;
     private String isHeartTest;
     private boolean hasReport;
+    private String weiXinHeadImg;
+    private String weiXinUnionid;
 
     private static final long serialVersionUID = 1L;
     private volatile static LoginBean instance = null;//volatile关键字来保证其线程间的可见性
@@ -513,5 +515,29 @@ public class LoginBean implements Serializable {
     public LoginBean setHasReport(boolean hasReport) {
         this.hasReport = hasReport;
         return instance;
+    }
+
+    public String getIsHeartTest() {
+        return isHeartTest;
+    }
+
+    public void setIsHeartTest(String isHeartTest) {
+        this.isHeartTest = isHeartTest;
+    }
+
+    public String getWeiXinHeadImg() {
+        return weiXinHeadImg;
+    }
+
+    public void setWeiXinHeadImg(String weiXinHeadImg) {
+        this.weiXinHeadImg = weiXinHeadImg;
+    }
+
+    public String getWeiXinUnionid() {
+        return weiXinUnionid;
+    }
+
+    public void setWeiXinUnionid(String weiXinUnionid) {
+        this.weiXinUnionid = weiXinUnionid;
     }
 }
