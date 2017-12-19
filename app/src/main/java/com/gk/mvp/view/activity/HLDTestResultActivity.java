@@ -2,6 +2,7 @@ package com.gk.mvp.view.activity;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -298,7 +299,9 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         // NOTE: The order of the entries when being added to the entries array determines their position around the center of
         // the chart.
         for (int i = 0; i < cnt; i++) {
-            float val2 = (float) (Math.random() * mult) + min + scores[i];
+            Double random = Math.random();
+            float val2 = (float) (random * mult) + min + scores[i];
+            Log.e("val2:", val2 + "");
             entries2.add(new RadarEntry(val2));
         }
 

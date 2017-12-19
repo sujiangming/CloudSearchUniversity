@@ -30,11 +30,12 @@
         android:layout_height="@dimen/space_35_dp"
         android:layout_alignParentRight="true"
         android:background="@drawable/school_rank_border"
+        android:gravity="center"
         android:paddingBottom="@dimen/space_9_dp"
-        android:paddingLeft="21dp"
-        android:paddingRight="21dp"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp"
         android:paddingTop="@dimen/space_9_dp"
-        android:text="2017年:1"
+        android:text="无排名信息"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -46,12 +47,13 @@
         android:layout_below="@id/tv_school_rank_0"
         android:background="@drawable/school_rank_border"
         android:paddingBottom="@dimen/space_9_dp"
-        android:paddingLeft="21dp"
-        android:paddingRight="21dp"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp"
         android:paddingTop="@dimen/space_9_dp"
-        android:text="2016年:1"
+        android:text="2016年：1 名"
         android:textColor="@color/color808080"
-        android:textSize="@dimen/font_12_sp" />
+        android:textSize="@dimen/font_12_sp"
+        android:visibility="gone" />
 
     <LinearLayout
         android:id="@+id/ll_shool_mark"

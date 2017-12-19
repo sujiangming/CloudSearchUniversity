@@ -60,7 +60,7 @@
                     android:layout_below="@id/tv_source_address"
                     android:layout_marginLeft="@dimen/space_5_dp"
                     android:layout_marginTop="@dimen/space_5_dp"
-                    android:text="意向去"
+                    android:text="意向省份"
                     android:textColor="@color/color808080"
                     android:textSize="@dimen/font_14_sp" />
 
@@ -71,7 +71,7 @@
                     android:layout_below="@id/tv_student_qx"
                     android:layout_marginLeft="@dimen/space_5_dp"
                     android:layout_marginTop="@dimen/space_5_dp"
-                    android:text="想学习"
+                    android:text="意向大学"
                     android:textColor="@color/color808080"
                     android:textSize="@dimen/font_14_sp" />
 
@@ -83,7 +83,7 @@
                     android:layout_marginTop="@dimen/space_5_dp"
                     android:layout_toRightOf="@id/tv_source_address"
                     android:gravity="right"
-                    android:text="590分"
+                    android:text="0分"
                     android:textColor="@color/color555555"
                     android:textSize="@dimen/font_14_sp" />
 
@@ -111,7 +111,8 @@
                     android:layout_toRightOf="@id/tv_s_want_city"
                     android:text="上大学"
                     android:textColor="@color/color808080"
-                    android:textSize="@dimen/font_14_sp" />
+                    android:textSize="@dimen/font_14_sp"
+                    android:visibility="gone"/>
 
                 <TextView
                     android:id="@+id/tv_zy"
@@ -123,7 +124,7 @@
                     android:layout_marginTop="@dimen/space_5_dp"
                     android:layout_toRightOf="@id/tv_student_qx"
                     android:gravity="left"
-                    android:text="机械工程、自动化、电力电子、土木工程"
+                    android:text="北京大学、清华大学"
                     android:textColor="@color/color555555"
                     android:textSize="@dimen/font_14_sp" />
             </RelativeLayout>

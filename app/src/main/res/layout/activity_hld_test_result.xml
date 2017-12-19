@@ -207,7 +207,7 @@
                 <com.github.mikephil.charting.charts.RadarChart
                     android:id="@+id/chart1"
                     android:layout_width="match_parent"
-                    android:layout_height="300dp"
+                    android:layout_height="320dp"
                     android:layout_marginTop="@dimen/space_25_dp" />
 
                 <TextView

@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.SchoolRankBean;
+import com.gk.beans.UniversityAreaEnum;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
@@ -115,17 +116,6 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
                 return true;
             }
         });
-        //搜索框展开时后面叉叉按钮的点击事件
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                searchKey = "";
-                isSearch = false;
-                invoke();
-                hideSoftKey();
-                return true;
-            }
-        });
     }
 
     private int screenHeight = 0;//屏幕高度
@@ -159,11 +149,7 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
     @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-        } else {
-            stopRefreshLayout();
-        }
+        stopLayoutRefreshByTag(isLoadMore);
         CommonBean commonBean = (CommonBean) t;
         List<SchoolRankBean> beanList = JSON.parseArray(commonBean.getData().toString(), SchoolRankBean.class);
         if (isSearch) {
@@ -204,6 +190,29 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
 
     }
 
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+        toast((String) t);
+        hideProgress();
+        stopLayoutRefreshByTag(isLoadMore);
+    }
+
+    @Override
+    public void refresh() {
+        mPage = 0;
+        isLoadMore = false;
+        isSearch = false;
+        invoke();
+    }
+
+    @Override
+    public void loadMore() {
+        mPage++;
+        isLoadMore = true;
+        isSearch = false;
+        invoke();
+    }
+
     private void setLvQuerySchool() {
         lvQuerySchool.setAdapter(adapter = new CommonAdapter<SchoolRankBean>(this, R.layout.school_rank_list_item, schoolBeanList) {
             @Override
@@ -222,7 +231,22 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
                 viewHolder.setText(R.id.tv_school_name, item.getSchoolName());
                 viewHolder.setText(R.id.tv_school_type, "1".equals(item.getSchoolType()) ? "本科" : "专科");
                 viewHolder.setText(R.id.tv_school_level, "1".equals(item.getSchoolCategory()) ? "综合类" : "教育类");
-                viewHolder.setText(R.id.tv_school_address, item.getSchoolArea());
+                viewHolder.setText(R.id.tv_school_address, UniversityAreaEnum.getName(Integer.valueOf(item.getSchoolArea())));
+
+                List<TextView> viewList = new ArrayList<>();
+                viewList.add((TextView) viewHolder.getView(R.id.tv_school_rank_0));
+                viewList.add((TextView) viewHolder.getView(R.id.tv_school_rank_1));
+
+                List<SchoolRankBean.RankingsBean> rankList = item.getRankings();
+
+                if (rankList != null && rankList.size() > 0) {
+                    for (int i = 0; i < rankList.size(); i++) {
+                        if (i <= 1) {
+                            viewList.get(i).setVisibility(View.VISIBLE);
+                            viewList.get(i).setText(getRankInfo(rankList.get(i).getUniYear(), rankList.get(i).getUniRanking()));
+                        }
+                    }
+                }
             }
         });
 
@@ -232,6 +256,10 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
                 toast("当前点击的是：" + i);
             }
         });
+    }
+
+    private String getRankInfo(String year, String rank) {
+        return year + "年：" + rank + " 名";
     }
 
     private void showTvNoData() {
@@ -246,33 +274,6 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
         if (tvNoData.getVisibility() == View.VISIBLE) {
             tvNoData.setVisibility(View.GONE);
         }
-    }
-
-    @Override
-    public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
-        hideProgress();
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-        } else {
-            stopRefreshLayout();
-        }
-    }
-
-    @Override
-    public void refresh() {
-        mPage = 0;
-        isLoadMore = false;
-        isSearch = false;
-        invoke();
-    }
-
-    @Override
-    public void loadMore() {
-        mPage++;
-        isLoadMore = true;
-        isSearch = false;
-        invoke();
     }
 
     public List<SchoolRankBean> removeDuplicate(List<SchoolRankBean> list) {

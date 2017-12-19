@@ -104,13 +104,10 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
 
             @Override
             public boolean onQueryTextChange(String s) {
-                return true;
-            }
-        });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                adapter.notifyDataSetChanged();
+                if (s == null || "".equals(s)) {
+                    searchKey = "";
+                    invoke();
+                }
                 return true;
             }
         });

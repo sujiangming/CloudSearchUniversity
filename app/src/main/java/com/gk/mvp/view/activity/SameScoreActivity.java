@@ -95,18 +95,20 @@ public class SameScoreActivity extends SjmBaseActivity {
                 viewHolder.setText(R.id.tv_score_start, item.getLowestScore() + "");
                 viewHolder.setText(R.id.tv_score_end, item.getHighestScore() + "");
 
-                int len = item.getHighestScore() - item.getLowestScore();
+                int max = item.getHighestScore();
+                int min = item.getLowestScore();
+
+                int len = max - min;
 
                 TextView endTextView = viewHolder.getView(R.id.tv_score_end);
                 RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) endTextView.getLayoutParams();
                 layoutParams.setMargins(len, 0, 0, 0);
+
                 ProgressBar progressBar = viewHolder.getView(R.id.progressBar1);
-                progressBar.setMax(item.getHighestScore());
-                int min = item.getLowestScore();
-                progressBar.setProgress(min);
-//                for (int i = min; i < item.getHighestScore(); i++) {
-//                    progressBar.setProgress(i);
-//                }
+                progressBar.setMax((max * 2));
+                for (int i = min; i < (max * 2); i++) {
+                    progressBar.setProgress(i);
+                }
             }
         });
         lvSameScore.setOnItemClickListener(new AdapterView.OnItemClickListener() {

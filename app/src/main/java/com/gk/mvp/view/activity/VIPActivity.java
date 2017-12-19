@@ -1,10 +1,12 @@
 package com.gk.mvp.view.activity;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -47,6 +49,8 @@ public class VIPActivity extends SjmBaseActivity {
     private String form = null;
     private int vipType = LoginBean.getInstance().getVipLevel();
     private int vipLevel = 0;
+    private String goldTip = "您确定升级为金卡会员吗？";
+    private String silverTip = "您确定升级为银卡会员吗？";
 
 
     @OnClick({R.id.tv_open_gold, R.id.tv_open_silver})
@@ -54,7 +58,7 @@ public class VIPActivity extends SjmBaseActivity {
         switch (view.getId()) {
             case R.id.tv_open_gold:
                 if (vipType < 3) {
-                    submitOrder(2);
+                    showVipDialog(goldTip, 2);
                     vipLevel = 3;
                 } else {
                     toast("您已经是金卡用户了");
@@ -62,7 +66,7 @@ public class VIPActivity extends SjmBaseActivity {
                 break;
             case R.id.tv_open_silver:
                 if (vipType < 2) {
-                    submitOrder(1);
+                    showVipDialog(silverTip, 1);
                     vipLevel = 2;
                 } else if (vipType == 2) {
                     toast("您已经是银卡用户了，您可要升级为金卡用户哦");
@@ -96,6 +100,27 @@ public class VIPActivity extends SjmBaseActivity {
                 }
             }
         }
+    }
+
+    private void showVipDialog(String tip, final int vipLevel) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("温馨提示");
+        builder.setMessage(tip);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                submitOrder(vipLevel);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void submitOrder(int level) {

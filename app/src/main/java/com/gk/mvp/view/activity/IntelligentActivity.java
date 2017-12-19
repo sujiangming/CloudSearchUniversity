@@ -49,6 +49,7 @@ public class IntelligentActivity extends SjmBaseActivity {
     Button btn2;
 
     private LoginBean loginBean = LoginBean.getInstance();
+    private int vipLevel = loginBean.getVipLevel();
 
     @Override
     public int getResouceId() {
@@ -61,13 +62,20 @@ public class IntelligentActivity extends SjmBaseActivity {
         tvSourceAddress.setText("" + loginBean.getAddress() + "  " + loginBean.getWlDesc());
         tvStudentScore.setText("" + loginBean.getScore() + "分");
         tvSWantCity.setText("" + (loginBean.getWishProvince() == null ? "未知" : loginBean.getWishProvince()));
+        tvZy.setText("" + (loginBean.getWishUniversity() == null ? "未知" : loginBean.getWishUniversity()));
+        if (vipLevel <= 1) {
+            tvWishReport.setText("会员等级低，没有权限");
+            btn1.setText("马上升级");
+            tvYhLevelLow.setText("会员等级低，没有权限");
+            btn2.setText("马上升级");
+        }
     }
 
     @OnClick({R.id.btn_1, R.id.btn_2})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_1:
-                openNewActivity(WishReportResultActivity.class);
+                showVipDialog();
                 break;
             case R.id.btn_2:
                 showVipDialog();
@@ -76,6 +84,10 @@ public class IntelligentActivity extends SjmBaseActivity {
     }
 
     private void showVipDialog() {
+        if (vipLevel > 1) {
+            openNewActivity(WishReportResultActivity.class);
+            return;
+        }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_alert);
         builder.setTitle("温馨提示");

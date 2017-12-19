@@ -98,8 +98,8 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 type = 4;
                 break;
             case R.id.btn_choose:
-                String str = "";
-                String strName = "";
+                String str = nullStr;
+                String strName = nullStr;
                 rlChoose.setVisibility(View.GONE);
                 queryIndexList = gridViewChooseAdapter.getCheckedArray();
                 if (queryIndexList != null) {
@@ -116,17 +116,19 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                     }
                 }
                 Log.e("str:", str);
-                if (!strName.equals("")) {
+                if (!strName.equals(nullStr)) {
                     setEnumName(strName);
                 }
                 if (type == 1) {
-                    invoke(str, "", "", "");
+                    invoke(str, nullStr, nullStr, nullStr, nullStr);
                 } else if (type == 2) {
-                    invoke("", str, "", "");
+                    invoke(nullStr, str, nullStr, nullStr, nullStr);
                 } else if (type == 3) {
-                    invoke("", "", str, "");
+                    invoke(nullStr, nullStr, str, nullStr, nullStr);
+                } else if (type == 4) {
+                    invoke(nullStr, nullStr, nullStr, str, nullStr);
                 } else {
-                    invoke("", "", "", str);
+                    invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
                 }
                 break;
         }
@@ -140,6 +142,8 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     private GridViewChooseAdapter gridViewChooseAdapter;
     private List<String> queryIndexList;
     private int type = 1;
+    private String nullStr = "";
+    private String searchKey = nullStr;
 
 
     @Override
@@ -150,12 +154,12 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         initSmartRefreshLayout(smartRfQuerySchool, true);
-        invoke("", "", "", "");
+        invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
         showSearch();
     }
 
     private String getEnumName(int index) {
-        String name = "";
+        String name = nullStr;
         if (type == 1) {
             name = UniversityAreaEnum.getName(index);
         } else if (type == 2) {
@@ -212,16 +216,8 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 Log.d(TAG, "onQueryTextSubmit = " + s);
-                int index = getSearchIndex(s);
-                if (searchview != null) {
-                    // 得到输入管理对象
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        // 这将让键盘在所有的情况下都被隐藏，但是一般我们在点击搜索按钮后，输入法都会乖乖的自动隐藏的。
-                        imm.hideSoftInputFromWindow(searchview.getWindowToken(), 0); // 输入法如果是显示状态，那么就隐藏输入法
-                    }
-                }
-                searchview.clearFocus(); // 不获取焦点
+                invoke(nullStr, nullStr, nullStr, nullStr, s);
+                clearSearch();
                 return true;
             }
 
@@ -234,19 +230,36 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         searchview.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                //nodesBeans.clear();
-                //adapter.notifyDataSetChanged();
+                searchview.setQueryHint("请输入关键字");
+                hideSoftKey();
                 return true;
             }
         });
     }
 
-    private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese) {
+    private void clearSearch() {
+        if (searchview != null) {
+            hideSoftKey();
+        }
+        searchview.clearFocus(); // 不获取焦点
+    }
+
+    private void hideSoftKey() {
+        // 得到输入管理对象
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm != null) {
+            // 这将让键盘在所有的情况下都被隐藏，但是一般我们在点击搜索按钮后，输入法都会乖乖的自动隐藏的。
+            imm.hideSoftInputFromWindow(searchview.getWindowToken(), 0); // 输入法如果是显示状态，那么就隐藏输入法
+        }
+    }
+
+    private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
         jsonObject.put("page", mPage);
         jsonObject.put("schoolArea", schoolArea);//学校地区
         jsonObject.put("schoolCategory", schoolCategory);//学校类别
         jsonObject.put("schoolType", schoolType);//学校类型（1本科、2专业）
         jsonObject.put("tese", tese);//特色
+        jsonObject.put("schoolName", schoolName);
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
@@ -258,7 +271,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     public void refresh() {
         mPage = 0;
         isLoadMore = false;
-        invoke("", "", "", "");
+        invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
 
     }
 
@@ -266,14 +279,15 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     public void loadMore() {
         mPage++;
         isLoadMore = true;
-        invoke("", "", "", "");
+        invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
+        stopLayoutRefreshByTag(isLoadMore);
         String data = (String) t;
-        if (data == null || "".equals(data)) {
+        if (data == null || nullStr.equals(data)) {
             toast("没有相关数据");
             return;
         }
@@ -281,7 +295,6 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         if (mPage == 0 && !isLoadMore) {
             schoolBeanList = querySchoolBean.getData();
             initListView();
-            stopRefreshLayout();
             return;
         }
         if (isLoadMore) {
@@ -301,11 +314,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-        } else {
-            stopRefreshLayout();
-        }
+        stopLayoutRefreshByTag(isLoadMore);
     }
 
     private void initListView() {
@@ -326,7 +335,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 viewHolder.setText(R.id.tv_school_name, item.getSchoolName());
                 viewHolder.setText(R.id.tv_school_type, "1".equals(item.getSchoolType()) ? "本科" : "专科");
                 viewHolder.setText(R.id.tv_school_level, "1".equals(item.getSchoolCategory()) ? "综合类" : "教育类");
-                viewHolder.setText(R.id.tv_school_address, item.getSchoolArea());
+                viewHolder.setText(R.id.tv_school_address, UniversityAreaEnum.getName(Integer.valueOf(item.getSchoolArea())));
             }
         });
     }

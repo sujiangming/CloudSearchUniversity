@@ -63,11 +63,11 @@ public class MajorInfoBean {
         private String majorId;
         private String majorName;
         private String majorProfile;
+        private String majorCode;
         private String minorCourses;
         private String necessaryCertificates;
         private String requiredCourse;
         private String salary;
-        private String majorCode;
 
         public String getCapacityRequirements() {
             return capacityRequirements;
