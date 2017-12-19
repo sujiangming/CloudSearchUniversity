@@ -202,7 +202,7 @@
 
         <activity
             android:name=".mvp.view.activity.OnLiveRoomActivity"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
 
         <!--微信-->
         <!--注册微信回调 WXEntryActivity -->

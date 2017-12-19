@@ -113,7 +113,6 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         }
         list = hldTestBeans;
         hldTableDao.deleteAll();
-        getFiveRecList();
         for (HLDTestBean h : list) {
             HLDTable hldTable = new HLDTable();
             hldTable.setHldId(h.getId());
@@ -129,7 +128,6 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         } else {
             pageCount = list.size() / 5 + 1;
         }
-        getFiveRecList();
         updatePage();
         tableList = getFiveRec();
         createUI();
@@ -219,8 +217,6 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         hldTableDao.update(hldTable);
 
         Log.e("after hldTable :", JSON.toJSONString(tableList.get(pos)));
-
-        getFiveRecList();
     }
 
     private void updateProgressBar() {

@@ -69,6 +69,7 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
     }
 
     private void httpRequest() {
+        showProgress();
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
@@ -78,6 +79,7 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithData(T t, int order) {
+        hideProgress();
         CommonBean commonBean = (CommonBean) t;
         List<MBITTestBean> hldTestBeans = JSON.parseArray(commonBean.getData().toString(), MBITTestBean.class);
         if (hldTestBeans == null || hldTestBeans.size() == 0) {
@@ -88,13 +90,22 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
         updatePage();
         initData(list.get(0));
         progressBar.setMax(list.size());
-        hideProgress();
+        tvSelect1.setVisibility(View.VISIBLE);
+        tvSelect2.setVisibility(View.VISIBLE);
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
+        setTvSelectGone(tvSelect1);
+        setTvSelectGone(tvSelect2);
+    }
+
+    private void setTvSelectGone(TextView tv) {
+        if (tv.getVisibility() == View.VISIBLE) {
+            tv.setVisibility(View.GONE);
+        }
     }
 
     private void updatePage() {
@@ -128,11 +139,15 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
 
     /**
      * type 表示选择是A还是B： 1 选择A 2 选择B
+     *
      * @param type
      */
     private void selectItem(int type) {
         if (page == list.size()) {
             finishDialog();
+            return;
+        }
+        if (list.size() == 0) {
             return;
         }
         MBITTestBean mbitTestBean = list.get(page);

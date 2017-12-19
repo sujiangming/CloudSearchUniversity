@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.gk.mvp.view.IView;
 import com.gk.mvp.view.custom.SjmProgressBar;
@@ -47,12 +49,27 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
      * 设置状态栏透明
      */
     public void setStatusBarTransparent() {
-        if (Build.VERSION.SDK_INT >= 21) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             View decorView = getWindow().getDecorView();
             int option = View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
             decorView.setSystemUiVisibility(option);
             getWindow().setStatusBarColor(Color.TRANSPARENT);
+        }
+    }
+
+    /**
+     * 设置状态栏透明
+     */
+    public void setStatusBarColor(int colorRes) {
+        try {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                Window window = getWindow();
+                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+                window.setStatusBarColor(colorRes);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 

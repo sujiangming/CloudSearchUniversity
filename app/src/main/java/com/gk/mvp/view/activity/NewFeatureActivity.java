@@ -10,11 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gk.R;
+import com.gk.beans.UserBean;
+import com.gk.beans.UserBeanDao;
 import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.mvp.view.adpater.SjmFragmentPagerAdapter;
-import com.gk.beans.UserBean;
-import com.gk.beans.UserBeanDao;
 
 import java.util.ArrayList;
 import java.util.List;

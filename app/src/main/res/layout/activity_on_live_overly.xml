@@ -2,6 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
+    android:id="@+id/root_view"
     android:layout_height="match_parent">
 
     <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
@@ -22,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginLeft="@dimen/space_12_dp"
-            android:layout_marginTop="@dimen/space_12_dp"
+            android:layout_marginTop="@dimen/space_5_dp"
             android:layout_weight="1"
             android:background="@drawable/on_live_detail_header"
             android:gravity="center_vertical"
@@ -49,8 +50,9 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginRight="@dimen/space_12_dp"
-            android:layout_marginTop="@dimen/space_12_dp"
-            android:layout_weight="1">
+            android:layout_marginTop="@dimen/space_5_dp"
+            android:layout_weight="1"
+            android:paddingLeft="@dimen/space_12_dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -109,7 +111,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_above="@id/ll_bottom_btns"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/space_60_dp"
         android:orientation="vertical"
         android:padding="@dimen/space_12_dp"
         android:paddingBottom="@dimen/space_20_dp"
@@ -130,9 +133,10 @@
     <RelativeLayout
         android:id="@+id/ll_bottom_btns"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_60_dp"
-        android:layout_alignParentBottom="true"
-        android:gravity="center_vertical"
+        android:layout_height="match_parent"
+        android:background="@color/transparent"
+        android:gravity="bottom"
+        android:paddingBottom="@dimen/space_5_dp"
         android:paddingLeft="@dimen/space_12_dp"
         android:paddingRight="@dimen/space_12_dp">
 
@@ -140,12 +144,14 @@
             android:id="@+id/civ_comment"
             android:layout_width="@dimen/space_40_dp"
             android:layout_height="@dimen/space_40_dp"
+            android:layout_alignParentBottom="true"
             android:src="@drawable/comment_live" />
 
         <com.gk.mvp.view.custom.CircleImageView
             android:id="@+id/civ_cancel"
             android:layout_width="@dimen/space_40_dp"
             android:layout_height="@dimen/space_40_dp"
+            android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/cancel_live" />
 
@@ -153,6 +159,7 @@
             android:id="@+id/civ_send_hua"
             android:layout_width="@dimen/space_40_dp"
             android:layout_height="@dimen/space_40_dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/space_20_dp"
             android:layout_toLeftOf="@id/civ_cancel"
             android:src="@drawable/songhua" />
@@ -161,9 +168,66 @@
             android:id="@+id/civ_shoucang"
             android:layout_width="@dimen/space_40_dp"
             android:layout_height="@dimen/space_40_dp"
+            android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/space_20_dp"
             android:layout_toLeftOf="@id/civ_send_hua"
             android:src="@drawable/shoucang" />
 
+        <tyrantgit.widget.HeartLayout
+            android:id="@+id/heart_layout"
+            android:layout_width="@dimen/space_100_dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/space_18_dp"
+            android:layout_marginRight="@dimen/space_8_dp"
+            android:layout_toLeftOf="@id/civ_send_hua"
+            android:visibility="visible" />
+
     </RelativeLayout>
+    <!--添加评论-->
+    <LinearLayout
+        android:id="@+id/ll_comment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_49_dp"
+        android:layout_alignParentBottom="true"
+        android:background="@android:color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/et_reply"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/space_30_dp"
+            android:layout_marginLeft="@dimen/space_5_dp"
+            android:layout_weight="1"
+            android:background="@drawable/reply_bg"
+            android:ellipsize="end"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:hint="输入您想要说的话"
+            android:inputType="text"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/space_20_dp"
+            android:textColor="@color/color1E1E1E"
+            android:textColorHint="@color/color9B9B9B"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_16_sp" />
+
+        <TextView
+            android:id="@+id/tv_send"
+            android:layout_width="@dimen/space_60_dp"
+            android:layout_height="@dimen/space_30_dp"
+            android:layout_marginLeft="@dimen/space_10_dp"
+            android:layout_marginRight="@dimen/space_20_dp"
+            android:background="@drawable/send_comment_bg"
+            android:gravity="center"
+            android:paddingLeft="@dimen/space_14_dp"
+            android:paddingRight="@dimen/space_14_dp"
+            android:text="发送"
+            android:textColor="@color/colorFDFBF3"
+            android:textSize="@dimen/font_14_sp" />
+
+    </LinearLayout>
 </RelativeLayout>

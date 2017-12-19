@@ -75,6 +75,9 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
     @BindView(R.id.include_comment)
     View includeComment;
 
+    @BindView(R.id.root_view)
+    View rootView;
+
     private int screenHeight = 0;//屏幕高度
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
     private QWListBean qwListBean;
@@ -94,6 +97,8 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
         qwListBean = (QWListBean) getIntent().getSerializableExtra("bean");
         initKeyBoardParameter();
         initData();
+        //添加layout大小发生改变监听器
+        rootView.addOnLayoutChangeListener(this);
     }
 
     private void initData() {
@@ -211,9 +216,12 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
 
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
-            etComment.setHint("我来说两句");
+        if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
+
+        } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+            includeComment.setVisibility(View.GONE);
             etComment.setText("");
+            etComment.clearFocus();
         }
     }
 
@@ -222,14 +230,17 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
         switch (view.getId()) {
             case R.id.btn_comment:
                 includeComment.setVisibility(View.VISIBLE);
-                etComment.setFocusable(true);
-                etComment.setFocusableInTouchMode(true);
+                etComment.requestFocus();
+                InputMethodManager inputManager =
+                        (InputMethodManager) etComment.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                inputManager.showSoftInput(etComment, 0);
                 break;
             case R.id.tv_care:
                 addAttentionTimes();
                 break;
             case R.id.tv_cancel:
                 includeComment.setVisibility(View.GONE);
+                etComment.clearFocus();
                 hideSoftKey();
                 break;
             case R.id.tv_submit:

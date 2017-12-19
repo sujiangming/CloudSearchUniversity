@@ -23,6 +23,7 @@ import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.VIPActivity;
 import com.gk.mvp.view.custom.RichText;
+import com.gk.tools.YxxEncoderUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -90,7 +91,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private String etHitStr = "请输入内容";
     private String emptyStr = "";
     private JSONObject jsonObject = new JSONObject();
-    private List<String> areaNameList;
     private EditText[] editTexts;
 
     @Override
@@ -142,11 +142,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 editUniversity();
                 break;
             case R.id.tv_province:
-//                if (TextUtils.isEmpty(tvProvince.getText())) {
-//                    showMultiChoiceDialog();
-//                } else {
-//                    showProvincesDialog();
-//                }
                 showMultiChoiceDialog();
                 break;
             case R.id.tv_status:
@@ -160,7 +155,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 break;
             case R.id.rich_wish:
             case R.id.rtv_zj:
-                openNewActivity(VIPActivity.class);
+                showUpgradeDialog();
                 break;
             case R.id.tv_cancel_university:
                 hideEditDialogUniversity();
@@ -318,15 +313,22 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
-    private void showProvincesDialog() {
+    private void showUpgradeDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setIcon(android.R.drawable.ic_dialog_info);
         builder.setTitle("温馨提示");
-        builder.setMessage("您已选：" + LoginBean.getInstance().getWishProvince());
+        builder.setMessage("VIP会员才能使用，您想成为VIP会员吗？");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
+                openNewActivity(VIPActivity.class);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
             }
         });
         AlertDialog dialog = builder.create();
@@ -476,7 +478,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private void updateWishUniversity(String intentSch) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
-        jsonObject.put("intentSch", intentSch);
+        jsonObject.put("intentSch", YxxEncoderUtils.URLEncoder(intentSch));
         RetrofitUtil.getInstance().createReq(IService.class)
                 .updateUserIntentSch(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
@@ -500,7 +502,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private void updateUserIntentArea(String intentArea) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
-        jsonObject.put("intentArea", intentArea);
+        jsonObject.put("intentArea", YxxEncoderUtils.URLEncoder(intentArea));
         RetrofitUtil.getInstance().createReq(IService.class)
                 .updateUserIntentArea(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
