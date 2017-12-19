@@ -43,4 +43,8 @@
     <dimen name="space_49_dp">49dp</dimen>
     <dimen name="space_50_dp">50dp</dimen>
     <dimen name="space_60_dp">60dp</dimen>
+    <dimen name="space_70_dp">70dp</dimen>
+    <dimen name="space_80_dp">80dp</dimen>
+    <dimen name="space_90_dp">90dp</dimen>
+    <dimen name="space_100_dp">100dp</dimen>
 </resources>

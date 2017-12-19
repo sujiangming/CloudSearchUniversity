@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
+        android:id="@+id/video_player_live_detail"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer>
+
+    <!--头部-->
+    <LinearLayout
+        android:id="@+id/ll_header"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_50_dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_12_dp"
+            android:layout_marginTop="@dimen/space_12_dp"
+            android:layout_weight="1"
+            android:background="@drawable/on_live_detail_header"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <com.gk.mvp.view.custom.CircleImageView
+                android:id="@+id/civ_header"
+                android:layout_width="@dimen/space_40_dp"
+                android:layout_height="@dimen/space_40_dp"
+                android:src="@drawable/ym" />
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10_dp"
+                android:text="杨幂大咪咪"
+                android:textColor="@color/colorFDFBF3"
+                android:textSize="@dimen/font_14_sp" />
+
+        </LinearLayout>
+
+        <HorizontalScrollView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginRight="@dimen/space_12_dp"
+            android:layout_marginTop="@dimen/space_12_dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="right"
+                android:gravity="center_vertical|right"
+                android:orientation="horizontal">
+
+                <com.gk.mvp.view.custom.CircleImageView
+                    android:layout_width="@dimen/space_30_dp"
+                    android:layout_height="@dimen/space_30_dp"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:src="@drawable/menu01" />
+
+                <com.gk.mvp.view.custom.CircleImageView
+                    android:layout_width="@dimen/space_30_dp"
+                    android:layout_height="@dimen/space_30_dp"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:src="@drawable/about" />
+
+                <com.gk.mvp.view.custom.CircleImageView
+                    android:layout_width="@dimen/space_30_dp"
+                    android:layout_height="@dimen/space_30_dp"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:src="@drawable/menu03" />
+
+                <com.gk.mvp.view.custom.CircleImageView
+                    android:layout_width="@dimen/space_30_dp"
+                    android:layout_height="@dimen/space_30_dp"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:src="@drawable/ym" />
+
+                <com.gk.mvp.view.custom.CircleImageView
+                    android:layout_width="@dimen/space_30_dp"
+                    android:layout_height="@dimen/space_30_dp"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:src="@drawable/menu02" />
+
+                <com.gk.mvp.view.custom.CircleImageView
+                    android:layout_width="@dimen/space_30_dp"
+                    android:layout_height="@dimen/space_30_dp"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:src="@drawable/menu01" />
+
+                <com.gk.mvp.view.custom.CircleImageView
+                    android:layout_width="@dimen/space_30_dp"
+                    android:layout_height="@dimen/space_30_dp"
+                    android:layout_marginLeft="@dimen/space_5_dp"
+                    android:src="@drawable/menu02" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
+    </LinearLayout>
+    <!--中间聊天-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_above="@id/ll_bottom_btns"
+        android:orientation="vertical"
+        android:padding="@dimen/space_12_dp"
+        android:paddingBottom="@dimen/space_20_dp"
+        android:scrollbars="vertical">
+
+        <include layout="@layout/on_live_detail_chat_item" />
+
+        <include layout="@layout/on_live_detail_chat_item" />
+
+        <include layout="@layout/on_live_detail_chat_item" />
+
+        <include layout="@layout/on_live_detail_chat_item" />
+
+        <include layout="@layout/on_live_detail_chat_item" />
+
+    </LinearLayout>
+    <!--底部功能按钮-->
+    <RelativeLayout
+        android:id="@+id/ll_bottom_btns"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_60_dp"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp">
+
+        <com.gk.mvp.view.custom.CircleImageView
+            android:id="@+id/civ_comment"
+            android:layout_width="@dimen/space_40_dp"
+            android:layout_height="@dimen/space_40_dp"
+            android:src="@drawable/comment_live" />
+
+        <com.gk.mvp.view.custom.CircleImageView
+            android:id="@+id/civ_cancel"
+            android:layout_width="@dimen/space_40_dp"
+            android:layout_height="@dimen/space_40_dp"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/cancel_live" />
+
+        <com.gk.mvp.view.custom.CircleImageView
+            android:id="@+id/civ_send_hua"
+            android:layout_width="@dimen/space_40_dp"
+            android:layout_height="@dimen/space_40_dp"
+            android:layout_marginRight="@dimen/space_20_dp"
+            android:layout_toLeftOf="@id/civ_cancel"
+            android:src="@drawable/songhua" />
+
+        <com.gk.mvp.view.custom.CircleImageView
+            android:id="@+id/civ_shoucang"
+            android:layout_width="@dimen/space_40_dp"
+            android:layout_height="@dimen/space_40_dp"
+            android:layout_marginRight="@dimen/space_20_dp"
+            android:layout_toLeftOf="@id/civ_send_hua"
+            android:src="@drawable/shoucang" />
+
+    </RelativeLayout>
+</RelativeLayout>

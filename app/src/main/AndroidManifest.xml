@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.gk">
+    package="com.gk"
+    android:installLocation="internalOnly">
 
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -197,6 +198,10 @@
 
         <activity
             android:name=".mvp.view.activity.ForgetPasswordActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.OnLiveRoomActivity"
             android:screenOrientation="portrait" />
 
         <!--微信-->

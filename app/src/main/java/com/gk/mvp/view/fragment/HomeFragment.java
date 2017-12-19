@@ -12,6 +12,7 @@ import com.gk.mvp.view.activity.LqRiskActivity;
 import com.gk.mvp.view.activity.MBTIActivity;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.mvp.view.activity.MaterialListActivity;
+import com.gk.mvp.view.activity.OnLiveRoomActivity;
 import com.gk.mvp.view.activity.ProfessionalQueryActivity;
 import com.gk.mvp.view.activity.QWActivity;
 import com.gk.mvp.view.activity.QuerySchoolActivity;
@@ -118,7 +119,7 @@ public class HomeFragment extends SjmBaseFragment {
 
     @OnClick({R.id.rtv_school_query, R.id.rtv_score_query, R.id.rtv_choose_school, R.id.rtv_rank_school,
             R.id.rtv_vip, R.id.rtv_same_score, R.id.rtv_same_rank, R.id.rtv_wish_report,
-            R.id.rtv_famous_teacher, R.id.rtv_interest, R.id.rtv_lq_risk, R.id.rtv_qw, R.id.rtv_gaokao_tiku})
+            R.id.rtv_famous_teacher, R.id.rtv_interest, R.id.rtv_lq_risk, R.id.rtv_qw, R.id.rtv_gaokao_tiku, R.id.rtv_on_live})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rtv_school_query:
@@ -160,6 +161,9 @@ public class HomeFragment extends SjmBaseFragment {
             case R.id.rtv_gaokao_tiku:
                 MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.changeNavStyle(mainActivity.getLlLesson());
+                break;
+            case R.id.rtv_on_live:
+                openNewActivity(OnLiveRoomActivity.class);
                 break;
 
         }
