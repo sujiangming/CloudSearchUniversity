@@ -136,13 +136,14 @@
                     android:orientation="vertical">
 
                     <com.gk.mvp.view.custom.RichText
+                        android:id="@+id/rtv_gold_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/space_10_dp"
                         android:gravity="center_vertical"
                         android:padding="@dimen/space_10_dp"
-                        android:text="金卡会员服务 ￥6999元"
-                        android:textColor="#fffd00"
+                        android:text="金卡会员服务 ￥2999元"
+                        android:textColor="#DEDB12"
                         android:textSize="@dimen/font_17_sp"
                         app:drawable_height="@dimen/space_50_dp"
                         app:drawable_location="left"
@@ -295,7 +296,7 @@
                         android:background="@drawable/vip_open_btn"
                         android:gravity="center"
                         android:text="立即开通"
-                        android:textColor="#808080"
+                        android:textColor="@color/color808080"
                         android:textSize="@dimen/font_18_sp" />
                 </LinearLayout>
                 <!--银卡-->
@@ -308,13 +309,14 @@
                     android:orientation="vertical">
 
                     <com.gk.mvp.view.custom.RichText
+                        android:id="@+id/rtv_silver_price"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawablePadding="@dimen/space_10_dp"
                         android:gravity="center_vertical"
                         android:padding="@dimen/space_10_dp"
-                        android:text="银卡会员服务 ￥699元"
-                        android:textColor="#c0c0c0"
+                        android:text="银卡会员服务 ￥999元"
+                        android:textColor="@color/color808080"
                         android:textSize="@dimen/font_17_sp"
                         app:drawable_height="@dimen/space_50_dp"
                         app:drawable_location="left"

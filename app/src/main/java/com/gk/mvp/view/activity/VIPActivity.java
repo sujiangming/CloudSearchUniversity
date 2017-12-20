@@ -20,16 +20,21 @@ import com.gk.beans.AuthResult;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.PayResult;
+import com.gk.beans.VIPPriceBean;
 import com.gk.beans.VipOrderBean;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by JDRY-SJM on 2017/10/23.
@@ -45,6 +50,12 @@ public class VIPActivity extends SjmBaseActivity {
 
     @BindView(R.id.ll_silve)
     LinearLayout llSilve;
+
+    @BindView(R.id.rtv_gold_price)
+    RichText rtv_gold_price;
+
+    @BindView(R.id.rtv_silver_price)
+    RichText rtv_silver_price;
 
     private String form = null;
     private int vipType = LoginBean.getInstance().getVipLevel();
@@ -86,6 +97,7 @@ public class VIPActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(tvTopBar, "VIP服务", 0);
         initUIByForm();
+        getVipLevelAmount();
     }
 
     private void initUIByForm() {
@@ -100,6 +112,30 @@ public class VIPActivity extends SjmBaseActivity {
                 }
             }
         }
+    }
+
+    private void getVipLevelAmount() {
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .getVipLevelAmount()
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            VIPPriceBean priceBean = JSON.parseObject(commonBean.getData().toString(), VIPPriceBean.class);
+                            if (priceBean != null) {
+                                rtv_gold_price.setText("金卡会员服务 ￥" + priceBean.getVipLevel2Amount() + "元");
+                                rtv_silver_price.setText("银卡会员服务 ￥" + priceBean.getVipLevel1Amount() + "元");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        toast(t.getMessage());
+                    }
+                });
     }
 
     private void showVipDialog(String tip, final int vipLevel) {

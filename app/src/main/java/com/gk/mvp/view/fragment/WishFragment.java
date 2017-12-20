@@ -16,6 +16,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
+import com.gk.beans.WishProvinceBean;
+import com.gk.beans.WishSchoolBean;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
@@ -105,6 +107,8 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     protected void onCreateViewByMe(Bundle savedInstanceState) {
         editTexts = new EditText[]{et_comment_common, et_school_1, et_school_2, et_school_3, et_school_4, et_school_5};
         initData();
+        getUserIntentSch();
+        getUserIntentArea();
         initKeyBoardParameter();
         rootView.addOnLayoutChangeListener(this);
     }
@@ -121,9 +125,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         if (loginBean != null) {
             tvScore.setText(loginBean.getScore() == null ? emptyStr : loginBean.getScore());
             tvRank.setText(loginBean.getRanking() == null ? emptyStr : loginBean.getRanking());
-            tvProvince.setText(loginBean.getWishProvince() == null ? emptyStr : "已选" + loginBean.getWishProvince().split(",").length + "个");
             tvWenli.setText(loginBean.getWlDesc());
-            tvYixiang.setText(loginBean.getWishUniversity() == null ? emptyStr : "已选" + loginBean.getWishUniversity().split(",").length + "个");
         }
     }
 
@@ -133,21 +135,29 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_score:
-                updateInfo(view, 1);
+                if (TextUtils.isEmpty(tvScore.getText())) {
+                    showCommonTipeDialog(view, 1);
+                }
                 break;
             case R.id.tv_rank:
-                updateInfo(view, 2);
+                if (TextUtils.isEmpty(tvRank.getText())) {
+                    showCommonTipeDialog(view, 2);
+                }
                 break;
             case R.id.tv_wenli:
-                showDialog();
+                if (TextUtils.isEmpty(tvWenli.getText())) {
+                    showCommonTipeDialog(view, 3);
+                }
                 break;
             case R.id.tv_yixiang:
-                requestCode = 4;
-                editUniversity();
-                YxxUtils.showSoftInputFromWindow(et_school_5);
+                if (TextUtils.isEmpty(tvYixiang.getText())) {
+                    showCommonTipeDialog(null, 4);
+                }
                 break;
             case R.id.tv_province:
-                showMultiChoiceDialog();
+                if (TextUtils.isEmpty(tvProvince.getText())) {
+                    showCommonTipeDialog(null, 5);
+                }
                 break;
             case R.id.tv_status:
                 break;
@@ -204,6 +214,10 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 yourChoicesName.clear();
                 break;
             case R.id.tv_submit_province:
+                if (yourChoicesName.size() == 0) {
+                    toast("您还没有选择");
+                    return;
+                }
                 String provinceStr = "";
                 for (int i = 0; i < yourChoicesName.size(); i++) {
                     if (i == (yourChoicesName.size() - 1)) {
@@ -220,16 +234,44 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
-    private void editUniversity() {
-        if (!TextUtils.isEmpty(tvYixiang.getText())) {
-            String[] wishUniversitys = LoginBean.getInstance().getWishUniversity().split(",");
-            tvYixiang.setText("已选" + wishUniversitys.length + "个");
-            EditText[] editTexts = {et_school_1, et_school_2, et_school_3, et_school_4, et_school_5};
-            for (int i = 0; i < wishUniversitys.length; i++) {
-                editTexts[i].setText(wishUniversitys[i]);
+    private void showCommonTipeDialog(final View view, final int index) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("温馨提示");
+        builder.setMessage("该次操作只能进行一次，请慎重填写！");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (index) {
+                    case 1:
+                        updateInfo(view, index);
+                        break;
+                    case 2:
+                        updateInfo(view, index);
+                        break;
+                    case 3:
+                        showWenLiDialog();
+                        break;
+                    case 4:
+                        requestCode = 4;
+                        showEditDialogUniversity();
+                        YxxUtils.showSoftInputFromWindow(et_school_5);
+                        break;
+                    case 5:
+                        showMultiChoiceDialog();
+                        break;
+                }
+                dialog.dismiss();
             }
-        }
-        showEditDialogUniversity();
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void setSchoolName(List<String> list, String str) {
@@ -241,12 +283,12 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private void updateInfo(View view, int key) {
         TextView textView = (TextView) view;
         if (TextUtils.isEmpty(textView.getText())) {
-            showEditDialog();
+            showCommonEditDialog();
             requestCode = key;
         }
     }
 
-    private void showEditDialog() {
+    private void showCommonEditDialog() {
         if (commonInfoEdit.getVisibility() == View.GONE) {
             commonInfoEdit.setVisibility(View.VISIBLE);
         }
@@ -338,7 +380,8 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         dialog.show();
     }
 
-    private void showDialog() {
+
+    private void showWenLiDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("文理科选择");
         //定义单选的选项
@@ -374,7 +417,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private void hideSoftKey() {
         for (EditText editText : editTexts) {
             //隐藏软盘
-            YxxUtils.hideSoftInputKeyboard(editText);
+            YxxUtils.hideSoftInputKeyboard(editText);//需要修改
             //清空数据
             editText.setHint(etHitStr);
             editText.setText(emptyStr);
@@ -525,6 +568,68 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     @Override
                     public void onFailure(Call<CommonBean> call, Throwable t) {
                         toast(t.getMessage());
+                    }
+                });
+    }
+
+    /**
+     * 获取意向高校
+     */
+    private void getUserIntentSch() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .getUserIntentSch(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            List<WishSchoolBean> wishSchoolBean = JSON.parseArray(commonBean.getData().toString(), WishSchoolBean.class);
+                            if (wishSchoolBean != null && wishSchoolBean.size() > 0) {
+                                tvYixiang.setText("已选" + wishSchoolBean.size() + "个");
+                                for (int i = 0; i < wishSchoolBean.size(); i++) {
+                                    EditText[] editTexts = {et_school_1, et_school_2, et_school_3, et_school_4, et_school_5};
+                                    editTexts[i].setText(wishSchoolBean.get(i).getIntentSchool());
+                                    editTexts[i].setEnabled(false);
+                                    editTexts[i].clearFocus();
+                                }
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    /**
+     * 获取意向省份
+     */
+    private void getUserIntentArea() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .getUserIntentArea(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            List<WishProvinceBean> wishSchoolBean = JSON.parseArray(commonBean.getData().toString(), WishProvinceBean.class);
+                            if (wishSchoolBean != null && wishSchoolBean.size() > 0) {
+                                tvProvince.setText("已选" + wishSchoolBean.size() + "个");
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+
                     }
                 });
     }

@@ -448,5 +448,29 @@ public interface IService {
     @POST("app/api/order/addUserOrder")
     Call<CommonBean> addUserOrder(@Field("data") String data);
 
+    /**
+     * 查询VIP充值价格
+     *
+     * @return
+     */
+    @GET("app/api/settings/getVipLevelAmount")
+    Call<CommonBean> getVipLevelAmount();
 
+    /**
+     * 查询考生意向高校接口
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/intent/getUserIntentSch")
+    Call<CommonBean> getUserIntentSch(@Field("data") String data);
+
+    /**
+     * 查询考生意向省份接口
+     *
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/intent/getUserIntentArea")
+    Call<CommonBean> getUserIntentArea(@Field("data") String data);
 }
