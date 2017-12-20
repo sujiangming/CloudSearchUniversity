@@ -14,7 +14,7 @@
         android:layout_marginRight="@dimen/space_20_dp"
         android:background="@drawable/border_radius_vip"
         android:orientation="vertical"
-        android:paddingTop="@dimen/space_30_dp">
+        android:paddingTop="@dimen/space_15_dp">
 
         <TextView
             android:layout_width="match_parent"

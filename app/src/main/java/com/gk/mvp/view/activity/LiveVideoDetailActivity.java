@@ -1,13 +1,11 @@
 package com.gk.mvp.view.activity;
 
-import android.content.Context;
 import android.content.res.Configuration;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -65,6 +63,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
 
     @BindView(R.id.lv_comment)
     SjmListView lvComment;
+
     @BindView(R.id.tv_video_name)
     TextView tvVideoName;
     @BindView(R.id.tv_video_count)
@@ -80,6 +79,9 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
 
     @BindView(R.id.include_comment)
     View includeComment;
+
+    @BindView(R.id.root_view)
+    View rootView;
 
     private boolean isTvZan = false;
     private boolean isIvZan = false;
@@ -102,6 +104,8 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                 break;
             case R.id.btn_comment:
                 includeComment.setVisibility(View.VISIBLE);
+                etComment.requestFocus();
+                YxxUtils.showSoftInputFromWindow(etComment);
                 break;
             case R.id.iv_zan:
                 if (!isIvZan) {
@@ -117,7 +121,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                 break;
             case R.id.tv_cancel:
                 includeComment.setVisibility(View.GONE);
-                hideSoftKey();
+                YxxUtils.hideSoftInputKeyboard(etComment);
                 break;
         }
     }
@@ -142,6 +146,8 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         initVideo();
         addFocusInter();
         getCommentInter();
+        //添加layout大小发生改变监听器
+        rootView.addOnLayoutChangeListener(this);
     }
 
     private void initData() {
@@ -150,9 +156,6 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         tvVideoName.setText(liveBean.getVideoName());
     }
 
-    /**
-     * 初始化软键盘弹出和关闭时的参数
-     */
     private void initKeyBoardParameter() {
         //获取屏幕高度
         screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
@@ -160,20 +163,14 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         keyHeight = screenHeight / 3;
     }
 
-    private void hideSoftKey() {
-        //隐藏软盘
-        InputMethodManager imm = (InputMethodManager) etComment.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(etComment.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        //editText失去焦点
-        etComment.clearFocus();
-        //清空数据
-        etComment.setHint("我来说两句");
-        etComment.setText("");
-    }
-
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+        //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
+        if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
+            //Toast.makeText(this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
+        } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+            includeComment.setVisibility(View.GONE);
+            etComment.clearFocus();
             etComment.setHint("我来说两句");
             etComment.setText("");
         }
@@ -266,7 +263,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                 toast(commonBean.getMessage());
                 getCommentInter();
                 includeComment.setVisibility(View.GONE);
-                hideSoftKey();
+                YxxUtils.hideSoftInputKeyboard(etComment);
                 break;
             case YXXConstants.INVOKE_API_THREE_TIME:
                 toast(commonBean.getMessage());

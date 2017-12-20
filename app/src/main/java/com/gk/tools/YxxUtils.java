@@ -1,9 +1,9 @@
 package com.gk.tools;
 
-import android.app.Activity;
+import android.content.Context;
 import android.os.Environment;
 import android.util.Log;
-import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import java.io.File;
@@ -21,11 +21,21 @@ public class YxxUtils {
     /**
      * EditText获取焦点并显示软键盘
      */
-    public static void showSoftInputFromWindow(Activity activity, EditText editText) {
-        editText.setFocusable(true);
-        editText.setFocusableInTouchMode(true);
+    public static void showSoftInputFromWindow(EditText editText) {
         editText.requestFocus();
-        activity.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        InputMethodManager inputManager = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputManager.showSoftInput(editText, 0);
+    }
+
+    /**
+     * 隐藏掉软盘
+     */
+    public static void hideSoftInputKeyboard(EditText editText) {
+        //隐藏软盘
+        InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        editText.clearFocus();
+        editText.setText("");
     }
 
     public static String URLEncode(String value) {
@@ -39,7 +49,7 @@ public class YxxUtils {
 
     public static void LogToFile(String fileName, String fileContent) {
         File file = new File(Environment.getExternalStorageDirectory() + "/Download/", fileName + ".txt");
-        Log.e("LogToFile:",file.getAbsolutePath());
+        Log.e("LogToFile:", file.getAbsolutePath());
         String path = file.getAbsolutePath();
         try {
             writeByOutputStreamWrite(path, fileContent);

@@ -1,16 +1,15 @@
 package com.gk.mvp.view.fragment;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -24,6 +23,7 @@ import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.VIPActivity;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.tools.YxxEncoderUtils;
+import com.gk.tools.YxxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +82,9 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     @BindView(R.id.choose_province)
     View chooseProvince;
 
+    @BindView(R.id.root_view)
+    View rootView;
+
     private LoginBean loginBean = LoginBean.getInstance();
     private DialogInterface mDialog;
     private int requestCode = 0;
@@ -103,6 +106,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         editTexts = new EditText[]{et_comment_common, et_school_1, et_school_2, et_school_3, et_school_4, et_school_5};
         initData();
         initKeyBoardParameter();
+        rootView.addOnLayoutChangeListener(this);
     }
 
     @Override
@@ -140,6 +144,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
             case R.id.tv_yixiang:
                 requestCode = 4;
                 editUniversity();
+                YxxUtils.showSoftInputFromWindow(et_school_5);
                 break;
             case R.id.tv_province:
                 showMultiChoiceDialog();
@@ -223,8 +228,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
             for (int i = 0; i < wishUniversitys.length; i++) {
                 editTexts[i].setText(wishUniversitys[i]);
             }
-            showEditDialogUniversity();
-            return;
         }
         showEditDialogUniversity();
     }
@@ -371,10 +374,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private void hideSoftKey() {
         for (EditText editText : editTexts) {
             //隐藏软盘
-            InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-            imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-            //editText失去焦点
-            editText.clearFocus();
+            YxxUtils.hideSoftInputKeyboard(editText);
             //清空数据
             editText.setHint(etHitStr);
             editText.setText(emptyStr);
@@ -383,6 +383,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
 
     private void clearAllEditView() {
         for (EditText editText : editTexts) {
+            editText.clearFocus();
             //清空数据
             editText.setHint(etHitStr);
             editText.setText(emptyStr);
@@ -470,8 +471,13 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
 
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+        //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
+        if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
+            Toast.makeText(getContext(), "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
+        } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
             clearAllEditView();
+            hideEditDialogUniversity();
+            Toast.makeText(getContext(), "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
         }
     }
 
