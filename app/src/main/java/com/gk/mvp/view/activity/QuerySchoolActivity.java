@@ -338,6 +338,12 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 viewHolder.setText(R.id.tv_school_address, UniversityAreaEnum.getName(Integer.valueOf(item.getSchoolArea())));
             }
         });
+        lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                openNewActivity(SchoolDetailActivity.class);
+            }
+        });
     }
 
 

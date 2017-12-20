@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#F5F6F5"
+        android:orientation="vertical">
+
+        <com.gk.mvp.view.custom.TopBarView
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:background="@color/color3AB1D6">
+
+            <com.gk.mvp.view.custom.CircleImageView
+                android:id="@+id/iv_query_item"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/space_10_dp"
+                android:src="@drawable/qinghuadaxue3x" />
+
+            <TextView
+                android:id="@+id/tv_school_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/space_10_dp"
+                android:layout_marginTop="@dimen/space_10_dp"
+                android:layout_toRightOf="@id/iv_query_item"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:paddingRight="@dimen/space_12_dp"
+                android:text="清华大学"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/font_17_sp" />
+
+            <LinearLayout
+                android:id="@+id/ll_shool_mark"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_school_name"
+                android:layout_marginLeft="@dimen/space_10_dp"
+                android:layout_marginTop="@dimen/space_5_dp"
+                android:layout_toRightOf="@id/iv_query_item"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_school_mark_0"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/space_10_dp"
+                    android:background="#F6922D"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/space_5_dp"
+                    android:paddingLeft="@dimen/space_10_dp"
+                    android:paddingRight="@dimen/space_10_dp"
+                    android:paddingTop="@dimen/space_5_dp"
+                    android:text="985"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_12_sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_school_mark_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/space_10_dp"
+                    android:background="#915113"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/space_5_dp"
+                    android:paddingLeft="@dimen/space_10_dp"
+                    android:paddingRight="@dimen/space_10_dp"
+                    android:paddingTop="@dimen/space_5_dp"
+                    android:text="211"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_12_sp"
+                    android:visibility="visible" />
+
+                <TextView
+                    android:id="@+id/tv_school_mark_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/space_2_dp"
+                    android:background="#399150"
+                    android:gravity="center"
+                    android:paddingBottom="@dimen/space_5_dp"
+                    android:paddingLeft="@dimen/space_10_dp"
+                    android:paddingRight="@dimen/space_10_dp"
+                    android:paddingTop="@dimen/space_5_dp"
+                    android:text="双一流"
+                    android:textColor="@android:color/white"
+                    android:textSize="@dimen/font_12_sp"
+                    android:visibility="visible" />
+            </LinearLayout>
+
+            <com.gk.mvp.view.custom.RichText
+                android:id="@+id/tv_school_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_shool_mark"
+                android:layout_marginLeft="@dimen/space_10_dp"
+                android:layout_marginTop="@dimen/space_10_dp"
+                android:layout_toRightOf="@id/iv_query_item"
+                android:drawablePadding="@dimen/space_5_dp"
+                android:gravity="center"
+                android:text="综合"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/font_12_sp"
+                app:drawable_height="@dimen/space_20_dp"
+                app:drawable_location="left"
+                app:drawable_src="@drawable/zonghe_img"
+                app:drawable_width="@dimen/space_20_dp" />
+
+            <com.gk.mvp.view.custom.RichText
+                android:id="@+id/tv_school_city"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/ll_shool_mark"
+                android:layout_marginLeft="@dimen/space_10_dp"
+                android:layout_marginTop="@dimen/space_10_dp"
+                android:layout_toRightOf="@id/tv_school_type"
+                android:drawablePadding="@dimen/space_5_dp"
+                android:gravity="center"
+                android:text="北京"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/font_12_sp"
+                app:drawable_height="@dimen/space_20_dp"
+                app:drawable_location="left"
+                app:drawable_src="@drawable/city_img"
+                app:drawable_width="@dimen/space_20_dp" />
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_44_dp"
+            android:layout_marginBottom="@dimen/space_12_dp"
+            android:layout_marginTop="@dimen/space_12_dp"
+            android:background="@color/colorWhite"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_brief"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="简介"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_16_sp" />
+
+            <TextView
+                android:id="@+id/tv_luqu_data"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="录取数据"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_16_sp" />
+
+            <TextView
+                android:id="@+id/tv_zs_plan"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="招生计划"
+                android:textColor="@color/color808080"
+                android:textSize="@dimen/font_16_sp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
