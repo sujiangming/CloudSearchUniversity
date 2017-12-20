@@ -1,14 +1,150 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="简介" />
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+        <com.gk.mvp.view.custom.TopBarView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_1_px"
+            android:background="@color/color353535" />
+
+        <com.gk.mvp.view.custom.RichText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_40_dp"
+            android:layout_marginTop="@dimen/space_12_dp"
+            android:background="@color/colorWhite"
+            android:drawablePadding="@dimen/space_8_dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/space_10_dp"
+            android:text="录取概率"
+            app:drawable_height="@dimen/space_30_dp"
+            app:drawable_src="@drawable/ic_shuxian_blue"
+            app:drawable_width="@dimen/space_8_dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_1_px"
+            android:background="@color/color19B4D4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/space_40_dp"
+                android:background="@drawable/shool_mark"
+                android:gravity="center"
+                android:text="VIP特权"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12_dp"
+                android:text="开通VIP后可以查看此校对你的录取概率"
+                android:textColor="@color/color808080" />
+
+        </LinearLayout>
+
+        <com.gk.mvp.view.custom.RichText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_40_dp"
+            android:layout_marginTop="@dimen/space_12_dp"
+            android:background="@color/colorWhite"
+            android:drawablePadding="@dimen/space_8_dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/space_10_dp"
+            android:text="招生简介"
+            app:drawable_height="@dimen/space_30_dp"
+            app:drawable_src="@drawable/ic_shuxian_blue"
+            app:drawable_width="@dimen/space_8_dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_1_px"
+            android:background="@color/color19B4D4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/space_40_dp"
+                android:background="@drawable/shool_mark"
+                android:gravity="center"
+                android:text="VIP特权"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12_dp"
+                android:text="开通VIP后可以查看此校对你的录取概率"
+                android:textColor="@color/color808080" />
+
+        </LinearLayout>
+
+        <com.gk.mvp.view.custom.RichText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_40_dp"
+            android:layout_marginTop="@dimen/space_12_dp"
+            android:background="@color/colorWhite"
+            android:drawablePadding="@dimen/space_8_dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/space_10_dp"
+            android:text="学校简介"
+            app:drawable_height="@dimen/space_30_dp"
+            app:drawable_src="@drawable/ic_shuxian_blue"
+            app:drawable_width="@dimen/space_8_dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_1_px"
+            android:background="@color/color19B4D4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="@dimen/space_40_dp"
+                android:background="@drawable/shool_mark"
+                android:gravity="center"
+                android:text="VIP特权"
+                android:textColor="@color/colorWhite" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12_dp"
+                android:text="开通VIP后可以查看此校对你的录取概率"
+                android:textColor="@color/color808080" />
+
+        </LinearLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
