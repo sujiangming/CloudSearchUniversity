@@ -3,6 +3,7 @@ package com.gk.mvp.view.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -15,6 +16,7 @@ import com.gk.mvp.view.fragment.SchoolDetailLqDataFragment;
 import com.gk.mvp.view.fragment.SchoolDetailZsPlanFragment;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by JDRY-SJM on 2017/12/20.
@@ -46,11 +48,28 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     @BindView(R.id.tv_zs_plan)
     TextView tvZsPlan;
 
+
+    @OnClick({R.id.tv_brief, R.id.tv_luqu_data, R.id.tv_zs_plan})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tv_brief:
+                changeNavStyle(view);
+                break;
+            case R.id.tv_luqu_data:
+                changeNavStyle(view);
+                break;
+            case R.id.tv_zs_plan:
+                changeNavStyle(view);
+                break;
+        }
+    }
+
     private FragmentManager fragmentManager;
     private SchoolDetailBriefFragment schoolDetailBriefFragment = null;
     private SchoolDetailLqDataFragment schoolDetailLqDataFragment = null;
     private SchoolDetailZsPlanFragment schoolDetailZsPlanFragment = null;
     private int index = 0;
+    private TextView[] textViews;
 
     @Override
     public int getResouceId() {
@@ -60,12 +79,29 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "高校详情", 0);
+        textViews = new TextView[]{tvBrief, tvLuquData, tvZsPlan};
         initFragments();
     }
 
     private void initFragments() {
         fragmentManager = getSupportFragmentManager();
         changeFragment(index);//显示主页
+    }
+
+    public void changeNavStyle(View view) {
+        String tag = (String) view.getTag();
+        index = Integer.parseInt(tag);
+        changeFragment(index);
+        changeTvColor(index);
+    }
+
+    private void changeTvColor(int index) {
+        textViews[index].setTextColor(0xFF3AB1D6);
+        for (int i = 0; i < textViews.length; i++) {
+            if (i != index) {
+                textViews[i].setTextColor(0xFF808080);
+            }
+        }
     }
 
     private void changeFragment(int indexTmp) {

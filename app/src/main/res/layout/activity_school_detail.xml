@@ -154,8 +154,9 @@
                 android:layout_weight="1"
                 android:gravity="center"
                 android:text="简介"
-                android:textColor="@color/color808080"
-                android:textSize="@dimen/font_16_sp" />
+                android:textColor="@color/color3AB1D6"
+                android:textSize="@dimen/font_16_sp"
+                android:tag="0"/>
 
             <TextView
                 android:id="@+id/tv_luqu_data"
@@ -165,7 +166,8 @@
                 android:gravity="center"
                 android:text="录取数据"
                 android:textColor="@color/color808080"
-                android:textSize="@dimen/font_16_sp" />
+                android:textSize="@dimen/font_16_sp"
+                android:tag="1"/>
 
             <TextView
                 android:id="@+id/tv_zs_plan"
@@ -175,7 +177,8 @@
                 android:gravity="center"
                 android:text="招生计划"
                 android:textColor="@color/color808080"
-                android:textSize="@dimen/font_16_sp" />
+                android:textSize="@dimen/font_16_sp"
+                android:tag="2"/>
 
         </LinearLayout>
 

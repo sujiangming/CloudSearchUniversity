@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -11,19 +10,9 @@
         android:background="@color/colorBackground"
         android:orientation="vertical">
 
-        <com.gk.mvp.view.custom.TopBarView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/space_1_px"
-            android:background="@color/color353535" />
-
         <com.gk.mvp.view.custom.RichText
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_40_dp"
-            android:layout_marginTop="@dimen/space_12_dp"
             android:background="@color/colorWhite"
             android:drawablePadding="@dimen/space_8_dp"
             android:gravity="center_vertical"
@@ -147,4 +136,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</android.support.constraint.ConstraintLayout>
+</ScrollView>
