@@ -116,10 +116,17 @@
         android:textColor="@color/color555555"
         android:textSize="@dimen/font_12_sp" />
 
-    <com.gk.mvp.view.custom.RichText
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@android:color/transparent" />
+
+    <com.gk.mvp.view.custom.RichText
+        android:id="@+id/rtv_weixin_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:drawablePadding="@dimen/space_20_dp"
         android:gravity="bottom|center_horizontal"
         android:paddingBottom="@dimen/space_25_dp"

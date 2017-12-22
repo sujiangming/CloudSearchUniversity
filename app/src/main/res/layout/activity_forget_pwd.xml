@@ -36,15 +36,63 @@
             android:gravity="center_vertical"
             android:hint="请输入手机号"
             android:inputType="phone"
-            android:maxLength="11"
             android:maxLines="1"
-            android:paddingLeft="@dimen/space_25_dp"
+            android:paddingLeft="@dimen/space_20_dp"
+            android:textColor="@color/color353535"
+            android:textColorHint="#d9d9d9"
+            android:textCursorDrawable="@null"
+            android:textSize="@dimen/font_16_sp" />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:layout_marginLeft="@dimen/space_44_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:background="@color/color555555" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:layout_marginTop="@dimen/space_38_dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/pwd3x" />
+
+        <EditText
+            android:id="@+id/et_user_pwd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/space_5_dp"
+            android:layout_weight="1"
+            android:background="@null"
+            android:ellipsize="end"
+            android:gravity="center_vertical"
+            android:hint="请输入密码"
+            android:inputType="number"
+            android:maxLines="1"
+            android:paddingLeft="@dimen/space_20_dp"
             android:textColor="@color/color353535"
             android:textColorHint="#d9d9d9"
             android:textCursorDrawable="@null"
             android:textSize="@dimen/font_14_sp" />
-    </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_code"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@drawable/login_btn_press"
+            android:gravity="center"
+            android:text="获取验证码"
+            android:textColor="@color/color4c90bf"
+            android:textSize="@dimen/font_14_sp" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -60,9 +108,22 @@
         android:layout_marginLeft="@dimen/space_12_dp"
         android:layout_marginRight="@dimen/space_12_dp"
         android:layout_marginTop="@dimen/space_40_dp"
-        android:background="@color/color19B4D4"
+        android:background="@color/color878787"
         android:gravity="center"
-        android:text="提交"
+        android:text="登录"
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_16_sp" />
+
+    <TextView
+        android:id="@+id/tv_ps"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_20_dp"
+        android:gravity="left"
+        android:lineSpacingExtra="@dimen/space_5_dp"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp"
+        android:text="*是劳动竞赛"
+        android:textColor="@color/colorFFFF0000"
+        android:textSize="@dimen/font_12_sp" />
 </LinearLayout>

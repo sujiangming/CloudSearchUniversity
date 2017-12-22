@@ -118,7 +118,7 @@ public class PresenterManager {
     }
 
     private void render(CommonBean commonBean) {
-        if (commonBean == null) {
+        if (commonBean == null || commonBean.getData() == null) {
             mIView.fillWithNoData(errorInfo, mOrder);
             return;
         }
@@ -166,7 +166,7 @@ public class PresenterManager {
      * @param flag
      */
     private void render(CommonBean commonBean, int flag) {
-        if (commonBean == null) {
+        if (commonBean == null || commonBean.getData() == null) {
             mIView.fillWithNoData(errorInfo, flag);
             return;
         }

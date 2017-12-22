@@ -91,14 +91,23 @@ public class PersonInfoActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "个人信息", 0);
-        glideImageLoader.displayImage(this, loginBean.getHeadImg(), ivUserHead);
-        tvUserCname.setText(loginBean.getCname());
-        tvUserNickName.setText(loginBean.getNickName());
-        tvWenLiKe.setText(loginBean.getWlDesc());
-        tvStudentRank.setText(String.valueOf(loginBean.getRanking()));
-        tvStudentScore.setText(String.valueOf(loginBean.getScore()));
-        tvStudentSource.setText(loginBean.getAddress());
-        tvVipLevel.setText(loginBean.getVipLevelDesc());
+        if(loginBean.getHeadImg() != null && !"".equals(loginBean.getHeadImg())){
+            glideImageLoader.displayImage(this, loginBean.getHeadImg(), ivUserHead);
+        }
+        setViewData(tvUserCname,loginBean.getCname());
+        setViewData(tvUserNickName,loginBean.getNickName());
+        setViewData(tvWenLiKe,loginBean.getWlDesc());
+        setViewData(tvStudentRank,String.valueOf(loginBean.getRanking()));
+        setViewData(tvStudentScore,String.valueOf(loginBean.getScore()));
+        setViewData(tvStudentSource,loginBean.getAddress());
+        setViewData(tvVipLevel,loginBean.getVipLevelDesc());
+
+    }
+
+    private void setViewData(TextView tv,String value){
+        if(value != null && !"".equals(value)){
+            tv.setText(value);
+        }
     }
 
 

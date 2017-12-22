@@ -7,6 +7,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gk.R;
+import com.gk.mvp.view.custom.GlideCircleTransform;
 import com.youth.banner.loader.ImageLoader;
 
 /**
@@ -19,12 +20,27 @@ public class GlideImageLoader extends ImageLoader {
         //Glide 加载图片简单用法
         Glide.with(context)
                 .load(path)
-                .placeholder(R.drawable.ic_gf_default_photo)
+                .crossFade()
+                .placeholder(R.drawable.zhanweitu)
                 .dontAnimate()
-                .error(R.drawable.ic_gf_default_photo)
-                .priority( Priority.HIGH)
+                .error(R.drawable.zhanweitu)
+                .priority(Priority.HIGH)
                 .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.RESULT)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(imageView);
+    }
+
+    public void displayCircleRadius(Context context, Object path, ImageView imageView, int radius) {
+        Glide.with(context)
+                .load(path)
+                .crossFade()
+                .transform(new GlideCircleTransform(context, radius))
+                .placeholder(R.drawable.zhanweitu)
+                .dontAnimate()
+                .error(R.drawable.zhanweitu)
+                .priority(Priority.HIGH)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(imageView);
     }
 }

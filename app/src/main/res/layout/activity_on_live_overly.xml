@@ -36,7 +36,7 @@
                 android:src="@drawable/ym" />
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tv_nick_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/space_10_dp"
@@ -55,53 +55,14 @@
             android:paddingLeft="@dimen/space_12_dp">
 
             <LinearLayout
+                android:id="@+id/ll_images"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="right"
                 android:gravity="center_vertical|right"
                 android:orientation="horizontal">
 
-                <com.gk.mvp.view.custom.CircleImageView
-                    android:layout_width="@dimen/space_30_dp"
-                    android:layout_height="@dimen/space_30_dp"
-                    android:layout_marginLeft="@dimen/space_5_dp"
-                    android:src="@drawable/menu01" />
 
-                <com.gk.mvp.view.custom.CircleImageView
-                    android:layout_width="@dimen/space_30_dp"
-                    android:layout_height="@dimen/space_30_dp"
-                    android:layout_marginLeft="@dimen/space_5_dp"
-                    android:src="@drawable/about" />
-
-                <com.gk.mvp.view.custom.CircleImageView
-                    android:layout_width="@dimen/space_30_dp"
-                    android:layout_height="@dimen/space_30_dp"
-                    android:layout_marginLeft="@dimen/space_5_dp"
-                    android:src="@drawable/menu03" />
-
-                <com.gk.mvp.view.custom.CircleImageView
-                    android:layout_width="@dimen/space_30_dp"
-                    android:layout_height="@dimen/space_30_dp"
-                    android:layout_marginLeft="@dimen/space_5_dp"
-                    android:src="@drawable/ym" />
-
-                <com.gk.mvp.view.custom.CircleImageView
-                    android:layout_width="@dimen/space_30_dp"
-                    android:layout_height="@dimen/space_30_dp"
-                    android:layout_marginLeft="@dimen/space_5_dp"
-                    android:src="@drawable/menu02" />
-
-                <com.gk.mvp.view.custom.CircleImageView
-                    android:layout_width="@dimen/space_30_dp"
-                    android:layout_height="@dimen/space_30_dp"
-                    android:layout_marginLeft="@dimen/space_5_dp"
-                    android:src="@drawable/menu01" />
-
-                <com.gk.mvp.view.custom.CircleImageView
-                    android:layout_width="@dimen/space_30_dp"
-                    android:layout_height="@dimen/space_30_dp"
-                    android:layout_marginLeft="@dimen/space_5_dp"
-                    android:src="@drawable/menu02" />
 
             </LinearLayout>
         </HorizontalScrollView>

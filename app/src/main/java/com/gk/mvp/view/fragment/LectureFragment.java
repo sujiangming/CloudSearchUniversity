@@ -239,16 +239,6 @@ public class LectureFragment extends SjmBaseFragment {
 
     }
 
-    @Override
-    public void loadMore() {
-
-    }
-
-    @Override
-    public void refresh() {
-
-    }
-
     private void initMsjt() {
         msjt = lectureBean.getMsjt();
         if (msjt == null) {

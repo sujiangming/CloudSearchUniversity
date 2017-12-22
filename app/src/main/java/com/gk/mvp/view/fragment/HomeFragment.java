@@ -4,15 +4,20 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
 import com.gk.R;
 import com.gk.beans.AdsBean;
+import com.gk.beans.CommonBean;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
+import com.gk.mvp.view.activity.GkLibraryActivity;
 import com.gk.mvp.view.activity.HldInterestActivity;
 import com.gk.mvp.view.activity.IntelligentActivity;
 import com.gk.mvp.view.activity.LqRiskActivity;
 import com.gk.mvp.view.activity.MBTIActivity;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.mvp.view.activity.MaterialListActivity;
-import com.gk.mvp.view.activity.OnLiveRoomActivity;
+import com.gk.mvp.view.activity.OnLiveListActivity;
 import com.gk.mvp.view.activity.ProfessionalQueryActivity;
 import com.gk.mvp.view.activity.QWActivity;
 import com.gk.mvp.view.activity.QuerySchoolActivity;
@@ -30,6 +35,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by JDRY_SJM on 2017/4/20.
@@ -52,8 +60,35 @@ public class HomeFragment extends SjmBaseFragment {
     private void initBanner() {
         List<AdsBean.MDataBean> mDataBeans = AdsBean.getInstance().getShouYeAds();
         if (mDataBeans == null || mDataBeans.size() == 0) {
+            getAdsInfo();
             return;
         }
+        initBannerData(mDataBeans);
+    }
+
+    private void getAdsInfo() {
+        RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList()
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            if (commonBean.getStatus() == 1) {
+                                List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean.getData().toString(), AdsBean.MDataBean.class);
+                                AdsBean.getInstance().saveAdsBean(mDataBeans);
+                                initBannerData(mDataBeans);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+
+                    }
+                });
+    }
+
+    private void initBannerData(List<AdsBean.MDataBean> mDataBeans) {
         final List<String> imageList = new ArrayList<>();
         final List<String> imageNameList = new ArrayList<>();
         final List<String> imageRedirectUrlList = new ArrayList<>();
@@ -159,11 +194,12 @@ public class HomeFragment extends SjmBaseFragment {
                 openNewActivity(QWActivity.class);
                 break;
             case R.id.rtv_gaokao_tiku:
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.changeNavStyle(mainActivity.getLlLesson());
+//                MainActivity mainActivity = (MainActivity) getActivity();
+//                mainActivity.changeNavStyle(mainActivity.getLlLesson());
+                openNewActivity(GkLibraryActivity.class);
                 break;
             case R.id.rtv_on_live:
-                openNewActivity(OnLiveRoomActivity.class);
+                openNewActivity(OnLiveListActivity.class);
                 break;
 
         }

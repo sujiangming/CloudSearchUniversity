@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.baoyz.actionsheet.ActionSheet;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
@@ -22,6 +23,8 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.activity.HldInterestActivity;
+import com.gk.mvp.view.activity.MBTIActivity;
 import com.gk.mvp.view.activity.VIPActivity;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.tools.YxxEncoderUtils;
@@ -123,9 +126,16 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
 
     private void initData() {
         if (loginBean != null) {
-            tvScore.setText(loginBean.getScore() == null ? emptyStr : loginBean.getScore());
-            tvRank.setText(loginBean.getRanking() == null ? emptyStr : loginBean.getRanking());
-            tvWenli.setText(loginBean.getWlDesc());
+            setViewData(tvScore, loginBean.getScore());
+            setViewData(tvRank, loginBean.getRanking());
+            setViewData(tvWenli, loginBean.getWlDesc());
+            setViewData(tvStatus, loginBean.getIsHeartTest());
+        }
+    }
+
+    private void setViewData(TextView tv, String value) {
+        if (value != null && !"".equals(value)) {
+            tv.setText(value);
         }
     }
 
@@ -136,30 +146,39 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         switch (view.getId()) {
             case R.id.tv_score:
                 if (TextUtils.isEmpty(tvScore.getText())) {
-                    showCommonTipeDialog(view, 1);
+                    //showCommonTipeDialog(view, 1);
+                    updateInfo(view, 1);
                 }
                 break;
             case R.id.tv_rank:
                 if (TextUtils.isEmpty(tvRank.getText())) {
-                    showCommonTipeDialog(view, 2);
+                    //showCommonTipeDialog(view, 2);
+                    updateInfo(view, 2);
                 }
                 break;
             case R.id.tv_wenli:
-                if (TextUtils.isEmpty(tvWenli.getText())) {
-                    showCommonTipeDialog(view, 3);
+                String value = tvWenli.getText().toString();
+                if (TextUtils.isEmpty(value)) {
+                    //showCommonTipeDialog(view, 3);
+                    showWenLiDialog();
                 }
                 break;
             case R.id.tv_yixiang:
                 if (TextUtils.isEmpty(tvYixiang.getText())) {
-                    showCommonTipeDialog(null, 4);
+                    //showCommonTipeDialog(null, 4);
+                    requestCode = 4;
+                    showEditDialogUniversity();
+                    YxxUtils.showSoftInputFromWindow(et_school_5);
                 }
                 break;
             case R.id.tv_province:
                 if (TextUtils.isEmpty(tvProvince.getText())) {
-                    showCommonTipeDialog(null, 5);
+                    //showCommonTipeDialog(null, 5);
+                    showMultiChoiceDialog();
                 }
                 break;
             case R.id.tv_status:
+                showXgTest();
                 break;
             case R.id.tv_cancel_common:
                 hideEditDialog();
@@ -234,6 +253,37 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
+    private void showXgTest() {
+        if (null != loginBean.getIsHeartTest() && !"".equals(loginBean.getIsHeartTest()) && !"0".equals(loginBean.getIsHeartTest())) {
+            toast("您已经测试过了");
+            return;
+        }
+        new ActionSheet.Builder(getContext(), getChildFragmentManager())
+                .setCancelButtonTitle("取消")
+                .setOtherButtonTitles("MBTI职业测试", "霍兰德性格测试")
+                .setCancelableOnTouchOutside(true)
+                .setListener(new ActionSheet.ActionSheetListener() {
+                    @Override
+                    public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
+
+                    }
+
+                    @Override
+                    public void onOtherButtonClick(ActionSheet actionSheet, int index) {
+                        switch (index) {
+                            case 0:
+                                openNewActivity(MBTIActivity.class);
+                                break;
+                            case 1:
+                                openNewActivity(HldInterestActivity.class);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }).show();
+    }
+
     private void showCommonTipeDialog(final View view, final int index) {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setIcon(android.R.drawable.ic_dialog_info);
@@ -291,12 +341,14 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private void showCommonEditDialog() {
         if (commonInfoEdit.getVisibility() == View.GONE) {
             commonInfoEdit.setVisibility(View.VISIBLE);
+            YxxUtils.showSoftInputFromWindow(et_comment_common);
         }
     }
 
     private void hideEditDialog() {
         if (commonInfoEdit.getVisibility() == View.VISIBLE) {
             commonInfoEdit.setVisibility(View.GONE);
+            YxxUtils.hideSoftInputKeyboard(et_comment_common);
         }
     }
 

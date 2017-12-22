@@ -31,7 +31,7 @@ public class AccountSaveActivity extends SjmBaseActivity {
     @BindView(R.id.tv_save)
     TextView tvSave;
     @BindView(R.id.et_account)
-    EditText etAccount;
+    TextView etAccount;
     @BindView(R.id.et_old_pwd)
     EditText etOldPwd;
     @BindView(R.id.et_new_pwd)
@@ -39,7 +39,7 @@ public class AccountSaveActivity extends SjmBaseActivity {
     @BindView(R.id.et_confirm_new_pwd)
     EditText etConfirmNewPwd;
 
-    private String userName;
+    private String userName = LoginBean.getInstance().getUsername();
     private String newPwd1;
 
     @Override
@@ -59,14 +59,9 @@ public class AccountSaveActivity extends SjmBaseActivity {
                 closeActivity();
                 break;
             case R.id.tv_save:
-                userName = etAccount.getText().toString();
                 String oldPwd = etOldPwd.getText().toString();
                 newPwd1 = etNewPwd.getText().toString();
                 String newPwd2 = etConfirmNewPwd.getText().toString();
-                if (userName == null || userName.equals("")) {
-                    toast("请输入账号");
-                    return;
-                }
                 if (oldPwd == null || oldPwd.equals("")) {
                     toast("请输入旧密码");
                     return;
@@ -108,7 +103,7 @@ public class AccountSaveActivity extends SjmBaseActivity {
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 JSONObject jsonObject = new JSONObject();
-                jsonObject.put("username", etAccount.getText().toString());
+                jsonObject.put("username", LoginBean.getInstance().getUsername());
                 showProgress();
                 PresenterManager.getInstance()
                         .setmContext(this)

@@ -9,9 +9,9 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
-import com.gk.beans.VerifyCodeBean;
 import com.gk.beans.WeiXin;
 import com.gk.beans.WeiXinToken;
 import com.gk.beans.WeiXinUserInfo;
@@ -30,6 +30,7 @@ import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -98,7 +99,12 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         } else if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {//登陆
             Log.d("ansen", "微信登录操作.....");
             SendAuth.Resp authResp = (SendAuth.Resp) resp;
-            ToastUtils.toast(this, "微信登录操作....." + authResp.code);
+            if (authResp.code == null) {
+                ToastUtils.toast(this, "微信登录失败,错误代码：" + authResp.errCode);
+                finish();
+                return;
+            }
+            ToastUtils.toast(this, "微信正在登陆中....." + authResp.code);
             YxxUtils.LogToFile("authRespCode", authResp.code);
             getAccessToken(authResp.code);
         }
@@ -127,10 +133,12 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         processGetAccessTokenResult(responseBody.string());
                     } catch (IOException e) {
                         e.printStackTrace();
+                        finish();
                     }
                 } else {
                     responseBody = response.errorBody();
-                    ToastUtils.toast(WXEntryActivity.this, "errorBody->" + responseBody.toString());
+                    ToastUtils.toast(WXEntryActivity.this, "授权口令没有返回：" + responseBody.toString());
+                    finish();
                 }
 
             }
@@ -138,6 +146,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
                 YxxUtils.LogToFile("getAccessTokenCallback", "onFailure:" + t.getLocalizedMessage());
+                ToastUtils.toast(WXEntryActivity.this, "调用授权口令失败：" + t.getLocalizedMessage());
+                finish();
             }
         });
     }
@@ -178,11 +188,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     }
 
     private void getUserInfo(final String access_token, String openid) {
-        ToastUtils.toast(WXEntryActivity.this, "getUserInfo..access_token.." + access_token);
         String url = "https://api.weixin.qq.com/sns/userinfo?" +
                 "access_token=" + access_token +
                 "&openid=" + openid;
         YxxUtils.LogToFile("getUserInfo", "url:" + url);
+        Log.e(WXEntryActivity.class.getName(), "getUserInfo..url:" + url);
         RetrofitUtil.getInstance().createReq(IService.class).getWXUserInfo(url).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -214,17 +224,21 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
                         } catch (IOException e) {
                             e.printStackTrace();
+                            ToastUtils.toast(WXEntryActivity.this, "ResponseBody解析异常：" + e.getMessage());
+                            finish();
                         }
                     }
                 } else {
                     responseBody = response.errorBody();
-                    ToastUtils.toast(WXEntryActivity.this, "getUserInfo onResponse->" + responseBody.toString());
+                    ToastUtils.toast(WXEntryActivity.this, "没有获取到微信用户信息：" + responseBody.toString());
+                    finish();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-
+                ToastUtils.toast(WXEntryActivity.this, "调用获取到微信用户信息接口失败：" + t.getMessage());
+                finish();
             }
         });
     }
@@ -247,59 +261,26 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
                             YxxUtils.LogToFile("weixinLoginBack", "返回参数jsonObject:" + JSON.toJSONString(commonBean));
-                            if (commonBean.getData() == null) {
-                                ToastUtils.toast(WXEntryActivity.this, commonBean.getMessage());
-                                return;
+                            if (commonBean.getStatus() == 1) {
+                                LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
+                                LoginBean.getInstance().saveLoginBean(loginBean);
+                                LoginBean.getInstance().setWeixin(loginBean.getWeixin());
+                                LoginBean.getInstance().save();
+                                getAdsInfo();
+                            } else {
+                                //getVerityfyCode(weixinNo);
+                                userBindingWeixin(weixinNo, LoginBean.getInstance().getVerifyCode());
                             }
-                            LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
-                            LoginBean.getInstance().saveLoginBean(loginBean);
-                            LoginBean.getInstance().setWeixin(loginBean.getWeixin());
-                            LoginBean.getInstance().save();
-                            Intent intent = new Intent();
-                            intent.setClass(WXEntryActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            ToastUtils.toast(WXEntryActivity.this, "weixinLogin onResponse->" + commonBean.getMessage());
-                            finish();
-                        } else {
-                            getVerityfyCode(weixinNo);
+                            return;
                         }
+                        //getVerityfyCode(weixinNo);
+                        userBindingWeixin(weixinNo, LoginBean.getInstance().getVerifyCode());
                     }
 
                     @Override
                     public void onFailure(Call<CommonBean> call, Throwable t) {
-                        ToastUtils.toast(WXEntryActivity.this, t.getMessage());
-                    }
-                });
-    }
-
-    /**
-     * 获取验证码接口，获取验证码作为微信绑定登录接口中的参数
-     */
-    private void getVerityfyCode(final String weixinNo) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", LoginBean.getInstance().getUsername());
-        YxxUtils.LogToFile("getVerityfyCode", "输入参数jsonObject:" + JSON.toJSONString(jsonObject));
-        RetrofitUtil.getInstance()
-                .createReq(IService.class)
-                .getVerityfyCode(jsonObject.toJSONString())
-                .enqueue(new Callback<CommonBean>() {
-                    @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                        if (response.isSuccessful()) {
-                            CommonBean commonBean = response.body();
-                            YxxUtils.LogToFile("getVerityfyCodeBack", "返回参数jsonObject:" + JSON.toJSONString(commonBean));
-                            VerifyCodeBean verifyCodeBean = JSON.parseObject(commonBean.getData().toString(), VerifyCodeBean.class);
-                            Log.e("微信绑定登录接口获取验证码成功~", verifyCodeBean.getVerifyCode());
-                            ToastUtils.toast(WXEntryActivity.this, "getVerityfyCode success->" + response.message());
-                            userBindingWeixin(weixinNo, verifyCodeBean.getVerifyCode());
-                        } else {
-                            ToastUtils.toast(WXEntryActivity.this, "getVerityfyCode fail->" + response.message());
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
-                        ToastUtils.toast(WXEntryActivity.this, "getVerityfyCode onFailure" + t.getMessage());
+                        ToastUtils.toast(WXEntryActivity.this, "调用微信登录接口失败：" + t.getMessage());
+                        finish();
                     }
                 });
     }
@@ -323,24 +304,27 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            YxxUtils.LogToFile("userBindingWeixin", "返回参数jsonObject:" + JSON.toJSONString(commonBean));
-                            LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
-                            LoginBean.getInstance().saveLoginBean(loginBean);
-                            LoginBean.getInstance().setWeixin(loginBean.getWeixin());
-                            LoginBean.getInstance().save();
-                            Intent intent = new Intent();
-                            intent.setClass(WXEntryActivity.this, MainActivity.class);
-                            startActivity(intent);
-                            ToastUtils.toast(WXEntryActivity.this, "userBindingWeixin onResponse success->" + commonBean.getMessage());
-                            finish();
-                        } else {
-                            ToastUtils.toast(WXEntryActivity.this, "userBindingWeixin onResponse fail->" + response.message());
+                            if (commonBean.getStatus() == 1) {
+                                YxxUtils.LogToFile("userBindingWeixin", "返回参数jsonObject:" + JSON.toJSONString(commonBean));
+                                LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
+                                LoginBean.getInstance().saveLoginBean(loginBean);
+                                LoginBean.getInstance().setWeixin(loginBean.getWeixin());
+                                LoginBean.getInstance().save();
+                                getAdsInfo();
+                            } else {
+                                ToastUtils.toast(WXEntryActivity.this, "绑定微信接口失败：" + response.message());
+                                finish();
+                            }
+                            return;
                         }
+                        ToastUtils.toast(WXEntryActivity.this, "绑定微信接口失败：" + response.message());
+                        finish();
                     }
 
                     @Override
                     public void onFailure(Call<CommonBean> call, Throwable t) {
-                        ToastUtils.toast(WXEntryActivity.this, "userBindingWeixin onFailure->" + t.getMessage());
+                        ToastUtils.toast(WXEntryActivity.this, "调用绑定微信接口失败：" + t.getMessage());
+                        finish();
                     }
                 });
     }
@@ -387,6 +371,35 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
                     }
                 });
+    }
+
+    private void getAdsInfo() {
+        RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList()
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            if (commonBean.getStatus() == 1) {
+                                List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean.getData().toString(), AdsBean.MDataBean.class);
+                                AdsBean.getInstance().saveAdsBean(mDataBeans);
+                            }
+                        }
+                        goMainActivity();
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        goMainActivity();
+                    }
+                });
+    }
+
+    private void goMainActivity() {
+        Intent intent = new Intent();
+        intent.setClass(WXEntryActivity.this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 
 }

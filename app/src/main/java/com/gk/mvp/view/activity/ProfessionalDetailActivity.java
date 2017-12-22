@@ -98,6 +98,9 @@ public class ProfessionalDetailActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "专业详情", 0);
         pid = getIntent().getStringExtra("id");
+        if (pid == null) {
+            return;
+        }
         MajorDeatilPresenter majorDeatilPresenter = new MajorDeatilPresenter(this);
         majorDeatilPresenter.httpRequest(pid);
     }

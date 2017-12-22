@@ -1,5 +1,6 @@
 package com.gk.mvp.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -43,11 +44,18 @@ public class LoginRightFragment extends SjmBaseFragment {
     @BindView(R.id.tv_forget_pwd)
     TextView tvForgetPwd;
 
+    @OnClick(R.id.rtv_weixin_login)
+    public void weixinLogin() {
+        goForgetPwd("weixin");
+    }
+
     private boolean isLogin = false;
     private static int mEnterFlag = 0;
     private String userName;
     private String password;
     private SaltBean saltBean;
+    private String uninID = "oilIa1bJEIEEp3k9gXZHVZnFU06Y";
+    private String openId = "oroNF01XOGhYlN0_sY1T3-VIgDQg";
 
     @Override
     public int getResourceId() {
@@ -75,6 +83,7 @@ public class LoginRightFragment extends SjmBaseFragment {
         editViewContentChangeEvent(etUserPhone);
         editViewContentChangeEvent(etUserPwd);
     }
+
 
     private void editViewContentChangeEvent(final EditText editText) {
         editText.addTextChangedListener(new TextWatcher() {
@@ -131,9 +140,15 @@ public class LoginRightFragment extends SjmBaseFragment {
                         .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
                 break;
             case R.id.tv_forget_pwd:
-                openNewActivity(ForgetPasswordActivity.class);
+                goForgetPwd("forget_pwd");
                 break;
         }
+    }
+
+    private void goForgetPwd(String value) {
+        Intent intent = new Intent();
+        intent.putExtra("flag", value);
+        openNewActivityByIntent(ForgetPasswordActivity.class, intent);
     }
 
     private void getAdsInfo() {

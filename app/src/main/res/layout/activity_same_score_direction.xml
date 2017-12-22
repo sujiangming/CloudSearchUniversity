@@ -115,6 +115,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/space_40_dp"
             android:layout_below="@id/tv_ps"
+            android:layout_marginBottom="@dimen/space_15_dp"
             android:layout_marginLeft="@dimen/space_10_dp"
             android:layout_marginRight="@dimen/space_10_dp"
             android:background="@drawable/more_data_bg"

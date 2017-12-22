@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:layout_marginLeft="@dimen/space_5_dp"
+        android:layout_marginRight="@dimen/space_5_dp">
+
+        <ImageView
+            android:id="@+id/iv_item"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/space_5_dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/wish_report" />
+
+        <TextView
+            android:id="@+id/tv_on_live_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/space_15_dp"
+            android:layout_marginTop="@dimen/space_15_dp"
+            android:text="直播名称"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_14_sp" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_10_dp" />
+
+</LinearLayout>

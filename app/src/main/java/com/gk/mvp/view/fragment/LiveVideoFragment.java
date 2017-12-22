@@ -1,5 +1,6 @@
 package com.gk.mvp.view.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,15 +12,17 @@ import android.widget.ListView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
-import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LiveBean;
+import com.gk.beans.OnLiveBean;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.LiveVideoDetailActivity;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.mvp.view.activity.MaterialListActivity;
+import com.gk.mvp.view.activity.OnLiveRoomActivity;
 import com.gk.mvp.view.activity.QuerySchoolActivity;
 import com.gk.mvp.view.activity.WishReportEnterActivity;
 import com.gk.mvp.view.adpater.LiveVideoAdapter;
@@ -58,10 +61,17 @@ public class LiveVideoFragment extends SjmBaseFragment {
     private List<LiveBean> liveBeanList = new ArrayList<>();
 
     private int mPage = 0;
+    private List<OnLiveBean> list = new ArrayList<>();
 
     @Override
     public int getResourceId() {
         return R.layout.fragment_live;
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        getVideoAdsList();
     }
 
     @Override
@@ -81,7 +91,6 @@ public class LiveVideoFragment extends SjmBaseFragment {
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
         initSmartRefreshLayout();
-        initBanner();
         liveVideoAdapter = new LiveVideoAdapter(getContext());
         liveList.setAdapter(liveVideoAdapter);
         liveList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -95,6 +104,34 @@ public class LiveVideoFragment extends SjmBaseFragment {
 
     }
 
+    private void initSmartRefreshLayout() {
+        smartRfLive.setRefreshHeader(new ClassicsHeader(getContext()));
+        smartRfLive.setRefreshFooter(new ClassicsFooter(getContext()));
+        smartRfLive.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh(RefreshLayout refreshlayout) {
+
+                refreshlayout.finishRefresh();
+            }
+        });
+        smartRfLive.setOnLoadmoreListener(new OnLoadmoreListener() {
+            @Override
+            public void onLoadmore(RefreshLayout refreshlayout) {
+                mPage++;
+                invoke(mPage);
+                refreshlayout.finishRefresh();
+            }
+        });
+    }
+
+    private void getVideoAdsList() {
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class)
+                        .getVideoAdsList())
+                .request(YXXConstants.INVOKE_API_SECOND_TIME);
+    }
+
     private void invoke(int page) {
         showProgress();
         jsonObject.put("page", page);
@@ -102,18 +139,26 @@ public class LiveVideoFragment extends SjmBaseFragment {
                 .setmContext(getContext())
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoList(jsonObject.toJSONString()))
-                .request();
+                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
-        if (commonBean.getData() == null) {
-            toast("没有数据");
-            return;
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                if (commonBean.getData() == null) {
+                    toast("没有数据");
+                    return;
+                }
+                liveBeanList = JSON.parseArray(commonBean.getData().toString(), LiveBean.class);
+                liveVideoAdapter.update(liveBeanList);
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                list = JSON.parseArray(commonBean.getData().toString(), OnLiveBean.class);
+                initBanner();
+                break;
         }
-        liveBeanList = JSON.parseArray(commonBean.getData().toString(), LiveBean.class);
-        liveVideoAdapter.update(liveBeanList);
         hideProgress();
     }
 
@@ -124,23 +169,20 @@ public class LiveVideoFragment extends SjmBaseFragment {
     }
 
     private void initBanner() {
-        List<AdsBean.MDataBean> mDataBeans = AdsBean.getInstance().getVideoPageAds();
-        if (mDataBeans == null || mDataBeans.size() == 0) {
+        if (list.size() == 0) {
             return;
         }
         final List<String> imageList = new ArrayList<>();
-        final List<String> imageNameList = new ArrayList<>();
-        final List<String> imageRedirectUrlList = new ArrayList<>();
-        for (int i = 0; i < mDataBeans.size(); i++) {
-            imageList.add(mDataBeans.get(i).getUrl());
-            imageNameList.add(mDataBeans.get(i).getName());
-            imageRedirectUrlList.add(mDataBeans.get(i).getRedirectUrl());
+        for (int i = 0; i < list.size(); i++) {
+            imageList.add(list.get(i).getLiveCrossLogo());
         }
         banner.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
-                goActivityByRedirectUrl(imageRedirectUrlList.get(position));
+                Intent intent = new Intent();
+                intent.putExtra("bean", list.get(position));
+                openNewActivityByIntent(OnLiveRoomActivity.class, intent);
             }
         });
     }
@@ -174,25 +216,5 @@ public class LiveVideoFragment extends SjmBaseFragment {
                 openNewActivity(WishReportEnterActivity.class);
                 break;
         }
-    }
-
-    private void initSmartRefreshLayout() {
-        smartRfLive.setRefreshHeader(new ClassicsHeader(getContext()));
-        smartRfLive.setRefreshFooter(new ClassicsFooter(getContext()));
-        smartRfLive.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh(RefreshLayout refreshlayout) {
-                invoke(0);
-                refreshlayout.finishRefresh();
-            }
-        });
-        smartRfLive.setOnLoadmoreListener(new OnLoadmoreListener() {
-            @Override
-            public void onLoadmore(RefreshLayout refreshlayout) {
-                mPage++;
-                invoke(mPage);
-                refreshlayout.finishRefresh();
-            }
-        });
     }
 }

@@ -78,6 +78,7 @@ public class LoginBean implements Serializable {
     private String username;
     private int vipLevel;
     private String weixin;
+    //下面的几个属性是自己添加的，方便使用
     private String wlDesc;
     private String wishUniversity;
     private String wishProvince;
@@ -85,6 +86,7 @@ public class LoginBean implements Serializable {
     private boolean hasReport;
     private String weiXinHeadImg;
     private String weiXinUnionid;
+    private String verifyCode;
 
     private static final long serialVersionUID = 1L;
     private volatile static LoginBean instance = null;//volatile关键字来保证其线程间的可见性
@@ -193,7 +195,6 @@ public class LoginBean implements Serializable {
                 desc = "理科";
                 break;
             default:
-                desc = "未知";
                 break;
         }
         return desc;
@@ -539,5 +540,13 @@ public class LoginBean implements Serializable {
 
     public void setWeiXinUnionid(String weiXinUnionid) {
         this.weiXinUnionid = weiXinUnionid;
+    }
+
+    public String getVerifyCode() {
+        return verifyCode;
+    }
+
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
     }
 }

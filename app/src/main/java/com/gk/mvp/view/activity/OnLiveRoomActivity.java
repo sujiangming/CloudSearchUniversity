@@ -4,16 +4,22 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.gk.R;
+import com.gk.beans.OnLiveBean;
+import com.gk.beans.OnLiveRoomInfo;
 import com.gk.global.YXXConstants;
+import com.gk.mvp.presenter.OnLiveRoomPresenter;
+import com.gk.mvp.view.custom.CircleImageView;
+import com.gk.tools.GlideImageLoader;
 import com.gk.tools.YxxUtils;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
@@ -46,9 +52,19 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     EditText et_reply;
     @BindView(R.id.heart_layout)
     HeartLayout heartLayout;
-
+    @BindView(R.id.tv_send)
+    TextView tvSend;
     @BindView(R.id.listView)
     ListView listView;
+
+    @BindView(R.id.civ_header)
+    CircleImageView circleImageView;
+
+    @BindView(R.id.tv_nick_name)
+    TextView tvNickName;
+
+    @BindView(R.id.ll_images)
+    LinearLayout llImages;
 
     @BindView(R.id.root_view)
     View rootView;
@@ -71,6 +87,12 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                 new LongTimeTask(YXXConstants.ON_LIVE_SEND_HEART_FLAG).execute("执行……");
                 break;
             case R.id.tv_send:
+                if (TextUtils.isEmpty(et_reply.getText())) {
+                    toast("请输入内容");
+                    return;
+                }
+                showProgress();
+                roomPresenter.fansLiveRoomsSpeak(YxxUtils.URLEncode(et_reply.getText().toString()));
                 break;
         }
     }
@@ -85,21 +107,27 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     private Timer mTimer = new Timer();
     private TimerTask timerTask;
 
-    private List<String> stringList = new ArrayList<>();
-    private CommonAdapter<String> adapter;
+    private List<OnLiveRoomInfo.FansSpeakBean> fanSpeakBeanList = new ArrayList<>();
+    private CommonAdapter<OnLiveRoomInfo.FansSpeakBean> adapter;
+    private OnLiveRoomPresenter roomPresenter;
+    private OnLiveBean onLiveBean;
+    private OnLiveRoomInfo onLiveRoomInfo;
+    private int onlyOneTime = 0;
+    private GlideImageLoader imageLoader = new GlideImageLoader();
 
     private int screenHeight = 0;//屏幕高度初始值
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
 
-    private final int TIME_INTERVAL = 1000;//1秒执行一次
+    private final int TIME_INTERVAL = 15000;//1秒执行一次
     private Handler handler = new Handler();
     Runnable runnable = new Runnable() {
         @Override
         public void run() {
             handler.postDelayed(this, TIME_INTERVAL);
-            stringList.add("测试添加信息" + Math.random());
+            //stringList.add("测试添加信息" + Math.random());
             Log.e("runnable：", "1秒执行一次添加操作");
-            adapter.notifyDataSetChanged();
+            roomPresenter.getLiveRoomsInfo();
+
         }
     };
 
@@ -107,19 +135,102 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     protected void onCreateByMe(Bundle savedInstanceState) {
         setStatusBarColor(Color.BLACK);
         setScreenHeight();
-        initVideo();
+        onLiveBean = (OnLiveBean) getIntent().getSerializableExtra("bean");
+        roomPresenter = new OnLiveRoomPresenter(this, onLiveBean);
         initListView();
         handler.postDelayed(runnable, TIME_INTERVAL); // 在初始化方法里.
         rootView.addOnLayoutChangeListener(this);//添加layout大小发生改变监听器
-
     }
 
-    private void initVideo() {
-        String url = "http://baobab.wdjcdn.com/14564977406580.mp4";
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                break;
+            case YXXConstants.INVOKE_API_THREE_TIME:
+                OnLiveRoomInfo.FansSpeakBean fanSpeakBean = (OnLiveRoomInfo.FansSpeakBean) t;
+                if (fanSpeakBean == null) {
+                    return;
+                }
+                fanSpeakBeanList.add(fanSpeakBean);
+                adapter.notifyDataSetChanged();
+                YxxUtils.hideSoftInputKeyboard(et_reply);
+                llComment.setVisibility(View.GONE);
+                break;
+            case YXXConstants.INVOKE_API_FORTH_TIME:
+                onLiveRoomInfo = (OnLiveRoomInfo) t;
+                initRoomInfo(onLiveRoomInfo);
+                break;
+        }
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                break;
+            case YXXConstants.INVOKE_API_THREE_TIME:
+                break;
+            case YXXConstants.INVOKE_API_FORTH_TIME:
+                break;
+        }
+    }
+
+    private void initRoomInfo(OnLiveRoomInfo roomInfo) {
+        if (onlyOneTime == 0) {
+            onlyOneTime = 1;
+            if (roomInfo.getHeadImg() != null && !"".equals(roomInfo.getHeadImg())) {
+                imageLoader.displayImage(this, roomInfo.getHeadImg(), circleImageView);
+            }
+            if (roomInfo.getNickName() != null && !"".equals(roomInfo.getNickName())) {
+                tvNickName.setText(roomInfo.getNickName());
+            }
+            List<OnLiveRoomInfo.Fans> fans = roomInfo.getFans();
+            if (fans != null && fans.size() > 0) {
+                for (int i = 0; i < fans.size(); i++) {
+                    View view = View.inflate(this, R.layout.on_live_images, null);
+                    CircleImageView circleImageView = view.findViewById(R.id.civ_image);
+                    imageLoader.displayImage(this, fans.get(i).getHeadImg(), circleImageView);
+                    llImages.addView(view);
+                }
+            }
+            initVideo(roomInfo);
+            initRoomFanSpeak(roomInfo);
+            return;
+        }
+        initRoomFanSpeak(roomInfo);
+    }
+
+    private void initRoomFanSpeak(OnLiveRoomInfo roomInfo) {
+        List<OnLiveRoomInfo.FansSpeakBean> speakBeanList = roomInfo.getFansSpeak();
+        if (speakBeanList != null && speakBeanList.size() > 0) {
+            fanSpeakBeanList.addAll(speakBeanList);
+            fanSpeakBeanList = removeDuplicate(fanSpeakBeanList);
+            adapter.notifyDataSetChanged();
+        }
+    }
+
+    public List<OnLiveRoomInfo.FansSpeakBean> removeDuplicate(List<OnLiveRoomInfo.FansSpeakBean> list) {
+        for (int i = 0; i < list.size() - 1; i++) {
+            for (int j = list.size() - 1; j > i; j--) {
+                if (list.get(j).getId().equals(list.get(i).getId())) {
+                    list.remove(j);
+                }
+            }
+        }
+        return list;
+    }
+
+    private void initVideo(OnLiveRoomInfo roomInfo) {
+        String url = roomInfo.getLivePullUrl();
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageView.setImageResource(R.drawable.ym);
+        imageLoader.displayImage(this, roomInfo.getLiveVerticalLogo(), imageView);
         new GSYVideoOptionBuilder()
                 .setThumbImageView(imageView)
                 .setUrl(url)
@@ -137,22 +248,10 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     }
 
     private void initListView() {
-        for (int i = 0; i < 10; i++) {
-            stringList.add("测试数据测试数据" + i);
-        }
-        listView.setAdapter(adapter = new CommonAdapter<String>(this, R.layout.on_live_detail_chat_item, stringList) {
+        listView.setAdapter(adapter = new CommonAdapter<OnLiveRoomInfo.FansSpeakBean>(this, R.layout.on_live_detail_chat_item, fanSpeakBeanList) {
             @Override
-            protected void convert(ViewHolder viewHolder, String item, int position) {
-                if (item == null) {
-                    return;
-                }
-                viewHolder.setText(R.id.tv_reply_content, item);
-            }
-        });
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toast(stringList.get(i));
+            protected void convert(ViewHolder viewHolder, OnLiveRoomInfo.FansSpeakBean item, int position) {
+                viewHolder.setText(R.id.tv_reply_content, item.getFansSpeak());
             }
         });
         listView.setSelection(adapter.getCount());
@@ -258,6 +357,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         closeActivity(this);
         stopTimer();
         stopHandler();
+        roomPresenter.fansExitLiveRooms();
     }
 
     @Override
@@ -266,5 +366,6 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         GSYVideoPlayer.releaseAllVideos();
         stopTimer();
         stopHandler();
+        roomPresenter.fansExitLiveRooms();
     }
 }

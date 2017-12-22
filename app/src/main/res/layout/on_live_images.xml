@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+    <View
+        android:layout_width="@dimen/space_5_dp"
+        android:layout_height="@dimen/space_30_dp" />
+
+    <com.gk.mvp.view.custom.CircleImageView
+        android:id="@+id/civ_image"
+        android:layout_width="@dimen/space_30_dp"
+        android:layout_height="@dimen/space_30_dp"
+        android:src="@drawable/menu01" />
+</LinearLayout>

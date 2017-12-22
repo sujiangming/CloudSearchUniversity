@@ -473,4 +473,54 @@ public interface IService {
     @FormUrlEncoded
     @POST("app/api/intent/getUserIntentArea")
     Call<CommonBean> getUserIntentArea(@Field("data") String data);
+
+    /**
+     * 获取直播视频列表
+     *
+     * @return
+     */
+    @GET("app/api/live/getVideoAdsList")
+    Call<CommonBean> getVideoAdsList();
+
+    /**
+     * 进入直播间
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/live/fansEnterLiveRooms")
+    Call<CommonBean> fansEnterLiveRooms(@Field("data") String data);
+
+    /**
+     * 退出直播间
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/live/fansExitLiveRooms")
+    Call<CommonBean> fansExitLiveRooms(@Field("data") String data);
+
+    /**
+     * 粉丝直播间发言
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/live/fansLiveRoomsSpeak")
+    Call<CommonBean> fansLiveRoomsSpeak(@Field("data") String data);
+
+    /**
+     * 获取直播间信息
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/live/getLiveRoomsInfo")
+    Call<CommonBean> getLiveRoomsInfo(@Field("data") String data);
+
+
 }

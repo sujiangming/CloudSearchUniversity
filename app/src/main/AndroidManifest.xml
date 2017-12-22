@@ -202,11 +202,19 @@
 
         <activity
             android:name=".mvp.view.activity.OnLiveRoomActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name=".mvp.view.activity.SchoolDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.OnLiveListActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.GkLibraryActivity"
+            android:screenOrientation="portrait" />
 
         <!--微信-->
         <!--注册微信回调 WXEntryActivity -->

@@ -59,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/space_5_dp"
-        android:text="贵州 | 理科"
+        android:hint="未填写"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_17_sp" />
 
@@ -88,7 +88,7 @@
             android:layout_weight="1"
             android:drawablePadding="@dimen/space_15_dp"
             android:gravity="center_vertical|right"
-            android:hint="650分"
+            android:hint="请填写"
             android:paddingRight="@dimen/space_11_dp"
             android:textColor="@color/color8f8e94"
             android:textSize="@dimen/font_16_sp"
@@ -139,7 +139,7 @@
     <Button
         android:id="@+id/btn_lq_risk_test"
         android:layout_width="match_parent"
-        android:layout_height="57dp"
+        android:layout_height="@dimen/space_44_dp"
         android:layout_marginBottom="@dimen/space_12_dp"
         android:layout_marginLeft="@dimen/space_10_dp"
         android:layout_marginRight="@dimen/space_10_dp"
