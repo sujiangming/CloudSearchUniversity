@@ -38,7 +38,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/space_15_dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/ym" />
+                    android:src="@drawable/zhanweitu" />
 
                 <TextView
                     android:id="@+id/tv_user_name"
@@ -81,7 +81,7 @@
                     android:layout_marginLeft="@dimen/space_15_dp"
                     android:layout_marginTop="@dimen/space_4_dp"
                     android:layout_toRightOf="@+id/iv_user_head"
-                    android:text="高考分数：未填写"
+                    android:hint="高考分数：未填写"
                     android:textColor="#808080"
                     android:textSize="@dimen/font_14_sp" />
 

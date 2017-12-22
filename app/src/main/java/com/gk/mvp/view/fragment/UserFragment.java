@@ -65,8 +65,14 @@ public class UserFragment extends SjmBaseFragment {
     private void initData() {
         LoginBean loginBean = LoginBean.getInstance();
         tvUserName.setText(loginBean.getCname() == null ? loginBean.getUsername() : loginBean.getCname());
-        tvUserScore.setText("高考分数：" + loginBean.getScore());
         ivLevel.setImageResource(loginBean.getLevelImage());
+        setViewData(tvUserScore, loginBean.getScore());
+    }
+
+    private void setViewData(TextView tv, String value) {
+        if (value != null && !"".equals(value)) {
+            tv.setText("高考分数：" + value);
+        }
     }
 
     @OnClick({R.id.rl_info, R.id.ll_wish_report, R.id.ll_vip_choose, R.id.ll_zj, R.id.ll_help_center, R.id.ll_contact_kf, R.id.ll_set})
