@@ -11,7 +11,6 @@ import android.view.KeyEvent;
 import android.view.View;
 
 import com.gk.R;
-import com.gk.global.YXXConstants;
 import com.gk.mvp.view.adpater.LoginFragmentPagerAdapter;
 import com.gk.mvp.view.custom.TopBarView;
 
@@ -78,18 +77,12 @@ public class LoginActivity extends SjmBaseActivity {
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-            if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
-                //两秒之内按返回键就会退出
-                if ((System.currentTimeMillis() - exitTime) > 2000) {
-                    toast("再按一次退出程序");
-                    exitTime = System.currentTimeMillis();
-                } else {
-                    appManager.finishAllActivity();
-                }
-                return true;
+            //两秒之内按返回键就会退出
+            if ((System.currentTimeMillis() - exitTime) > 2000) {
+                toast("再按一次退出程序");
+                exitTime = System.currentTimeMillis();
             } else {
-                closeActivity();
-                return true;
+                appManager.finishAllActivity();
             }
         }
         return super.onKeyDown(keyCode, event);
