@@ -1,6 +1,5 @@
 package com.gk.mvp.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import com.alibaba.fastjson.JSON;
@@ -12,7 +11,6 @@ import com.gk.beans.LoginBean;
 import com.gk.beans.VersionBean;
 import com.gk.beans.VersionBeanDao;
 import com.gk.global.YXXApplication;
-import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
@@ -88,9 +86,9 @@ public class SplashActivity extends SjmBaseActivity {
         if (loginBean != null && loginBean.getUsername() != null) {
             openNewActivity(MainActivity.class);
         } else {
-            Intent intent = new Intent();
-            intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, YXXConstants.FROM_SPLASH_FLAG);
-            openNewActivityByIntent(LoginActivity.class, intent);
+//            Intent intent = new Intent();
+//            intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, YXXConstants.FROM_SPLASH_FLAG);
+            openNewActivity(LoginActivity.class);
         }
     }
 

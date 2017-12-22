@@ -1,6 +1,5 @@
 package com.gk.mvp.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
@@ -13,7 +12,6 @@ import com.gk.R;
 import com.gk.beans.UserBean;
 import com.gk.beans.UserBeanDao;
 import com.gk.global.YXXApplication;
-import com.gk.global.YXXConstants;
 import com.gk.mvp.view.adpater.SjmFragmentPagerAdapter;
 
 import java.util.ArrayList;
@@ -71,9 +69,9 @@ public class NewFeatureActivity extends SjmBaseActivity implements ViewPager.OnP
         if (userBeans != null && userBeans.size() > 0) {
             openNewActivity(MainActivity.class);
         } else {
-            Intent intent = new Intent();
-            intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, YXXConstants.FROM_SPLASH_FLAG);
-            openNewActivityByIntent(LoginActivity.class, intent);
+//            Intent intent = new Intent();
+//            intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, YXXConstants.FROM_SPLASH_FLAG);
+            openNewActivity(LoginActivity.class);
         }
         closeActivity();
     }

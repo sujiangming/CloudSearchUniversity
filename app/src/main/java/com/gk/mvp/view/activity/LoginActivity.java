@@ -2,7 +2,6 @@ package com.gk.mvp.view.activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -46,23 +45,24 @@ public class LoginActivity extends SjmBaseActivity {
         getPersimmions();
         initTopBar();
         initData();
-        pager.setAdapter(new LoginFragmentPagerAdapter(getSupportFragmentManager(), list,mEnterFlag));
+        pager.setAdapter(new LoginFragmentPagerAdapter(getSupportFragmentManager(), list, mEnterFlag));
         tabLayout.setupWithViewPager(pager);
     }
 
     private void initTopBar() {
-        Intent intent = getIntent();
-        mEnterFlag = intent.getIntExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, 0);
-        if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
-            topBarLogin.getBackView().setVisibility(View.GONE);
-        }
-        topBarLogin.getTitleView().setText("登录");
-        topBarLogin.getBackView().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                closeActivity();
-            }
-        });
+        topBarLogin.getBackView().setVisibility(View.GONE);
+        //       Intent intent = getIntent();
+//        mEnterFlag = intent.getIntExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, 0);
+//        if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
+//            topBarLogin.getBackView().setVisibility(View.GONE);
+//        }
+//        topBarLogin.getTitleView().setText("登录");
+//        topBarLogin.getBackView().setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                closeActivity();
+//            }
+//        });
 
     }
 

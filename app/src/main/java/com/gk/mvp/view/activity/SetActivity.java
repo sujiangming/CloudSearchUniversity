@@ -1,13 +1,11 @@
 package com.gk.mvp.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.global.YXXConstants;
 import com.gk.mvp.view.custom.TopBarView;
 
 import butterknife.BindView;
@@ -47,9 +45,9 @@ public class SetActivity extends SjmBaseActivity {
                 openNewActivity(AboutActivity.class);
                 break;
             case R.id.tv_logout:
-                Intent intent = new Intent();
-                intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, YXXConstants.FROM_OTHER_FLAG);
-                openNewActivityByIntent(LoginActivity.class, intent);
+//                Intent intent = new Intent();
+//                intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, YXXConstants.FROM_OTHER_FLAG);
+                openNewActivity(LoginActivity.class);
                 break;
         }
     }
