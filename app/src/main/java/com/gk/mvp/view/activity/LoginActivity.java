@@ -40,6 +40,12 @@ public class LoginActivity extends SjmBaseActivity {
     }
 
     @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        appManager.finishAllActivity();
+    }
+
+    @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         getPersimmions();
         initTopBar();
@@ -50,19 +56,6 @@ public class LoginActivity extends SjmBaseActivity {
 
     private void initTopBar() {
         topBarLogin.getBackView().setVisibility(View.GONE);
-        //       Intent intent = getIntent();
-//        mEnterFlag = intent.getIntExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, 0);
-//        if (mEnterFlag == YXXConstants.FROM_SPLASH_FLAG) {
-//            topBarLogin.getBackView().setVisibility(View.GONE);
-//        }
-//        topBarLogin.getTitleView().setText("登录");
-//        topBarLogin.getBackView().setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                closeActivity();
-//            }
-//        });
-
     }
 
     /*初始化数据*/
@@ -84,6 +77,7 @@ public class LoginActivity extends SjmBaseActivity {
             } else {
                 appManager.finishAllActivity();
             }
+            return true;
         }
         return super.onKeyDown(keyCode, event);
     }

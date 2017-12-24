@@ -137,8 +137,6 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
      */
     @Override
     public void onclick(int parentPosition, int childPosition, int childIndex) {
-        Log.e("xxx", "点了" + "parentPosition>>" + "childPosition>>" + childPosition +
-                "childIndex>>" + childIndex);
 
     }
 
@@ -198,7 +196,6 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toast("当前点击第" + i + "个专业：" + listQuery.get(i).getMajorName());
                 Intent intent = new Intent();
                 intent.setClass(ProfessionalQueryActivity.this, ProfessionalDetailActivity.class);
                 intent.putExtra("id", listQuery.get(i).getMajorId());
@@ -223,7 +220,6 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
 
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d(TAG, "onQueryTextSubmit = " + s);
                 majorPresenter.queryMajorByName(YxxUtils.URLEncode(s), pageType);
                 if (searchView != null) {
                     // 得到输入管理对象

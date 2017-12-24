@@ -86,8 +86,6 @@ public class SplashActivity extends SjmBaseActivity {
         if (loginBean != null && loginBean.getUsername() != null) {
             openNewActivity(MainActivity.class);
         } else {
-//            Intent intent = new Intent();
-//            intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, YXXConstants.FROM_SPLASH_FLAG);
             openNewActivity(LoginActivity.class);
         }
     }

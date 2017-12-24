@@ -136,6 +136,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         setStatusBarColor(Color.BLACK);
         setScreenHeight();
         onLiveBean = (OnLiveBean) getIntent().getSerializableExtra("bean");
+        initVideo();
         roomPresenter = new OnLiveRoomPresenter(this, onLiveBean);
         initListView();
         handler.postDelayed(runnable, TIME_INTERVAL); // 在初始化方法里.
@@ -198,7 +199,6 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                     llImages.addView(view);
                 }
             }
-            initVideo(roomInfo);
             initRoomFanSpeak(roomInfo);
             return;
         }
@@ -225,12 +225,15 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         return list;
     }
 
-    private void initVideo(OnLiveRoomInfo roomInfo) {
-        String url = roomInfo.getLivePullUrl();
+    private void initVideo() {
+        if (onLiveBean == null) {
+            return;
+        }
+        String url = onLiveBean.getLivePullUrl();
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageLoader.displayImage(this, roomInfo.getLiveVerticalLogo(), imageView);
+        imageLoader.displayImage(this, onLiveBean.getLiveVerticalLogo(), imageView);
         new GSYVideoOptionBuilder()
                 .setThumbImageView(imageView)
                 .setUrl(url)

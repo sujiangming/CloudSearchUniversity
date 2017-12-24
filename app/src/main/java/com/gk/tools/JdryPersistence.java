@@ -65,4 +65,18 @@ public class JdryPersistence {
         SharedPreferences sp = context.getSharedPreferences(objName, Context.MODE_PRIVATE);
         return sp.getString(objName, null);
     }
+
+    public static void deleteLoginBean(Context context, String keyName) {
+        SharedPreferences sp = context.getSharedPreferences(keyName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.remove(keyName);
+        editor.commit();
+    }
+
+    public static void clearLoginBean(Context context, String keyName) {
+        SharedPreferences sp = context.getSharedPreferences(keyName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.clear();
+        editor.commit();
+    }
 }

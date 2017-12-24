@@ -1,5 +1,6 @@
 package com.gk.mvp.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
@@ -17,14 +18,13 @@ import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.VerifyCodeBean;
-import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.activity.ForgetPasswordActivity;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.tools.ToastUtils;
-import com.tencent.mm.opensdk.modelmsg.SendAuth;
 
 import java.util.List;
 
@@ -54,14 +54,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
     }
 
     public void wxLogin() {
-        if (!YXXApplication.sApi.isWXAppInstalled()) {
-            toast("您还未安装微信客户端");
-            return;
-        }
-        final SendAuth.Req req = new SendAuth.Req();
-        req.scope = "snsapi_userinfo";
-        req.state = "yxx_wx_login";
-        YXXApplication.sApi.sendReq(req);
+        goForgetPwd("weixin");
     }
 
     private String descPrefix = "温馨提示：未注册云寻校的手机，登录时将自动注册，且代表您已同意";
@@ -97,6 +90,12 @@ public class LoginLeftFragment extends SjmBaseFragment {
         editViewContentChangeEvent(etUserPhone);
         editViewContentChangeEvent(etUserPwd);
         tvPs.setText(Html.fromHtml(descPrefix + "<font color='red'>《云寻校用户协议》</font>"));
+    }
+
+    private void goForgetPwd(String value) {
+        Intent intent = new Intent();
+        intent.putExtra("flag", value);
+        openNewActivityByIntent(ForgetPasswordActivity.class, intent);
     }
 
     private void editViewContentChangeEvent(final EditText editText) {

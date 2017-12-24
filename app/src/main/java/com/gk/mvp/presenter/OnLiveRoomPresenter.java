@@ -69,6 +69,7 @@ public class OnLiveRoomPresenter<T> implements IPresenterCallback<T> {
                 break;
             case YXXConstants.INVOKE_API_FORTH_TIME:
                 getOnLiveRoomInfoFail((String) o);
+                iView.hideProgress();
                 break;
         }
     }
@@ -90,10 +91,10 @@ public class OnLiveRoomPresenter<T> implements IPresenterCallback<T> {
             return;
         }
         fanSpeakBean = JSON.parseObject(commonBean.getData().toString(), OnLiveRoomInfo.FansSpeakBean.class);
-        iView.fillWithData(onLiveRoomInfo, YXXConstants.INVOKE_API_FORTH_TIME);
+        iView.fillWithData(fanSpeakBean, YXXConstants.INVOKE_API_THREE_TIME);
     }
 
     private void getOnLiveRoomFanSpeakFail(String string) {
-        iView.fillWithNoData(string, YXXConstants.INVOKE_API_FORTH_TIME);
+        iView.fillWithNoData(string, YXXConstants.INVOKE_API_THREE_TIME);
     }
 }

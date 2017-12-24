@@ -101,7 +101,7 @@ public class LiveVideoFragment extends SjmBaseFragment {
                 openNewActivityByIntent(LiveVideoDetailActivity.class, intent);
             }
         });
-
+        addListener();
     }
 
     private void initSmartRefreshLayout() {
@@ -110,7 +110,8 @@ public class LiveVideoFragment extends SjmBaseFragment {
         smartRfLive.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh(RefreshLayout refreshlayout) {
-
+                mPage = 0;
+                invoke(mPage);
                 refreshlayout.finishRefresh();
             }
         });
@@ -169,17 +170,20 @@ public class LiveVideoFragment extends SjmBaseFragment {
     }
 
     private void initBanner() {
-        if (list.size() == 0) {
-            return;
-        }
         final List<String> imageList = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
             imageList.add(list.get(i).getLiveCrossLogo());
         }
         banner.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
+    }
+
+    private void addListener() {
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {
+                if (list.size() == 0) {
+                    return;
+                }
                 Intent intent = new Intent();
                 intent.putExtra("bean", list.get(position));
                 openNewActivityByIntent(OnLiveRoomActivity.class, intent);

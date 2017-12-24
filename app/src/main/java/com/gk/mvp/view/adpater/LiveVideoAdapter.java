@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.beans.LiveBean;
+import com.gk.tools.GlideImageLoader;
 
 
 /**
@@ -17,8 +18,11 @@ import com.gk.beans.LiveBean;
 
 public class LiveVideoAdapter extends JdryBaseAdapter {
 
+    private GlideImageLoader imageLoader;
+
     public LiveVideoAdapter(Context context) {
         super(context);
+        imageLoader = new GlideImageLoader();
     }
 
     @SuppressLint("InflateParams")
@@ -33,12 +37,12 @@ public class LiveVideoAdapter extends JdryBaseAdapter {
             viewHolder.tvLiveTitle = (TextView) convertView.findViewById(R.id.tv_live_title);
             viewHolder.ivItem = (ImageView) convertView.findViewById(R.id.iv_item);
             viewHolder.tvTeacher = (TextView) convertView.findViewById(R.id.tv_teacher);
-            //viewHolder.linearLayout = (LinearLayout) convertView.findViewById(R.id.ll_no_data_tip);
             convertView.setTag(viewHolder);
         }
         LiveBean liveBean = (LiveBean) list.get(position);
         viewHolder.tvLiveTitle.setText(liveBean.getVideoName());
         viewHolder.tvTeacher.setText(liveBean.getSpeaker());
+        imageLoader.displayImage(mContext, liveBean.getVideoLogo(), viewHolder.ivItem);
         return convertView;
     }
 
@@ -46,6 +50,5 @@ public class LiveVideoAdapter extends JdryBaseAdapter {
         ImageView ivItem;
         TextView tvLiveTitle;
         TextView tvTeacher;
-        //LinearLayout linearLayout;
     }
 }

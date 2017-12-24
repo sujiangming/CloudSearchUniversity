@@ -5,6 +5,7 @@ import android.os.Environment;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -45,6 +46,12 @@ public class YxxUtils {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static void setViewData(TextView tv, String value) {
+        if (value != null && !"".equals(value)) {
+            tv.setText(value);
+        }
     }
 
     public static void LogToFile(String fileName, String fileContent) {

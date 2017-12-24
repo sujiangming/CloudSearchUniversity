@@ -15,6 +15,7 @@ import android.widget.LinearLayout;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
+import com.baoyz.actionsheet.ActionSheet;
 import com.gk.R;
 import com.gk.beans.AuthResult;
 import com.gk.beans.CommonBean;
@@ -58,7 +59,8 @@ public class VIPActivity extends SjmBaseActivity {
     RichText rtv_silver_price;
 
     private String form = null;
-    private int vipType = LoginBean.getInstance().getVipLevel();
+    private LoginBean loginBean;
+    private int vipType = 0;
     private int vipLevel = 0;
     private String goldTip = "您确定升级为金卡会员吗？";
     private String silverTip = "您确定升级为银卡会员吗？";
@@ -69,7 +71,8 @@ public class VIPActivity extends SjmBaseActivity {
         switch (view.getId()) {
             case R.id.tv_open_gold:
                 if (vipType < 3) {
-                    showVipDialog(goldTip, 2);
+                    //showVipDialog(goldTip, 2);
+                    showPayWay(2);
                     vipLevel = 3;
                 } else {
                     toast("您已经是金卡用户了");
@@ -77,7 +80,8 @@ public class VIPActivity extends SjmBaseActivity {
                 break;
             case R.id.tv_open_silver:
                 if (vipType < 2) {
-                    showVipDialog(silverTip, 1);
+                    //showVipDialog(silverTip, 1);
+                    showPayWay(1);
                     vipLevel = 2;
                 } else if (vipType == 2) {
                     toast("您已经是银卡用户了，您可要升级为金卡用户哦");
@@ -98,6 +102,17 @@ public class VIPActivity extends SjmBaseActivity {
         setTopBar(tvTopBar, "VIP服务", 0);
         initUIByForm();
         getVipLevelAmount();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    private void initData() {
+        loginBean = LoginBean.getInstance();
+        vipType = LoginBean.getInstance().getVipLevel();
     }
 
     private void initUIByForm() {
@@ -157,6 +172,37 @@ public class VIPActivity extends SjmBaseActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void showPayWay(final int vipLevel) {
+        if (null == loginBean.getUsername()) {
+            toast("您还没有登录，请您先登录！");
+            return;
+        }
+        new ActionSheet.Builder(this, getSupportFragmentManager())
+                .setCancelButtonTitle("取消")
+                .setOtherButtonTitles("支付宝支付", "微信支付")
+                .setCancelableOnTouchOutside(true)
+                .setListener(new ActionSheet.ActionSheetListener() {
+                    @Override
+                    public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
+
+                    }
+
+                    @Override
+                    public void onOtherButtonClick(ActionSheet actionSheet, int index) {
+                        switch (index) {
+                            case 0:
+                                submitOrder(vipLevel);
+                                break;
+                            case 1:
+                                toast("微信支付功能暂未开通");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }).show();
     }
 
     private void submitOrder(int level) {

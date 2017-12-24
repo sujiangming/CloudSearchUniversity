@@ -126,7 +126,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 ResponseBody responseBody;
                 if (response.isSuccessful()) {
-                    ToastUtils.toast(WXEntryActivity.this, "getAccessToken....." + response.message());
                     responseBody = response.body();
                     YxxUtils.LogToFile("getAccessTokenCallback", "onResponse:" + response.body().toString());
                     try {
@@ -204,8 +203,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                             String bodyString = responseBody.string();
 
                             YxxUtils.LogToFile("getUserInfo", "body:" + bodyString + "\n access_token:" + access_token);
-
-                            ToastUtils.toast(WXEntryActivity.this, "getUserInfo onResponse->" + bodyString);
 
                             WeiXinUserInfo weiXinUserInfo = JSON.parseObject(bodyString, WeiXinUserInfo.class);
 

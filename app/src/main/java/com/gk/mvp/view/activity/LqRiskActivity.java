@@ -4,13 +4,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.beans.LoginBean;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.tools.YxxUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -38,7 +41,17 @@ public class LqRiskActivity extends SjmBaseActivity {
     @BindView(R.id.tv_test_desc)
     TextView tv_test_desc;
 
+    @BindView(R.id.ll_comment)
+    LinearLayout llComment;
+    @BindView(R.id.et_reply)
+    EditText et_reply;
+
     private int faultLevel = 1; //默认显示高校
+    private LoginBean loginBean;
+    private String score;
+    private String rank;
+    private String weli;
+    private String address;
 
     @Override
     public int getResouceId() {
@@ -48,8 +61,24 @@ public class LqRiskActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "录取测试", 0);
-        tvStudentScore.setText(LoginBean.getInstance().getScore());
-        tv_wen_li_desc.setText(LoginBean.getInstance().getAddress() + "|" + LoginBean.getInstance().getWlDesc());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
+
+    private void initData() {
+        loginBean = LoginBean.getInstance();
+        score = loginBean.getScore();
+        rank = loginBean.getRanking();
+        weli = loginBean.getWlDesc();
+        address = loginBean.getAddress();
+        YxxUtils.setViewData(tvStudentScore, score);
+        if (!TextUtils.isEmpty(address) && !TextUtils.isEmpty(weli)) {
+            tv_wen_li_desc.setText(LoginBean.getInstance().getAddress() + "|" + LoginBean.getInstance().getWlDesc());
+        }
     }
 
     @OnClick({R.id.tv_level_1, R.id.tv_level_2, R.id.ll_aim, R.id.btn_lq_risk_test})
@@ -65,11 +94,47 @@ public class LqRiskActivity extends SjmBaseActivity {
                 openWin();
                 break;
             case R.id.btn_lq_risk_test://立即测试
-                rightNowTest();
+                needZDCkeck();
+                break;
+            case R.id.tv_student_score:
+                if (TextUtils.isEmpty(et_reply.getText())) {
+                    llComment.setVisibility(View.VISIBLE);
+                    YxxUtils.showSoftInputFromWindow(et_reply);
+                    return;
+                }
+                break;
+            case R.id.tv_send:
+                if (TextUtils.isEmpty(et_reply.getText())) {
+                    toast("请输入内容");
+                    return;
+                }
+                llComment.setVisibility(View.GONE);
+                YxxUtils.hideSoftInputKeyboard(et_reply);
                 break;
 
         }
     }
+
+    private void needZDCkeck() {
+        if (TextUtils.isEmpty(score)) {
+            toast("请完善您的个人信息-分数还未填写");
+            return;
+        }
+        if (TextUtils.isEmpty(rank)) {
+            toast("请完善您的个人信息-排名还未填写");
+            return;
+        }
+        if (TextUtils.isEmpty(weli)) {
+            toast("请完善您的个人信息-文理科还未填写");
+            return;
+        }
+        if (TextUtils.isEmpty(address)) {
+            toast("请完善您的个人信息-生源地还未填写");
+            return;
+        }
+        rightNowTest();
+    }
+
 
     private void tvLevel1Click() {
         imageView.setImageResource(R.drawable.lq_yx3x);
