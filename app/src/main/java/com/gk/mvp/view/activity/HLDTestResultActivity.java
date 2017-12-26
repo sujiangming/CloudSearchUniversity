@@ -164,7 +164,15 @@ public class HLDTestResultActivity extends SjmBaseActivity {
     }
 
     private void initCommon() {
-        tvJielun.setText(hldReportBean.getCareerTypical());
+        String typeValue = hldReportBean.getCareerTypical();
+        if (typeValue != null && !"".equals(typeValue)) {
+            int len = typeValue.length();
+            if (len > 10) {
+                tvJielun.setText(typeValue.substring(0, 10));
+            } else {
+                tvJielun.setText(typeValue);
+            }
+        }
         tvHldType.setText(hldReportBean.getCareerAlphabet());
         tvTypeContent.setText(hldReportBean.getCareerFeature());
         tv_test_result.setText(hldReportBean.getCareerTestResults());

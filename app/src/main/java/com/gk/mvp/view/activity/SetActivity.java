@@ -6,9 +6,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.global.YXXConstants;
+import com.gk.beans.LoginBean;
 import com.gk.mvp.view.custom.TopBarView;
-import com.gk.tools.JdryPersistence;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -47,7 +46,7 @@ public class SetActivity extends SjmBaseActivity {
                 openNewActivity(AboutActivity.class);
                 break;
             case R.id.tv_logout:
-                JdryPersistence.deleteLoginBean(this, YXXConstants.LOGIN_INFO_SERIALIZE_KEY);
+                LoginBean.getInstance().clearInstance();
                 openNewActivity(LoginActivity.class);
                 break;
         }

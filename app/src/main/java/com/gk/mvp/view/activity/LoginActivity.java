@@ -55,6 +55,7 @@ public class LoginActivity extends SjmBaseActivity {
     }
 
     private void initTopBar() {
+        topBarLogin.getTitleView().setText("登录");
         topBarLogin.getBackView().setVisibility(View.GONE);
     }
 

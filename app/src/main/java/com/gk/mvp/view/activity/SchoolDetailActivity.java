@@ -48,7 +48,6 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     @BindView(R.id.tv_zs_plan)
     TextView tvZsPlan;
 
-
     @OnClick({R.id.tv_brief, R.id.tv_luqu_data, R.id.tv_zs_plan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -70,6 +69,8 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     private SchoolDetailZsPlanFragment schoolDetailZsPlanFragment = null;
     private int index = 0;
     private TextView[] textViews;
+    private String uniName;
+    private Bundle bundle = new Bundle();
 
     @Override
     public int getResouceId() {
@@ -79,6 +80,8 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "高校详情", 0);
+        uniName = getIntent().getStringExtra("uniName");
+        bundle.putString("uniName", uniName);
         textViews = new TextView[]{tvBrief, tvLuquData, tvZsPlan};
         initFragments();
     }
@@ -111,6 +114,7 @@ public class SchoolDetailActivity extends SjmBaseActivity {
             case 0:
                 if (null == schoolDetailBriefFragment) {
                     schoolDetailBriefFragment = new SchoolDetailBriefFragment();
+                    schoolDetailBriefFragment.setArguments(bundle);
                     transaction.add(R.id.ll_fragment_container, schoolDetailBriefFragment);
                 } else {
                     transaction.show(schoolDetailBriefFragment);
@@ -120,6 +124,7 @@ public class SchoolDetailActivity extends SjmBaseActivity {
             case 1:
                 if (null == schoolDetailLqDataFragment) {
                     schoolDetailLqDataFragment = new SchoolDetailLqDataFragment();
+                    schoolDetailLqDataFragment.setArguments(bundle);
                     transaction.add(R.id.ll_fragment_container, schoolDetailLqDataFragment);
                 } else {
                     transaction.show(schoolDetailLqDataFragment);
@@ -128,6 +133,7 @@ public class SchoolDetailActivity extends SjmBaseActivity {
             case 2:
                 if (null == schoolDetailZsPlanFragment) {
                     schoolDetailZsPlanFragment = new SchoolDetailZsPlanFragment();
+                    schoolDetailZsPlanFragment.setArguments(bundle);
                     transaction.add(R.id.ll_fragment_container, schoolDetailZsPlanFragment);
                 } else {
                     transaction.show(schoolDetailZsPlanFragment);

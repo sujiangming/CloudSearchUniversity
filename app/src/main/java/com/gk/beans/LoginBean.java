@@ -87,6 +87,7 @@ public class LoginBean implements Serializable {
     private String weiXinHeadImg;
     private String weiXinUnionid;
     private String verifyCode;
+    private String empty = null;
 
     private static final long serialVersionUID = 1L;
     private volatile static LoginBean instance = null;//volatile关键字来保证其线程间的可见性
@@ -164,6 +165,42 @@ public class LoginBean implements Serializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void clearInstance() {
+        this.setAddress(empty);
+        this.setAdministrator(false);
+        this.setBanned(false);
+        this.setBirthday(0);
+        this.setClassGrade(empty);
+        this.setCompanyId(empty);
+        this.setCreateDate(0);
+        this.setDepts(empty);
+        this.setEmail(empty);
+        this.setEnabled(false);
+        this.setEname(empty);
+        this.setHeadImg(empty);
+        this.setLatestLoginIp(empty);
+        this.setLatestLoginTime(0);
+        this.setMale(false);
+        this.setMobile(empty);
+        this.setNation(empty);
+        this.setNickName(empty);
+        this.setRanking(empty);
+        this.setRoles(empty);
+        this.setSalt(empty);
+        this.setSchool(empty);
+        this.setScore(empty);
+        this.setSubjectType(0);
+        this.setType(empty);
+        this.setUsername(empty);
+        this.setVipLevel(0);
+        this.setWeixin(empty);
+        this.setIsHeartTest(empty);
+        this.setWishProvince(empty);
+        this.setHasReport(false);
+        this.setWeiXinUnionid(empty);
+        this.setWeiXinHeadImg(empty);
     }
 
     public String getVipLevelDesc() {

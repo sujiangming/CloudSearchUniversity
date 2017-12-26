@@ -1,6 +1,7 @@
 package com.gk.mvp.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -327,7 +328,9 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                openNewActivity(SchoolDetailActivity.class);
+                Intent intent = new Intent();
+                intent.putExtra("uniName", schoolBeanList.get(i).getSchoolName());
+                openNewActivityByIntent(SchoolDetailActivity.class, intent);
             }
         });
     }

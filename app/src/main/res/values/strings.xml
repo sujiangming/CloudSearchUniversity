@@ -46,6 +46,14 @@
     <string name="zheng_zhi">政治</string>
     <string name="di_li">地理</string>
     <string name="video_brief">简介</string>
+    <string name="lu_year">年份</string>
+    <string name="lu_type">文理科</string>
+    <string name="lu_hightest">最高分</string>
+    <string name="lu_lowest">最低分</string>
+    <string name="lu_province_control">省控线</string>
+    <string name="zy_name">专业名称</string>
+    <string name="pi_ci">批次</string>
+    <string name="zs_number">招生人数</string>
     <string name="mbti_desc">性格外向/内向适合做什么？那些职业适合我的性格？性格是影响人一生的重要因素，性格不同，看待问题、处理事情的方式不同。通过本次测试，将让你发现真实的自己。</string>
     <string name="mbti_desc_1">MBTI的全名是Myers-Briggs Type Indicator。它是一种迫选型、自我报告式的性格评估理论模型，用以衡量和描述人们在获取信息、作出决策、对待生活等方面的心理活动规律和性格类型。</string>
     <string name="mbti_qw">以为MBTI职业模型为基础，通过专业的心理测试，让您清楚的了解自身职业倾向类型</string>

@@ -129,13 +129,14 @@
                     android:layout_below="@id/tv_for_iv_1"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/space_20_dp"
+                    android:hint="喜欢钻研思考好的好好"
                     android:paddingLeft="@dimen/space_20_dp"
                     android:paddingRight="@dimen/space_20_dp"
                     android:scrollbars="vertical"
                     android:singleLine="false"
-                    android:text="喜欢钻研思考"
                     android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/font_17_sp" />
+                    android:textColorHint="@color/colorFDFBF3"
+                    android:textSize="24sp" />
 
             </RelativeLayout>
 

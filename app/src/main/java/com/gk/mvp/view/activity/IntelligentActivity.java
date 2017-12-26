@@ -48,7 +48,7 @@ public class IntelligentActivity extends SjmBaseActivity {
     @BindView(R.id.btn_2)
     Button btn2;
 
-    private LoginBean loginBean = LoginBean.getInstance();
+    private LoginBean loginBean;
     private int vipLevel = loginBean.getVipLevel();
 
     @Override
@@ -59,7 +59,10 @@ public class IntelligentActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "智能海选", 0);
-        tvSourceAddress.setText("" + loginBean.getAddress() + "  " + loginBean.getWlDesc());
+        loginBean = LoginBean.getInstance();
+        String address = loginBean.getAddress();
+        String wenli = loginBean.getWlDesc();
+        tvSourceAddress.setText("" + (address == null ? "----" : address) + "  " + (wenli == null ? "----" : wenli));
         tvStudentScore.setText("" + loginBean.getScore() + "分");
         tvSWantCity.setText("" + (loginBean.getWishProvince() == null ? "未知" : loginBean.getWishProvince()));
         tvZy.setText("" + (loginBean.getWishUniversity() == null ? "未知" : loginBean.getWishUniversity()));

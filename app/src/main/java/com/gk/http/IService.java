@@ -533,4 +533,14 @@ public interface IService {
     @POST("app/api/wxpay/prepay")
     Call<CommonBean> prepay(@Field("data") String data);
 
+    /**
+     * 通过高校准确名字获取高校的基本信息
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/university/getUniversityInfoByName")
+    Call<CommonBean> getUniversityInfoByName(@Field("data") String data);
+
 }

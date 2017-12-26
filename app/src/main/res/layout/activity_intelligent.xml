@@ -49,7 +49,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/space_5_dp"
                     android:layout_marginTop="@dimen/space_5_dp"
-                    android:text="贵州 理科"
+                    android:hint="贵州 理科"
                     android:textColor="@color/color808080"
                     android:textSize="@dimen/font_14_sp" />
 
@@ -83,7 +83,7 @@
                     android:layout_marginTop="@dimen/space_5_dp"
                     android:layout_toRightOf="@id/tv_source_address"
                     android:gravity="right"
-                    android:text="0分"
+                    android:hint="0分"
                     android:textColor="@color/color555555"
                     android:textSize="@dimen/font_14_sp" />
 
