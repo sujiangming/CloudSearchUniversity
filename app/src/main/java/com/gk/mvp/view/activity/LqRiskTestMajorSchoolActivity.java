@@ -54,9 +54,9 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "请选择学校", 0);
+        majorName = getIntent().getStringExtra("major");
         initSmartRefreshLayout(smartRfQuerySchool, true);
         invoke(nullString, nullString, nullString, nullString, nullString);
-        majorName = getIntent().getStringExtra("major");
     }
 
     private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
@@ -91,6 +91,7 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
     @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
+        stopLayoutRefreshByTag(isLoadMore);
         String data = (String) t;
         if (data == null || nullString.equals(data)) {
             toast("没有相关数据");
@@ -100,11 +101,9 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
         if (mPage == 0 && !isLoadMore) {
             schoolBeanList = querySchoolBean.getData();
             initListView();
-            stopRefreshLayout();
             return;
         }
         if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
             List<QuerySchoolBean.DataBean> dataBeans = querySchoolBean.getData();
             if (data == null) {
                 toast("没有更多数据了");
@@ -120,21 +119,23 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-        } else {
-            stopRefreshLayout();
-        }
+        stopLayoutRefreshByTag(isLoadMore);
     }
 
     private void initListView() {
         lvQuerySchool.setAdapter(new CommonAdapter<QuerySchoolBean.DataBean>(this, R.layout.risk_major_query_item, schoolBeanList) {
             @Override
             protected void convert(ViewHolder viewHolder, QuerySchoolBean.DataBean item, int position) {
-                viewHolder.setText(R.id.tv_live_title, item.getSchoolName());
-                viewHolder.setText(R.id.tv_teacher, majorName);
+                String schoolName = item.getSchoolName();
+                if (schoolName != null && !"".equals(schoolName)) {
+                    viewHolder.setText(R.id.tv_university_name, schoolName);
+                }
+                if (majorName != null && !"".equals(majorName)) {
+                    viewHolder.setText(R.id.tv_major_name, majorName);
+                }
+
                 imageLoader.displayImage(LqRiskTestMajorSchoolActivity.this, item.getSchoolLogo(),
-                        (ImageView) viewHolder.getView(R.id.iv_item));
+                        (ImageView) viewHolder.getView(R.id.iv_logo));
             }
         });
         lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {

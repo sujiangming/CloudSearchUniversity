@@ -93,6 +93,9 @@ public class CourseListActivity extends SjmBaseActivity {
 
     private void setTitleByType() {
         switch (course) {
+            case "":
+                setTopBar(topBar, "全部资料", 0);
+                break;
             case "yuwen":
                 setTopBar(topBar, "语文资料", 0);
                 break;
@@ -139,7 +142,7 @@ public class CourseListActivity extends SjmBaseActivity {
         MaterialItemBean commonBean = (MaterialItemBean) t;
         List<MaterialItemBean.DataBean> beanList = commonBean.getData();//JSON.parseArray(commonBean.getData().toString(), MaterialItemBean.DataBean.class);
         if (beanList == null || beanList.size() == 0) {
-            toast("已经扯到底啦");
+            toast("数据为空");
             return;
         }
         if (isLoadMore) {
@@ -170,9 +173,6 @@ public class CourseListActivity extends SjmBaseActivity {
         lvMaterial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                Intent intent = new Intent();
-//                intent.putExtra("bean", list.get(i));
-//                openNewActivityByIntent(FileOpenTestActivity.class, intent);
                 openOrDownloadFile(list.get(i));
             }
         });
@@ -198,17 +198,6 @@ public class CourseListActivity extends SjmBaseActivity {
         page++;
         isLoadMore = true;
         materialPresenter.httpRequestMaterialsByCourse(page, course);
-    }
-
-    public List<MaterialItemBean.DataBean> removeDuplicate(List<MaterialItemBean.DataBean> list) {
-        for (int i = 0; i < list.size() - 1; i++) {
-            for (int j = list.size() - 1; j > i; j--) {
-                if (list.get(j).getId().equals(list.get(i).getId())) {
-                    list.remove(j);
-                }
-            }
-        }
-        return list;
     }
 
     private String permissionInfo;

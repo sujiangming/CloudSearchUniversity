@@ -523,4 +523,14 @@ public interface IService {
     Call<CommonBean> getLiveRoomsInfo(@Field("data") String data);
 
 
+    /**
+     * 微信支付
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/wxpay/prepay")
+    Call<CommonBean> prepay(@Field("data") String data);
+
 }

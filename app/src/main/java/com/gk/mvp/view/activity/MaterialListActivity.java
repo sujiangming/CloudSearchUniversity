@@ -115,35 +115,25 @@ public class MaterialListActivity extends SjmBaseActivity {
     @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-        } else {
-            stopRefreshLayout();
-        }
+        stopLayoutRefreshByTag(isLoadMore);
         CommonBean commonBean = (CommonBean) t;
         List<MaterialItemBean.DataBean> beanList = JSON.parseArray(commonBean.getData().toString(), MaterialItemBean.DataBean.class);
-        if (beanList == null || beanList.size() == 0) {
-            return;
-        }
         if (isLoadMore) {
-            list.addAll(beanList);
-        } else {
             if (beanList == null || beanList.size() == 0) {
                 toast("已经扯到底啦");
                 return;
             }
-            if (isLoadMore) {
-                list.addAll(beanList);
-            } else {
-                int currentSize = list.size();
-                list.addAll(beanList);
-                list = removeDuplicate(list);
-                int afterSize = list.size();
-                if (currentSize == afterSize) {
-                    return;
-                }
+            list.addAll(beanList);
+        } else {
+            int currentSize = list.size();
+            list.addAll(beanList);
+            list = removeDuplicate(list);
+            int afterSize = list.size();
+            if (currentSize == afterSize) {
+                return;
             }
         }
+
         lvMaterial.setAdapter(new CommonAdapter<MaterialItemBean.DataBean>(this, R.layout.material_item, list) {
             @Override
             protected void convert(ViewHolder viewHolder, MaterialItemBean.DataBean item, int position) {
@@ -176,11 +166,7 @@ public class MaterialListActivity extends SjmBaseActivity {
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-        } else {
-            stopRefreshLayout();
-        }
+        stopLayoutRefreshByTag(isLoadMore);
     }
 
     @Override

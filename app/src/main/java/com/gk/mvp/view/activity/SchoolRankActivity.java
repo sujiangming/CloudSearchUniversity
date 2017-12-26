@@ -3,7 +3,6 @@ package com.gk.mvp.view.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -94,7 +93,6 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
 
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d(TAG, "onQueryTextSubmit = " + s);
                 searchKey = YxxUtils.URLEncode(s);
                 isSearch = true;
                 invoke();
@@ -253,7 +251,7 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
         lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toast("当前点击的是：" + i);
+                openNewActivity(SchoolDetailActivity.class);
             }
         });
     }

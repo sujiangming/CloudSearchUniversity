@@ -16,7 +16,7 @@
     <LinearLayout
         android:id="@+id/ll_header"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_50_dp"
+        android:layout_height="@dimen/space_40_dp"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -40,7 +40,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/space_10_dp"
-                android:text="杨幂大咪咪"
+                android:hint="----"
                 android:textColor="@color/colorFDFBF3"
                 android:textSize="@dimen/font_14_sp" />
 
@@ -141,6 +141,15 @@
             android:layout_marginBottom="@dimen/space_18_dp"
             android:layout_marginRight="@dimen/space_8_dp"
             android:layout_toLeftOf="@id/civ_send_hua"
+            android:visibility="visible" />
+
+        <tyrantgit.widget.HeartLayout
+            android:id="@+id/heart_layout_flower"
+            android:layout_width="@dimen/space_100_dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/space_18_dp"
+            android:layout_marginRight="@dimen/space_2_dp"
+            android:layout_toLeftOf="@id/civ_cancel"
             android:visibility="visible" />
 
     </RelativeLayout>

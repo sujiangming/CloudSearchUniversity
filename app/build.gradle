@@ -73,4 +73,6 @@ dependencies {
     compile 'com.github.PhilJay:MPAndroidChart:v3.0.2'
     //直播点赞心形效果
     compile 'tyrant:heartlayout:1.0.1'
+    //ExpandableTextView
+    compile 'com.ms-square:expandableTextView:0.1.4'
 }

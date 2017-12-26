@@ -1,12 +1,13 @@
 package com.gk.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by JDRY-SJM on 2017/11/24.
  */
 
-public class SchoolRankBean {
+public class SchoolRankBean implements Serializable{
 
     /**
      * isDoubleTop : 1
@@ -152,7 +153,7 @@ public class SchoolRankBean {
         this.rankings = rankings;
     }
 
-    public static class RankingsBean {
+    public static class RankingsBean implements Serializable{
         /**
          * id : 2c948a825fc9d631015fc9e37f740004
          * uniId : 2c948a825f445e41015f447b5f400001

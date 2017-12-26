@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -71,25 +72,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="@dimen/space_40_dp"
-                android:background="@drawable/shool_mark"
-                android:gravity="center"
-                android:text="VIP特权"
-                android:textColor="@color/colorWhite" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_12_dp"
-                android:text="开通VIP后可以查看此校对你的录取概率"
-                android:textColor="@color/color808080" />
+            <include
+                android:id="@+id/expand_text_1"
+                layout="@layout/text_item" />
 
         </LinearLayout>
 
@@ -113,25 +103,14 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
+            android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:gravity="center"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="100dp"
-                android:layout_height="@dimen/space_40_dp"
-                android:background="@drawable/shool_mark"
-                android:gravity="center"
-                android:text="VIP特权"
-                android:textColor="@color/colorWhite" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_12_dp"
-                android:text="开通VIP后可以查看此校对你的录取概率"
-                android:textColor="@color/color808080" />
+            <include
+                android:id="@+id/expand_text_2"
+                layout="@layout/text_item" />
 
         </LinearLayout>
     </LinearLayout>

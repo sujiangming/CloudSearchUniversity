@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -50,8 +49,13 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     LinearLayout llComment;
     @BindView(R.id.et_reply)
     EditText et_reply;
+
     @BindView(R.id.heart_layout)
     HeartLayout heartLayout;
+
+    @BindView(R.id.heart_layout_flower)
+    HeartLayout heartLayoutFlower;
+
     @BindView(R.id.tv_send)
     TextView tvSend;
     @BindView(R.id.listView)
@@ -77,14 +81,17 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                 YxxUtils.showSoftInputFromWindow(et_reply);
                 break;
             case R.id.civ_cancel:
-                clearTimeTask();
+                clearHeartTask();
                 closeActivity(this);
                 break;
             case R.id.civ_send_hua:
+                toast("送花成功！");
                 break;
             case R.id.civ_shoucang:
-                showHeartLayout();
-                new LongTimeTask(YXXConstants.ON_LIVE_SEND_HEART_FLAG).execute("执行……");
+                if (heartTask != null) {
+                    showHeartLayout();
+                    heartTask.execute("执行……");
+                }
                 break;
             case R.id.tv_send:
                 if (TextUtils.isEmpty(et_reply.getText())) {
@@ -105,7 +112,8 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     private OrientationUtils orientationUtils;
     private Random mRandom = new Random();
     private Timer mTimer = new Timer();
-    private TimerTask timerTask;
+    private TimerTask timerHeartTask;
+    private LongTimeTask heartTask = new LongTimeTask();
 
     private List<OnLiveRoomInfo.FansSpeakBean> fanSpeakBeanList = new ArrayList<>();
     private CommonAdapter<OnLiveRoomInfo.FansSpeakBean> adapter;
@@ -124,10 +132,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         @Override
         public void run() {
             handler.postDelayed(this, TIME_INTERVAL);
-            //stringList.add("测试添加信息" + Math.random());
-            Log.e("runnable：", "1秒执行一次添加操作");
             roomPresenter.getLiveRoomsInfo();
-
         }
     };
 
@@ -169,6 +174,8 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
+        toast((String) t);
+        hideProgress();
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 break;
@@ -265,8 +272,8 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     }
 
     private void showHeartLayout() {
-        clearTimeTask();
-        mTimer.scheduleAtFixedRate(timerTask = new TimerTask() {
+        clearHeartTask();
+        mTimer.scheduleAtFixedRate(timerHeartTask = new TimerTask() {
             @Override
             public void run() {
                 heartLayout.post(new Runnable() {
@@ -281,23 +288,11 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
 
     public class LongTimeTask extends AsyncTask {
 
-        private int index;
-
-        public LongTimeTask(int index) {
-            this.index = index;
-        }
-
         @Override
         protected void onPostExecute(Object o) {
             super.onPostExecute(o);
             //更新UI的操作，这里面的内容是在UI线程里面执行的
-            if (index == YXXConstants.ON_LIVE_SEND_HEART_FLAG) {
-                clearTimeTask();
-            } else if (index == YXXConstants.ON_LIVE_SEND_FLOWER_FLAG) {
-
-            } else if (index == YXXConstants.ON_LIVE_SEND_COMMENT_FLAG) {
-
-            }
+            clearHeartTask();
         }
 
         @Override
@@ -312,10 +307,10 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         }
     }
 
-    public void clearTimeTask() {
+    public void clearHeartTask() {
         if (mTimer != null) {
-            if (timerTask != null) {
-                timerTask.cancel();
+            if (timerHeartTask != null) {
+                timerHeartTask.cancel();
             }
         }
     }
@@ -358,6 +353,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         }
         super.onBackPressed();
         closeActivity(this);
+        clearHeartTask();
         stopTimer();
         stopHandler();
         roomPresenter.fansExitLiveRooms();
@@ -367,6 +363,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoPlayer.releaseAllVideos();
+        clearHeartTask();
         stopTimer();
         stopHandler();
         roomPresenter.fansExitLiveRooms();

@@ -32,7 +32,8 @@
                 android:layout_marginLeft="@dimen/space_10_dp"
                 android:layout_marginRight="@dimen/space_10_dp"
                 android:layout_marginTop="@dimen/space_10_dp"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/space_20_dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"

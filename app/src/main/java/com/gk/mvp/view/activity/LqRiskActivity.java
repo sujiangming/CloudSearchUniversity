@@ -9,20 +9,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.YxxUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by JDRY-SJM on 2017/11/2.
  */
 
-public class LqRiskActivity extends SjmBaseActivity {
+public class LqRiskActivity extends SjmBaseActivity implements View.OnLayoutChangeListener {
     @BindView(R.id.top_bar)
     TopBarView topBar;
     @BindView(R.id.tv_level_1)
@@ -61,6 +68,7 @@ public class LqRiskActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "录取测试", 0);
+        setScreenHeight();
     }
 
     @Override
@@ -81,7 +89,12 @@ public class LqRiskActivity extends SjmBaseActivity {
         }
     }
 
-    @OnClick({R.id.tv_level_1, R.id.tv_level_2, R.id.ll_aim, R.id.btn_lq_risk_test})
+    @OnClick({R.id.tv_level_1,
+            R.id.tv_level_2,
+            R.id.ll_aim,
+            R.id.btn_lq_risk_test,
+            R.id.ll_score,
+            R.id.tv_send, R.id.tv_wen_li_desc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_level_1:
@@ -108,11 +121,53 @@ public class LqRiskActivity extends SjmBaseActivity {
                     toast("请输入内容");
                     return;
                 }
-                llComment.setVisibility(View.GONE);
-                YxxUtils.hideSoftInputKeyboard(et_reply);
+                updateUserScore();
                 break;
-
+            case R.id.ll_score:
+                if (TextUtils.isEmpty(tvStudentScore.getText())) {
+                    llComment.setVisibility(View.VISIBLE);
+                    YxxUtils.showSoftInputFromWindow(et_reply);
+                    return;
+                }
+                break;
+            case R.id.tv_wen_li_desc:
+                if (TextUtils.isEmpty(tv_wen_li_desc.getText())) {
+                    toast("请完善个人资料");
+                    openNewActivity(PersonInfoActivity.class);
+                }
+                break;
         }
+    }
+
+    private void updateUserScore() {
+        showProgress();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", loginBean.getUsername());
+        jsonObject.put("score", et_reply.getText().toString());
+        RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            toast(commonBean.getMessage());
+                            if (commonBean.getStatus() == 1) {
+                                tvStudentScore.setText(et_reply.getText());
+                                llComment.setVisibility(View.GONE);
+                                YxxUtils.hideSoftInputKeyboard(et_reply);
+                                LoginBean.getInstance().setScore(et_reply.getText().toString());
+                                LoginBean.getInstance().save();
+                            }
+                        }
+                        hideProgress();
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        toast(t.getMessage());
+                        hideProgress();
+                    }
+                });
     }
 
     private void needZDCkeck() {
@@ -191,6 +246,29 @@ public class LqRiskActivity extends SjmBaseActivity {
         } else {
             String schoolName = data.getStringExtra("schoolName");
             tvStudentMb.setText(schoolName);
+        }
+    }
+
+    private int screenHeight = 0;//屏幕高度初始值
+    private int keyHeight = 0;//软件盘弹起后所占高度阀值
+
+    private void setScreenHeight() {
+        //获取屏幕高度
+        screenHeight = getWindowManager().getDefaultDisplay().getHeight();
+        //阀值设置为屏幕高度的1/3
+        keyHeight = screenHeight / 3;
+    }
+
+    @Override
+    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+        //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
+        if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
+            //Toast.makeText(this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
+        } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+            llComment.setVisibility(View.GONE);
+            et_reply.clearFocus();
+            et_reply.setText("");
+            YxxUtils.hideSoftInputKeyboard(et_reply);
         }
     }
 }

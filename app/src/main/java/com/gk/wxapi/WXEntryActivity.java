@@ -72,13 +72,11 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         super.onNewIntent(intent);
         setIntent(intent);
         wxAPI.handleIntent(getIntent(), this);
-        Log.d("ansen", "WXEntryActivity onNewIntent");
     }
 
     // 微信发送请求到第三方应用时，会回调到该方法
     @Override
     public void onReq(BaseReq req) {
-        Log.d("ansen", "WXEntryActivity onReq:" + req);
         switch (req.getType()) {
             case ConstantsAPI.COMMAND_GETMESSAGE_FROM_WX:
                 break;
@@ -94,10 +92,8 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp resp) {
         Log.e(WXEntryActivity.class.getName(), JSON.toJSONString(resp));
         if (resp.getType() == ConstantsAPI.COMMAND_SENDMESSAGE_TO_WX) {//分享
-            Log.d("ansen", "微信分享操作.....");
             WeiXin weiXin = new WeiXin(2, resp.errCode, "");
         } else if (resp.getType() == ConstantsAPI.COMMAND_SENDAUTH) {//登陆
-            Log.d("ansen", "微信登录操作.....");
             SendAuth.Resp authResp = (SendAuth.Resp) resp;
             if (authResp.code == null) {
                 ToastUtils.toast(this, "微信登录失败,错误代码：" + authResp.errCode);
@@ -119,7 +115,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 "&secret=" + Constant.WECHAT_SECRET +
                 "&code=" + code +
                 "&grant_type=authorization_code";
-        YxxUtils.LogToFile("getAccessToken", "url:" + url);
+        //YxxUtils.LogToFile("getAccessToken", "url:" + url);
         // 网络请求获取access_token
         RetrofitUtil.getInstance().createReq(IService.class).getAccessToken(url).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -144,7 +140,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                YxxUtils.LogToFile("getAccessTokenCallback", "onFailure:" + t.getLocalizedMessage());
                 ToastUtils.toast(WXEntryActivity.this, "调用授权口令失败：" + t.getLocalizedMessage());
                 finish();
             }
@@ -157,18 +152,14 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
      * @param response 授权信息结果
      */
     private void processGetAccessTokenResult(String response) {
-        ToastUtils.toast(WXEntryActivity.this, "processGetAccessTokenResult->" + response);
         // 验证获取授权口令返回的信息是否成功
         if (validateSuccess(response)) {
             // 使用Gson解析返回的授权口令信息
             WeiXinToken tokenInfo = JSON.parseObject(response, WeiXinToken.class);
-            Log.e("", tokenInfo.toString());
-            YxxUtils.LogToFile("processGetAccessTokenResult", "WeiXinToken:" + tokenInfo.getAccess_token() +
-                    "\n openId:" + tokenInfo.getOpenid() + "\n Unionid:" + tokenInfo.getUnionid());
             // 获取用户信息
             getUserInfo(tokenInfo.getAccess_token(), tokenInfo.getOpenid());
         } else {
-            Log.d("error response", response);
+            ToastUtils.toast(WXEntryActivity.this, "处理授权结果失败");
         }
     }
 
@@ -182,7 +173,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         String errFlag = "errmsg";
         boolean ret = (errFlag.contains(response) && !"ok".equals(response))
                 || (!"errcode".contains(response) && !errFlag.contains(response));
-        YxxUtils.LogToFile("validateSuccess", "ret:" + ret);
         return ret;
     }
 
@@ -190,8 +180,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         String url = "https://api.weixin.qq.com/sns/userinfo?" +
                 "access_token=" + access_token +
                 "&openid=" + openid;
-        YxxUtils.LogToFile("getUserInfo", "url:" + url);
-        Log.e(WXEntryActivity.class.getName(), "getUserInfo..url:" + url);
         RetrofitUtil.getInstance().createReq(IService.class).getWXUserInfo(url).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
@@ -201,13 +189,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     if (responseBody != null) {
                         try {
                             String bodyString = responseBody.string();
-
-                            YxxUtils.LogToFile("getUserInfo", "body:" + bodyString + "\n access_token:" + access_token);
-
                             WeiXinUserInfo weiXinUserInfo = JSON.parseObject(bodyString, WeiXinUserInfo.class);
-
-                            YxxUtils.LogToFile("weiXinUserInfo", "weiXinUserInfo openID:" + weiXinUserInfo.getOpenid());
-
                             //调用微信登录接口
                             weixinLogin(weiXinUserInfo.getOpenid());
                             //将头像和uninID上传服务器
@@ -248,7 +230,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
     private void weixinLogin(final String weixinNo) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("weixin", weixinNo);
-        YxxUtils.LogToFile("weixinLogin", "参入参数jsonObject:" + jsonObject.toJSONString());
         RetrofitUtil.getInstance()
                 .createReq(IService.class)
                 .weixinLogin(jsonObject.toJSONString())
@@ -257,7 +238,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            YxxUtils.LogToFile("weixinLoginBack", "返回参数jsonObject:" + JSON.toJSONString(commonBean));
                             if (commonBean.getStatus() == 1) {
                                 LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
                                 LoginBean.getInstance().saveLoginBean(loginBean);
@@ -265,12 +245,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                                 LoginBean.getInstance().save();
                                 getAdsInfo();
                             } else {
-                                //getVerityfyCode(weixinNo);
                                 userBindingWeixin(weixinNo, LoginBean.getInstance().getVerifyCode());
                             }
                             return;
                         }
-                        //getVerityfyCode(weixinNo);
                         userBindingWeixin(weixinNo, LoginBean.getInstance().getVerifyCode());
                     }
 
@@ -292,7 +270,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         jsonObject.put("weixin", weixinNo);
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("verifyCode", verifyCode);
-        YxxUtils.LogToFile("userBindingWeixin", "输入参数jsonObject:" + JSON.toJSONString(jsonObject));
         RetrofitUtil.getInstance()
                 .createReq(IService.class)
                 .weixinLogin(jsonObject.toJSONString())
@@ -302,7 +279,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
                             if (commonBean.getStatus() == 1) {
-                                YxxUtils.LogToFile("userBindingWeixin", "返回参数jsonObject:" + JSON.toJSONString(commonBean));
                                 LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
                                 LoginBean.getInstance().saveLoginBean(loginBean);
                                 LoginBean.getInstance().setWeixin(loginBean.getWeixin());
@@ -342,8 +318,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         if (nickName != null) {
             jsonObject.put("nickName", nickName);
         }
-
-        YxxUtils.LogToFile("updateUserInfo", "unionid->" + unionid + "\n" + "nickName->" + nickName);
 
         RetrofitUtil.getInstance()
                 .createReq(IService.class)

@@ -23,11 +23,14 @@ import com.gk.beans.LoginBean;
 import com.gk.beans.PayResult;
 import com.gk.beans.VIPPriceBean;
 import com.gk.beans.VipOrderBean;
+import com.gk.beans.WeiXinPay;
+import com.gk.global.YXXApplication;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
+import com.tencent.mm.opensdk.modelpay.PayReq;
 
 import java.util.Map;
 
@@ -196,13 +199,56 @@ public class VIPActivity extends SjmBaseActivity {
                                 submitOrder(vipLevel);
                                 break;
                             case 1:
-                                toast("微信支付功能暂未开通");
+                                weiXinPay(vipLevel);
                                 break;
                             default:
                                 break;
                         }
                     }
                 }).show();
+    }
+
+    private void weiXinPay(int level) {
+        showProgress();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("vipLevel", level);
+        RetrofitUtil.getInstance().createReq(IService.class)
+                .prepay(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            if (commonBean.getData() == null) {
+                                toast("获取订单信息失败");
+                                return;
+                            }
+                            WeiXinPay weiXinPay = JSON.parseObject(commonBean.getData().toString(), WeiXinPay.class);
+                            payForWeiXin(weiXinPay);
+                            hideProgress();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        toast(t.getMessage());
+                        hideProgress();
+                    }
+                });
+    }
+
+    private void payForWeiXin(WeiXinPay weiXinPay) {
+        PayReq req = new PayReq();
+        req.appId = weiXinPay.getAppid();
+        req.partnerId = weiXinPay.getPartnerid();
+        req.prepayId = weiXinPay.getPrepayid();
+        req.nonceStr = weiXinPay.getNoncestr();
+        req.timeStamp = weiXinPay.getTimestamp();
+        req.packageValue = weiXinPay.getPackAge();
+        req.sign = weiXinPay.getSign();
+        toast("这在调起微信支付……");
+        YXXApplication.payApi.sendReq(req);
     }
 
     private void submitOrder(int level) {

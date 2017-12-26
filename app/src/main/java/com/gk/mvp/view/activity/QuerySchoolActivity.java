@@ -28,6 +28,7 @@ import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.adpater.GridViewChooseAdapter;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
@@ -184,20 +185,6 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         }
     }
 
-    private int getSearchIndex(String name) {
-        int ret = 0;
-        if (type == 1) {
-            ret = UniversityAreaEnum.getIndex(name);
-        } else if (type == 2) {
-            ret = UniversityTypeEnum.getIndex(name);
-        } else if (type == 3) {
-            ret = UniversityFeatureEnum.getIndex(name);
-        } else {
-            ret = UniversityLevelEnum.getIndex(name);
-        }
-        return ret;
-    }
-
     private void initGridViewAdapter() {
         gvChannel.setAdapter(gridViewChooseAdapter);
         gvChannel.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -215,8 +202,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
 
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d(TAG, "onQueryTextSubmit = " + s);
-                invoke(nullStr, nullStr, nullStr, nullStr, s);
+                invoke(nullStr, nullStr, nullStr, nullStr, YxxUtils.URLEncode(s));
                 clearSearch();
                 return true;
             }

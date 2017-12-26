@@ -79,7 +79,7 @@ public class MajorModel {
     public void httpQueryRequest(String key, int type, final IPresenterCallback iPresenterCallback) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("majorName", key);
-        jsonObject.put("type", type);
+        jsonObject.put("type", "");
         RetrofitUtil.getInstance().createReq(IService.class).getMajorListByName(jsonObject.toJSONString()).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

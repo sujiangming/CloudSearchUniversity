@@ -371,7 +371,13 @@ public class LectureFragment extends SjmBaseFragment {
         }
     }
 
-    @OnClick({R.id.ll_search, R.id.rtv_all, R.id.rtv_yuwen, R.id.rtv_shuxue, R.id.rtv_english, R.id.rtv_wz, R.id.rtv_lz, R.id.rtv_wuli, R.id.rtv_huaxue, R.id.rtv_shengwu, R.id.rtv_dili, R.id.rtv_lish, R.id.rtv_zhengzhi, R.id.ll_msjt, R.id.ll_lszt, R.id.ll_mnsj})
+    @OnClick({R.id.ll_search, R.id.rtv_all, R.id.rtv_yuwen,
+            R.id.rtv_shuxue, R.id.rtv_english, R.id.rtv_wz,
+            R.id.rtv_lz, R.id.rtv_wuli, R.id.rtv_huaxue,
+            R.id.rtv_shengwu, R.id.rtv_dili, R.id.rtv_lish,
+            R.id.rtv_zhengzhi, R.id.ll_msjt, R.id.ll_msjt_part_1, R.id.ll_msjt_part_2,
+            R.id.ll_lszt, R.id.ll_lszt_part_1, R.id.ll_lszt_part_2,
+            R.id.ll_mnsj, R.id.ll_mnsj_part_1, R.id.ll_mnsj_part_2})
     public void onViewClicked(View view) {
         Intent intent = new Intent();
         switch (view.getId()) {
@@ -379,6 +385,8 @@ public class LectureFragment extends SjmBaseFragment {
                 openNewActivity(MaterialQueryActivity.class);
                 break;
             case R.id.rtv_all:
+                intent.putExtra("course", "all");
+                openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.rtv_yuwen:
                 intent.putExtra("course", "yuwen");
@@ -425,16 +433,22 @@ public class LectureFragment extends SjmBaseFragment {
                 openNewActivityByIntent(CourseListActivity.class, intent);
                 break;
             case R.id.ll_msjt:
+            case R.id.ll_msjt_part_1:
+            case R.id.ll_msjt_part_2:
                 intent.putExtra("type", 1);
                 intent.putExtra("course", "");
                 openNewActivityByIntent(MaterialListActivity.class, intent);
                 break;
             case R.id.ll_lszt:
+            case R.id.ll_lszt_part_1:
+            case R.id.ll_lszt_part_2:
                 intent.putExtra("type", 2);
                 intent.putExtra("course", "");
                 openNewActivityByIntent(MaterialListActivity.class, intent);
                 break;
             case R.id.ll_mnsj:
+            case R.id.ll_mnsj_part_1:
+            case R.id.ll_mnsj_part_2:
                 intent.putExtra("type", 3);
                 intent.putExtra("course", "");
                 openNewActivityByIntent(MaterialListActivity.class, intent);

@@ -5,12 +5,21 @@ package com.gk.beans;
  * @create time 2017-09-15
  */
 public class WeiXinPay{
-    private String noncestr="";//随机字符串，不长于32位。推荐随机数生成算法
-    private String package_value="";//暂填写固定值Sign=WXPay
-    private String partnerid="";//微信支付分配的商户号
-    private String prepayid="";//微信返回的支付交易会话ID
-    private String timestamp="";//时间戳
-    private String sign="";//签名
+    private String appid;//应用ID
+    private String noncestr;//随机字符串
+    private String packAge;//扩展字段"Sign=WXPay"
+    private String partnerid;//商户号
+    private String prepayid;//预支付id
+    private String sign;//签名
+    private String timestamp;
+
+    public String getAppid() {
+        return appid;
+    }
+
+    public void setAppid(String appid) {
+        this.appid = appid;
+    }
 
     public String getNoncestr() {
         return noncestr;
@@ -20,12 +29,12 @@ public class WeiXinPay{
         this.noncestr = noncestr;
     }
 
-    public String getPackage_value() {
-        return package_value;
+    public String getPackAge() {
+        return packAge;
     }
 
-    public void setPackage_value(String package_value) {
-        this.package_value = package_value;
+    public void setPackAge(String packAge) {
+        this.packAge = packAge;
     }
 
     public String getPartnerid() {
@@ -44,19 +53,19 @@ public class WeiXinPay{
         this.prepayid = prepayid;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
-
     public String getSign() {
         return sign;
     }
 
     public void setSign(String sign) {
         this.sign = sign;
+    }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(String timestamp) {
+        this.timestamp = timestamp;
     }
 }
