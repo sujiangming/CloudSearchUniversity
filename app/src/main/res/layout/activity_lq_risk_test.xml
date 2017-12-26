@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#EDF8F9"
@@ -149,50 +150,4 @@
         android:text="立即测试"
         android:textColor="@android:color/white"
         android:textSize="@dimen/font_20_sp" />
-
-    <LinearLayout
-        android:id="@+id/ll_comment"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/space_49_dp"
-        android:background="@android:color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/space_12_dp"
-        android:visibility="gone">
-
-        <EditText
-            android:id="@+id/et_reply"
-            android:layout_width="0dp"
-            android:layout_height="@dimen/space_30_dp"
-            android:layout_marginLeft="@dimen/space_5_dp"
-            android:layout_weight="1"
-            android:background="@drawable/reply_bg"
-            android:ellipsize="end"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
-            android:gravity="center_vertical"
-            android:hint="输入您的高考分数"
-            android:inputType="number"
-            android:maxLines="1"
-            android:paddingLeft="@dimen/space_20_dp"
-            android:textColor="@color/color1E1E1E"
-            android:textColorHint="@color/color9B9B9B"
-            android:textCursorDrawable="@null"
-            android:textSize="@dimen/font_16_sp" />
-
-        <TextView
-            android:id="@+id/tv_send"
-            android:layout_width="@dimen/space_60_dp"
-            android:layout_height="@dimen/space_30_dp"
-            android:layout_marginLeft="@dimen/space_10_dp"
-            android:layout_marginRight="@dimen/space_20_dp"
-            android:background="@drawable/send_comment_bg"
-            android:gravity="center"
-            android:paddingLeft="@dimen/space_14_dp"
-            android:paddingRight="@dimen/space_14_dp"
-            android:text="发送"
-            android:textColor="@color/colorFDFBF3"
-            android:textSize="@dimen/font_14_sp" />
-
-    </LinearLayout>
 </LinearLayout>

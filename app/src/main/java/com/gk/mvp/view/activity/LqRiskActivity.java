@@ -1,35 +1,28 @@
 package com.gk.mvp.view.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
-import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
-import com.gk.http.IService;
-import com.gk.http.RetrofitUtil;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.YxxUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by JDRY-SJM on 2017/11/2.
  */
 
-public class LqRiskActivity extends SjmBaseActivity implements View.OnLayoutChangeListener {
+public class LqRiskActivity extends SjmBaseActivity {
     @BindView(R.id.top_bar)
     TopBarView topBar;
     @BindView(R.id.tv_level_1)
@@ -44,14 +37,8 @@ public class LqRiskActivity extends SjmBaseActivity implements View.OnLayoutChan
     RichText tvStudentMb;
     @BindView(R.id.tv_wen_li_desc)
     TextView tv_wen_li_desc;
-
     @BindView(R.id.tv_test_desc)
     TextView tv_test_desc;
-
-    @BindView(R.id.ll_comment)
-    LinearLayout llComment;
-    @BindView(R.id.et_reply)
-    EditText et_reply;
 
     private int faultLevel = 1; //默认显示高校
     private LoginBean loginBean;
@@ -68,7 +55,6 @@ public class LqRiskActivity extends SjmBaseActivity implements View.OnLayoutChan
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "录取测试", 0);
-        setScreenHeight();
     }
 
     @Override
@@ -93,8 +79,7 @@ public class LqRiskActivity extends SjmBaseActivity implements View.OnLayoutChan
             R.id.tv_level_2,
             R.id.ll_aim,
             R.id.btn_lq_risk_test,
-            R.id.ll_score,
-            R.id.tv_send, R.id.tv_wen_li_desc})
+            R.id.ll_score,R.id.tv_wen_li_desc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_level_1:
@@ -109,87 +94,60 @@ public class LqRiskActivity extends SjmBaseActivity implements View.OnLayoutChan
             case R.id.btn_lq_risk_test://立即测试
                 needZDCkeck();
                 break;
-            case R.id.tv_student_score:
-                if (TextUtils.isEmpty(et_reply.getText())) {
-                    llComment.setVisibility(View.VISIBLE);
-                    YxxUtils.showSoftInputFromWindow(et_reply);
-                    return;
-                }
-                break;
-            case R.id.tv_send:
-                if (TextUtils.isEmpty(et_reply.getText())) {
-                    toast("请输入内容");
-                    return;
-                }
-                updateUserScore();
-                break;
             case R.id.ll_score:
                 if (TextUtils.isEmpty(tvStudentScore.getText())) {
-                    llComment.setVisibility(View.VISIBLE);
-                    YxxUtils.showSoftInputFromWindow(et_reply);
-                    return;
+                    showVipDialog("请完善个人资料");
                 }
                 break;
             case R.id.tv_wen_li_desc:
                 if (TextUtils.isEmpty(tv_wen_li_desc.getText())) {
-                    toast("请完善个人资料");
-                    openNewActivity(PersonInfoActivity.class);
+                    showVipDialog("请完善个人资料");
                 }
                 break;
         }
     }
 
-    private void updateUserScore() {
-        showProgress();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", loginBean.getUsername());
-        jsonObject.put("score", et_reply.getText().toString());
-        RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString())
-                .enqueue(new Callback<CommonBean>() {
-                    @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                        if (response.isSuccessful()) {
-                            CommonBean commonBean = response.body();
-                            toast(commonBean.getMessage());
-                            if (commonBean.getStatus() == 1) {
-                                tvStudentScore.setText(et_reply.getText());
-                                llComment.setVisibility(View.GONE);
-                                YxxUtils.hideSoftInputKeyboard(et_reply);
-                                LoginBean.getInstance().setScore(et_reply.getText().toString());
-                                LoginBean.getInstance().save();
-                            }
-                        }
-                        hideProgress();
-                    }
-
-                    @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
-                        toast(t.getMessage());
-                        hideProgress();
-                    }
-                });
-    }
-
     private void needZDCkeck() {
         if (TextUtils.isEmpty(score)) {
-            toast("请完善您的个人信息-分数还未填写");
+            showVipDialog("请完善您的个人信息-分数还未填写");
             return;
         }
         if (TextUtils.isEmpty(rank)) {
-            toast("请完善您的个人信息-排名还未填写");
+            showVipDialog("请完善您的个人信息-排名还未填写");
             return;
         }
         if (TextUtils.isEmpty(weli)) {
-            toast("请完善您的个人信息-文理科还未填写");
+            showVipDialog("请完善您的个人信息-文理科还未填写");
             return;
         }
         if (TextUtils.isEmpty(address)) {
-            toast("请完善您的个人信息-生源地还未填写");
+            showVipDialog("请完善您的个人信息-生源地还未填写");
             return;
         }
         rightNowTest();
     }
 
+    private void showVipDialog(String tip) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("温馨提示");
+        builder.setMessage(tip);
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                openNewActivity(PersonInfoActivity.class);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
 
     private void tvLevel1Click() {
         imageView.setImageResource(R.drawable.lq_yx3x);
@@ -246,29 +204,6 @@ public class LqRiskActivity extends SjmBaseActivity implements View.OnLayoutChan
         } else {
             String schoolName = data.getStringExtra("schoolName");
             tvStudentMb.setText(schoolName);
-        }
-    }
-
-    private int screenHeight = 0;//屏幕高度初始值
-    private int keyHeight = 0;//软件盘弹起后所占高度阀值
-
-    private void setScreenHeight() {
-        //获取屏幕高度
-        screenHeight = getWindowManager().getDefaultDisplay().getHeight();
-        //阀值设置为屏幕高度的1/3
-        keyHeight = screenHeight / 3;
-    }
-
-    @Override
-    public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
-        if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
-            //Toast.makeText(this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
-        } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
-            llComment.setVisibility(View.GONE);
-            et_reply.clearFocus();
-            et_reply.setText("");
-            YxxUtils.hideSoftInputKeyboard(et_reply);
         }
     }
 }
