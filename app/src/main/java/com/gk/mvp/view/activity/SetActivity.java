@@ -47,6 +47,7 @@ public class SetActivity extends SjmBaseActivity {
                 break;
             case R.id.tv_logout:
                 LoginBean.getInstance().clearInstance();
+                LoginBean.getInstance().save();
                 openNewActivity(LoginActivity.class);
                 break;
         }

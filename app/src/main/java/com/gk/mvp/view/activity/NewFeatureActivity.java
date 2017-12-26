@@ -69,8 +69,6 @@ public class NewFeatureActivity extends SjmBaseActivity implements ViewPager.OnP
         if (userBeans != null && userBeans.size() > 0) {
             openNewActivity(MainActivity.class);
         } else {
-//            Intent intent = new Intent();
-//            intent.putExtra(YXXConstants.ENTER_LOGIN_PAGE_FLAG, YXXConstants.FROM_SPLASH_FLAG);
             openNewActivity(LoginActivity.class);
         }
         closeActivity();
@@ -107,7 +105,8 @@ public class NewFeatureActivity extends SjmBaseActivity implements ViewPager.OnP
      */
     private void initViewPager() {
         //实例化图片资源
-        imageIdArray = new int[]{R.drawable.timg_0, R.drawable.timg_1, R.drawable.timg_2};
+        imageIdArray = new int[]{R.drawable.new_feature_1, R.drawable.new_feature_2,
+                R.drawable.new_feature_3, R.drawable.new_feature_4};
         viewList = new ArrayList<>();
         //获取一个Layout参数，设置为全屏
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(

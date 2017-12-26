@@ -205,11 +205,26 @@
                     android:textColor="@color/color808080"
                     android:textSize="@dimen/font_17_sp" />
 
-                <com.github.mikephil.charting.charts.RadarChart
-                    android:id="@+id/chart1"
+                <!--<com.github.mikephil.charting.charts.RadarChart-->
+                    <!--android:id="@+id/chart1"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="320dp"-->
+                    <!--android:layout_marginTop="@dimen/space_25_dp" />-->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="320dp"
-                    android:layout_marginTop="@dimen/space_25_dp" />
+                    android:layout_marginTop="12dp"
+                    android:gravity="center">
+
+                    <WebView
+                        android:id="@+id/wv_chart"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center">
+
+                    </WebView>
+
+                </LinearLayout>
 
                 <TextView
                     android:layout_width="wrap_content"

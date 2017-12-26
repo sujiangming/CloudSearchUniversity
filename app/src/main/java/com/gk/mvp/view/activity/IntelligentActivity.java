@@ -49,7 +49,7 @@ public class IntelligentActivity extends SjmBaseActivity {
     Button btn2;
 
     private LoginBean loginBean;
-    private int vipLevel = loginBean.getVipLevel();
+    private int vipLevel = 0;
 
     @Override
     public int getResouceId() {

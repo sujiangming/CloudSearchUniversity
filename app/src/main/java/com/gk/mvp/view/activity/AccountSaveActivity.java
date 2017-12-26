@@ -49,7 +49,7 @@ public class AccountSaveActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-
+        etAccount.setText(userName);
     }
 
     @OnClick({R.id.iv_back, R.id.tv_save})
