@@ -11,23 +11,17 @@
 					padding:0px;
 			  }
 
-
-
-
     </style>
 
 <body>
-<div id="bar" style="width:100%; height:320px">是了解大数据多少度</div>
+<div id="bar" style="width:100%; height:320px">看数据开设的</div>
 <script type="text/javascript">
-			var myChart = echarts.init(document.getElementById('bar'));
+            function set_option_value(scores){
+            //var scores = '[4, 4, 5, 5, 6, 5]';
+            scores = eval(scores);
+            var myChart = echarts.init(document.getElementById('bar'));
 			    var option = {
-                    title: {
-                        text: '霍兰德测试'
-                    },
                     tooltip: {},
-                    legend: {
-                        data: ['得分分布']
-                    },
                     radar: {
                         name: {
                             textStyle: {
@@ -38,12 +32,12 @@
                            }
                         },
                         indicator: [
-                           { name: 'A 艺术', max: 6500},
-                           { name: 'S 社会', max: 16000},
-                           { name: 'E 企业', max: 30000},
-                           { name: 'C 传统', max: 38000},
-                           { name: 'R 实际', max: 52000},
-                           { name: 'I 研究', max: 25000}
+                           { name: 'A 艺术', max: 7},
+                           { name: 'S 社会', max: 7},
+                           { name: 'E 企业', max: 7},
+                           { name: 'C 传统', max: 7},
+                           { name: 'R 实际', max: 7},
+                           { name: 'I 研究', max: 7}
                         ]
                     },
                     series: [{
@@ -51,13 +45,14 @@
                         type: 'radar',
                         data : [
                             {
-                                value : [4300, 10000, 28000, 35000, 50000, 19000],
+                                value : [scores[0], scores[1], scores[2], scores[3], scores[4], scores[5]],
                                 name : '得分分布'
                             }
                         ]
                     }]
                 };
                 myChart.setOption(option);
+            }
 </script>
 </body>
 </html>

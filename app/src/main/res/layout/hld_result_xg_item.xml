@@ -13,20 +13,28 @@
         android:background="@drawable/shadow3x"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="77dp"
+        android:paddingBottom="@dimen/space_20_dp"
+        android:paddingLeft="88dp"
         android:paddingRight="@dimen/space_13_dp"
-        android:text="@string/interest_ys"
+        android:paddingTop="@dimen/space_12_dp"
+        android:text="@string/interest_4"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp">
 
     </TextView>
 
-    <ImageView
+    <TextView
         android:id="@+id/iv_hld_xg"
         android:layout_width="80dp"
         android:layout_height="@dimen/space_60_dp"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginVertical="@dimen/space_20_dp"
-        android:src="@drawable/interest_ys" />
+        android:background="@drawable/hld"
+        android:gravity="center"
+        android:paddingBottom="@dimen/space_5_dp"
+        android:paddingRight="@dimen/space_12_dp"
+        android:text="@string/a_type"
+        android:textColor="@android:color/white"
+        android:textSize="@dimen/font_14_sp" />
 </RelativeLayout>

@@ -10,12 +10,12 @@ import java.util.List;
  */
 
 public enum HLDImageTypeEnum {
-    A(R.drawable.interest_ys, "A"),
-    S(R.drawable.interest_sh, "S"),
-    E(R.drawable.interest_yy, "E"),
-    C(R.drawable.interest_ct, "C"),
-    REAL(R.drawable.interest_xs, "R"),
-    I(R.drawable.interest_yj, "I");
+    A(R.drawable.hld, "A"),
+    S(R.drawable.hld_blue, "S"),
+    E(R.drawable.hld, "E"),
+    C(R.drawable.hld_blue, "C"),
+    REAL(R.drawable.hld, "R"),
+    I(R.drawable.hld_blue, "I");
 
     private int imageRes;
     private String index;

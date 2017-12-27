@@ -107,10 +107,15 @@
 
                     </TextView>
 
-                    <ImageView
-                        android:layout_width="80dp"
+                    <TextView
+                        android:layout_width="50dp"
                         android:layout_height="@dimen/space_60_dp"
-                        android:src="@drawable/mbti_qw" />
+                        android:layout_marginLeft="@dimen/space_15_dp"
+                        android:background="@drawable/mbti_blue"
+                        android:textSize="@dimen/font_14_sp"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:text="权威"/>
 
                 </RelativeLayout>
 
@@ -136,10 +141,15 @@
 
                     </TextView>
 
-                    <ImageView
-                        android:layout_width="80dp"
+                    <TextView
+                        android:layout_width="50dp"
                         android:layout_height="@dimen/space_60_dp"
-                        android:src="@drawable/mbti_qx" />
+                        android:layout_marginLeft="@dimen/space_15_dp"
+                        android:background="@drawable/mbti_zs"
+                        android:textSize="@dimen/font_14_sp"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:text="清晰"/>
 
                 </RelativeLayout>
 
@@ -165,10 +175,15 @@
 
                     </TextView>
 
-                    <ImageView
-                        android:layout_width="80dp"
+                    <TextView
+                        android:layout_width="50dp"
                         android:layout_height="@dimen/space_60_dp"
-                        android:src="@drawable/mbti_sy" />
+                        android:layout_marginLeft="@dimen/space_15_dp"
+                        android:background="@drawable/mbti_deep_blue"
+                        android:textSize="@dimen/font_14_sp"
+                        android:textColor="@android:color/white"
+                        android:gravity="center"
+                        android:text="实用"/>
 
                 </RelativeLayout>
             </LinearLayout>

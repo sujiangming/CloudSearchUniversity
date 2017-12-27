@@ -30,17 +30,6 @@ public class HldInterestActivity extends SjmBaseActivity {
     @BindView(R.id.btn_mbti_query)
     Button btnMbtiQuery;
 
-    @Override
-    public int getResouceId() {
-        return R.layout.activity_interest_test;
-    }
-
-    @Override
-    protected void onCreateByMe(Bundle savedInstanceState) {
-        setTopBar(topBar, "霍兰德性格测试", 0);
-        httpReqest();
-    }
-
     @OnClick({R.id.btn_mbti_test, R.id.btn_mbti_query})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -53,7 +42,19 @@ public class HldInterestActivity extends SjmBaseActivity {
         }
     }
 
+    @Override
+    public int getResouceId() {
+        return R.layout.activity_interest_test;
+    }
+
+    @Override
+    protected void onCreateByMe(Bundle savedInstanceState) {
+        setTopBar(topBar, "霍兰德性格测试", 0);
+        httpReqest();
+    }
+
     private void httpReqest() {
+        showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         PresenterManager.getInstance()
@@ -65,6 +66,7 @@ public class HldInterestActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithData(T t, int order) {
+        hideProgress();
         CommonBean commonBean = (CommonBean) t;
         HldReportBean hldReportBean = JSON.parseObject(commonBean.getData().toString(), HldReportBean.class);
         if (hldReportBean == null || hldReportBean.getId() == null) {
@@ -76,6 +78,7 @@ public class HldInterestActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-
+        toast((String) t);
+        hideProgress();
     }
 }

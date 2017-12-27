@@ -71,6 +71,12 @@
     <string name="interest_sh">喜欢与人交往、不断结交新的朋友、善言谈、愿意教导别人。关心社会问题、渴望发挥自己的社会作用。</string>
     <string name="detail_text">在2017国际体验设计大会中，来自“互联网银行用户体验联合实验室”的Ray和Louie在工作坊里为大家介绍了互联网金融的通用设计流程。后续我们把在工作坊里面提到设计方法库进行了再次整理和优化，在这里为大家详细的介绍。</string>
     <string name="app_tip">提示</string>
+    <string name="a_type">A\n艺术型</string>
+    <string name="c_type">C\n传统型</string>
+    <string name="s_type">S\n社会型</string>
+    <string name="r_type">R\n现实型</string>
+    <string name="e_type">E\n企业型</string>
+    <string name="i_type">I\n研究型</string>
     <!-- WXPayEntryActivity -->
     <string name="pay_result_tip">这个界面用于显示第三方app通过微信支付的结果</string>
     <string name="pay_result_callback_msg" formatted="false">微信支付结果：%s</string>

@@ -108,13 +108,20 @@
 
                     </TextView>
 
-                    <ImageView
+                    <TextView
+                        android:id="@+id/tv_a_type"
                         android:layout_width="80dp"
                         android:layout_height="@dimen/space_60_dp"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="@dimen/space_10_dp"
                         android:layout_marginVertical="@dimen/space_20_dp"
-                        android:src="@drawable/interest_ys" />
+                        android:background="@drawable/hld"
+                        android:gravity="center"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:paddingBottom="@dimen/space_2_dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_14_sp"
+                        android:text="@string/a_type"/>
 
                 </RelativeLayout>
 
@@ -140,13 +147,20 @@
 
                     </TextView>
 
-                    <ImageView
+                    <TextView
+                        android:id="@+id/tv_c_type"
                         android:layout_width="80dp"
                         android:layout_height="@dimen/space_60_dp"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="@dimen/space_10_dp"
                         android:layout_marginVertical="@dimen/space_20_dp"
-                        android:src="@drawable/interest_ct" />
+                        android:background="@drawable/hld_blue"
+                        android:gravity="center"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:paddingBottom="@dimen/space_2_dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_14_sp"
+                        android:text="@string/c_type"/>
 
                 </RelativeLayout>
 
@@ -172,13 +186,20 @@
 
                     </TextView>
 
-                    <ImageView
+                    <TextView
+                        android:id="@+id/tv_e_type"
                         android:layout_width="80dp"
                         android:layout_height="@dimen/space_60_dp"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="@dimen/space_10_dp"
                         android:layout_marginVertical="@dimen/space_20_dp"
-                        android:src="@drawable/interest_yy" />
+                        android:background="@drawable/hld"
+                        android:gravity="center"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:paddingBottom="@dimen/space_2_dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_14_sp"
+                        android:text="@string/e_type"/>
 
                 </RelativeLayout>
 
@@ -204,13 +225,20 @@
 
                     </TextView>
 
-                    <ImageView
+                    <TextView
+                        android:id="@+id/tv_i_type"
                         android:layout_width="80dp"
                         android:layout_height="@dimen/space_60_dp"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="@dimen/space_10_dp"
                         android:layout_marginVertical="@dimen/space_20_dp"
-                        android:src="@drawable/interest_yj" />
+                        android:background="@drawable/hld_blue"
+                        android:gravity="center"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:paddingBottom="@dimen/space_2_dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_14_sp"
+                        android:text="@string/i_type"/>
 
                 </RelativeLayout>
 
@@ -236,13 +264,20 @@
 
                     </TextView>
 
-                    <ImageView
+                    <TextView
+                        android:id="@+id/tv_r_type"
                         android:layout_width="80dp"
                         android:layout_height="@dimen/space_60_dp"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="@dimen/space_10_dp"
                         android:layout_marginVertical="@dimen/space_20_dp"
-                        android:src="@drawable/interest_xs" />
+                        android:background="@drawable/hld"
+                        android:gravity="center"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:paddingBottom="@dimen/space_2_dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_14_sp"
+                        android:text="@string/r_type"/>
 
                 </RelativeLayout>
 
@@ -268,13 +303,20 @@
 
                     </TextView>
 
-                    <ImageView
+                    <TextView
+                        android:id="@+id/tv_s_type"
                         android:layout_width="80dp"
                         android:layout_height="@dimen/space_60_dp"
                         android:layout_alignParentLeft="true"
                         android:layout_marginLeft="@dimen/space_10_dp"
                         android:layout_marginVertical="@dimen/space_20_dp"
-                        android:src="@drawable/interest_sh" />
+                        android:background="@drawable/hld_blue"
+                        android:gravity="center"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:paddingBottom="@dimen/space_2_dp"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_14_sp"
+                        android:text="@string/s_type"/>
 
                 </RelativeLayout>
             </LinearLayout>

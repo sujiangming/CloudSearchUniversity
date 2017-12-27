@@ -4,7 +4,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.ImageView;
+import android.webkit.WebViewClient;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -14,6 +14,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.HLDImageTypeEnum;
+import com.gk.beans.HLDImageTypeStringEnum;
 import com.gk.beans.HLDTable;
 import com.gk.beans.HLDTableDao;
 import com.gk.beans.HLDTypeEnum;
@@ -80,8 +81,6 @@ public class HLDTestResultActivity extends SjmBaseActivity {
     private TextView[] textViews;
     private TextView[] textViewType;
     private HldReportBean hldReportBean;
-    private String[] mActivities = new String[]{"A 艺术", "S 社会", "E 企业", "C 传统", "R 实际", "I 研究"};
-
     @Override
     public int getResouceId() {
         return R.layout.activity_hld_test_result;
@@ -93,7 +92,6 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         textViews = new TextView[]{tv1, tv2, tv3};
         textViewType = new TextView[]{tvForIv1, tvForIv2, tvForIv3};
         httpRequest();
-        initWebView(new int[]{1,2,4,5,6});
     }
 
     private void httpRequest() {
@@ -137,7 +135,7 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         }
         int[] scores = new int[]{hldReportBean.getCareerA(), hldReportBean.getCareerS(), hldReportBean.getCareerE()
                 , hldReportBean.getCareerC(), hldReportBean.getCareerR(), hldReportBean.getCareerI()};
-        initWebView(scores);
+        initWebView(JSON.toJSONString(scores));
         initCommon();
         addCommonSubView();
         addTypicalSubView();
@@ -174,9 +172,10 @@ public class HLDTestResultActivity extends SjmBaseActivity {
             textViews[i].setText(strings[i]);
             textViewType[i].setText(HLDTypeEnum.getName(strings[i]));
             View view = View.inflate(this, R.layout.hld_result_xg_item, null);
-            ImageView imageView = view.findViewById(R.id.iv_hld_xg);
+            TextView imageView = view.findViewById(R.id.iv_hld_xg);
             TextView textView = view.findViewById(R.id.tv_hld_xg_desc);
-            imageView.setImageResource(HLDImageTypeEnum.getImageRes(strings[i]));
+            imageView.setBackgroundResource(HLDImageTypeEnum.getImageRes(strings[i]));
+            imageView.setText(HLDImageTypeStringEnum.getImageRes(strings[i]));
             if (i == 0) {
                 textView.setText(hldReportBean.getCareerCommonOne());
             } else if (i == 1) {
@@ -219,22 +218,22 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         }
     }
 
-    private void initWebView(final int[] values) {
+    private void initWebView(final String values) {
         WebSettings webSettings = mChart.getSettings();
         webSettings.setAllowFileAccess(true);
         webSettings.setJavaScriptEnabled(true);
         webSettings.setSupportZoom(true);
         mChart.loadUrl("file:///android_asset/radar_chart.html");
-//        mChart.setWebViewClient(new WebViewClient() {
-//            @Override
-//            public void onPageFinished(WebView view, String url) {
-//                updateHandicapList(values);
-//            }
-//        });
+        mChart.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onPageFinished(WebView view, String url) {
+                updateHandicapList(values);
+            }
+        });
     }
 
-    private void updateHandicapList(int[] values) {
-        String strCall = "javascript:set_option_value('" + mActivities + "','" + values + "')";
+    private void updateHandicapList(String values) {
+        String strCall = "javascript:set_option_value('" + values + "')";
         mChart.loadUrl(strCall);
     }
 }

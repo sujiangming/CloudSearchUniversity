@@ -29,8 +29,4 @@ public class YXXConstants {
     public static final String LOGIN_INFO_SERIALIZE_KEY = "loginBean";
     public static final String ADS_INFO_SERIALIZE_KEY = "ads";
 
-    public static final int ON_LIVE_SEND_HEART_FLAG = 1;
-    public static final int ON_LIVE_SEND_FLOWER_FLAG = 2;
-    public static final int ON_LIVE_SEND_COMMENT_FLAG = 3;
-
 }

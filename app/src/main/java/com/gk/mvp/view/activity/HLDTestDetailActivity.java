@@ -56,6 +56,10 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         }
         currentPage++;
         if (currentPage > pageCount) {
+            if (list.size() == 0) {
+                toast("没有数据，不能做题！");
+                return;
+            }
             toast("已作答完毕");
             openNewActivity(HLDTestResultActivity.class);
             closeActivity(this);
