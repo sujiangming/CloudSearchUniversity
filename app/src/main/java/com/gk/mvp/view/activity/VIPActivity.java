@@ -72,8 +72,7 @@ public class VIPActivity extends SjmBaseActivity {
         switch (view.getId()) {
             case R.id.tv_open_gold:
                 if (vipType < 3) {
-                    //showVipDialog(goldTip, 2);
-                    showPayWay(2);
+                    showPayWay(3);
                     vipLevel = 3;
                 } else {
                     toast("您已经是金卡用户了");
@@ -81,8 +80,7 @@ public class VIPActivity extends SjmBaseActivity {
                 break;
             case R.id.tv_open_silver:
                 if (vipType < 2) {
-                    //showVipDialog(silverTip, 1);
-                    showPayWay(1);
+                    showPayWay(2);
                     vipLevel = 2;
                 } else if (vipType == 2) {
                     toast("您已经是银卡用户了，您可要升级为金卡用户哦");
@@ -225,6 +223,10 @@ public class VIPActivity extends SjmBaseActivity {
         req.packageValue = weiXinPay.getPackAge();
         req.sign = weiXinPay.getSign();
         toast("这在调起微信支付……");
+
+        LoginBean.getInstance().setVipLevelTmp(vipLevel);
+        LoginBean.getInstance().setOrderNo(weiXinPay.getOrderNo());
+
         YXXApplication.payApi.sendReq(req);
     }
 
@@ -245,6 +247,7 @@ public class VIPActivity extends SjmBaseActivity {
         CommonBean commonBean = (CommonBean) t;
         VipOrderBean vipOrderBean = JSON.parseObject(commonBean.getData().toString(), VipOrderBean.class);
         String sign = vipOrderBean.getSign();
+        LoginBean.getInstance().setOrderNo(vipOrderBean.getOrderNo());
         payV2(sign);
         hideProgress();
     }
@@ -310,7 +313,9 @@ public class VIPActivity extends SjmBaseActivity {
                         toast("支付成功");
                         LoginBean.getInstance().setVipLevel(vipLevel);
                         LoginBean.getInstance().save();
+                        LoginBean.getInstance().setVipLevelTmp(vipLevel);
                         vipType = LoginBean.getInstance().getVipLevel();
+                        tempOrderPaySuccess();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
                         toast("支付失败");
@@ -339,4 +344,28 @@ public class VIPActivity extends SjmBaseActivity {
             }
         }
     };
+
+    private void tempOrderPaySuccess() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("orderNo", LoginBean.getInstance().getOrderNo());
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .tempOrderPaySuccess(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            if (commonBean.getStatus() == 1) {
+                                toast(commonBean.getMessage());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+
+                    }
+                });
+    }
 }

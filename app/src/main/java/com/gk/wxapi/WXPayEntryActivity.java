@@ -8,8 +8,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.CommonBean;
+import com.gk.beans.LoginBean;
 import com.gk.global.YXXApplication;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
 import com.gk.tools.ToastUtils;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
@@ -17,6 +22,10 @@ import com.tencent.mm.opensdk.modelbase.BaseResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * 微信支付回调Activity
@@ -72,9 +81,36 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                 }
             });
             builder.show();
+            LoginBean.getInstance().setVipLevel(LoginBean.getInstance().getVipLevelTmp());
+            LoginBean.getInstance().save();
+            tempOrderPaySuccess();
         } else {
             ToastUtils.toast(this, "微信支付失败");
             finish();
         }
+    }
+
+    private void tempOrderPaySuccess() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("orderNo", LoginBean.getInstance().getOrderNo());
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .tempOrderPaySuccess(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            if (commonBean.getStatus() == 1) {
+                                ToastUtils.toast(WXPayEntryActivity.this, commonBean.getMessage());
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+
+                    }
+                });
     }
 }

@@ -12,6 +12,7 @@ public class WeiXinPay{
     private String prepayid;//预支付id
     private String sign;//签名
     private String timestamp;
+    private String orderNo;//订单号
 
     public String getAppid() {
         return appid;
@@ -67,5 +68,13 @@ public class WeiXinPay{
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 }

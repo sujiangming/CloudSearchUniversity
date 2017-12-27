@@ -45,6 +45,9 @@ public class WishReportEnterActivity extends SjmBaseActivity {
             btnRg.setText("马上升级");
             tvYhLevelLow.setText("会员等级低，没有权限");
             btnZj.setText("马上升级");
+        } else if (vipLevel == 2) {
+            tvYhLevelLow.setText("会员等级低，没有权限");
+            btnZj.setText("马上升级");
         }
     }
 

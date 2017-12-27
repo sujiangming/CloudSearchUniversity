@@ -543,4 +543,14 @@ public interface IService {
     @POST("app/api/university/getUniversityInfoByName")
     Call<CommonBean> getUniversityInfoByName(@Field("data") String data);
 
+    /**
+     * 支付 app临时支付成功
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/order/tempOrderPaySuccess")
+    Call<CommonBean> tempOrderPaySuccess(@Field("data") String data);
+
 }

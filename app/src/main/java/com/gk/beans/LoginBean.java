@@ -88,6 +88,8 @@ public class LoginBean implements Serializable {
     private String weiXinUnionid;
     private String verifyCode;
     private String empty = null;
+    private int vipLevelTmp;//临时会员等级状态
+    private String orderNo;//临时保存订单等级；
 
     private static final long serialVersionUID = 1L;
     private volatile static LoginBean instance = null;//volatile关键字来保证其线程间的可见性
@@ -585,5 +587,21 @@ public class LoginBean implements Serializable {
 
     public void setVerifyCode(String verifyCode) {
         this.verifyCode = verifyCode;
+    }
+
+    public int getVipLevelTmp() {
+        return vipLevelTmp;
+    }
+
+    public void setVipLevelTmp(int vipLevelTmp) {
+        this.vipLevelTmp = vipLevelTmp;
+    }
+
+    public String getOrderNo() {
+        return orderNo;
+    }
+
+    public void setOrderNo(String orderNo) {
+        this.orderNo = orderNo;
     }
 }
