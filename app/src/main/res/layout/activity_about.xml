@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F0F4"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <com.gk.mvp.view.custom.TopBarView
@@ -24,8 +24,10 @@
             android:src="@drawable/about" />
 
         <TextView
+            android:id="@+id/tv_version"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_5_dp"
             android:gravity="center_horizontal"
             android:text="云寻校V1.0.0"
             android:textColor="@color/color808080"
