@@ -3,9 +3,11 @@ package com.gk.mvp.view.activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.tools.YxxUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -29,6 +31,8 @@ public class HelpCenterActivity extends SjmBaseActivity {
     LinearLayout llOfficeSite;
     @BindView(R.id.ll_web_chat_number)
     LinearLayout llWebChatNumber;
+    @BindView(R.id.tv_phone)
+    TextView tv_phone;
 
     @Override
     public int getResouceId() {
@@ -37,21 +41,23 @@ public class HelpCenterActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        setTopBar(topBar,"帮助中心",0);
+        setTopBar(topBar, "帮助中心", 0);
     }
 
-    @OnClick({R.id.ll_wish_report, R.id.ll_vip_open, R.id.ll_solve, R.id.ll_hot_line, R.id.ll_office_site, R.id.ll_web_chat_number})
+    @OnClick({R.id.ll_wish_report, R.id.ll_vip_open, R.id.ll_solve, R.id.ll_hot_line, R.id.ll_web_chat_number})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.ll_wish_report:
+                openNewActivity(OperationHelpActivity.class);
                 break;
             case R.id.ll_vip_open:
+                openNewActivity(VIPHelpActivity.class);
                 break;
             case R.id.ll_solve:
+                openNewActivity(QuestionHelpActivity.class);
                 break;
             case R.id.ll_hot_line:
-                break;
-            case R.id.ll_office_site:
+                YxxUtils.dialPhoneNumber(this, tv_phone.getText().toString());
                 break;
             case R.id.ll_web_chat_number:
                 break;

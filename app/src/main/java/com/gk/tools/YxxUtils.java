@@ -1,6 +1,8 @@
 package com.gk.tools;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
@@ -51,6 +53,14 @@ public class YxxUtils {
     public static void setViewData(TextView tv, String value) {
         if (value != null && !"".equals(value)) {
             tv.setText(value);
+        }
+    }
+
+    public static void dialPhoneNumber(Context context, String phoneNumber) {
+        Intent intent = new Intent(Intent.ACTION_DIAL);
+        intent.setData(Uri.parse("tel:" + phoneNumber));
+        if (intent.resolveActivity(context.getPackageManager()) != null) {
+            context.startActivity(intent);
         }
     }
 

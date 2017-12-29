@@ -216,6 +216,18 @@
             android:name=".mvp.view.activity.GkLibraryActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".mvp.view.activity.OperationHelpActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.QuestionHelpActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.VIPHelpActivity"
+            android:screenOrientation="portrait" />
+
         <!--微信-->
         <!--注册微信回调 WXEntryActivity -->
         <activity
