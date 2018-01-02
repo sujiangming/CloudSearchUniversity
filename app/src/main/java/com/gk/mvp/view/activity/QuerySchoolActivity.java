@@ -4,15 +4,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -66,9 +65,10 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     @BindView(R.id.btn_choose)
     Button btnChoose;
     @BindView(R.id.rl_choose)
-    RelativeLayout rlChoose;
+    LinearLayout rlChoose;
 
-    @OnClick({R.id.back_image, R.id.spinner1, R.id.spinner2, R.id.spinner3, R.id.spinner4, R.id.btn_choose})
+    @OnClick({R.id.back_image, R.id.spinner1, R.id.spinner2,
+            R.id.spinner3, R.id.spinner4, R.id.btn_choose, R.id.tv_bg_click})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.back_image:
@@ -106,7 +106,6 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 queryIndexList = gridViewChooseAdapter.getCheckedArray();
                 if (queryIndexList != null) {
                     for (int i = 0; i < queryIndexList.size(); i++) {
-                        Log.e("queryIndex:", queryIndexList.get(i));
                         gridViewChooseAdapter.getIsCheck().set(i, false);
                         if (i == queryIndexList.size() - 1) {
                             str += queryIndexList.get(i);
@@ -117,7 +116,6 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                         }
                     }
                 }
-                Log.e("str:", str);
                 if (!strName.equals(nullStr)) {
                     setEnumName(strName);
                 }
@@ -132,6 +130,9 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 } else {
                     invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
                 }
+                break;
+            case R.id.tv_bg_click:
+                rlChoose.setVisibility(View.GONE);
                 break;
         }
     }

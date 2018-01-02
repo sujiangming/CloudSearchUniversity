@@ -1,7 +1,6 @@
 package com.gk.mvp.view.adpater;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -112,16 +111,13 @@ public class GridViewChooseAdapter<T> extends JdryBaseAdapter {
         TextView textView = (TextView) view;
         isCheck.set(post, isCheck.get(post).booleanValue() == true ? false : true);
         if (isCheck.get(post)) {
-            textView.setBackgroundResource(R.color.color555555);
+            textView.setBackgroundResource(R.drawable.more_data_bg);
             textView.setTextColor(0xFFFFFFFF);
             checkedArray.add(textView.getHint().toString());
         } else {
             textView.setBackgroundResource(R.color.transparent);
             textView.setTextColor(0xFF353535);
             checkedArray.remove(textView.getHint().toString());
-        }
-        for (String str : checkedArray) {
-            Log.e("增加删除后:", str);
         }
         this.notifyDataSetChanged();
     }

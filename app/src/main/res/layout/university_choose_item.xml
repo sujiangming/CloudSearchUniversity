@@ -3,7 +3,7 @@
     android:id="@+id/tv_name"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="@dimen/space_12_dp"
+    android:padding="@dimen/space_10_dp"
     android:text="北京"
     android:textColor="@color/color353535"
     android:textSize="@dimen/font_14_sp" />

@@ -107,10 +107,10 @@
     </LinearLayout>
 
     <TextView
-        android:layout_below="@id/ll_choose"
         android:id="@+id/tv_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_1_px"
+        android:layout_below="@id/ll_choose"
         android:background="@color/color353535" />
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
@@ -131,7 +131,7 @@
         </ListView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/rl_choose"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -145,20 +145,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="#F0EFF3"
+            android:horizontalSpacing="@dimen/space_5_dp"
             android:numColumns="5"
-            android:paddingLeft="15dp"
-            android:paddingRight="15dp"
-            android:paddingTop="10dp"
-            android:scrollbars="vertical" />
+            android:paddingLeft="@dimen/space_10_dp"
+            android:paddingRight="@dimen/space_10_dp"
+            android:paddingTop="@dimen/space_10_dp"
+            android:scrollbars="vertical"
+            android:verticalSpacing="@dimen/space_5_dp" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/gv_channel"
             android:background="@color/colorF0EFF3"
             android:gravity="center_vertical"
-            android:paddingBottom="@dimen/space_20_dp"
-            android:paddingTop="@dimen/space_20_dp">
+            android:paddingBottom="@dimen/space_16_dp"
+            android:paddingTop="@dimen/space_16_dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -183,6 +184,13 @@
                 android:textColor="@android:color/white" />
         </RelativeLayout>
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/tv_bg_click"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@android:color/transparent" />
+
+    </LinearLayout>
 
 </RelativeLayout>
