@@ -88,10 +88,8 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                 toast("送花成功！");
                 break;
             case R.id.civ_shoucang:
-                if (heartTask != null) {
-                    showHeartLayout();
-                    heartTask.execute("执行……");
-                }
+                showHeartLayout();
+                new LongTimeTask().execute("执行……");
                 break;
             case R.id.tv_send:
                 if (TextUtils.isEmpty(et_reply.getText())) {
@@ -113,7 +111,6 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     private Random mRandom = new Random();
     private Timer mTimer = new Timer();
     private TimerTask timerHeartTask;
-    private LongTimeTask heartTask = new LongTimeTask();
 
     private List<OnLiveRoomInfo.FansSpeakBean> fanSpeakBeanList = new ArrayList<>();
     private CommonAdapter<OnLiveRoomInfo.FansSpeakBean> adapter;

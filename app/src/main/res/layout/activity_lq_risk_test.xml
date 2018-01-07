@@ -149,5 +149,5 @@
         android:background="@drawable/mbti_btn_bg3x"
         android:text="立即测试"
         android:textColor="@android:color/white"
-        android:textSize="@dimen/font_20_sp" />
+        android:textSize="@dimen/font_16_sp" />
 </LinearLayout>

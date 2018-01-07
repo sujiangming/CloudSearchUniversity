@@ -79,7 +79,7 @@ public class LqRiskActivity extends SjmBaseActivity {
             R.id.tv_level_2,
             R.id.ll_aim,
             R.id.btn_lq_risk_test,
-            R.id.ll_score,R.id.tv_wen_li_desc})
+            R.id.ll_score, R.id.tv_wen_li_desc})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_level_1:
@@ -157,6 +157,7 @@ public class LqRiskActivity extends SjmBaseActivity {
         tvLevel2.setTextColor(0xFF555555);
         faultLevel = 1;
         tv_test_desc.setText("目标高校");
+        tvStudentMb.setText("");
         tvStudentMb.setHint("请选择目标高校");
     }
 
@@ -168,6 +169,7 @@ public class LqRiskActivity extends SjmBaseActivity {
         tvLevel2.setTextColor(0xFFFFFFFF);
         faultLevel = 2;
         tv_test_desc.setText("目标专业");
+        tvStudentMb.setText("");
         tvStudentMb.setHint("请选择目标专业");
     }
 

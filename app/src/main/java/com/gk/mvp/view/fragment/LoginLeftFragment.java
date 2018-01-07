@@ -24,6 +24,7 @@ import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.ForgetPasswordActivity;
 import com.gk.mvp.view.activity.MainActivity;
+import com.gk.mvp.view.activity.UserAgreementActivity;
 import com.gk.tools.ToastUtils;
 
 import java.util.List;
@@ -48,9 +49,16 @@ public class LoginLeftFragment extends SjmBaseFragment {
     @BindView(R.id.tv_ps)
     TextView tvPs;
 
-    @OnClick(R.id.rtv_weixin_login)
-    public void weixinLogin() {
-        wxLogin();
+    @OnClick({R.id.rtv_weixin_login, R.id.tv_ps})
+    public void weixinLogin(View view) {
+        switch (view.getId()) {
+            case R.id.rtv_weixin_login:
+                wxLogin();
+                break;
+            case R.id.tv_ps:
+                openNewActivity(UserAgreementActivity.class);
+                break;
+        }
     }
 
     public void wxLogin() {
