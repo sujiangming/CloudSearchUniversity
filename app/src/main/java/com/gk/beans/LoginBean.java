@@ -129,6 +129,7 @@ public class LoginBean implements Serializable {
         this.setBanned(loginBean.isBanned());
         this.setBirthday(loginBean.getBirthday());
         this.setClassGrade(loginBean.getClassGrade());
+        this.setCname(loginBean.getCname());
         this.setCompanyId(loginBean.getCompanyId());
         this.setCreateDate(loginBean.getCreateDate());
         this.setDepts(loginBean.getDepts());
