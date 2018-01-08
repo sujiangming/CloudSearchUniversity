@@ -1,6 +1,7 @@
 package com.gk.mvp.view.activity;
 
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -46,6 +47,10 @@ public class ForgetPasswordActivity extends SjmBaseActivity {
     private String verifyCode;
     private String pageFlag;
 
+    private MyCountDownTimer countDownTimerUtils;
+    private final long TIME = 60 * 1000L;
+    private final long INTERVAL = 1000L;
+
     @Override
     public int getResouceId() {
         return R.layout.activity_forget_pwd;
@@ -75,6 +80,7 @@ public class ForgetPasswordActivity extends SjmBaseActivity {
                 }
                 userName = etUserPhone.getText().toString();
                 getVerifyCode();
+                startTimer();
                 break;
             case R.id.tv_login:
                 login();
@@ -202,4 +208,52 @@ public class ForgetPasswordActivity extends SjmBaseActivity {
                 });
     }
 
+    public class MyCountDownTimer extends CountDownTimer {
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            tvCode.setEnabled(false);
+            tvCode.setText("已发送(" + millisUntilFinished / 1000 + " s)");
+        }
+
+        @Override
+        public void onFinish() {
+            resetButton();
+            cancelTimer();
+        }
+    }
+
+    /**
+     * 开始倒计时
+     */
+    private void startTimer() {
+        if (countDownTimerUtils == null) {
+            countDownTimerUtils = new MyCountDownTimer(TIME, INTERVAL);
+        }
+        countDownTimerUtils.start();
+    }
+
+    /**
+     * 取消倒计时
+     */
+    private void cancelTimer() {
+        if (countDownTimerUtils != null) {
+            countDownTimerUtils.cancel();
+            countDownTimerUtils = null;
+        }
+    }
+
+    private void resetButton() {
+        tvCode.setEnabled(true);
+        tvCode.setText("获取验证码");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        cancelTimer();
+    }
 }

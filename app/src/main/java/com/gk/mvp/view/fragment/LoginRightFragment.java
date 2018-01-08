@@ -54,8 +54,6 @@ public class LoginRightFragment extends SjmBaseFragment {
     private String userName;
     private String password;
     private SaltBean saltBean;
-    private String uninID = "oilIa1bJEIEEp3k9gXZHVZnFU06Y";
-    private String openId = "oroNF01XOGhYlN0_sY1T3-VIgDQg";
 
     @Override
     public int getResourceId() {

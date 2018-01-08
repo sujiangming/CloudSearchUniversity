@@ -235,7 +235,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
         @Override
         public void onTick(long millisUntilFinished) {
             button.setEnabled(false);
-            button.setText("已发送(" + millisUntilFinished / 1000 + ")");
+            button.setText("已发送(" + millisUntilFinished / 1000 + " s)");
         }
 
         @Override
