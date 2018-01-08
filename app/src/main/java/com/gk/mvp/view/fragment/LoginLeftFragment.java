@@ -2,6 +2,7 @@ package com.gk.mvp.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.Html;
@@ -26,7 +27,6 @@ import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.ForgetPasswordActivity;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.mvp.view.activity.UserAgreementActivity;
-import com.gk.tools.CountDownTimerUtils;
 import com.gk.tools.ToastUtils;
 
 import java.util.List;
@@ -73,7 +73,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
     private String userName;
     private String password;
     private VerifyCodeBean verifyCodeBean;
-    private CountDownTimerUtils countDownTimerUtils;
+    private MyCountDownTimer countDownTimerUtils;
     private final long TIME = 60 * 1000L;
     private final long INTERVAL = 1000L;
 
@@ -189,12 +189,12 @@ public class LoginLeftFragment extends SjmBaseFragment {
 
     @Override
     public <T> void fillWithData(T t, int order) {
+        hideProgress();
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 CommonBean commonBean = (CommonBean) t;
                 verifyCodeBean = JSON.parseObject(commonBean.getData().toString(), VerifyCodeBean.class);
                 ToastUtils.toast(getContext(), "验证码已发至您的手机上");
-                cancelTimer();
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 String data = (String) t;
@@ -219,7 +219,6 @@ public class LoginLeftFragment extends SjmBaseFragment {
                 closeActivity();
                 break;
         }
-        hideProgress();
     }
 
     @Override
@@ -228,12 +227,30 @@ public class LoginLeftFragment extends SjmBaseFragment {
         hideProgress();
     }
 
+    public class MyCountDownTimer extends CountDownTimer {
+        public MyCountDownTimer(long millisInFuture, long countDownInterval) {
+            super(millisInFuture, countDownInterval);
+        }
+
+        @Override
+        public void onTick(long millisUntilFinished) {
+            button.setEnabled(false);
+            button.setText("已发送(" + millisUntilFinished / 1000 + ")");
+        }
+
+        @Override
+        public void onFinish() {
+            resetButton();
+            cancelTimer();
+        }
+    }
+
     /**
      * 开始倒计时
      */
     private void startTimer() {
         if (countDownTimerUtils == null) {
-            countDownTimerUtils = new CountDownTimerUtils(button, TIME, INTERVAL);
+            countDownTimerUtils = new MyCountDownTimer(TIME, INTERVAL);
         }
         countDownTimerUtils.start();
     }
@@ -247,6 +264,11 @@ public class LoginLeftFragment extends SjmBaseFragment {
             countDownTimerUtils.cancel();
             countDownTimerUtils = null;
         }
+    }
+
+    private void resetButton() {
+        button.setEnabled(true);
+        button.setText("获取验证码");
     }
 
     @Override
