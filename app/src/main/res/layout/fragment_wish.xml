@@ -75,6 +75,7 @@
                 android:background="@color/colorc8c7cc" />
 
             <LinearLayout
+                android:id="@+id/ll_rank"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
                 android:background="@drawable/menu_btn_press"
@@ -110,6 +111,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_wenli"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
                 android:layout_marginTop="@dimen/space_24_dp"
@@ -152,6 +154,7 @@
                 android:background="@color/colorc8c7cc" />
 
             <LinearLayout
+                android:id="@+id/ll_yixiang"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
                 android:background="@drawable/menu_btn_press"
@@ -193,6 +196,7 @@
                 android:background="@color/colorc8c7cc" />
 
             <LinearLayout
+                android:id="@+id/ll_yixiang_provinces"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
                 android:background="@drawable/menu_btn_press"
@@ -234,6 +238,7 @@
                 android:background="@color/colorc8c7cc" />
 
             <LinearLayout
+                android:id="@+id/ll_heart_test"
                 android:layout_width="match_parent"
                 android:layout_height="49dp"
                 android:background="@drawable/menu_btn_press"

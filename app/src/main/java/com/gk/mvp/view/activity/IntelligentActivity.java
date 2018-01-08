@@ -62,8 +62,9 @@ public class IntelligentActivity extends SjmBaseActivity {
         loginBean = LoginBean.getInstance();
         String address = loginBean.getAddress();
         String wenli = loginBean.getWlDesc();
+        String score = loginBean.getScore();
         tvSourceAddress.setText("" + (address == null ? "----" : address) + "  " + (wenli == null ? "----" : wenli));
-        tvStudentScore.setText("" + loginBean.getScore() + "分");
+        tvStudentScore.setText("" + (score == null ? "----" : score) + "分");
         tvSWantCity.setText("" + (loginBean.getWishProvince() == null ? "未知" : loginBean.getWishProvince()));
         tvZy.setText("" + (loginBean.getWishUniversity() == null ? "未知" : loginBean.getWishUniversity()));
         if (vipLevel <= 1) {
@@ -71,6 +72,16 @@ public class IntelligentActivity extends SjmBaseActivity {
             btn1.setText("马上升级");
             tvYhLevelLow.setText("会员等级低，没有权限");
             btn2.setText("马上升级");
+        }else if(vipLevel == 2){ //fix me
+            tvWishReport.setText("未知");
+            btn1.setText("立即生成");
+            tvYhLevelLow.setText("会员等级低，没有权限");
+            btn2.setText("马上升级");
+        }else{
+            tvWishReport.setText("未知");
+            btn1.setText("立即生成");
+            tvYhLevelLow.setText("未知");
+            btn2.setText("立即生成");
         }
     }
 

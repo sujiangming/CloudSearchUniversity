@@ -139,45 +139,52 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
-    @OnClick({R.id.tv_score, R.id.tv_rank, R.id.tv_wenli, R.id.tv_yixiang, R.id.tv_province, R.id.tv_status, R.id.rich_wish, R.id.rtv_zj
-            , R.id.tv_cancel_common, R.id.tv_submit_common, R.id.tv_cancel_university,
-            R.id.tv_submit_university, R.id.tv_cancel_province, R.id.tv_submit_province})
+    @OnClick({
+            R.id.ll_user_score,
+            R.id.ll_rank,
+            R.id.ll_wenli,
+            R.id.ll_yixiang,
+            R.id.ll_yixiang_provinces,
+            R.id.ll_heart_test,
+            R.id.rich_wish,
+            R.id.rtv_zj,
+            R.id.tv_cancel_common,
+            R.id.tv_submit_common,
+            R.id.tv_cancel_university,
+            R.id.tv_submit_university,
+            R.id.tv_cancel_province,
+            R.id.tv_submit_province})
     public void onViewClicked(View view) {
         switch (view.getId()) {
-            case R.id.tv_score:
+            case R.id.ll_user_score:
                 if (TextUtils.isEmpty(tvScore.getText())) {
-                    //showCommonTipeDialog(view, 1);
                     updateInfo(view, 1);
                 }
                 break;
-            case R.id.tv_rank:
+            case R.id.ll_rank:
                 if (TextUtils.isEmpty(tvRank.getText())) {
-                    //showCommonTipeDialog(view, 2);
                     updateInfo(view, 2);
                 }
                 break;
-            case R.id.tv_wenli:
+            case R.id.ll_wenli:
                 String value = tvWenli.getText().toString();
                 if (TextUtils.isEmpty(value)) {
-                    //showCommonTipeDialog(view, 3);
                     showWenLiDialog();
                 }
                 break;
-            case R.id.tv_yixiang:
+            case R.id.ll_yixiang:
                 if (TextUtils.isEmpty(tvYixiang.getText())) {
-                    //showCommonTipeDialog(null, 4);
                     requestCode = 4;
                     showEditDialogUniversity();
                     YxxUtils.showSoftInputFromWindow(et_school_5);
                 }
                 break;
-            case R.id.tv_province:
+            case R.id.ll_yixiang_provinces:
                 if (TextUtils.isEmpty(tvProvince.getText())) {
-                    //showCommonTipeDialog(null, 5);
                     showMultiChoiceDialog();
                 }
                 break;
-            case R.id.tv_status:
+            case R.id.ll_heart_test:
                 showXgTest();
                 break;
             case R.id.tv_cancel_common:
@@ -411,25 +418,30 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     }
 
     private void showUpgradeDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setIcon(android.R.drawable.ic_dialog_info);
-        builder.setTitle("温馨提示");
-        builder.setMessage("VIP会员才能使用，您想成为VIP会员吗？");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                openNewActivity(VIPActivity.class);
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        int vip = loginBean.getVipLevel();
+        if (vip <= 1) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setIcon(android.R.drawable.ic_dialog_info);
+            builder.setTitle("温馨提示");
+            builder.setMessage("VIP会员才能使用，您想成为VIP会员吗？");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    openNewActivity(VIPActivity.class);
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            openNewActivity(VIPActivity.class);
+        }
     }
 
 

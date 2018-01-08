@@ -8,6 +8,7 @@ import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -25,6 +26,7 @@ import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.ForgetPasswordActivity;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.mvp.view.activity.UserAgreementActivity;
+import com.gk.tools.CountDownTimerUtils;
 import com.gk.tools.ToastUtils;
 
 import java.util.List;
@@ -42,8 +44,8 @@ public class LoginLeftFragment extends SjmBaseFragment {
     EditText etUserPhone;
     @BindView(R.id.et_user_pwd)
     EditText etUserPwd;
-    @BindView(R.id.tv_code)
-    TextView tvCode;
+    @BindView(R.id.btn_code)
+    Button button;
     @BindView(R.id.tv_login)
     TextView tvLogin;
     @BindView(R.id.tv_ps)
@@ -71,6 +73,9 @@ public class LoginLeftFragment extends SjmBaseFragment {
     private String userName;
     private String password;
     private VerifyCodeBean verifyCodeBean;
+    private CountDownTimerUtils countDownTimerUtils;
+    private final long TIME = 60 * 1000L;
+    private final long INTERVAL = 1000L;
 
     @Override
     public int getResourceId() {
@@ -137,7 +142,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
         }
     }
 
-    @OnClick({R.id.tv_code, R.id.tv_login})
+    @OnClick({R.id.btn_code, R.id.tv_login})
     public void onViewClicked(View view) {
         userName = etUserPhone.getText().toString();
         if (userName.isEmpty()) {
@@ -147,13 +152,14 @@ public class LoginLeftFragment extends SjmBaseFragment {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", userName);
         switch (view.getId()) {
-            case R.id.tv_code:
+            case R.id.btn_code:
                 showProgress();
                 PresenterManager.getInstance()
                         .setmContext(getContext())
                         .setmIView(this)
                         .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVerityfyCode(jsonObject.toJSONString()))
                         .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+                startTimer();
                 break;
             case R.id.tv_login:
                 showProgress();
@@ -187,7 +193,8 @@ public class LoginLeftFragment extends SjmBaseFragment {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 CommonBean commonBean = (CommonBean) t;
                 verifyCodeBean = JSON.parseObject(commonBean.getData().toString(), VerifyCodeBean.class);
-                ToastUtils.toast(getContext(), "获取验证码成功~" + verifyCodeBean.getVerifyCode());
+                ToastUtils.toast(getContext(), "验证码已发至您的手机上");
+                cancelTimer();
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 String data = (String) t;
@@ -219,5 +226,32 @@ public class LoginLeftFragment extends SjmBaseFragment {
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
+    }
+
+    /**
+     * 开始倒计时
+     */
+    private void startTimer() {
+        if (countDownTimerUtils == null) {
+            countDownTimerUtils = new CountDownTimerUtils(button, TIME, INTERVAL);
+        }
+        countDownTimerUtils.start();
+    }
+
+
+    /**
+     * 取消倒计时
+     */
+    private void cancelTimer() {
+        if (countDownTimerUtils != null) {
+            countDownTimerUtils.cancel();
+            countDownTimerUtils = null;
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        cancelTimer();
     }
 }

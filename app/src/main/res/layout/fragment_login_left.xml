@@ -16,8 +16,8 @@
         android:paddingRight="@dimen/space_12_dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/space_20_dp"
+            android:layout_height="@dimen/space_25_dp"
             android:src="@drawable/phone3x" />
 
         <EditText
@@ -56,8 +56,8 @@
         android:paddingRight="@dimen/space_12_dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/space_20_dp"
+            android:layout_height="@dimen/space_25_dp"
             android:src="@drawable/pwd3x" />
 
         <EditText
@@ -69,7 +69,7 @@
             android:background="@null"
             android:ellipsize="end"
             android:gravity="center_vertical"
-            android:hint="请输入密码"
+            android:hint="请输入验证码"
             android:inputType="number"
             android:maxLines="1"
             android:paddingLeft="@dimen/space_20_dp"
@@ -78,12 +78,11 @@
             android:textCursorDrawable="@null"
             android:textSize="@dimen/font_14_sp" />
 
-        <TextView
-            android:id="@+id/tv_code"
+        <Button
+            android:id="@+id/btn_code"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:background="@drawable/login_btn_press"
-            android:gravity="center"
+            android:background="@null"
             android:text="获取验证码"
             android:textColor="@color/color4c90bf"
             android:textSize="@dimen/font_14_sp" />

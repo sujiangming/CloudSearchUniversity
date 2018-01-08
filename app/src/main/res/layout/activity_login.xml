@@ -21,6 +21,7 @@
         android:layout_height="@dimen/space_44_dp"
         android:paddingLeft="@dimen/space_12_dp"
         android:paddingRight="@dimen/space_12_dp"
+        android:layout_marginTop="45dp"
         app:tabIndicatorColor="@color/color4c90bf"
         app:tabMode="fixed"
         app:tabSelectedTextColor="@color/color4c90bf"
@@ -41,7 +42,7 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginTop="40dp"
         android:layout_weight="1"
         android:background="@color/colorBackground" />
 </LinearLayout>

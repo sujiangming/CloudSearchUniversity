@@ -82,7 +82,6 @@ public class QWActivity extends SjmBaseActivity {
         lvQw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toast("当前点击的是：" + i);
                 Intent intent = new Intent();
                 intent.putExtra("bean", list.get(i));
                 openNewActivityByIntent(QWDetailActivity.class, intent);
