@@ -21,7 +21,6 @@ import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 /**
  * Created by JDRY-SJM on 2017/11/3.
@@ -39,20 +38,14 @@ public class WishReportEnterActivity extends SjmBaseActivity {
     @BindView(R.id.btn_zj)
     Button btnZj;
 
-    @OnClick({R.id.btn_rg, R.id.btn_zj})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_rg:
-                vipAuth(1);
-                break;
-            case R.id.btn_zj:
-                vipAuth(2);
-                break;
-        }
-    }
-
     private int vipLevel = 0;
     private JSONObject jsonObject = new JSONObject();
+    private String tipUpdate = "立即升级";
+    private String lowLevel = "会员等级低，不能生成";
+    private String noGenerate = "未生成";
+    private String generated = "已生成";
+    private String rightNowGen = "立即生成";
+    private String rightNowSee = "立即查看";
 
     @Override
     public int getResouceId() {
@@ -74,16 +67,145 @@ public class WishReportEnterActivity extends SjmBaseActivity {
     private void initData() {
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         generateReportStatus(YXXConstants.INVOKE_API_DEFAULT_TIME);
-       // generateReportStatus(YXXConstants.INVOKE_API_SECOND_TIME);
+        generateReportStatus(YXXConstants.INVOKE_API_SECOND_TIME);
     }
 
-    private void vipAuth(int type) {
+    private void generateReportStatus(int time) {
+        jsonObject.put("reportType", time);
+        PresenterManager.getInstance().setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).generateWishReport(jsonObject.toJSONString()))
+                .request(time);
+    }
+
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        hideProgress();
+        CommonBean commonBean = (CommonBean) t;
+        WishResultBean wishResultBean = JSON.parseObject(commonBean.getData().toString(), WishResultBean.class);
+        String status = wishResultBean.getReportStatus();
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                showDifferentMsg(status, order);
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                showDifferentMsg(status, order);
+                break;
+        }
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+        toast((String) t);
+        hideProgress();
+    }
+
+    private void showDifferentMsg(String status, int flag) {
+        if (status == null || "".equals(status)) {
+            normalVip();
+            return;
+        }
+        vipMsgRg(status, flag);
+    }
+
+    private void normalVip() {
         if (vipLevel <= 1) {
-            showDialog();
-        } else {//银卡和金卡用户才有这个权限，此刻需要进行是否已经生成报告来判断是否应该生成
-            Intent intent = new Intent();
-            intent.putExtra("type", type);
-            openNewActivityByIntent(WishReportResultActivity.class, intent);
+            tvWishReport.setText(lowLevel);
+            btnRg.setText(tipUpdate);
+            tvYhLevelLow.setText(lowLevel);
+            btnZj.setText(tipUpdate);
+        } else if (vipLevel == 2) {
+            tvYhLevelLow.setText(lowLevel);
+            btnZj.setText(tipUpdate);
+        }
+    }
+
+    private void vipMsgRg(String status, int flag) {
+        if (vipLevel <= 1) {
+            tvWishReport.setText(lowLevel);
+            btnRg.setText(tipUpdate);
+            tvYhLevelLow.setText(lowLevel);
+            btnZj.setText(tipUpdate);
+
+            btnRg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDialog();
+                }
+            });
+            btnZj.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDialog();
+                }
+            });
+            return;
+        }
+        if (vipLevel == 2) {
+            if (flag == YXXConstants.INVOKE_API_DEFAULT_TIME) {
+                if (status.equals("1")) {
+                    tvWishReport.setText(noGenerate);
+                    btnRg.setText(rightNowGen);
+                } else {
+                    tvWishReport.setText(generated);
+                    btnRg.setText(rightNowSee);
+                }
+                btnRg.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Intent intent = new Intent();
+                        intent.putExtra("type", 1);
+                        openNewActivityByIntent(WishReportResultActivity.class, intent);
+                    }
+                });
+            }
+            tvYhLevelLow.setText(lowLevel);
+            btnZj.setText(tipUpdate);
+            btnZj.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showDialog();
+                }
+            });
+            return;
+        }
+
+        if (vipLevel == 3) {
+            if (flag == YXXConstants.INVOKE_API_DEFAULT_TIME) {
+                if (status.equals("1")) {
+                    tvWishReport.setText(noGenerate);
+                    btnRg.setText(rightNowGen);
+                } else {
+                    tvWishReport.setText(generated);
+                    btnRg.setText(rightNowSee);
+                }
+            } else {
+                if (status.equals("1")) {
+                    tvYhLevelLow.setText(noGenerate);
+                    btnZj.setText(rightNowGen);
+                } else {
+                    tvYhLevelLow.setText(generated);
+                    btnZj.setText(rightNowSee);
+                }
+            }
+
+            btnRg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.putExtra("type", 1);
+                    openNewActivityByIntent(WishReportResultActivity.class, intent);
+                }
+            });
+
+            btnZj.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.putExtra("type", 2);
+                    openNewActivityByIntent(WishReportResultActivity.class, intent);
+                }
+            });
+            return;
         }
     }
 
@@ -106,94 +228,5 @@ public class WishReportEnterActivity extends SjmBaseActivity {
         });
         AlertDialog dialog = builder.create();
         dialog.show();
-    }
-
-    private void generateReportStatus(int time) {
-        jsonObject.put("reportType", time);
-        PresenterManager.getInstance().setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).generateWishReport(jsonObject.toJSONString()))
-                .request(time);
-    }
-
-    @Override
-    public <T> void fillWithData(T t, int order) {
-        hideProgress();
-        CommonBean commonBean = (CommonBean) t;
-        WishResultBean wishResultBean = JSON.parseObject(commonBean.getData().toString(), WishResultBean.class);
-        String status = wishResultBean.getReportStatus();
-        switch (order) {
-            case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                showDifferentMsg(status);
-                break;
-            case YXXConstants.INVOKE_API_SECOND_TIME:
-                showDifferentMsg(status);
-                break;
-        }
-    }
-
-    @Override
-    public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
-        hideProgress();
-    }
-
-    private void showDifferentMsg(String status) {
-        if (status == null || "".equals(status)) {
-            normalVip();
-            return;
-        }
-        vipMsgRg(status);
-    }
-
-    private void normalVip() {
-        if (vipLevel <= 1) {
-            tvWishReport.setText("会员等级低，没有权限");
-            btnRg.setText("马上升级");
-            tvYhLevelLow.setText("会员等级低，没有权限");
-            btnZj.setText("马上升级");
-        } else if (vipLevel == 2) {
-            tvYhLevelLow.setText("会员等级低，没有权限");
-            btnZj.setText("马上升级");
-        }
-    }
-
-    private void vipMsgRg(String status) {
-        if (vipLevel <= 1) {
-            tvWishReport.setText("会员等级低，没有权限");
-            btnRg.setText("马上升级");
-            tvYhLevelLow.setText("会员等级低，没有权限");
-            btnZj.setText("马上升级");
-            return;
-        }
-        if (vipLevel == 2) {
-            if (status.equals("1")) {
-                tvWishReport.setText("未生成");
-                btnRg.setText("立即生成");
-            } else {
-                tvWishReport.setText("已生成");
-                btnRg.setText("立即查看");
-            }
-            tvYhLevelLow.setText("会员等级低，没有权限");
-            btnZj.setText("马上升级");
-            return;
-        }
-
-        if (vipLevel == 3) {
-            if (status.equals("1")) {
-                tvWishReport.setText("未生成");
-                btnRg.setText("立即生成");
-
-                tvYhLevelLow.setText("未生成");
-                btnZj.setText("立即生成");
-
-            } else {
-                tvWishReport.setText("已生成");
-                btnRg.setText("立即查看");
-
-                tvYhLevelLow.setText("已生成");
-                btnZj.setText("立即查看");
-            }
-            return;
-        }
     }
 }

@@ -34,6 +34,7 @@ import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.YxxUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -406,7 +407,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
             presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
                     .request(YXXConstants.INVOKE_API_SECOND_TIME);
         } else {
-            jsonObject.put("address", value);
+            jsonObject.put("address", YxxUtils.URLEncode(imagePath));
             presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
                     .request(YXXConstants.INVOKE_API_THREE_TIME);
         }
@@ -429,7 +430,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 mDialog.dismiss();
                 break;
             case YXXConstants.INVOKE_API_THREE_TIME:
-                LoginBean.getInstance().setWishProvince(yourChoicesName.get(0)).save();
+                LoginBean.getInstance().setAddress(yourChoicesName.get(0)).save();
                 tvStudentSource.setText(yourChoicesName.get(0));
                 hideEditDialogProvince();
                 break;

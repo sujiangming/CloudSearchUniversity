@@ -60,7 +60,7 @@
                     android:layout_marginLeft="@dimen/space_10_dp"
                     android:layout_marginTop="@dimen/space_5_dp"
                     android:layout_toRightOf="@id/tv_wish_desc"
-                    android:text="不能生成"
+                    android:text="未生成"
                     android:textColor="#ff0000"
                     android:textSize="@dimen/font_14_sp" />
 

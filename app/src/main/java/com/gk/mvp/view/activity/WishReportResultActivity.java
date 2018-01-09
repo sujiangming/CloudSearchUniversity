@@ -96,12 +96,12 @@ public class WishReportResultActivity extends SjmBaseActivity {
     }
 
     private void initData(WishResultBean wishResultBean) {
-        tvStudentName.setText("姓名：   " + (wishResultBean.getCname() == null ? "您还未设置名称" : wishResultBean.getCname()));
-        tvStudentAddress.setText("生源地：  " + wishResultBean.getBirthPlace());
+        tvStudentName.setText("姓名：   " + (wishResultBean.getCname() == null ? "未设置名称" : wishResultBean.getCname()));
+        tvStudentAddress.setText("生源地：  " + (wishResultBean.getBirthPlace() == null ? "----" : wishResultBean.getBirthPlace()));
         tvStudentScoreAndRank.setText("成绩：  " + wishResultBean.getScoreRanking());
         tvWenLiKe.setText("文理科：  " + wishResultBean.getSubjectName());
-        tvWishProvince.setText("意向省市：  " + wishResultBean.getIntentArea());
-        tvWishZy.setText("意向专业：  " + wishResultBean.getIntentMajors());
+        tvWishProvince.setText("意向省市：  " + (wishResultBean.getIntentArea() == null ? "----" : wishResultBean.getIntentArea()));
+        tvWishZy.setText("意向专业：  " + (wishResultBean.getIntentMajors() == null ? "----" : wishResultBean.getIntentMajors()));
         tvMindTestResult.setText(wishResultBean.getHeartTest());
         initFirstBatch(wishResultBean.getFirstBatch());
         initSecondBatch(wishResultBean.getSecondBatch());
