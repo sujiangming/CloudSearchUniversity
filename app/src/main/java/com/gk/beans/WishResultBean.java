@@ -26,9 +26,18 @@ public class WishResultBean {
     private String intentArea;
     private String intentMajors;
     private String scoreRanking;
+    private String reportStatus;
     private String subjectName;
     private List<FirstBatchBean> firstBatch;
     private List<SecondBatchBean> secondBatch;
+
+    public String getReportStatus() {
+        return reportStatus;
+    }
+
+    public void setReportStatus(String reportStatus) {
+        this.reportStatus = reportStatus;
+    }
 
     public String getBirthPlace() {
         return birthPlace;

@@ -66,7 +66,7 @@
                     android:text="985"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/font_12_sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_school_mark_1"
@@ -82,7 +82,7 @@
                     android:text="211"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/font_12_sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
 
                 <TextView
                     android:id="@+id/tv_school_mark_2"
@@ -98,7 +98,7 @@
                     android:text="双一流"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/font_12_sp"
-                    android:visibility="visible" />
+                    android:visibility="gone" />
             </LinearLayout>
 
             <com.gk.mvp.view.custom.RichText

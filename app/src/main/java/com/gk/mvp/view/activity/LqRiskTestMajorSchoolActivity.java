@@ -10,13 +10,15 @@ import android.widget.ListView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
-import com.gk.beans.QuerySchoolBean;
+import com.gk.beans.CommonBean;
+import com.gk.beans.QuerySchoolByMajorBean;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
@@ -38,11 +40,8 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
     @BindView(R.id.smart_rf_query_school)
     SmartRefreshLayout smartRfQuerySchool;
 
-    private List<QuerySchoolBean.DataBean> schoolBeanList = new ArrayList<>();
+    private List<QuerySchoolByMajorBean> schoolBeanList = new ArrayList<>();
     private JSONObject jsonObject = new JSONObject();
-    private int mPage = 0;
-    private boolean isLoadMore = false;
-    private String nullString = "";
     private GlideImageLoader imageLoader = new GlideImageLoader();
     private String majorName = null;
 
@@ -54,78 +53,48 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "请选择学校", 0);
+        initSmartRefreshLayout(smartRfQuerySchool, false);
         majorName = getIntent().getStringExtra("major");
-        initSmartRefreshLayout(smartRfQuerySchool, true);
-        invoke(nullString, nullString, nullString, nullString, nullString);
-    }
-
-    private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
-        jsonObject.put("page", mPage);
-        jsonObject.put("schoolArea", schoolArea);//学校地区
-        jsonObject.put("schoolCategory", schoolCategory);//学校类别
-        jsonObject.put("schoolType", schoolType);//学校类型（1本科、2专业）
-        jsonObject.put("tese", tese);//特色
-        jsonObject.put("schoolName", schoolName);//学校名称
-        PresenterManager.getInstance()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance()
-                        .createReq(IService.class).getUniversityList(jsonObject.toJSONString()))
-                .requestForResponseBody(YXXConstants.INVOKE_API_DEFAULT_TIME);
+        invoke();
     }
 
     @Override
     public void refresh() {
-        mPage = 0;
-        isLoadMore = false;
-        invoke(nullString, nullString, nullString, nullString, nullString);
-
+        invoke();
     }
 
-    @Override
-    public void loadMore() {
-        mPage++;
-        isLoadMore = true;
-        invoke(nullString, nullString, nullString, nullString, nullString);
+    private void invoke() {
+        jsonObject.put("majorName", YxxUtils.URLEncode(majorName));
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance()
+                        .createReq(IService.class).getUniversityByMajor(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
-        stopLayoutRefreshByTag(isLoadMore);
-        String data = (String) t;
-        if (data == null || nullString.equals(data)) {
-            toast("没有相关数据");
+        stopRefreshLayout();
+        CommonBean commonBean = (CommonBean) t;
+        schoolBeanList = JSON.parseArray(commonBean.getData().toString(), QuerySchoolByMajorBean.class);
+        if (schoolBeanList.size() == 0) {
             return;
         }
-        QuerySchoolBean querySchoolBean = JSON.parseObject(data, QuerySchoolBean.class);
-        if (mPage == 0 && !isLoadMore) {
-            schoolBeanList = querySchoolBean.getData();
-            initListView();
-            return;
-        }
-        if (isLoadMore) {
-            List<QuerySchoolBean.DataBean> dataBeans = querySchoolBean.getData();
-            if (data == null) {
-                toast("没有更多数据了");
-                return;
-            }
-            schoolBeanList.addAll(dataBeans);
-            initListView();
-            lvQuerySchool.smoothScrollByOffset(lvQuerySchool.getHeight());
-        }
+        initListView();
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
-        stopLayoutRefreshByTag(isLoadMore);
+        stopRefreshLayout();
     }
 
     private void initListView() {
-        lvQuerySchool.setAdapter(new CommonAdapter<QuerySchoolBean.DataBean>(this, R.layout.risk_major_query_item, schoolBeanList) {
+        lvQuerySchool.setAdapter(new CommonAdapter<QuerySchoolByMajorBean>(this, R.layout.risk_major_query_item, schoolBeanList) {
             @Override
-            protected void convert(ViewHolder viewHolder, QuerySchoolBean.DataBean item, int position) {
+            protected void convert(ViewHolder viewHolder, QuerySchoolByMajorBean item, int position) {
                 String schoolName = item.getSchoolName();
                 if (schoolName != null && !"".equals(schoolName)) {
                     viewHolder.setText(R.id.tv_university_name, schoolName);
@@ -134,15 +103,15 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
                     viewHolder.setText(R.id.tv_major_name, majorName);
                 }
 
-                imageLoader.displayImage(LqRiskTestMajorSchoolActivity.this, item.getSchoolLogo(),
-                        (ImageView) viewHolder.getView(R.id.iv_logo));
+                imageLoader.displayByImgRes(LqRiskTestMajorSchoolActivity.this, item.getSchoolLogo(),
+                        (ImageView) viewHolder.getView(R.id.iv_logo), R.drawable.gaoxiaozhanweitu);
             }
         });
         lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
-                intent.putExtra("schoolName", schoolBeanList.get(i).getSchoolName() + "+" + majorName);
+                intent.putExtra("schoolName", majorName);
                 LqRiskTestMajorSchoolActivity.this.setResult(119, intent);
                 closeActivity(LqRiskTestMajorSchoolActivity.this);
             }

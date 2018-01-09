@@ -13,7 +13,7 @@ import com.gk.mvp.view.activity.MultiItemRvActivity;
 import com.gk.mvp.view.activity.PersonInfoActivity;
 import com.gk.mvp.view.activity.SetActivity;
 import com.gk.mvp.view.activity.VIPActivity;
-import com.gk.mvp.view.activity.WishReportActivity;
+import com.gk.mvp.view.activity.WishReportEnterActivity;
 import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.tools.GlideImageLoader;
 
@@ -64,7 +64,7 @@ public class UserFragment extends SjmBaseFragment {
 
     private void initData() {
         LoginBean loginBean = LoginBean.getInstance();
-        tvUserName.setText(loginBean.getCname() == null ? loginBean.getUsername() : loginBean.getCname());
+        tvUserName.setText(loginBean.getNickName() == null ? loginBean.getUsername() : loginBean.getNickName());
         ivLevel.setImageResource(loginBean.getLevelImage());
         setViewData(tvUserScore, loginBean.getScore());
     }
@@ -82,7 +82,7 @@ public class UserFragment extends SjmBaseFragment {
                 openNewActivity(PersonInfoActivity.class);
                 break;
             case R.id.ll_wish_report:
-                openNewActivity(WishReportActivity.class);
+                openNewActivity(WishReportEnterActivity.class);
                 break;
             case R.id.ll_vip_choose:
                 Intent intent = new Intent();

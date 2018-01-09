@@ -53,6 +53,7 @@ public class WishReportResultActivity extends SjmBaseActivity {
     LinearLayout llReportContainer;
 
     private String[] orderIndex = {"①  ", "②  ", "③  ", "④  ", "⑤  ", "⑥  ", "⑦  ", "⑧  ", "⑨  ", "⑩  "};
+    private int type = 0;
 
     @Override
     public int getResouceId() {
@@ -62,20 +63,15 @@ public class WishReportResultActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "我的志愿报告", 0);
+        type = getIntent().getIntExtra("type", 0);
         httpRequest();
     }
 
     private void httpRequest() {
         showProgress();
         JSONObject jsonObject = new JSONObject();
-        LoginBean loginBean = LoginBean.getInstance();
-        jsonObject.put("score", loginBean.getScore());//必传
-        jsonObject.put("ranking", loginBean.getRanking());//必传
-        jsonObject.put("subjectName", loginBean.getSubjectType());
-        jsonObject.put("birthPlace", loginBean.getAddress());
-        jsonObject.put("intentSch", loginBean.getWishUniversity());//选传 意向高校(多个逗号隔开)
-        jsonObject.put("intentArea", loginBean.getWishProvince());//(选填):意向省份(多个逗号隔开)
-        jsonObject.put("heartTest", loginBean.getHeartTest());//(选填):心理测试记过
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("reportType", type);
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)

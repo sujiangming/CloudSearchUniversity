@@ -36,6 +36,7 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tv_vip"
                 android:layout_width="100dp"
                 android:layout_height="@dimen/space_40_dp"
                 android:background="@drawable/shool_mark"
@@ -106,7 +107,8 @@
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:gravity="center"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/space_16_dp">
 
             <include
                 android:id="@+id/expand_text_2"

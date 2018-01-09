@@ -42,24 +42,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="@string/lu_type"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/font_14_sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="@string/pi_ci"
-            android:textColor="@color/colorWhite"
-            android:textSize="@dimen/font_14_sp" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
             android:text="@string/lu_year"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/font_14_sp" />
@@ -69,7 +51,25 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:text="@string/lu_type"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_14_sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
             android:text="@string/zs_number"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_14_sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/pi_ci"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/font_14_sp" />
 

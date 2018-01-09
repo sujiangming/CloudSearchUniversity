@@ -124,9 +124,9 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 } else if (type == 2) {
                     invoke(nullStr, str, nullStr, nullStr, nullStr);
                 } else if (type == 3) {
-                    invoke(nullStr, nullStr, str, nullStr, nullStr);
-                } else if (type == 4) {
                     invoke(nullStr, nullStr, nullStr, str, nullStr);
+                } else if (type == 4) {
+                    invoke(nullStr, nullStr, nullStr, nullStr, str);
                 } else {
                     invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
                 }
@@ -319,7 +319,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 viewHolder.setText(R.id.tv_school_mark_1, "1".equals(isToo) ? "211" : "非211");
                 viewHolder.setText(R.id.tv_school_mark_2, isDoubleTop.equals("1") ? "双一流" : "非双一流");
                 ImageView imageView = viewHolder.getView(R.id.iv_query_item);
-                glideImageLoader.displayImage(QuerySchoolActivity.this, item.getSchoolLogo(), imageView);
+                glideImageLoader.displayByImgRes(QuerySchoolActivity.this, item.getSchoolLogo(), imageView, R.drawable.gaoxiaozhanweitu);
                 viewHolder.setText(R.id.tv_school_name, item.getSchoolName());
                 viewHolder.setText(R.id.tv_school_type, "1".equals(item.getSchoolType()) ? "本科" : "专科");
                 viewHolder.setText(R.id.tv_school_level, "1".equals(item.getSchoolCategory()) ? "综合类" : "教育类");
@@ -330,7 +330,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
-                intent.putExtra("uniName", schoolBeanList.get(i).getSchoolName());
+                intent.putExtra("uniName", schoolBeanList.get(i));
                 openNewActivityByIntent(SchoolDetailActivity.class, intent);
             }
         });

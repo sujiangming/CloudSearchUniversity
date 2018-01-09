@@ -1,12 +1,13 @@
 package com.gk.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by JDRY-SJM on 2017/10/30.
  */
 
-public class QuerySchoolBean {
+public class QuerySchoolBean implements Serializable{
 
     /**
      * data : [{"isDoubleTop":"1","isNef":"1","isToo":"1","schoolAffiliate":"教育部","schoolArea":"遵义","schoolBatch":"1","schoolCategory":"2","schoolCode":"ZY001","schoolId":"2c948a825f445e41015f447b5f400001","schoolLogo":"http://101.132.143.37/file/","schoolName":"遵义师范学院","schoolProfile":"ffff对方是否","schoolType":"1"},{"isDoubleTop":"1","isNef":"1","isToo":"1","schoolAffiliate":"贵州教育局","schoolArea":"贵州省贵阳市","schoolBatch":"2","schoolCategory":"1","schoolCode":"gz001","schoolId":"2c948a825fb579f7015fb57fc1bf0001","schoolLogo":"http://101.132.143.37/file/university/007BF78D89C14E619A164838B0E485A4.png","schoolName":"贵州大学","schoolProfile":"该学校...","schoolType":"1"}]
@@ -42,7 +43,7 @@ public class QuerySchoolBean {
         this.data = data;
     }
 
-    public static class DataBean {
+    public static class DataBean implements Serializable{
         /**
          * isDoubleTop : 1
          * isNef : 1
@@ -57,6 +58,7 @@ public class QuerySchoolBean {
          * schoolName : 遵义师范学院
          * schoolProfile : ffff对方是否
          * schoolType : 1
+         * stuRecruitBrochure:xxxx
          */
 
         private String isDoubleTop;
@@ -72,6 +74,15 @@ public class QuerySchoolBean {
         private String schoolName;
         private String schoolProfile;
         private String schoolType;
+        private String stuRecruitBrochure;
+
+        public String getStuRecruitBrochure() {
+            return stuRecruitBrochure;
+        }
+
+        public void setStuRecruitBrochure(String stuRecruitBrochure) {
+            this.stuRecruitBrochure = stuRecruitBrochure;
+        }
 
         public String getIsDoubleTop() {
             return isDoubleTop;

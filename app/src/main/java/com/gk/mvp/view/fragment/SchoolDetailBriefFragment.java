@@ -1,20 +1,20 @@
 package com.gk.mvp.view.fragment;
 
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 
-import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
-import com.gk.beans.CommonBean;
-import com.gk.http.IService;
-import com.gk.http.RetrofitUtil;
+import com.gk.beans.LoginBean;
+import com.gk.beans.QuerySchoolBean;
+import com.gk.mvp.view.activity.LqRiskTestResultActivity;
+import com.gk.mvp.view.activity.VIPActivity;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 
 import butterknife.BindView;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import butterknife.OnClick;
 
 /**
  * Created by JDRY-SJM on 2017/12/20.
@@ -28,6 +28,13 @@ public class SchoolDetailBriefFragment extends SjmBaseFragment {
     @BindView(R.id.expand_text_2)
     View expand_text_2;
 
+    @OnClick(R.id.tv_vip)
+    public void vipClicked() {
+        showUpgradeDialog();
+    }
+
+    private QuerySchoolBean.DataBean schoolBean;
+
     @Override
     public int getResourceId() {
         return R.layout.fragment_school_detail_brief;
@@ -35,39 +42,44 @@ public class SchoolDetailBriefFragment extends SjmBaseFragment {
 
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
-        String uniName = getArguments().getString("uniName");
-        Log.e(SchoolDetailBriefFragment.class.getName(), uniName);
+        schoolBean = (QuerySchoolBean.DataBean) getArguments().getSerializable("schoolBean");
         initData();
-    }
-
-    private void getUniversityInfoByName(String uniName) {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("uniName", uniName);
-        RetrofitUtil.getInstance()
-                .createReq(IService.class)
-                .getUniversityInfoByName(jsonObject.toJSONString())
-                .enqueue(new Callback<CommonBean>() {
-                    @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                        if (response.isSuccessful()) {
-                            CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
-
-                            }
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
-
-                    }
-                });
     }
 
     private void initData() {
         ExpandableTextView expandableTextView1 = expand_text_1.findViewById(R.id.expand_text_view);
         ExpandableTextView expandableTextView2 = expand_text_2.findViewById(R.id.expand_text_view);
-        expandableTextView1.setText(getString(R.string.test_desc));
-        expandableTextView2.setText(getString(R.string.test_desc));
+        expandableTextView1.setText(schoolBean.getStuRecruitBrochure());
+        expandableTextView2.setText(schoolBean.getSchoolProfile());
+    }
+
+    private void showUpgradeDialog() {
+        int vip = LoginBean.getInstance().getVipLevel();
+        if (vip <= 1) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+            builder.setIcon(android.R.drawable.ic_dialog_info);
+            builder.setTitle("温馨提示");
+            builder.setMessage("VIP会员才能使用，您想成为VIP会员吗？");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    openNewActivity(VIPActivity.class);
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+        } else {
+            Intent intent = new Intent();
+            intent.putExtra("flag", 1);//高校
+            intent.putExtra("aim", schoolBean.getSchoolName());
+            openNewActivityByIntent(LqRiskTestResultActivity.class, intent);
+        }
     }
 }

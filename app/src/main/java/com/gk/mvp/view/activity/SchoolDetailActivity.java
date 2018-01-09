@@ -8,12 +8,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gk.R;
+import com.gk.beans.QuerySchoolBean;
+import com.gk.beans.UniversityAreaEnum;
+import com.gk.beans.UniversityTypeEnum;
 import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.mvp.view.fragment.SchoolDetailBriefFragment;
 import com.gk.mvp.view.fragment.SchoolDetailLqDataFragment;
 import com.gk.mvp.view.fragment.SchoolDetailZsPlanFragment;
+import com.gk.tools.GlideImageLoader;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -69,8 +73,9 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     private SchoolDetailZsPlanFragment schoolDetailZsPlanFragment = null;
     private int index = 0;
     private TextView[] textViews;
-    private String uniName;
+    private QuerySchoolBean.DataBean uniName;
     private Bundle bundle = new Bundle();
+    private GlideImageLoader imageLoader = new GlideImageLoader();
 
     @Override
     public int getResouceId() {
@@ -80,10 +85,36 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "高校详情", 0);
-        uniName = getIntent().getStringExtra("uniName");
-        bundle.putString("uniName", uniName);
+        uniName = (QuerySchoolBean.DataBean) getIntent().getSerializableExtra("uniName");
+        bundle.putString("uniName", uniName.getSchoolId());
         textViews = new TextView[]{tvBrief, tvLuquData, tvZsPlan};
+        initData();
         initFragments();
+    }
+
+    private void initData() {
+        imageLoader.displayByImgRes(this, uniName.getSchoolLogo(), ivQueryItem, R.drawable.gaoxiaozhanweitu);
+        tvSchoolName.setText(uniName.getSchoolName());
+        String area = uniName.getSchoolArea();
+        if (area != null && !"".equals(area)) {
+            tvSchoolCity.setText(UniversityAreaEnum.getName(Integer.valueOf(area)));
+        }
+        String schoolCategory = uniName.getSchoolCategory();
+        if (schoolCategory != null && !"".equals(schoolCategory)) {
+            tvSchoolType.setText(UniversityTypeEnum.getName(Integer.valueOf(schoolCategory)));
+        }
+        String isNef = uniName.getIsNef();
+        if (isNef != null && !"".equals(isNef) && "1".equals(isNef)) {
+            tvSchoolMark0.setVisibility(View.VISIBLE);
+        }
+        String isToo = uniName.getIsToo();
+        if (isToo != null && !"".equals(isToo) && "1".equals(isToo)) {
+            tvSchoolMark1.setVisibility(View.VISIBLE);
+        }
+        String isDouble = uniName.getIsDoubleTop();
+        if (isDouble != null && !"".equals(isDouble) && "1".equals(isDouble)) {
+            tvSchoolMark2.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initFragments() {
@@ -113,6 +144,7 @@ public class SchoolDetailActivity extends SjmBaseActivity {
         switch (indexTmp) {
             case 0:
                 if (null == schoolDetailBriefFragment) {
+                    bundle.putSerializable("schoolBean", uniName);
                     schoolDetailBriefFragment = new SchoolDetailBriefFragment();
                     schoolDetailBriefFragment.setArguments(bundle);
                     transaction.add(R.id.ll_fragment_container, schoolDetailBriefFragment);

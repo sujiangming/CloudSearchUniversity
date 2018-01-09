@@ -1,5 +1,6 @@
 package com.gk.mvp.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -130,13 +131,23 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         }
         GlideImageLoader imageLoader = new GlideImageLoader();
         for (int i = 0; i < recommendSchsBeans.size(); i++) {
-            LuQuRiskBean.RecommendSchsBean bean = recommendSchsBeans.get(i);
+            final LuQuRiskBean.RecommendSchsBean bean = recommendSchsBeans.get(i);
             View view = View.inflate(this, R.layout.risk_result_item, null);
             TextView textView = view.findViewById(R.id.tv_university_name);
             ImageView ivLogo = view.findViewById(R.id.iv_logo);
 
             textView.setText(bean.getSchoolName());
             imageLoader.displayImage(this, bean.getSchoolLogo(), ivLogo);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.putExtra("flag", 1);
+                    intent.putExtra("aim", bean.getSchoolName());
+                    openNewActivityByIntent(LqRiskTestResultActivity.class, intent);
+                }
+            });
 
             llTuijuanList.addView(view);
         }

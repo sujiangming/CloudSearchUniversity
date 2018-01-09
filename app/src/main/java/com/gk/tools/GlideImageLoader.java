@@ -43,4 +43,17 @@ public class GlideImageLoader extends ImageLoader {
                 .diskCacheStrategy(DiskCacheStrategy.SOURCE)
                 .into(imageView);
     }
+
+    public void displayByImgRes(Context context, Object path, ImageView imageView, int imgRes) {
+        Glide.with(context)
+                .load(path)
+                .crossFade()
+                .placeholder(imgRes)
+                .dontAnimate()
+                .error(imgRes)
+                .priority(Priority.HIGH)
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .into(imageView);
+    }
 }

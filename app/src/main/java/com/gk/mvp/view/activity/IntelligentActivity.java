@@ -1,6 +1,7 @@
 package com.gk.mvp.view.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -72,12 +73,12 @@ public class IntelligentActivity extends SjmBaseActivity {
             btn1.setText("马上升级");
             tvYhLevelLow.setText("会员等级低，没有权限");
             btn2.setText("马上升级");
-        }else if(vipLevel == 2){ //fix me
+        } else if (vipLevel == 2) { //fix me
             tvWishReport.setText("未知");
             btn1.setText("立即生成");
             tvYhLevelLow.setText("会员等级低，没有权限");
             btn2.setText("马上升级");
-        }else{
+        } else {
             tvWishReport.setText("未知");
             btn1.setText("立即生成");
             tvYhLevelLow.setText("未知");
@@ -99,7 +100,9 @@ public class IntelligentActivity extends SjmBaseActivity {
 
     private void showVipDialog() {
         if (vipLevel > 1) {
-            openNewActivity(WishReportResultActivity.class);
+            Intent intent = new Intent();
+            intent.putExtra("type", 1);
+            openNewActivityByIntent(WishReportResultActivity.class, intent);
             return;
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(this);

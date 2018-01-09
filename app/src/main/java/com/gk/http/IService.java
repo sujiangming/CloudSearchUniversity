@@ -553,4 +553,34 @@ public interface IService {
     @POST("app/api/order/tempOrderPaySuccess")
     Call<CommonBean> tempOrderPaySuccess(@Field("data") String data);
 
+    /**
+     * 通过专业名称查询高校
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/university/getUniversityByMajor")
+    Call<CommonBean> getUniversityByMajor(@Field("data") String data);
+
+
+    /**
+     * 大学专业录取数据
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/major/getMajorAdmissionsData")
+    Call<CommonBean> getMajorAdmissionsData(@Field("data") String data);
+
+
+    /**
+     * 大学招生计划
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/major/getMajorRecruitPlan")
+    Call<CommonBean> getMajorRecruitPlan(@Field("data") String data);
+
+
 }

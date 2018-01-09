@@ -15,7 +15,6 @@ import com.gk.mvp.view.activity.HldInterestActivity;
 import com.gk.mvp.view.activity.IntelligentActivity;
 import com.gk.mvp.view.activity.LqRiskActivity;
 import com.gk.mvp.view.activity.MBTIActivity;
-import com.gk.mvp.view.activity.MainActivity;
 import com.gk.mvp.view.activity.MaterialListActivity;
 import com.gk.mvp.view.activity.OnLiveListActivity;
 import com.gk.mvp.view.activity.ProfessionalQueryActivity;
@@ -25,6 +24,7 @@ import com.gk.mvp.view.activity.SameScoreActivity;
 import com.gk.mvp.view.activity.SchoolRankActivity;
 import com.gk.mvp.view.activity.SchoolZSPlanActivity;
 import com.gk.mvp.view.activity.VIPActivity;
+import com.gk.mvp.view.activity.VideoListActivity;
 import com.gk.mvp.view.activity.WishReportEnterActivity;
 import com.gk.tools.GlideImageLoader;
 import com.youth.banner.Banner;
@@ -113,8 +113,7 @@ public class HomeFragment extends SjmBaseFragment {
                 openNewActivityByIntent(QuerySchoolActivity.class, intent);
                 break;
             case "schoolVideoList"://视频列表
-                MainActivity mainActivity = (MainActivity) getActivity();
-                mainActivity.changeNavStyle(mainActivity.getLlLesson());
+                openNewActivity(VideoListActivity.class);
                 break;
             case "pastQuestion"://历史真题
                 intent.putExtra("type", 2);

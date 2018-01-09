@@ -292,7 +292,7 @@ public class MainActivity extends SjmBaseActivity {
         super.onStart();
         getPersimmions();
         glideImageLoader.displayImage(this, LoginBean.getInstance().getHeadImg(), ivUserHeader);
-        String userCname = LoginBean.getInstance().getCname() == null ? LoginBean.getInstance().getUsername() : LoginBean.getInstance().getCname();
+        String userCname = LoginBean.getInstance().getNickName() == null ? "未填写" : LoginBean.getInstance().getNickName();
         tvWelcome.setText(userCname + ",欢迎回来！");
     }
 

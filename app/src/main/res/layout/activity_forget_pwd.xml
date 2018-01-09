@@ -21,9 +21,9 @@
         android:paddingRight="@dimen/space_12_dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/phone3x" />
+            android:layout_width="@dimen/space_30_dp"
+            android:layout_height="@dimen/space_30_dp"
+            android:src="@drawable/phone" />
 
         <EditText
             android:id="@+id/et_user_phone"
@@ -61,9 +61,9 @@
         android:paddingRight="@dimen/space_12_dp">
 
         <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/pwd3x" />
+            android:layout_width="@dimen/space_30_dp"
+            android:layout_height="@dimen/space_30_dp"
+            android:src="@drawable/verifycode" />
 
         <EditText
             android:id="@+id/et_user_pwd"
