@@ -82,6 +82,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
     private static final String CODE_KEY = "code";
     private GlideImageLoader glideImageLoader = new GlideImageLoader();
     private DialogInterface mDialog;
+    private String editInfo = "您已经编辑过了";
 
     @Override
     public int getResouceId() {
@@ -131,11 +132,15 @@ public class PersonInfoActivity extends SjmBaseActivity {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 2);
                     startActivityForResult(intent, 2);
+                }else{
+                    toast(editInfo);
                 }
                 break;
             case R.id.tv_student_source:
                 if (TextUtils.isEmpty(tvStudentSource.getText())) {
                     showMultiChoiceDialog();
+                }else{
+                    toast(editInfo);
                 }
                 break;
             case R.id.tv_student_score:
@@ -143,6 +148,8 @@ public class PersonInfoActivity extends SjmBaseActivity {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 4);
                     startActivityForResult(intent, 4);
+                }else{
+                    toast(editInfo);
                 }
                 break;
             case R.id.tv_student_rank:
@@ -150,17 +157,25 @@ public class PersonInfoActivity extends SjmBaseActivity {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 5);
                     startActivityForResult(intent, 5);
+                }else{
+                    toast(editInfo);
                 }
                 break;
             case R.id.tv_wen_li_ke:
                 if (TextUtils.isEmpty(tvWenLiKe.getText())) {
                     showDialog();
+                }else{
+                    toast(editInfo);
                 }
                 break;
             case R.id.tv_user_nick_name:
-                intent.setClass(this, UpdateUserInfoActivity.class);
-                intent.putExtra(CODE_KEY, 7);
-                startActivityForResult(intent, 7);
+                if(TextUtils.isEmpty(tvUserNickName.getText())){
+                    intent.setClass(this, UpdateUserInfoActivity.class);
+                    intent.putExtra(CODE_KEY, 7);
+                    startActivityForResult(intent, 7);
+                }else{
+                    toast(editInfo);
+                }
                 break;
             case R.id.tv_cancel_province:
                 hideEditDialogProvince();

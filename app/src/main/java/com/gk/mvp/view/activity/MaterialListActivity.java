@@ -257,6 +257,8 @@ public class MaterialListActivity extends SjmBaseActivity {
         }
     }
 
+    private String errorInfo = "文件下载失败";
+
     private void retrofitDownload(final MaterialItemBean.DataBean dataBean) {
         //监听下载进度
         final ProgressDialog dialog = new ProgressDialog(this);
@@ -315,13 +317,13 @@ public class MaterialListActivity extends SjmBaseActivity {
                     }
                     openFile(fileAbsolutePath);
                 } else {
-                    toast(response.message());
+                    toast(errorInfo);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                toast(t.getMessage());
+                toast(errorInfo);
             }
         });
     }

@@ -4,6 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginRight="@dimen/space_100_dp"
     android:background="@color/transparent"
+    android:gravity="center_vertical"
     android:orientation="horizontal">
 
     <TextView
@@ -17,8 +18,18 @@
         android:id="@+id/tv_reply_content"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/space_5_dp"
         android:layout_weight="1"
         android:text="回不去的时光和青春一起坠落"
         android:textColor="@color/colorFDFBF3"
-        android:textSize="@dimen/font_14_sp" />
+        android:textSize="@dimen/font_14_sp"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/iv_zan"
+        android:layout_width="@dimen/space_30_dp"
+        android:layout_height="@dimen/space_30_dp"
+        android:layout_marginLeft="@dimen/space_5_dp"
+        android:src="@drawable/dianzan"
+        android:visibility="gone" />
 </LinearLayout>

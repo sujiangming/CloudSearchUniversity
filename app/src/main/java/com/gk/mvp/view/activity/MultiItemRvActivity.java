@@ -1,15 +1,12 @@
 package com.gk.mvp.view.activity;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -25,8 +22,6 @@ import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.adpater.rv.ChatAdapterForRv;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.YxxUtils;
-import com.zhy.adapter.recyclerview.CommonAdapter;
-import com.zhy.adapter.recyclerview.wrapper.LoadMoreWrapper;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -43,12 +38,60 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
     @BindView(R.id.id_recyclerview)
     RecyclerView mRecyclerView;
 
-    private LoadMoreWrapper mLoadMoreWrapper;
-    //private List<ChatMessage> mDatas = new ArrayList<>();
+    @BindView(R.id.et_comment)
+    EditText etComment;
+    @BindView(R.id.include_comment)
+    View includeComment;
+
+    @BindView(R.id.root_view)
+    View rootView;
+
+    @OnClick({R.id.btn_comment, R.id.tv_cancel, R.id.tv_submit})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_comment:
+                includeComment.setVisibility(View.VISIBLE);
+                YxxUtils.showSoftInputFromWindow(etComment);
+                break;
+            case R.id.tv_cancel:
+                includeComment.setVisibility(View.GONE);
+                YxxUtils.hideSoftInputKeyboard(etComment);
+                etComment.setHint("我来说两句");
+                etComment.setText("");
+                break;
+            case R.id.tv_submit:
+                if (TextUtils.isEmpty(etComment.getText())) {
+                    toast("请输入内容");
+                    return;
+                }
+                showProgress();
+                jsonObject.put("fromUser", LoginBean.getInstance().getUsername());
+                jsonObject.put("messageType", 1);
+                jsonObject.put("message", YxxUtils.URLEncode(etComment.getText().toString()));
+                PresenterManager.getInstance()
+                        .setmIView(this)
+                        .setCall(RetrofitUtil.getInstance()
+                                .createReq(IService.class).sendMessage(jsonObject.toJSONString()))
+                        .request(YXXConstants.INVOKE_API_SECOND_TIME);
+
+                includeComment.setVisibility(View.GONE);
+                YxxUtils.hideSoftInputKeyboard(etComment);
+                etComment.setHint("我来说两句");
+                etComment.setText("");
+
+                break;
+        }
+    }
+
+    private int screenHeight = 0;//屏幕高度
+    private int keyHeight = 0;//软件盘弹起后所占高度阀值
+
     private List<ChatMessageBean> mDatas = new ArrayList<>();
 
     private JSONObject jsonObject = new JSONObject();
     private ChatAdapterForRv adapter;
+
+    private int onlyOneTime = 0;
 
     @Override
     public int getResouceId() {
@@ -59,28 +102,16 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBarView, "客服中心", 0);
         initKeyBoardParameter();
-
+        rootView.addOnLayoutChangeListener(this);
         jsonObject.put("username", LoginBean.getInstance().getUsername());
-
         getMyMessageList();
     }
 
     private void initAdapter() {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ChatAdapterForRv(this, mDatas);
-        adapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                Toast.makeText(MultiItemRvActivity.this, "Click:" + position, Toast.LENGTH_SHORT).show();
-            }
-
-            @Override
-            public boolean onItemLongClick(View view, RecyclerView.ViewHolder holder, int position) {
-                Toast.makeText(MultiItemRvActivity.this, "LongClick:" + position, Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        });
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.scrollToPosition(adapter.getItemCount());
     }
 
     private void getMyMessageList() {
@@ -112,7 +143,11 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
                 SendMsgBean sendMsgBean = JSON.parseObject(commonBean.getData().toString(), SendMsgBean.class);
                 mDatas.add(addChatMessageUser(sendMsgBean));
                 adapter.notifyDataSetChanged();
-                delayShowClientInfo();
+                if (onlyOneTime == 0) {
+                    onlyOneTime = 1;
+                    delayShowClientInfo();
+                }
+                mRecyclerView.scrollToPosition(adapter.getItemCount());
                 break;
         }
     }
@@ -129,7 +164,7 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
             public void run() {
                 mDatas.add(addChatMessageClient());
                 adapter.notifyDataSetChanged();
-                mRecyclerView.scrollTo(0, mRecyclerView.getHeight());
+                mRecyclerView.scrollToPosition(adapter.getItemCount());
             }
         }, 1500);
     }
@@ -171,45 +206,6 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
         return list;
     }
 
-    @BindView(R.id.et_comment)
-    EditText etComment;
-    @BindView(R.id.include_comment)
-    View includeComment;
-
-    @OnClick({R.id.btn_comment, R.id.tv_cancel, R.id.tv_submit})
-    public void onViewClicked(View view) {
-        switch (view.getId()) {
-            case R.id.btn_comment:
-                includeComment.setVisibility(View.VISIBLE);
-                etComment.setFocusable(true);
-                etComment.setFocusableInTouchMode(true);
-                break;
-            case R.id.tv_cancel:
-                includeComment.setVisibility(View.GONE);
-                hideSoftKey();
-                break;
-            case R.id.tv_submit:
-                includeComment.setVisibility(View.GONE);
-                if (TextUtils.isEmpty(etComment.getText())) {
-                    toast("请输入内容");
-                    return;
-                }
-                showProgress();
-                jsonObject.put("fromUser", LoginBean.getInstance().getUsername());
-                jsonObject.put("messageType", 1);
-                jsonObject.put("message", YxxUtils.URLEncode(etComment.getText().toString()));
-                PresenterManager.getInstance()
-                        .setmIView(this)
-                        .setCall(RetrofitUtil.getInstance()
-                                .createReq(IService.class).sendMessage(jsonObject.toJSONString()))
-                        .request(YXXConstants.INVOKE_API_SECOND_TIME);
-                break;
-        }
-    }
-
-    private int screenHeight = 0;//屏幕高度
-    private int keyHeight = 0;//软件盘弹起后所占高度阀值
-
     /**
      * 初始化软键盘弹出和关闭时的参数
      */
@@ -220,22 +216,12 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
         keyHeight = screenHeight / 3;
     }
 
-    private void hideSoftKey() {
-        //隐藏软盘
-        InputMethodManager imm = (InputMethodManager) etComment.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(etComment.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-        //editText失去焦点
-        etComment.clearFocus();
-        //清空数据
-        etComment.setHint("我来说两句");
-        etComment.setText("");
-    }
-
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
             etComment.setHint("我来说两句");
             etComment.setText("");
+            includeComment.setVisibility(View.GONE);
         }
     }
 }

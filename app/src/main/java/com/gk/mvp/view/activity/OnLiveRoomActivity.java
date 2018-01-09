@@ -13,6 +13,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gk.R;
+import com.gk.beans.LoginBean;
 import com.gk.beans.OnLiveBean;
 import com.gk.beans.OnLiveRoomInfo;
 import com.gk.global.YXXConstants;
@@ -35,6 +36,7 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import moe.codeest.enviews.ENPlayView;
 import tyrantgit.widget.HeartLayout;
 
 /**
@@ -86,9 +88,11 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                 break;
             case R.id.civ_send_hua:
                 toast("送花成功！");
+                dianzanAndSendFlower(flower);
                 break;
             case R.id.civ_shoucang:
                 showHeartLayout();
+                dianzanAndSendFlower(like);
                 new LongTimeTask().execute("执行……");
                 break;
             case R.id.tv_send:
@@ -96,10 +100,20 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                     toast("请输入内容");
                     return;
                 }
-                showProgress();
                 roomPresenter.fansLiveRoomsSpeak(YxxUtils.URLEncode(et_reply.getText().toString()));
                 break;
         }
+    }
+
+    private void dianzanAndSendFlower(String value) {
+        OnLiveRoomInfo.FansSpeakBean fanSpeakBean = new OnLiveRoomInfo.FansSpeakBean();
+        fanSpeakBean.setFansSpeak(value);
+        fanSpeakBean.setNickName(LoginBean.getInstance().getNickName());
+        fanSpeakBean.setUsername(LoginBean.getInstance().getUsername());
+        fanSpeakBean.setId(value);
+        fanSpeakBeanList.add(fanSpeakBean);
+        adapter.notifyDataSetChanged();
+        listView.smoothScrollByOffset(adapter.getCount());
     }
 
     @Override
@@ -122,6 +136,9 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
 
     private int screenHeight = 0;//屏幕高度初始值
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
+
+    private String flower = "/flower";
+    private String like = "/like";
 
     private final int TIME_INTERVAL = 15000;//1秒执行一次
     private Handler handler = new Handler();
@@ -159,6 +176,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                 }
                 fanSpeakBeanList.add(fanSpeakBean);
                 adapter.notifyDataSetChanged();
+                listView.smoothScrollByOffset(adapter.getCount());
                 YxxUtils.hideSoftInputKeyboard(et_reply);
                 llComment.setVisibility(View.GONE);
                 break;
@@ -194,6 +212,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
             if (roomInfo.getNickName() != null && !"".equals(roomInfo.getNickName())) {
                 tvNickName.setText(roomInfo.getNickName());
             }
+            llImages.removeAllViews();
             List<OnLiveRoomInfo.Fans> fans = roomInfo.getFans();
             if (fans != null && fans.size() > 0) {
                 for (int i = 0; i < fans.size(); i++) {
@@ -215,6 +234,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
             fanSpeakBeanList.addAll(speakBeanList);
             fanSpeakBeanList = removeDuplicate(fanSpeakBeanList);
             adapter.notifyDataSetChanged();
+            listView.smoothScrollByOffset(adapter.getCount());
         }
     }
 
@@ -238,6 +258,9 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
         imageLoader.displayImage(this, onLiveBean.getLiveVerticalLogo(), imageView);
+
+        videoPlayerLiveDetail.getTitleTextView().setVisibility(View.GONE);
+        videoPlayerLiveDetail.getBackButton().setVisibility(View.GONE);
         new GSYVideoOptionBuilder()
                 .setThumbImageView(imageView)
                 .setUrl(url)
@@ -247,21 +270,50 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                 .setLockLand(false)
                 .setShowFullAnimation(false)
                 .setNeedLockFull(true)
-                .setNeedShowWifiTip(false)
+                .setNeedShowWifiTip(true)
                 .setSeekRatio(1)
                 .build(videoPlayerLiveDetail);
-        videoPlayerLiveDetail.getTitleTextView().setVisibility(View.GONE);
-        videoPlayerLiveDetail.getBackButton().setVisibility(View.GONE);
+        //0未直播1直播中2直播结束3已录制
+        int status = onLiveBean.getLiveStatus();
+        switch (status) {
+            case 0:
+                break;
+            case 1:
+                videoPlayerLiveDetail.getStartButton().setVisibility(View.GONE);
+                if (videoPlayerLiveDetail.getStartButton() instanceof ENPlayView) {
+                    ENPlayView enPlayView = (ENPlayView) videoPlayerLiveDetail.getStartButton();
+                    enPlayView.setDuration(500);
+                    enPlayView.play();
+                }
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+        }
     }
 
     private void initListView() {
         listView.setAdapter(adapter = new CommonAdapter<OnLiveRoomInfo.FansSpeakBean>(this, R.layout.on_live_detail_chat_item, fanSpeakBeanList) {
             @Override
             protected void convert(ViewHolder viewHolder, OnLiveRoomInfo.FansSpeakBean item, int position) {
-                viewHolder.setText(R.id.tv_reply_content, item.getFansSpeak());
+                viewHolder.setText(R.id.tv_replier, (item.getNickName() == null ? "游客：" : (item.getNickName() + "：")));
+                if (item.getFansSpeak().equals(flower)) {
+                    viewHolder.setVisible(R.id.iv_zan, true);
+                    viewHolder.setImageResource(R.id.iv_zan, R.drawable.sendhua);
+                    viewHolder.setVisible(R.id.tv_reply_content, false);
+                } else if (item.getFansSpeak().equals(like)) {
+                    viewHolder.setVisible(R.id.iv_zan, true);
+                    viewHolder.setImageResource(R.id.iv_zan, R.drawable.dianzan);
+                    viewHolder.setVisible(R.id.tv_reply_content, false);
+                } else {
+                    viewHolder.setText(R.id.tv_reply_content, item.getFansSpeak());
+                    viewHolder.setVisible(R.id.tv_reply_content, true);
+                    viewHolder.setVisible(R.id.iv_zan, false);
+                }
             }
         });
-        listView.setSelection(adapter.getCount());
+        listView.smoothScrollByOffset(adapter.getCount());
     }
 
     private int randomColor() {
