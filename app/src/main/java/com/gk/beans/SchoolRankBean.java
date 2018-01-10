@@ -39,7 +39,16 @@ public class SchoolRankBean implements Serializable{
     private String schoolName;
     private String schoolProfile;
     private String schoolType;
+    private String stuRecruitBrochure;
     private List<RankingsBean> rankings;
+
+    public String getStuRecruitBrochure() {
+        return stuRecruitBrochure;
+    }
+
+    public void setStuRecruitBrochure(String stuRecruitBrochure) {
+        this.stuRecruitBrochure = stuRecruitBrochure;
+    }
 
     public String getIsDoubleTop() {
         return isDoubleTop;

@@ -60,7 +60,7 @@ public class SchoolDetailBriefFragment extends SjmBaseFragment {
             schoolName = schoolBean.getSchoolName();
         } else {
             schoolRankBean = (SchoolRankBean) getArguments().getSerializable("schoolBean");
-            //expandableTextView1.setText(schoolRankBean.getStuRecruitBrochure());
+            expandableTextView1.setText(schoolRankBean.getStuRecruitBrochure());
             expandableTextView2.setText(schoolRankBean.getSchoolProfile());
             schoolName = schoolRankBean.getSchoolName();
         }
