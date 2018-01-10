@@ -19,6 +19,7 @@ import com.gk.beans.CommonBean;
 import com.gk.beans.HLDTable;
 import com.gk.beans.HLDTableDao;
 import com.gk.beans.HLDTestBean;
+import com.gk.beans.LoginBean;
 import com.gk.global.YXXApplication;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
@@ -63,6 +64,8 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
             toast("已作答完毕");
             openNewActivity(HLDTestResultActivity.class);
             closeActivity(this);
+            LoginBean.getInstance().setIsHeartTest("1");
+            LoginBean.getInstance().save();
             return;
         }
         if (currentPage == pageCount) {

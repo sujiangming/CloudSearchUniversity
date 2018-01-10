@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.gk.R;
 import com.gk.beans.CommonBean;
+import com.gk.beans.LoginBean;
 import com.gk.beans.MBITTbale;
 import com.gk.beans.MBITTbaleDao;
 import com.gk.beans.MBITTestBean;
@@ -184,6 +185,8 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
             public void onClick(DialogInterface dialog, int which) {
                 openNewActivity(MBTITestResultActivity.class);
                 closeActivity(MBTITestDetailActivity.this);
+                LoginBean.getInstance().setIsHeartTest("1");
+                LoginBean.getInstance().save();
             }
         });
         AlertDialog dialog = builder.create();

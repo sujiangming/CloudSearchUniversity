@@ -128,7 +128,10 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
             setViewData(tvScore, loginBean.getScore());
             setViewData(tvRank, loginBean.getRanking());
             setViewData(tvWenli, loginBean.getWlDesc());
-            setViewData(tvStatus, loginBean.getIsHeartTest());
+            String isTest = loginBean.getIsHeartTest();
+            if(null != isTest && !"".equals(isTest) && "1".equals(isTest)){
+                setViewData(tvStatus, "已完成");
+            }
         }
     }
 
