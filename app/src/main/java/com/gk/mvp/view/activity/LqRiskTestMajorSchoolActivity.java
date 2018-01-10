@@ -111,7 +111,8 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
-                intent.putExtra("schoolName", majorName);
+                intent.putExtra("majorName", majorName);
+                intent.putExtra("schoolName",schoolBeanList.get(i).getSchoolName());
                 LqRiskTestMajorSchoolActivity.this.setResult(119, intent);
                 closeActivity(LqRiskTestMajorSchoolActivity.this);
             }

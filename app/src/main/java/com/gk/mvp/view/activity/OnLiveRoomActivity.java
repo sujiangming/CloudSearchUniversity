@@ -1,10 +1,13 @@
 package com.gk.mvp.view.activity;
 
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -22,7 +25,6 @@ import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.YxxUtils;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
-import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.zhy.adapter.abslistview.CommonAdapter;
@@ -36,7 +38,6 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import moe.codeest.enviews.ENPlayView;
 import tyrantgit.widget.HeartLayout;
 
 /**
@@ -121,7 +122,6 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         return R.layout.activity_on_live_overly;
     }
 
-    private OrientationUtils orientationUtils;
     private Random mRandom = new Random();
     private Timer mTimer = new Timer();
     private TimerTask timerHeartTask;
@@ -156,6 +156,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         setScreenHeight();
         onLiveBean = (OnLiveBean) getIntent().getSerializableExtra("bean");
         initVideo();
+        showDialogByStatus();
         roomPresenter = new OnLiveRoomPresenter(this, onLiveBean);
         initListView();
         handler.postDelayed(runnable, TIME_INTERVAL); // 在初始化方法里.
@@ -273,24 +274,89 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                 .setNeedShowWifiTip(true)
                 .setSeekRatio(1)
                 .build(videoPlayerLiveDetail);
+    }
+
+    private void showDialogByStatus() {
         //0未直播1直播中2直播结束3已录制
         int status = onLiveBean.getLiveStatus();
         switch (status) {
             case 0:
+                showCommonTipeDialog("直播未开始");
                 break;
             case 1:
-                videoPlayerLiveDetail.getStartButton().setVisibility(View.GONE);
-                if (videoPlayerLiveDetail.getStartButton() instanceof ENPlayView) {
-                    ENPlayView enPlayView = (ENPlayView) videoPlayerLiveDetail.getStartButton();
-                    enPlayView.setDuration(500);
-                    enPlayView.play();
-                }
+                autoPlay();
                 break;
             case 2:
+                showCommonTipeDialog("直播结束");
                 break;
             case 3:
+                showContinue();
                 break;
         }
+    }
+
+    private void autoPlay() {
+        videoPlayerLiveDetail.getFullscreenButton().setVisibility(View.GONE);
+        videoPlayerLiveDetail.startPlayLogic();
+    }
+
+    private void showCommonTipeDialog(String status) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("温馨提示");
+        builder.setCancelable(false);
+        builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        builder.setMessage(status);
+        builder.setPositiveButton("返回", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                closeActivity(OnLiveRoomActivity.this);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showContinue() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("温馨提示");
+        builder.setMessage("当前将要播放的为录制视频！");
+        builder.setPositiveButton("继续播放", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                autoPlay();
+            }
+        });
+        builder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                closeActivity(OnLiveRoomActivity.this);
+            }
+        });
+        builder.setCancelable(false);
+        builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    return true;
+                }
+                return false;
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void initListView() {

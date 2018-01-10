@@ -331,6 +331,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
                 intent.putExtra("uniName", schoolBeanList.get(i));
+                intent.putExtra("flag","query");
                 openNewActivityByIntent(SchoolDetailActivity.class, intent);
             }
         });

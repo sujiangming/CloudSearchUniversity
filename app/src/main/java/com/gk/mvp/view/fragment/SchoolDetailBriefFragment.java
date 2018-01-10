@@ -9,6 +9,7 @@ import android.view.View;
 import com.gk.R;
 import com.gk.beans.LoginBean;
 import com.gk.beans.QuerySchoolBean;
+import com.gk.beans.SchoolRankBean;
 import com.gk.mvp.view.activity.LqRiskTestResultActivity;
 import com.gk.mvp.view.activity.VIPActivity;
 import com.ms.square.android.expandabletextview.ExpandableTextView;
@@ -34,6 +35,9 @@ public class SchoolDetailBriefFragment extends SjmBaseFragment {
     }
 
     private QuerySchoolBean.DataBean schoolBean;
+    private String flagStr;
+    private SchoolRankBean schoolRankBean;
+    private String schoolName;
 
     @Override
     public int getResourceId() {
@@ -42,15 +46,24 @@ public class SchoolDetailBriefFragment extends SjmBaseFragment {
 
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
-        schoolBean = (QuerySchoolBean.DataBean) getArguments().getSerializable("schoolBean");
         initData();
     }
 
     private void initData() {
         ExpandableTextView expandableTextView1 = expand_text_1.findViewById(R.id.expand_text_view);
         ExpandableTextView expandableTextView2 = expand_text_2.findViewById(R.id.expand_text_view);
-        expandableTextView1.setText(schoolBean.getStuRecruitBrochure());
-        expandableTextView2.setText(schoolBean.getSchoolProfile());
+        flagStr = getArguments().getString("flag");
+        if (flagStr != null && "query".equals(flagStr)) {
+            schoolBean = (QuerySchoolBean.DataBean) getArguments().getSerializable("schoolBean");
+            expandableTextView1.setText(schoolBean.getStuRecruitBrochure());
+            expandableTextView2.setText(schoolBean.getSchoolProfile());
+            schoolName = schoolBean.getSchoolName();
+        } else {
+            schoolRankBean = (SchoolRankBean) getArguments().getSerializable("schoolBean");
+            //expandableTextView1.setText(schoolRankBean.getStuRecruitBrochure());
+            expandableTextView2.setText(schoolRankBean.getSchoolProfile());
+            schoolName = schoolRankBean.getSchoolName();
+        }
     }
 
     private void showUpgradeDialog() {
@@ -78,7 +91,7 @@ public class SchoolDetailBriefFragment extends SjmBaseFragment {
         } else {
             Intent intent = new Intent();
             intent.putExtra("flag", 1);//高校
-            intent.putExtra("aim", schoolBean.getSchoolName());
+            intent.putExtra("aim", schoolName);
             openNewActivityByIntent(LqRiskTestResultActivity.class, intent);
         }
     }

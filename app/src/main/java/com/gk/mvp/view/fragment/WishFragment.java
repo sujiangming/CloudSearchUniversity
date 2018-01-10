@@ -290,46 +290,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 }).show();
     }
 
-    private void showCommonTipeDialog(final View view, final int index) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
-        builder.setIcon(android.R.drawable.ic_dialog_info);
-        builder.setTitle("温馨提示");
-        builder.setMessage("该次操作只能进行一次，请慎重填写！");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                switch (index) {
-                    case 1:
-                        updateInfo(view, index);
-                        break;
-                    case 2:
-                        updateInfo(view, index);
-                        break;
-                    case 3:
-                        showWenLiDialog();
-                        break;
-                    case 4:
-                        requestCode = 4;
-                        showEditDialogUniversity();
-                        YxxUtils.showSoftInputFromWindow(et_school_5);
-                        break;
-                    case 5:
-                        showMultiChoiceDialog();
-                        break;
-                }
-                dialog.dismiss();
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
     private void setSchoolName(List<String> list, String str) {
         if (!TextUtils.isEmpty(str)) {
             list.add(str);

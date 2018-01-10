@@ -58,6 +58,7 @@ public class OnLiveListActivity extends SjmBaseActivity {
     }
 
     private void getVideoAdsList() {
+        showProgress();
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
@@ -67,6 +68,8 @@ public class OnLiveListActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithData(T t, int order) {
+        hideProgress();
+        stopRefreshLayout();
         CommonBean commonBean = (CommonBean) t;
         list = JSON.parseArray(commonBean.getData().toString(), OnLiveBean.class);
         lvOnlive.setAdapter(new CommonAdapter<OnLiveBean>(this, R.layout.on_live_list_item, list) {
@@ -85,8 +88,6 @@ public class OnLiveListActivity extends SjmBaseActivity {
                 openNewActivityByIntent(OnLiveRoomActivity.class, intent);
             }
         });
-        hideProgress();
-        stopRefreshLayout();
     }
 
     @Override

@@ -101,7 +101,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 return;
             }
             ToastUtils.toast(this, "微信正在登陆中....." + authResp.code);
-            YxxUtils.LogToFile("authRespCode", authResp.code);
             getAccessToken(authResp.code);
         }
     }
@@ -115,7 +114,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 "&secret=" + Constant.WECHAT_SECRET +
                 "&code=" + code +
                 "&grant_type=authorization_code";
-        //YxxUtils.LogToFile("getAccessToken", "url:" + url);
         // 网络请求获取access_token
         RetrofitUtil.getInstance().createReq(IService.class).getAccessToken(url).enqueue(new Callback<ResponseBody>() {
             @Override
@@ -123,7 +121,6 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 ResponseBody responseBody;
                 if (response.isSuccessful()) {
                     responseBody = response.body();
-                    YxxUtils.LogToFile("getAccessTokenCallback", "onResponse:" + response.body().toString());
                     try {
                         processGetAccessTokenResult(responseBody.string());
                     } catch (IOException e) {
@@ -189,6 +186,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     if (responseBody != null) {
                         try {
                             String bodyString = responseBody.string();
+                            YxxUtils.LogToFile("getUserInfo", bodyString);
                             WeiXinUserInfo weiXinUserInfo = JSON.parseObject(bodyString, WeiXinUserInfo.class);
                             //调用微信登录接口
                             weixinLogin(weiXinUserInfo.getOpenid());
@@ -316,7 +314,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
             jsonObject.put("headImg", imagePath);
         }
         if (nickName != null) {
-            jsonObject.put("nickName", nickName);
+            jsonObject.put("nickName", YxxUtils.URLEncode(nickName));
         }
 
         RetrofitUtil.getInstance()

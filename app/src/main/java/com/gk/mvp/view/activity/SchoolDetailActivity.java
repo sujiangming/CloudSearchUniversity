@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.beans.QuerySchoolBean;
+import com.gk.beans.SchoolRankBean;
 import com.gk.beans.UniversityAreaEnum;
 import com.gk.beans.UniversityTypeEnum;
 import com.gk.mvp.view.custom.CircleImageView;
@@ -76,6 +77,8 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     private QuerySchoolBean.DataBean uniName;
     private Bundle bundle = new Bundle();
     private GlideImageLoader imageLoader = new GlideImageLoader();
+    private String flagStr;
+    private SchoolRankBean schoolRankBean;
 
     @Override
     public int getResouceId() {
@@ -85,14 +88,25 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "高校详情", 0);
-        uniName = (QuerySchoolBean.DataBean) getIntent().getSerializableExtra("uniName");
-        bundle.putString("uniName", uniName.getSchoolId());
+        flagStr = getIntent().getStringExtra("flag");
+        if (flagStr != null && "query".equals(flagStr)) {
+            uniName = (QuerySchoolBean.DataBean) getIntent().getSerializableExtra("uniName");
+            bundle.putString("uniName", uniName.getSchoolId());
+            bundle.putSerializable("schoolBean", uniName);
+            bundle.putString("flag", flagStr);
+            initDataByQuery();
+        } else {
+            schoolRankBean = (SchoolRankBean) getIntent().getSerializableExtra("uniName");
+            bundle.putString("uniName", schoolRankBean.getSchoolId());
+            bundle.putSerializable("schoolBean", schoolRankBean);
+            bundle.putString("flag", flagStr);
+            initDataByRank();
+        }
         textViews = new TextView[]{tvBrief, tvLuquData, tvZsPlan};
-        initData();
         initFragments();
     }
 
-    private void initData() {
+    private void initDataByQuery() {
         imageLoader.displayByImgRes(this, uniName.getSchoolLogo(), ivQueryItem, R.drawable.gaoxiaozhanweitu);
         tvSchoolName.setText(uniName.getSchoolName());
         String area = uniName.getSchoolArea();
@@ -112,6 +126,31 @@ public class SchoolDetailActivity extends SjmBaseActivity {
             tvSchoolMark1.setVisibility(View.VISIBLE);
         }
         String isDouble = uniName.getIsDoubleTop();
+        if (isDouble != null && !"".equals(isDouble) && "1".equals(isDouble)) {
+            tvSchoolMark2.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void initDataByRank() {
+        imageLoader.displayByImgRes(this, schoolRankBean.getSchoolLogo(), ivQueryItem, R.drawable.gaoxiaozhanweitu);
+        tvSchoolName.setText(schoolRankBean.getSchoolName());
+        String area = schoolRankBean.getSchoolArea();
+        if (area != null && !"".equals(area)) {
+            tvSchoolCity.setText(UniversityAreaEnum.getName(Integer.valueOf(area)));
+        }
+        String schoolCategory = schoolRankBean.getSchoolCategory();
+        if (schoolCategory != null && !"".equals(schoolCategory)) {
+            tvSchoolType.setText(UniversityTypeEnum.getName(Integer.valueOf(schoolCategory)));
+        }
+        String isNef = schoolRankBean.getIsNef();
+        if (isNef != null && !"".equals(isNef) && "1".equals(isNef)) {
+            tvSchoolMark0.setVisibility(View.VISIBLE);
+        }
+        String isToo = schoolRankBean.getIsToo();
+        if (isToo != null && !"".equals(isToo) && "1".equals(isToo)) {
+            tvSchoolMark1.setVisibility(View.VISIBLE);
+        }
+        String isDouble = schoolRankBean.getIsDoubleTop();
         if (isDouble != null && !"".equals(isDouble) && "1".equals(isDouble)) {
             tvSchoolMark2.setVisibility(View.VISIBLE);
         }
@@ -144,7 +183,6 @@ public class SchoolDetailActivity extends SjmBaseActivity {
         switch (indexTmp) {
             case 0:
                 if (null == schoolDetailBriefFragment) {
-                    bundle.putSerializable("schoolBean", uniName);
                     schoolDetailBriefFragment = new SchoolDetailBriefFragment();
                     schoolDetailBriefFragment.setArguments(bundle);
                     transaction.add(R.id.ll_fragment_container, schoolDetailBriefFragment);

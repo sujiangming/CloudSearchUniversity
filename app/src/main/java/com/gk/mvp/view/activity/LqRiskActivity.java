@@ -192,8 +192,13 @@ public class LqRiskActivity extends SjmBaseActivity {
         Intent intent = new Intent();
         intent.putExtra("flag", faultLevel);
         intent.putExtra("aim", tvStudentMb.getText().toString());
+        if (faultLevel == 2) {
+            intent.putExtra("schoolName", schoolName);
+        }
         openNewActivityByIntent(LqRiskTestResultActivity.class, intent);
     }
+
+    private String schoolName;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -204,8 +209,9 @@ public class LqRiskActivity extends SjmBaseActivity {
             String schoolName = data.getStringExtra("schoolName");
             tvStudentMb.setText(schoolName);
         } else {
-            String schoolName = data.getStringExtra("schoolName");
-            tvStudentMb.setText(schoolName);
+            schoolName = data.getStringExtra("schoolName");
+            String majorName = data.getStringExtra("majorName");
+            tvStudentMb.setText(majorName);
         }
     }
 }

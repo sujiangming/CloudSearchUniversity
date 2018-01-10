@@ -55,6 +55,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
 
     private String valueDesc;
     private int flag = 0;
+    private String aimSchool = "目标院校： ";
 
     @Override
     public int getResouceId() {
@@ -67,6 +68,19 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         flag = getIntent().getIntExtra("flag", 0);
         valueDesc = getIntent().getStringExtra("aim");
         httpRequest();
+        initData();
+    }
+
+    private void initData() {
+        tvMyScore.setText("我的成绩：" + LoginBean.getInstance().getScore() + "分");
+        if (flag == 2) {
+            String schoolName = getIntent().getStringExtra("schoolName");
+            tv_my_aim_major.setVisibility(View.VISIBLE);
+            tv_my_aim_major.setText("目标专业： " + valueDesc);
+            tvMyAimUniversity.setText(aimSchool + schoolName);
+        } else {
+            tvMyAimUniversity.setText(aimSchool + valueDesc);
+        }
     }
 
     private void httpRequest() {
@@ -96,7 +110,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         if (luQuRiskBean == null) {
             return;
         }
-        initData(luQuRiskBean);
+        tvChart.setText(luQuRiskBean.getAdmissionProbability());
         initAddViews(luQuRiskBean.getRecommendSchs());
     }
 
@@ -104,16 +118,6 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
-    }
-
-    private void initData(LuQuRiskBean luQuRiskBean) {
-        tvMyScore.setText("我的成绩：" + LoginBean.getInstance().getScore() + "分");
-        tvMyAimUniversity.setText("目标院校： " + valueDesc);
-        tvChart.setText(luQuRiskBean.getAdmissionProbability());
-        if (flag == 2) {
-            tv_my_aim_major.setVisibility(View.VISIBLE);
-            tv_my_aim_major.setText("目标专业： " + valueDesc);
-        }
     }
 
     private void initAddViews(List<LuQuRiskBean.RecommendSchsBean> recommendSchsBeans) {
@@ -159,7 +163,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         }
         GlideImageLoader imageLoader = new GlideImageLoader();
         for (int i = 0; i < recommendSchsBeans.size(); i++) {
-            LuQuRiskBean.RecommendSchsBean bean = recommendSchsBeans.get(i);
+            final LuQuRiskBean.RecommendSchsBean bean = recommendSchsBeans.get(i);
             View view = View.inflate(this, R.layout.risk_major_query_item, null);
             TextView tv_university_name = view.findViewById(R.id.tv_university_name);
             TextView tv_major_name = view.findViewById(R.id.tv_major_name);
@@ -167,6 +171,18 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
             tv_university_name.setText(bean.getSchoolName());
             tv_major_name.setText(bean.getSchoolMajor());
             imageLoader.displayImage(this, bean.getSchoolLogo(), ivLogo);
+
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent();
+                    intent.putExtra("flag", 2);
+                    intent.putExtra("aim", bean.getSchoolMajor());
+                    intent.putExtra("schoolName", bean.getSchoolName());
+                    openNewActivityByIntent(LqRiskTestResultActivity.class, intent);
+                }
+            });
+
             llTuijuanList.addView(view);
         }
     }

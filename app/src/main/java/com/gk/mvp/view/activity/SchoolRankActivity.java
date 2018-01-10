@@ -254,6 +254,7 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
                 intent.putExtra("uniName", schoolBeanList.get(i));
+                intent.putExtra("flag","rank");
                 openNewActivityByIntent(SchoolDetailActivity.class, intent);
             }
         });
