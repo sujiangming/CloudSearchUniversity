@@ -112,6 +112,9 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                     ivZan.setImageResource(R.drawable.zan_press3x);
                     isIvZan = true;
                     addZanInter();
+                    String[] textArray = tvZan.getText().toString().split("  ");
+                    int count = Integer.valueOf(textArray[1]) + 1;
+                    tvZan.setText("点赞:  " + count);
                 } else {
                     toast("您已经点过赞了");
                 }
@@ -253,11 +256,12 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                         viewHolder.setText(R.id.tv_time, JdryTime.format(JdryTime.getFullDate(JdryTime.getFullTimeBySec(item.getCreateTime()))));
                         viewHolder.setText(R.id.tv_comment_content, item.getContent());
                         int tmp = position % 2;
-                        if (tmp == 1) { //奇数
+                        if (tmp == 0) { //偶数
                             viewHolder.setBackgroundColor(R.id.rl_comment_root, 0xFFF2F2F2);
                         }
                     }
                 });
+                lvComment.smoothScrollToPosition(lvComment.getFirstVisiblePosition());
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 toast(commonBean.getMessage());

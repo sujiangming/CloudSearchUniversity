@@ -17,35 +17,27 @@ import java.io.Serializable;
 public class LoginBean implements Serializable {
 
     /**
-     * "address": null, //地址
-     * "administrator": false, //是否管理员
-     * "banned": false,   //是否禁言
-     * "birthday": null, //出生日期
-     * "classGrade": null,   //班级
-     * "cname": null,    //姓名
-     * "companyId": null,  //公司id
-     * "createDate": 1510240198000, //创建日期
-     * "depts": null,   //部门
-     * "email": null,   //邮件
-     * "enabled": true, //是否可用
-     * "ename": null,   //英文名称
-     * "headImg": null,  //头像
-     * "latestLoginIp": null, //最后登录ip
-     * "latestLoginTime": null,  //最后登录时间
-     * "male": true,    //性别
-     * "mobile": "15285630464", //电话
-     * "nation": null, //名族
-     * "password": "ce0d06028b025af428d46d8ad7a908f4", 密码
-     * "ranking": 0, //排名
-     * "roles": null,  //角色
-     * "salt": "191",  //盐值
-     * "school": null, //学校
-     * "score": 0,  //分数
-     * "subjectType": null,  //文理科
-     * "type": null,   //用户身份
-     * "username": "15285630464",  //用户名
-     * "vipLevel": null //vip等级
-     * "weixin": null
+     * "address": "贵州",
+     * "administrator": false,
+     * "banned": false,
+     * "cname": "苏江明",
+     * "createDate": 1512214834000,
+     * "enabled": true,
+     * "headImg": "http://wx.qlogo.cn/mmopen/vi_32/kftYk0rZ92WmibSz1pgXBoMZyAxRQw2cm1diaPtl3JJR549Rh1ZlIYT6DEPAKibQicjKJL2tBpfqQX6boPuuH9AWYg/132",
+     * "isHeartTest": "1",
+     * "latestLoginIp": "1.204.215.0",
+     * "latestLoginTime": 1515726747098,
+     * "male": true,
+     * "mobile": "18275128970",
+     * "nickName": "若兰幽竹",
+     * "password": "08ce5105ea96a708d588b178086e7ee7",
+     * "ranking": "130",
+     * "salt": "138",
+     * "score": "668",
+     * "subjectType": "2",
+     * "username": "18275128970",
+     * "vipLevel": "2",
+     * "weixin": "oroNF01XOGhYlN0_sY1T3-VIgDQg"
      */
 
     private String address;
@@ -61,6 +53,7 @@ public class LoginBean implements Serializable {
     private boolean enabled;
     private String ename;
     private String headImg;
+    private String isHeartTest;
     private String latestLoginIp;
     private long latestLoginTime;
     private boolean male;
@@ -82,7 +75,6 @@ public class LoginBean implements Serializable {
     private String wlDesc;
     private String wishUniversity;
     private String wishProvince;
-    private String isHeartTest;
     private boolean hasReport;
     private String weiXinHeadImg;
     private String weiXinUnionid;
@@ -137,6 +129,7 @@ public class LoginBean implements Serializable {
         this.setEnabled(loginBean.isEnabled());
         this.setEname(loginBean.getEname());
         this.setHeadImg(loginBean.getHeadImg());
+        this.setIsHeartTest(loginBean.getIsHeartTest());
         this.setLatestLoginIp(loginBean.getLatestLoginIp());
         this.setLatestLoginTime(loginBean.getLatestLoginTime());
         this.setMale(loginBean.isMale());

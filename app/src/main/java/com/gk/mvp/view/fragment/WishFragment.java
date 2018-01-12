@@ -89,7 +89,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     @BindView(R.id.root_view)
     View rootView;
 
-    private LoginBean loginBean = LoginBean.getInstance();
+    private LoginBean loginBean;
     private DialogInterface mDialog;
     private int requestCode = 0;
 
@@ -124,6 +124,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     }
 
     private void initData() {
+        loginBean = LoginBean.getInstance();
         if (loginBean != null) {
             setViewData(tvScore, loginBean.getScore());
             setViewData(tvRank, loginBean.getRanking());
