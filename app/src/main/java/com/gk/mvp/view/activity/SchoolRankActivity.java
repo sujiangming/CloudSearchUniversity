@@ -7,7 +7,6 @@ import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -16,15 +15,13 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.SchoolRankBean;
-import com.gk.beans.UniversityAreaEnum;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.RankSchoolAdapter;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,7 +56,7 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
     private JSONObject jsonObject;
     private int mPage = 0;
     private boolean isLoadMore = false;
-    private CommonAdapter<SchoolRankBean> adapter;
+    private RankSchoolAdapter adapter;
     private String searchKey = "";
     private boolean isSearch = false;
 
@@ -73,11 +70,13 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
         initSmartRefreshLayout(smartRfQuerySchool, true);
         initKeyBoardParameter();
         jsonObject = new JSONObject();
+        setLvQuerySchool();
         invoke();
         showSearch();
     }
 
     private void invoke() {
+        showProgress();
         jsonObject.put("page", mPage);
         jsonObject.put("schoolName", searchKey);
         PresenterManager.getInstance()
@@ -159,7 +158,7 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
                 return;
             }
             hideTvNoData();
-            setLvQuerySchool();
+            adapter.update(schoolBeanList);
             return;
         }
 
@@ -169,24 +168,25 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
                 return;
             }
             schoolBeanList.addAll(beanList);
-        } else {
-            if (beanList == null || beanList.size() == 0) {
-                toast("没有查询到数据");
-                showTvNoData();
-                return;
-            }
-            hideTvNoData();
-            int currentSize = schoolBeanList.size();
-            schoolBeanList.addAll(beanList);
-            schoolBeanList = removeDuplicate(schoolBeanList);
-            int afterSize = schoolBeanList.size();
-            if (currentSize == afterSize) {
-                toast("没有最新数据");
-                return;
-            }
+            adapter.update(beanList, true);
+            lvQuerySchool.smoothScrollToPosition(lvQuerySchool.getLastVisiblePosition(), 0);
+            return;
         }
-        setLvQuerySchool();
-
+        if (beanList == null || beanList.size() == 0) {
+            toast("没有查询到数据");
+            showTvNoData();
+            return;
+        }
+        hideTvNoData();
+        int currentSize = schoolBeanList.size();
+        schoolBeanList.addAll(beanList);
+        schoolBeanList = removeDuplicate(schoolBeanList);
+        int afterSize = schoolBeanList.size();
+        if (currentSize == afterSize) {
+            toast("没有最新数据");
+            return;
+        }
+        adapter.update(schoolBeanList);
     }
 
     @Override
@@ -213,55 +213,17 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
     }
 
     private void setLvQuerySchool() {
-        lvQuerySchool.setAdapter(adapter = new CommonAdapter<SchoolRankBean>(this, R.layout.school_rank_list_item, schoolBeanList) {
-            @Override
-            protected void convert(ViewHolder viewHolder, SchoolRankBean item, int position) {
-                String isDoubleTop = item.getIsDoubleTop();
-                String isNef = item.getIsNef();
-                String isToo = item.getIsToo();
-                viewHolder.getView(R.id.tv_school_mark_0).setVisibility(View.VISIBLE);
-                viewHolder.getView(R.id.tv_school_mark_1).setVisibility(View.VISIBLE);
-                viewHolder.getView(R.id.tv_school_mark_2).setVisibility(View.VISIBLE);
-                viewHolder.setText(R.id.tv_school_mark_0, "1".equals(isNef) ? "985" : "非985");
-                viewHolder.setText(R.id.tv_school_mark_1, "1".equals(isToo) ? "211" : "非211");
-                viewHolder.setText(R.id.tv_school_mark_2, isDoubleTop.equals("1") ? "双一流" : "非双一流");
-                ImageView imageView = viewHolder.getView(R.id.iv_query_item);
-                glideImageLoader.displayImage(SchoolRankActivity.this, item.getSchoolLogo(), imageView);
-                viewHolder.setText(R.id.tv_school_name, item.getSchoolName());
-                viewHolder.setText(R.id.tv_school_type, "1".equals(item.getSchoolType()) ? "本科" : "专科");
-                viewHolder.setText(R.id.tv_school_level, "1".equals(item.getSchoolCategory()) ? "综合类" : "教育类");
-                viewHolder.setText(R.id.tv_school_address, UniversityAreaEnum.getName(Integer.valueOf(item.getSchoolArea())));
-
-                List<TextView> viewList = new ArrayList<>();
-                viewList.add((TextView) viewHolder.getView(R.id.tv_school_rank_0));
-                viewList.add((TextView) viewHolder.getView(R.id.tv_school_rank_1));
-
-                List<SchoolRankBean.RankingsBean> rankList = item.getRankings();
-
-                if (rankList != null && rankList.size() > 0) {
-                    for (int i = 0; i < rankList.size(); i++) {
-                        if (i <= 1) {
-                            viewList.get(i).setVisibility(View.VISIBLE);
-                            viewList.get(i).setText(getRankInfo(rankList.get(i).getUniYear(), rankList.get(i).getUniRanking()));
-                        }
-                    }
-                }
-            }
-        });
-
+        adapter = new RankSchoolAdapter(this);
+        lvQuerySchool.setAdapter(adapter);
         lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
                 intent.putExtra("uniName", schoolBeanList.get(i));
-                intent.putExtra("flag","rank");
+                intent.putExtra("flag", "rank");
                 openNewActivityByIntent(SchoolDetailActivity.class, intent);
             }
         });
-    }
-
-    private String getRankInfo(String year, String rank) {
-        return year + "年：" + rank + " 名";
     }
 
     private void showTvNoData() {

@@ -56,36 +56,28 @@ public abstract class JdryBaseAdapter<T> extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    //清空list集合
+    public void update(List<T> arrayList, boolean isNewAdd) {
+        if (isNewAdd) {
+            list.addAll(arrayList);
+            notifyDataSetChanged();
+        } else {
+            update(arrayList);
+        }
+    }
+
     public void clear() {
         list.clear();
         notifyDataSetChanged();
     }
 
-    //移除指定位置的对象
     public void remove(int index) {
         list.remove(index);
         notifyDataSetChanged();
     }
 
-    //移除对象
     public void remove(T t) {
         list.remove(t);
         notifyDataSetChanged();
-    }
-
-    public void showProgressBar() {
-        if (null == jdryProgressBar) {
-            jdryProgressBar = SjmProgressBar.show(mContext);
-        } else {
-            jdryProgressBar.show();
-        }
-    }
-
-    public void dismissProgressBar() {
-        if (null != jdryProgressBar && jdryProgressBar.isShowing()) {
-            jdryProgressBar.dismiss();
-        }
     }
 
     /**

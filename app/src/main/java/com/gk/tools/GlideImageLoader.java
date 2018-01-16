@@ -24,9 +24,9 @@ public class GlideImageLoader extends ImageLoader {
                 .placeholder(R.drawable.zhanweitu)
                 .dontAnimate()
                 .error(R.drawable.zhanweitu)
-                .priority(Priority.HIGH)
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .priority(Priority.NORMAL)
+                .skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(imageView);
     }
 
@@ -38,9 +38,9 @@ public class GlideImageLoader extends ImageLoader {
                 .placeholder(R.drawable.zhanweitu)
                 .dontAnimate()
                 .error(R.drawable.zhanweitu)
-                .priority(Priority.HIGH)
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .priority(Priority.NORMAL)
+                .skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(imageView);
     }
 
@@ -49,11 +49,10 @@ public class GlideImageLoader extends ImageLoader {
                 .load(path)
                 .crossFade()
                 .placeholder(imgRes)
-                .dontAnimate()
                 .error(imgRes)
-                .priority(Priority.HIGH)
-                .skipMemoryCache(true)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .priority(Priority.NORMAL)
+                .skipMemoryCache(false)
+                .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(imageView);
     }
 }

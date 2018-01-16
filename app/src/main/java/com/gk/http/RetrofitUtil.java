@@ -14,22 +14,28 @@ import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
  */
 
 public class RetrofitUtil {
-    public static final int DEFAULT_TIMEOUT = 15;
-    public Retrofit mRetrofit;
+    public static final int DEFAULT_TIMEOUT = 30;
 
+    public Retrofit mRetrofit;
     private static RetrofitUtil mInstance;
 
     /**
      * 私有构造方法
      */
     private RetrofitUtil() {
-        OkHttpClient.Builder builder = new OkHttpClient.Builder();
-        builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
+        //可以利用okhttp实现缓存
+        OkHttpClient client = new OkHttpClient.Builder()
+                .retryOnConnectionFailure(true)//连接失败后是否重新连接
+                .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .build();
+
+        //创建retrofit对象
         mRetrofit = new Retrofit.Builder()
-                .client(builder.build())
+                .client(client)
                 .baseUrl(YXXConstants.HOST)
-                 //在此处声明使用FastJsonConverter做为转换器
-                .addConverterFactory(FastJsonConverterFactory.create())
+                .addConverterFactory(FastJsonConverterFactory.create())//在此处声明使用FastJsonConverter做为转换器
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
     }

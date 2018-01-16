@@ -63,10 +63,10 @@ public class MajorModel {
         List<MajorBean.DataBean> bzTypeList = majorBean.getData();
         for (MajorBean.DataBean dataBean : bzTypeList) {
             String name = dataBean.getName();
-            if (name.equals("本科专业")) {
+            if (name.equals("本科")) {
                 listList.add(0, dataBean.getNodes());
                 continue;
-            } else if (name.equals("专科专业")) {
+            } else if (name.equals("专科")) {
                 listList.add(1, dataBean.getNodes());
                 continue;
             } else {

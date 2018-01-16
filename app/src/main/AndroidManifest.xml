@@ -236,6 +236,13 @@
             android:name=".mvp.view.activity.VideoListActivity"
             android:screenOrientation="portrait" />
 
+        <!--网络监听广播-->
+        <receiver android:name=".listener.ConnectionChangeReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
+
         <!--微信-->
         <!--注册微信回调 WXEntryActivity -->
         <activity

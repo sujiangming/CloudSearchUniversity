@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.gk.R;
 import com.gk.beans.MajorBean;
 import com.gk.beans.MajorQueryBean;
@@ -88,6 +89,10 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 listList = (List<List<MajorBean.DataBean.NodesBeanXX>>) t;
+                if (listList == null || listList.size() == 0) {
+                    toast("无相关数据");
+                    return;
+                }
                 list = listList.get(0);//默认是本科
                 initView();
                 break;
@@ -137,7 +142,8 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
      */
     @Override
     public void onclick(int parentPosition, int childPosition, int childIndex) {
-
+        MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean da = list.get(parentPosition).getNodes().get(childIndex).getNodes().get(childIndex);
+        Log.e("", JSON.toJSONString(da));
     }
 
     @OnClick({R.id.iv_back, R.id.iv_search, R.id.tv_level_1, R.id.tv_level_2, R.id.back_image})
@@ -148,12 +154,18 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
                 break;
             case R.id.tv_level_1:
                 tvLevel1Click();
+                if (listList.size() < 1) {
+                    return;
+                }
                 list = listList.get(0);
                 pageType = 1;
                 initView();
                 break;
             case R.id.tv_level_2:
                 tvLevel2Click();
+                if (listList.size() <= 1) {
+                    return;
+                }
                 list = listList.get(1);
                 pageType = 2;
                 initView();
@@ -216,8 +228,6 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
         }
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            private String TAG = getClass().getSimpleName();
-
             @Override
             public boolean onQueryTextSubmit(String s) {
                 majorPresenter.queryMajorByName(YxxUtils.URLEncode(s), pageType);
@@ -235,14 +245,13 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
 
             @Override
             public boolean onQueryTextChange(String s) {
-                //initQueryData(s);
                 return true;
             }
         });
         searchView.setOnCloseListener(new SearchView.OnCloseListener() {
             @Override
             public boolean onClose() {
-                //nodesBeans.clear();
+                searchView.setQueryHint("高校排名");
                 adapter.notifyDataSetChanged();
                 return true;
             }

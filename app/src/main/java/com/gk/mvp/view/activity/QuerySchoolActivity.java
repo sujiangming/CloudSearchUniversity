@@ -27,11 +27,9 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.adpater.GridViewChooseAdapter;
-import com.gk.tools.GlideImageLoader;
+import com.gk.mvp.view.adpater.QuerySchoolAdapter;
 import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -138,7 +136,6 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     }
 
     private List<QuerySchoolBean.DataBean> schoolBeanList = new ArrayList<>();
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
     private JSONObject jsonObject = new JSONObject();
     private int mPage = 0;
     private boolean isLoadMore = false;
@@ -147,6 +144,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     private int type = 1;
     private String nullStr = "";
     private String searchKey = nullStr;
+    private QuerySchoolAdapter adapter;
 
 
     @Override
@@ -157,8 +155,23 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         initSmartRefreshLayout(smartRfQuerySchool, true);
+        initListView();
         invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
         showSearch();
+    }
+
+    private void initListView() {
+        adapter = new QuerySchoolAdapter(this);
+        lvQuerySchool.setAdapter(adapter);
+        lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent();
+                intent.putExtra("uniName", schoolBeanList.get(i));
+                intent.putExtra("flag", "query");
+                openNewActivityByIntent(SchoolDetailActivity.class, intent);
+            }
+        });
     }
 
     private String getEnumName(int index) {
@@ -242,6 +255,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     }
 
     private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
+        showProgress();
         jsonObject.put("page", mPage);
         jsonObject.put("schoolArea", schoolArea);//学校地区
         jsonObject.put("schoolCategory", schoolCategory);//学校类别
@@ -282,19 +296,21 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         QuerySchoolBean querySchoolBean = JSON.parseObject(data, QuerySchoolBean.class);
         if (mPage == 0 && !isLoadMore) {
             schoolBeanList = querySchoolBean.getData();
-            initListView();
+            adapter.update(schoolBeanList);
             return;
         }
         if (isLoadMore) {
             stopRefreshLayoutLoadMore();
             List<QuerySchoolBean.DataBean> dataBeans = querySchoolBean.getData();
             if (data == null) {
-                toast("没有更多数据了");
+                toast("别扯了，我是有底线的");
                 return;
             }
             schoolBeanList.addAll(dataBeans);
-            initListView();
-            lvQuerySchool.smoothScrollByOffset(lvQuerySchool.getHeight());
+            adapter.update(dataBeans, true);
+            if (lvQuerySchool != null) {
+                lvQuerySchool.smoothScrollToPosition(lvQuerySchool.getLastVisiblePosition(), 0);
+            }
         }
     }
 
@@ -303,38 +319,6 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         toast((String) t);
         hideProgress();
         stopLayoutRefreshByTag(isLoadMore);
-    }
-
-    private void initListView() {
-        lvQuerySchool.setAdapter(new CommonAdapter<QuerySchoolBean.DataBean>(this, R.layout.query_school_list_item, schoolBeanList) {
-            @Override
-            protected void convert(ViewHolder viewHolder, QuerySchoolBean.DataBean item, int position) {
-                String isDoubleTop = item.getIsDoubleTop();
-                String isNef = item.getIsNef();
-                String isToo = item.getIsToo();
-                viewHolder.getView(R.id.tv_school_mark_0).setVisibility(View.VISIBLE);
-                viewHolder.getView(R.id.tv_school_mark_1).setVisibility(View.VISIBLE);
-                viewHolder.getView(R.id.tv_school_mark_2).setVisibility(View.VISIBLE);
-                viewHolder.setText(R.id.tv_school_mark_0, "1".equals(isNef) ? "985" : "非985");
-                viewHolder.setText(R.id.tv_school_mark_1, "1".equals(isToo) ? "211" : "非211");
-                viewHolder.setText(R.id.tv_school_mark_2, isDoubleTop.equals("1") ? "双一流" : "非双一流");
-                ImageView imageView = viewHolder.getView(R.id.iv_query_item);
-                glideImageLoader.displayByImgRes(QuerySchoolActivity.this, item.getSchoolLogo(), imageView, R.drawable.gaoxiaozhanweitu);
-                viewHolder.setText(R.id.tv_school_name, item.getSchoolName());
-                viewHolder.setText(R.id.tv_school_type, "1".equals(item.getSchoolType()) ? "本科" : "专科");
-                viewHolder.setText(R.id.tv_school_level, "1".equals(item.getSchoolCategory()) ? "综合类" : "教育类");
-                viewHolder.setText(R.id.tv_school_address, UniversityAreaEnum.getName(Integer.valueOf(item.getSchoolArea())));
-            }
-        });
-        lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent();
-                intent.putExtra("uniName", schoolBeanList.get(i));
-                intent.putExtra("flag","query");
-                openNewActivityByIntent(SchoolDetailActivity.class, intent);
-            }
-        });
     }
 
 
