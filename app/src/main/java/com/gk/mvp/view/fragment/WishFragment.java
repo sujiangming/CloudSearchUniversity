@@ -129,10 +129,20 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
             setViewData(tvScore, loginBean.getScore());
             setViewData(tvRank, loginBean.getRanking());
             setViewData(tvWenli, loginBean.getWlDesc());
+            setViewData(tvYixiang, loginBean.getWishUniversity());
             String isTest = loginBean.getIsHeartTest();
-            if(null != isTest && !"".equals(isTest) && "1".equals(isTest)){
+            if (null != isTest && !"".equals(isTest) && "1".equals(isTest)) {
                 setViewData(tvStatus, "已完成");
             }
+            setTvYixiang(tvYixiang, loginBean.getWishUniversity());
+            setTvYixiang(tvProvince, loginBean.getWishProvince());
+        }
+    }
+
+    private void setTvYixiang(TextView tv, String yxUniv) {
+        if (yxUniv != null && !"".equals(yxUniv)) {
+            String[] strings = yxUniv.split(",");
+            tv.setText("已选" + strings.length + "个");
         }
     }
 
@@ -550,6 +560,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     }
 
     private void updateWishUniversity(String intentSch) {
+        showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("intentSch", YxxEncoderUtils.URLEncoder(intentSch));
@@ -564,16 +575,19 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                         } else {
                             toast(response.message());
                         }
+                        hideProgress();
                     }
 
                     @Override
                     public void onFailure(Call<CommonBean> call, Throwable t) {
                         toast(t.getMessage());
+                        hideProgress();
                     }
                 });
     }
 
     private void updateUserIntentArea(String intentArea) {
+        showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("intentArea", YxxEncoderUtils.URLEncoder(intentArea));
@@ -588,11 +602,13 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                         } else {
                             toast(response.message());
                         }
+                        hideProgress();
                     }
 
                     @Override
                     public void onFailure(Call<CommonBean> call, Throwable t) {
                         toast(t.getMessage());
+                        hideProgress();
                     }
                 });
     }
@@ -601,6 +617,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
      * 获取意向高校
      */
     private void getUserIntentSch() {
+        showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         RetrofitUtil.getInstance()
@@ -622,11 +639,12 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                                 }
                             }
                         }
+                        hideProgress();
                     }
 
                     @Override
                     public void onFailure(Call<CommonBean> call, Throwable t) {
-
+                        hideProgress();
                     }
                 });
     }
@@ -635,6 +653,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
      * 获取意向省份
      */
     private void getUserIntentArea() {
+        showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         RetrofitUtil.getInstance()
@@ -650,11 +669,12 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                                 tvProvince.setText("已选" + wishSchoolBean.size() + "个");
                             }
                         }
+                        hideProgress();
                     }
 
                     @Override
                     public void onFailure(Call<CommonBean> call, Throwable t) {
-
+                        hideProgress();
                     }
                 });
     }

@@ -101,6 +101,7 @@ public class IntelligentActivity extends SjmBaseActivity {
     }
 
     private void generateReportStatus(int time) {
+        showProgress();
         jsonObject.put("reportType", time);
         PresenterManager.getInstance().setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).generateWishReport(jsonObject.toJSONString()))
