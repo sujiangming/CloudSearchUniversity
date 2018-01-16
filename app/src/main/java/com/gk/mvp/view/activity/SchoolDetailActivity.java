@@ -107,7 +107,7 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     }
 
     private void initDataByQuery() {
-        imageLoader.displayByImgRes(this, uniName.getSchoolLogo(), ivQueryItem, R.drawable.gaoxiaozhanweitu);
+        imageLoader.displayImage(this, uniName.getSchoolLogo(), ivQueryItem);
         tvSchoolName.setText(uniName.getSchoolName());
         String area = uniName.getSchoolArea();
         if (area != null && !"".equals(area)) {
@@ -132,7 +132,7 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     }
 
     private void initDataByRank() {
-        imageLoader.displayByImgRes(this, schoolRankBean.getSchoolLogo(), ivQueryItem, R.drawable.gaoxiaozhanweitu);
+        imageLoader.displayImage(this, schoolRankBean.getSchoolLogo(), ivQueryItem);
         tvSchoolName.setText(schoolRankBean.getSchoolName());
         String area = schoolRankBean.getSchoolArea();
         if (area != null && !"".equals(area)) {
