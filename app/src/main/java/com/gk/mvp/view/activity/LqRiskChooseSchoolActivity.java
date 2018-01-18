@@ -98,6 +98,7 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
     }
 
     private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
+        showProgress();
         jsonObject.put("page", mPage);
         jsonObject.put("schoolArea", schoolArea);//学校地区
         jsonObject.put("schoolCategory", schoolCategory);//学校类别
@@ -116,7 +117,6 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
         mPage = 0;
         isLoadMore = false;
         invoke(nullString, nullString, nullString, nullString, nullString);
-
     }
 
     @Override
