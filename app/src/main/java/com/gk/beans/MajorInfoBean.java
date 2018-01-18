@@ -64,10 +64,19 @@ public class MajorInfoBean {
         private String majorName;
         private String majorProfile;
         private String majorCode;
+        private String majorType;
         private String minorCourses;
         private String necessaryCertificates;
         private String requiredCourse;
         private String salary;
+
+        public String getMajorType() {
+            return majorType;
+        }
+
+        public void setMajorType(String majorType) {
+            this.majorType = majorType;
+        }
 
         public String getCapacityRequirements() {
             return capacityRequirements;

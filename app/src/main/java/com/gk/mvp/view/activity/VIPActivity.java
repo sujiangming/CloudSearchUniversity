@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
@@ -58,24 +59,50 @@ public class VIPActivity extends SjmBaseActivity {
 
     @BindView(R.id.rtv_silver_price)
     RichText rtv_silver_price;
+    @BindView(R.id.rich_vip)
+    RichText richVip;
+    @BindView(R.id.tv_vip_desc)
+    TextView tvVipDesc;
+    @BindView(R.id.tv_blue_circle_0)
+    RichText tvBlueCircle0;
+    @BindView(R.id.tv_diamond_vip)
+    TextView tvDiamondVip;
+    @BindView(R.id.tv_blue_circle_1)
+    RichText tvBlueCircle1;
+    @BindView(R.id.tv_gold_vip)
+    TextView tvGoldVip;
+    @BindView(R.id.tv_blue_circle_2)
+    RichText tvBlueCircle2;
+    @BindView(R.id.tv_silver_vip)
+    TextView tvSilverVip;
+    @BindView(R.id.rtv_diamond_price)
+    RichText rtvDiamondPrice;
+    @BindView(R.id.tv_open_diamond)
+    TextView tvOpenDiamond;
+    @BindView(R.id.ll_diamond)
+    LinearLayout llDiamond;
+    @BindView(R.id.tv_open_gold)
+    TextView tvOpenGold;
+    @BindView(R.id.tv_open_silver)
+    TextView tvOpenSilver;
 
     private String form = null;
     private LoginBean loginBean;
     private int vipType = 0;
     private int vipLevel = 0;
-    private String goldTip = "您确定升级为金卡会员吗？";
-    private String silverTip = "您确定升级为银卡会员吗？";
 
 
-    @OnClick({R.id.tv_open_gold, R.id.tv_open_silver})
+    @OnClick({R.id.tv_open_gold, R.id.tv_open_silver, R.id.tv_open_diamond})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_open_gold:
                 if (vipType < 3) {
                     showPayWay(3);
                     vipLevel = 3;
-                } else {
+                } else if (vipType == 3) {
                     toast("您已经是金卡用户了");
+                } else {
+                    toast("您已经是钻石卡用户了");
                 }
                 break;
             case R.id.tv_open_silver:
@@ -83,9 +110,23 @@ public class VIPActivity extends SjmBaseActivity {
                     showPayWay(2);
                     vipLevel = 2;
                 } else if (vipType == 2) {
-                    toast("您已经是银卡用户了，您可要升级为金卡用户哦");
-                } else {
+                    toast("您已经是银卡用户了，您可以升级为金卡或者钻石卡用户哦");
+                } else if (vipType == 3) {
                     toast("您已经是金卡用户了");
+                } else {
+                    toast("您已经是钻石卡用户了");
+                }
+                break;
+            case R.id.tv_open_diamond:
+                if (vipType < 4) {
+                    showPayWay(4);
+                    vipLevel = 4;
+                } else if (vipType == 4) {
+                    toast("您已经是钻石卡用户了");
+                } else if (vipType == 3) {
+                    toast("您已经是金卡用户了,您可以升级为钻石卡用户哦~");
+                } else if (vipType == 2) {
+                    toast("您已经是银卡用户了，您可要升级为金卡或者钻石卡用户哦~");
                 }
                 break;
         }
@@ -121,8 +162,13 @@ public class VIPActivity extends SjmBaseActivity {
             if (form != null) {
                 if (form.equals("vip_choose")) {
                     llGold.setVisibility(View.GONE);
+                    llDiamond.setVisibility(View.GONE);
+                } else if (form.equals("vip_zj")) {
+                    llSilve.setVisibility(View.GONE);
+                    llDiamond.setVisibility(View.GONE);
                 } else {
                     llSilve.setVisibility(View.GONE);
+                    llGold.setVisibility(View.GONE);
                 }
             }
         }
@@ -139,6 +185,7 @@ public class VIPActivity extends SjmBaseActivity {
                             CommonBean commonBean = response.body();
                             VIPPriceBean priceBean = JSON.parseObject(commonBean.getData().toString(), VIPPriceBean.class);
                             if (priceBean != null) {
+                                rtvDiamondPrice.setText("钻石卡会员服务 ￥" + priceBean.getVipLevel3Amount() + "元");
                                 rtv_gold_price.setText("金卡会员服务 ￥" + priceBean.getVipLevel2Amount() + "元");
                                 rtv_silver_price.setText("银卡会员服务 ￥" + priceBean.getVipLevel1Amount() + "元");
                             }
@@ -368,4 +415,5 @@ public class VIPActivity extends SjmBaseActivity {
                     }
                 });
     }
+
 }

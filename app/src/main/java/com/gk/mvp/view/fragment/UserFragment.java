@@ -40,6 +40,11 @@ public class UserFragment extends SjmBaseFragment {
     @BindView(R.id.iv_level)
     ImageView ivLevel;
 
+    private String userHeadImage = null;
+    private String userNickName = null;
+    private String userScore = null;
+    private int userVipLevel = 0;
+
     @Override
     public int getResourceId() {
         return R.layout.fragment_user;
@@ -54,6 +59,37 @@ public class UserFragment extends SjmBaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        String userImage = LoginBean.getInstance().getHeadImg();
+        String nickName = LoginBean.getInstance().getNickName();
+        String score = LoginBean.getInstance().getScore();
+        int level = LoginBean.getInstance().getVipLevel();
+
+        if (userImage != null) {
+            if (!userImage.equals(userHeadImage)) {
+                glideImageLoader.displayImage(getContext(), userImage, ivUserHead);
+            }
+        }
+        if (nickName != null) {
+            if (!nickName.equals(userNickName)) {
+                tvUserName.setText(nickName);
+            }
+        }
+
+        if (score != null) {
+            if (!score.equals(userScore)) {
+                setViewData(tvUserScore, score);
+            }
+        }
+
+        if (level != userVipLevel) {
+            ivLevel.setImageResource(LoginBean.getInstance().getLevelImage());
+        }
+
+    }
+
+    @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
@@ -64,18 +100,25 @@ public class UserFragment extends SjmBaseFragment {
 
     private void initData() {
         LoginBean loginBean = LoginBean.getInstance();
-        tvUserName.setText(loginBean.getNickName() == null ? loginBean.getUsername() : loginBean.getNickName());
+        userHeadImage = loginBean.getHeadImg();
+        userNickName = loginBean.getNickName();
+        userScore = loginBean.getScore();
+        userVipLevel = loginBean.getVipLevel();
+        tvUserName.setText(userNickName == null ? loginBean.getUsername() : userNickName);
         ivLevel.setImageResource(loginBean.getLevelImage());
-        setViewData(tvUserScore, loginBean.getScore());
+        setViewData(tvUserScore, userScore);
     }
 
     private void setViewData(TextView tv, String value) {
         if (value != null && !"".equals(value)) {
-            tv.setText("高考分数：" + value);
+            tv.setText("高考分数：" + value + " 分");
         }
     }
 
-    @OnClick({R.id.rl_info, R.id.ll_wish_report, R.id.ll_vip_choose, R.id.ll_zj, R.id.ll_help_center, R.id.ll_contact_kf, R.id.ll_set})
+    @OnClick({R.id.rl_info, R.id.ll_wish_report,
+            R.id.ll_vip_choose, R.id.ll_zj,
+            R.id.ll_help_center, R.id.ll_contact_kf,
+            R.id.ll_set, R.id.ll_zj_face_to_face})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.rl_info:
@@ -93,6 +136,11 @@ public class UserFragment extends SjmBaseFragment {
                 Intent intent1 = new Intent();
                 intent1.putExtra("form", "vip_zj");
                 openNewActivityByIntent(VIPActivity.class, intent1);
+                break;
+            case R.id.ll_zj_face_to_face:
+                Intent intent2 = new Intent();
+                intent2.putExtra("form", "vip_zj_face");
+                openNewActivityByIntent(VIPActivity.class, intent2);
                 break;
             case R.id.ll_help_center:
                 openNewActivity(HelpCenterActivity.class);

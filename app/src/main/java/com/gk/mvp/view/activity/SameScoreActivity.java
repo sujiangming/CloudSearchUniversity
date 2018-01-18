@@ -121,9 +121,7 @@ public class SameScoreActivity extends SjmBaseActivity {
 
     private void getSameScoreDirection() {
         jsonObject.put("page", mPage);
-        jsonObject.put("area", "");//地区
-        jsonObject.put("subject", LoginBean.getInstance().getSubjectType());
-        jsonObject.put("score", LoginBean.getInstance().getScore());
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
