@@ -14,8 +14,8 @@
         android:background="@android:color/transparent"
         android:gravity="center"
         android:text="@string/main_tab_txt4"
-        android:textColor="@color/color030303"
-        android:textSize="@dimen/font_17_sp" />
+        android:textColor="@color/color555555"
+        android:textSize="@dimen/font_15_sp" />
 
     <ScrollView
         android:layout_width="match_parent"

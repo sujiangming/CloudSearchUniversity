@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     android:orientation="vertical">
 
     <com.gk.mvp.view.custom.TopBarView
@@ -18,6 +19,7 @@
         android:layout_marginLeft="@dimen/space_30_dp"
         android:layout_marginRight="@dimen/space_30_dp"
         android:layout_marginTop="@dimen/space_80_dp"
+        android:background="@null"
         android:ellipsize="end"
         android:gravity="center_vertical"
         android:hint="请输入内容"
@@ -28,6 +30,13 @@
         android:textColorHint="#A8A8A8"
         android:textCursorDrawable="@null"
         android:textSize="@dimen/font_14_sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:layout_marginLeft="@dimen/space_30_dp"
+        android:layout_marginRight="@dimen/space_30_dp"
+        android:background="@color/color4a4a4a" />
 
     <TextView
         android:id="@+id/tv_login"

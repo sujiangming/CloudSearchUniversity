@@ -5,7 +5,7 @@
     <color name="colorAccent">#f4f4f4</color>
     <color name="colorNavigation">#f4f4f4</color>
     <color name="colorIndexBottomBtn">#F6F6F6</color>
-    <color name="colorBackground">#E8E8E8</color> <!--F5F6F8-->
+    <color name="colorBackground">#eceaf2</color> <!--F5F6F8-->
     <color name="colorBtnSetPress">#0099B8</color>
     <color name="choosePressColor">#D2D0CA</color>
     <color name="indexColorChange">#F4F2E9</color>
