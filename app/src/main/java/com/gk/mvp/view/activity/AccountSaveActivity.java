@@ -1,13 +1,11 @@
 package com.gk.mvp.view.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
@@ -114,7 +112,6 @@ public class AccountSaveActivity extends SjmBaseActivity {
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 LoginBean.getInstance().setPassword(newPwd1);
                 LoginBean.getInstance().save();
-                Log.e(AccountSaveActivity.class.getName(), JSON.toJSONString(LoginBean.getInstance()));
                 toast(commonBean.getMessage());
                 closeActivity(this);
                 break;

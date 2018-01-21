@@ -31,8 +31,10 @@ import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
+import java.util.Set;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -208,7 +210,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         if (onlyOneTime == 0) {
             onlyOneTime = 1;
             if (roomInfo.getHeadImg() != null && !"".equals(roomInfo.getHeadImg())) {
-                imageLoader.displayImage(this, roomInfo.getHeadImg(), circleImageView);
+                imageLoader.displayByImgRes(this, roomInfo.getHeadImg(), circleImageView,R.drawable.my);
             }
             if (roomInfo.getNickName() != null && !"".equals(roomInfo.getNickName())) {
                 tvNickName.setText(roomInfo.getNickName());
@@ -216,10 +218,14 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
             llImages.removeAllViews();
             List<OnLiveRoomInfo.Fans> fans = roomInfo.getFans();
             if (fans != null && fans.size() > 0) {
+                Set<String> stringSet = new HashSet<>();
                 for (int i = 0; i < fans.size(); i++) {
+                    stringSet.add(fans.get(i).getHeadImg());
+                }
+                for (String url : stringSet) {
                     View view = View.inflate(this, R.layout.on_live_images, null);
                     CircleImageView circleImageView = view.findViewById(R.id.civ_image);
-                    imageLoader.displayImage(this, fans.get(i).getHeadImg(), circleImageView);
+                    imageLoader.displayByImgRes(this, url, circleImageView,R.drawable.my);
                     llImages.addView(view);
                 }
             }

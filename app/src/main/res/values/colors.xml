@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#D4D4D4</color>
-    <color name="colorPrimaryDark">#D4D4D4</color>
-    <color name="colorAccent">#D4D4D4</color>
-    <color name="colorNavigation">#D4D4D4</color>
+    <color name="colorPrimary">#f4f4f4</color>
+    <color name="colorPrimaryDark">#353535</color>
+    <color name="colorAccent">#f4f4f4</color>
+    <color name="colorNavigation">#f4f4f4</color>
     <color name="colorIndexBottomBtn">#F6F6F6</color>
-    <color name="colorBackground">#F5F6F8</color>
+    <color name="colorBackground">#E8E8E8</color> <!--F5F6F8-->
     <color name="colorBtnSetPress">#0099B8</color>
     <color name="choosePressColor">#D2D0CA</color>
     <color name="indexColorChange">#F4F2E9</color>
@@ -45,4 +45,5 @@
     <color name="color3AB1D6">#3AB1D6</color>
     <color name="colorFFFF0000">#FFFF0000</color>
     <color name="colorE1E2E4">#E1E2E4</color>
+    <color name="colorE8E8E8">#E8E8E8</color>
 </resources>

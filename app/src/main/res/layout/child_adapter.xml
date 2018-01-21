@@ -31,7 +31,9 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="50dp"
             android:gravity="center"
-            android:text="10"
+            android:text="专业代码："
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_12_sp"
             android:visibility="visible" />
     </RelativeLayout>
 

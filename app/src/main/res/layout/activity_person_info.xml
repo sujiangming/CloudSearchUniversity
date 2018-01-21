@@ -20,14 +20,14 @@
         android:orientation="vertical">
 
         <LinearLayout
+            android:layout_marginTop="@dimen/space_12_dp"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
-            android:layout_marginTop="@dimen/space_10_dp"
+            android:layout_height="80dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/space_20_dp"
-            android:paddingRight="@dimen/space_20_dp">
+            android:paddingLeft="@dimen/space_14_dp"
+            android:paddingRight="@dimen/space_14_dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -36,20 +36,20 @@
                 android:gravity="center_vertical"
                 android:text="头像"
                 android:textColor="@color/color030303"
-                android:textSize="@dimen/font_17_sp" />
+                android:textSize="@dimen/font_14_sp" />
 
             <com.gk.mvp.view.custom.CircleImageView
                 android:id="@+id/iv_user_head"
-                android:layout_width="85dp"
-                android:layout_height="85dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/space_15_dp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/zhanweitu" />
+                android:src="@drawable/my" />
 
             <ImageView
-                android:layout_width="@dimen/space_23_dp"
-                android:layout_height="23dp"
+                android:layout_width="@dimen/space_14_dp"
+                android:layout_height="@dimen/space_14_dp"
                 android:layout_marginLeft="@dimen/space_10_dp"
                 android:src="@drawable/right_arrow" />
         </LinearLayout>
@@ -61,12 +61,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/space_20_dp"
-            android:paddingRight="@dimen/space_10_dp">
+            android:paddingLeft="@dimen/space_14_dp"
+            android:paddingRight="@dimen/space_14_dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -74,7 +74,7 @@
                 android:layout_weight="1"
                 android:text="姓名"
                 android:textColor="@color/color030303"
-                android:textSize="@dimen/font_17_sp" />
+                android:textSize="@dimen/font_14_sp" />
 
             <com.gk.mvp.view.custom.RichText
                 android:id="@+id/tv_user_cname"
@@ -86,13 +86,12 @@
                 android:drawablePadding="@dimen/space_15_dp"
                 android:gravity="center_vertical|right"
                 android:hint="必填"
-                android:paddingRight="@dimen/space_11_dp"
                 android:textColor="@color/color8f8e94"
-                android:textSize="@dimen/font_16_sp"
-                app:drawable_height="@dimen/space_25_dp"
+                android:textSize="@dimen/font_14_sp"
+                app:drawable_height="@dimen/space_14_dp"
                 app:drawable_location="right"
                 app:drawable_src="@drawable/right_arrow"
-                app:drawable_width="@dimen/space_25_dp" />
+                app:drawable_width="@dimen/space_14_dp" />
         </LinearLayout>
 
         <TextView
@@ -102,12 +101,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/space_20_dp"
-            android:paddingRight="@dimen/space_10_dp">
+            android:paddingLeft="@dimen/space_14_dp"
+            android:paddingRight="@dimen/space_14_dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -115,7 +114,7 @@
                 android:layout_weight="1"
                 android:text="昵称"
                 android:textColor="@color/color030303"
-                android:textSize="@dimen/font_17_sp" />
+                android:textSize="@dimen/font_14_sp" />
 
             <com.gk.mvp.view.custom.RichText
                 android:id="@+id/tv_user_nick_name"
@@ -127,13 +126,12 @@
                 android:drawablePadding="@dimen/space_15_dp"
                 android:gravity="center_vertical|right"
                 android:hint="必填"
-                android:paddingRight="@dimen/space_11_dp"
                 android:textColor="@color/color8f8e94"
-                android:textSize="@dimen/font_16_sp"
-                app:drawable_height="@dimen/space_25_dp"
+                android:textSize="@dimen/font_14_sp"
+                app:drawable_height="@dimen/space_14_dp"
                 app:drawable_location="right"
                 app:drawable_src="@drawable/right_arrow"
-                app:drawable_width="@dimen/space_25_dp" />
+                app:drawable_width="@dimen/space_14_dp" />
         </LinearLayout>
 
         <TextView
@@ -143,12 +141,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/space_20_dp"
-            android:paddingRight="@dimen/space_10_dp">
+            android:paddingLeft="@dimen/space_14_dp"
+            android:paddingRight="@dimen/space_14_dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -156,7 +154,7 @@
                 android:layout_weight="1"
                 android:text="等级"
                 android:textColor="@color/color030303"
-                android:textSize="@dimen/font_17_sp" />
+                android:textSize="@dimen/font_14_sp" />
 
             <com.gk.mvp.view.custom.RichText
                 android:id="@+id/tv_vip_level"
@@ -168,24 +166,23 @@
                 android:drawablePadding="@dimen/space_15_dp"
                 android:gravity="center_vertical|right"
                 android:hint="必填"
-                android:paddingRight="@dimen/space_11_dp"
                 android:textColor="@color/color8f8e94"
-                android:textSize="@dimen/font_16_sp"
-                app:drawable_height="@dimen/space_25_dp"
+                android:textSize="@dimen/font_14_sp"
+                app:drawable_height="@dimen/space_14_dp"
                 app:drawable_location="right"
                 app:drawable_src="@drawable/right_arrow"
-                app:drawable_width="@dimen/space_25_dp" />
+                app:drawable_width="@dimen/space_14_dp" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:layout_marginTop="@dimen/space_10_dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/space_20_dp"
-            android:paddingRight="@dimen/space_10_dp">
+            android:paddingLeft="@dimen/space_14_dp"
+            android:paddingRight="@dimen/space_14_dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -193,7 +190,7 @@
                 android:layout_weight="1"
                 android:text="生源地"
                 android:textColor="@color/color030303"
-                android:textSize="@dimen/font_17_sp" />
+                android:textSize="@dimen/font_14_sp" />
 
             <com.gk.mvp.view.custom.RichText
                 android:id="@+id/tv_student_source"
@@ -205,13 +202,12 @@
                 android:drawablePadding="@dimen/space_15_dp"
                 android:gravity="center_vertical|right"
                 android:hint="必填"
-                android:paddingRight="@dimen/space_11_dp"
                 android:textColor="@color/color8f8e94"
-                android:textSize="@dimen/font_16_sp"
-                app:drawable_height="@dimen/space_25_dp"
+                android:textSize="@dimen/font_14_sp"
+                app:drawable_height="@dimen/space_14_dp"
                 app:drawable_location="right"
                 app:drawable_src="@drawable/right_arrow"
-                app:drawable_width="@dimen/space_25_dp" />
+                app:drawable_width="@dimen/space_14_dp" />
         </LinearLayout>
 
         <TextView
@@ -221,12 +217,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/space_20_dp"
-            android:paddingRight="@dimen/space_10_dp">
+            android:paddingLeft="@dimen/space_14_dp"
+            android:paddingRight="@dimen/space_14_dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -234,7 +230,7 @@
                 android:layout_weight="1"
                 android:text="高考分数"
                 android:textColor="@color/color030303"
-                android:textSize="@dimen/font_17_sp" />
+                android:textSize="@dimen/font_14_sp" />
 
             <com.gk.mvp.view.custom.RichText
                 android:id="@+id/tv_student_score"
@@ -246,13 +242,12 @@
                 android:drawablePadding="@dimen/space_15_dp"
                 android:gravity="center_vertical|right"
                 android:hint="必填"
-                android:paddingRight="@dimen/space_11_dp"
                 android:textColor="@color/color8f8e94"
-                android:textSize="@dimen/font_16_sp"
-                app:drawable_height="@dimen/space_25_dp"
+                android:textSize="@dimen/font_14_sp"
+                app:drawable_height="@dimen/space_14_dp"
                 app:drawable_location="right"
                 app:drawable_src="@drawable/right_arrow"
-                app:drawable_width="@dimen/space_25_dp" />
+                app:drawable_width="@dimen/space_14_dp" />
         </LinearLayout>
 
         <TextView
@@ -262,12 +257,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/space_20_dp"
-            android:paddingRight="@dimen/space_10_dp">
+            android:paddingLeft="@dimen/space_14_dp"
+            android:paddingRight="@dimen/space_14_dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -275,7 +270,7 @@
                 android:layout_weight="1"
                 android:text="高考排名"
                 android:textColor="@color/color030303"
-                android:textSize="@dimen/font_17_sp" />
+                android:textSize="@dimen/font_14_sp" />
 
             <com.gk.mvp.view.custom.RichText
                 android:id="@+id/tv_student_rank"
@@ -287,13 +282,12 @@
                 android:drawablePadding="@dimen/space_15_dp"
                 android:gravity="center_vertical|right"
                 android:hint="必填"
-                android:paddingRight="@dimen/space_11_dp"
                 android:textColor="@color/color8f8e94"
-                android:textSize="@dimen/font_16_sp"
-                app:drawable_height="@dimen/space_25_dp"
+                android:textSize="@dimen/font_14_sp"
+                app:drawable_height="@dimen/space_14_dp"
                 app:drawable_location="right"
                 app:drawable_src="@drawable/right_arrow"
-                app:drawable_width="@dimen/space_25_dp" />
+                app:drawable_width="@dimen/space_14_dp" />
         </LinearLayout>
 
         <TextView
@@ -303,12 +297,12 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
+            android:layout_height="45dp"
             android:background="@android:color/white"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingLeft="@dimen/space_20_dp"
-            android:paddingRight="@dimen/space_10_dp">
+            android:paddingLeft="@dimen/space_14_dp"
+            android:paddingRight="@dimen/space_14_dp">
 
             <TextView
                 android:layout_width="0dp"
@@ -316,7 +310,7 @@
                 android:layout_weight="1"
                 android:text="@string/wen_li"
                 android:textColor="@color/color030303"
-                android:textSize="@dimen/font_17_sp" />
+                android:textSize="@dimen/font_14_sp" />
 
             <com.gk.mvp.view.custom.RichText
                 android:id="@+id/tv_wen_li_ke"
@@ -328,13 +322,12 @@
                 android:drawablePadding="@dimen/space_15_dp"
                 android:gravity="center_vertical|right"
                 android:hint="必填"
-                android:paddingRight="@dimen/space_11_dp"
                 android:textColor="@color/color8f8e94"
-                android:textSize="@dimen/font_16_sp"
-                app:drawable_height="@dimen/space_25_dp"
+                android:textSize="@dimen/font_14_sp"
+                app:drawable_height="@dimen/space_14_dp"
                 app:drawable_location="right"
                 app:drawable_src="@drawable/right_arrow"
-                app:drawable_width="@dimen/space_25_dp" />
+                app:drawable_width="@dimen/space_14_dp" />
         </LinearLayout>
     </LinearLayout>
 

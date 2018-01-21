@@ -11,7 +11,7 @@
         android:id="@+id/top_bar_live"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_44_dp"
-        android:background="@color/colorNavigation"
+        android:background="@android:color/transparent"
         android:gravity="center"
         android:text="@string/main_tab_txt4"
         android:textColor="@color/color030303"

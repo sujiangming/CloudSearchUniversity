@@ -2,6 +2,7 @@ package com.gk.mvp.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
@@ -23,6 +24,7 @@ import com.gk.beans.MajorQueryBean;
 import com.gk.global.YXXConstants;
 import com.gk.mvp.presenter.MajorPresenter;
 import com.gk.mvp.view.adpater.ProfessionalParentAdapter;
+import com.gk.tools.JdryPersistence;
 import com.gk.tools.YxxUtils;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
@@ -72,6 +74,8 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
 
     private MajorPresenter majorPresenter;
     private int pageType = 1;//默认当前页面是本科页面 2 为专科页面
+    private String majorJson = null;
+    private MajorBean majorBean;
 
     @Override
     public int getResouceId() {
@@ -80,8 +84,57 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        showProgress();
-        majorPresenter = new MajorPresenter(this);
+        majorJson = JdryPersistence.getObjectByAppContext(YXXConstants.MAJOR_JSON_SERIALIZE_KEY);
+        if (null == majorJson || "".equals(majorJson)) {
+            showProgress();
+            majorPresenter = new MajorPresenter(this);
+            return;
+        }
+        //取出存储的数据，直接显示
+        new DownTask().execute("execute");
+    }
+
+    /**
+     * 取出本地数据，主要是数据量比较大，需要异步操作，避免UI线程阻塞
+     */
+    public class DownTask extends AsyncTask<String, Void, MajorBean> {
+        @Override
+        //在界面上显示进度条
+        protected void onPreExecute() {
+            showProgress();
+        }
+
+        protected MajorBean doInBackground(String... params) {  //三个点，代表可变参数
+            majorJson = JdryPersistence.getObjectByAppContext(YXXConstants.MAJOR_JSON_SERIALIZE_KEY);
+            majorBean = JSON.parseObject(majorJson, MajorBean.class);
+            return majorBean;
+        }
+
+        //主要是更新UI
+        @Override
+        protected void onPostExecute(MajorBean result) {
+            super.onPostExecute(result);
+            handleData();//更新UI
+            hideProgress();
+        }
+    }
+
+    private void handleData() {
+        List<List<MajorBean.DataBean.NodesBeanXX>> listList = new ArrayList<>();
+        List<MajorBean.DataBean> bzTypeList = majorBean.getData();
+        for (MajorBean.DataBean dataBean : bzTypeList) {
+            String name = dataBean.getName();
+            if (name.equals("本科")) {
+                listList.add(0, dataBean.getNodes());
+                continue;
+            }
+            if (name.equals("专科")) {
+                listList.add(1, dataBean.getNodes());
+                continue;
+            }
+        }
+        list = listList.get(0);//默认是本科
+        initView();
     }
 
     @Override

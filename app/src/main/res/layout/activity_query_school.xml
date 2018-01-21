@@ -39,7 +39,7 @@
     <LinearLayout
         android:id="@+id/ll_choose"
         android:layout_width="match_parent"
-        android:layout_height="53dp"
+        android:layout_height="40dp"
         android:layout_below="@id/ll_top_bar"
         android:background="#F0EFF3"
         android:gravity="center"
@@ -57,7 +57,8 @@
             android:maxLines="1"
             android:paddingRight="@dimen/space_12_dp"
             android:text="所在地"
-            android:textColor="@color/color353535" />
+            android:textColor="@color/color353535"
+            android:textSize="@dimen/font_12_sp" />
 
         <TextView
             android:id="@+id/spinner2"
@@ -73,7 +74,8 @@
             android:maxLines="1"
             android:paddingRight="@dimen/space_12_dp"
             android:text="高校类型"
-            android:textColor="@color/color353535" />
+            android:textColor="@color/color353535"
+            android:textSize="@dimen/font_12_sp" />
 
         <TextView
             android:id="@+id/spinner3"
@@ -88,7 +90,8 @@
             android:maxLines="1"
             android:paddingRight="@dimen/space_12_dp"
             android:text="重点院校"
-            android:textColor="@color/color353535" />
+            android:textColor="@color/color353535"
+            android:textSize="@dimen/font_12_sp" />
 
         <TextView
             android:id="@+id/spinner4"
@@ -102,7 +105,8 @@
             android:maxLines="1"
             android:paddingRight="@dimen/space_12_dp"
             android:text="批次"
-            android:textColor="@color/color353535" />
+            android:textColor="@color/color353535"
+            android:textSize="@dimen/font_12_sp" />
 
     </LinearLayout>
 
@@ -119,14 +123,14 @@
         android:layout_height="match_parent"
         android:layout_below="@id/tv_line"
         android:background="@color/colorF0EFF3"
-        android:paddingTop="@dimen/space_12_dp">
+        android:paddingTop="@dimen/space_5_dp">
 
         <ListView
             android:id="@+id/lv_query_school"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:divider="@color/colorF0EFF3"
-            android:dividerHeight="@dimen/space_10_dp">
+            android:dividerHeight="@dimen/space_1_dp">
 
         </ListView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

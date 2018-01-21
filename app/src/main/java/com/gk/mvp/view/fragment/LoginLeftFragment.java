@@ -225,6 +225,12 @@ public class LoginLeftFragment extends SjmBaseFragment {
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
+        switch (order) {
+            case YXXConstants.INVOKE_API_THREE_TIME:
+                openNewActivity(MainActivity.class);
+                closeActivity();
+                break;
+        }
     }
 
     public class MyCountDownTimer extends CountDownTimer {

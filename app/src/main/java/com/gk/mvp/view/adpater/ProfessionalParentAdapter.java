@@ -2,7 +2,6 @@ package com.gk.mvp.view.adpater;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -150,7 +149,6 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
         childListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
             @Override
             public boolean onGroupClick(ExpandableListView parent, View v, int position, long id) {
-                Log.e("Xxx", "恭喜你,点击了" + parentPosition + "childpos>>>" + childPosition);
                 List<MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean> nodesBeanXList = secondNodesBeanX.getNodes();
                 if (nodesBeanXList == null || nodesBeanXList.size() == 0) {
                     ToastUtils.toast(mContext, "该专业类型没有更多子类型专业了");
@@ -167,7 +165,6 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
             @Override
             public boolean onChildClick(ExpandableListView arg0, View arg1, int groupIndex, int childIndex, long arg4) {
                 if (mListener != null) {
-                    //mListener.onclick(parentPosition, childPosition, childIndex);
                     //点击三级菜单，跳转到编辑菜单界面
                     List<MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean> beans = childData.get(0).getNodes();
                     if (beans == null) {
@@ -213,7 +210,6 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
         childListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Log.e("xxx", groupPosition + ">>onGroupCollapse");
                 AbsListView.LayoutParams lp = new AbsListView.LayoutParams(
                         ViewGroup.LayoutParams.MATCH_PARENT, (int) mContext
                         .getResources().getDimension(R.dimen.space_50_dp));

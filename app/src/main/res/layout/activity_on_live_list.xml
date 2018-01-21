@@ -18,13 +18,14 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="@color/colorBackground">
+            android:background="@color/colorE8E8E8">
 
             <ListView
                 android:id="@+id/lv_onlive"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:divider="@null"
+                android:dividerHeight="@dimen/space_1_px"
                 android:scrollbars="none">
 
             </ListView>

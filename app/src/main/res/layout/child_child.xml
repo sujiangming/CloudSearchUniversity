@@ -1,6 +1,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,11 +20,17 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="50dp"
-            android:background="@drawable/score_bg"
+            android:layout_marginRight="@dimen/space_12_dp"
             android:gravity="center"
-            android:text="10分"
-            android:visibility="gone" />
+            android:text="专业代码："
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_12_sp"
+            android:visibility="visible" />
     </RelativeLayout>
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:layout_marginLeft="@dimen/space_60_dp"
+        android:background="@color/colorE1E2E4" />
 </LinearLayout>

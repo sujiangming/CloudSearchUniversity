@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <!--以前的主题-->
+    <style name="BaseAppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item><!-- 状态栏 -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item><!-- toolbar -->
+        <item name="colorAccent">@color/colorAccent</item> <!-- 重点 -->
         <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
     </style>
 
-    <style name="jdryStyle" parent="AppTheme">
+    <style name="jdryStyle" parent="BaseAppTheme">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:textColor">@android:color/black</item>
@@ -43,7 +43,7 @@
 
     <!--启动欢迎页-->
     <style name="AppWelcome" parent="jdryStyle">
-        <item name="android:windowBackground">@drawable/lanch</item>
+        <item name="android:windowBackground">@drawable/yxxx1080x1920</item>
     </style>
 
     <style name="TabLayoutTextStyle">

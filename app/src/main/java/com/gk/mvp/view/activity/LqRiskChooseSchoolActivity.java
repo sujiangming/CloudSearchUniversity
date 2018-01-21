@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -71,7 +70,6 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
 
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d(TAG, "onQueryTextSubmit = " + s);
                 invoke(nullString, nullString, nullString, nullString, YxxUtils.URLEncode(s));
                 if (searchview != null) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -104,7 +102,7 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
         jsonObject.put("schoolCategory", schoolCategory);//学校类别
         jsonObject.put("schoolType", schoolType);//学校类型（1本科、2专业）
         jsonObject.put("tese", tese);//特色
-        jsonObject.put("schoolName", schoolName);//学校名称
+        jsonObject.put("schoolName", schoolName);
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance()

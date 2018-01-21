@@ -6,9 +6,11 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.beans.MajorBean;
 import com.gk.beans.MajorQueryBean;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.IPresenterCallback;
+import com.gk.tools.JdryPersistence;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -40,6 +42,7 @@ public class MajorModel {
                 if (response.isSuccessful()) {
                     try {
                         String body = response.body().string();
+                        JdryPersistence.saveByAppContext(body, YXXConstants.MAJOR_JSON_SERIALIZE_KEY);//存储起来
                         majorBean = JSON.parseObject(body, MajorBean.class);
                         handleData(iPresenterCallback);
                     } catch (IOException e) {

@@ -7,12 +7,12 @@
     <!--头部部分-->
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_44_dp"
+        android:layout_height="@dimen/space_40_dp"
         android:background="@color/colorNavigation"
         android:gravity="center"
         android:text="@string/main_tab_txt5"
         android:textColor="@color/color030303"
-        android:textSize="@dimen/font_17_sp" />
+        android:textSize="@dimen/font_16_sp" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -28,7 +28,7 @@
                 android:id="@+id/rl_info"
                 android:layout_width="match_parent"
                 android:layout_height="110dp"
-                android:layout_marginTop="@dimen/space_16_dp"
+                android:layout_marginTop="@dimen/space_12_dp"
                 android:background="@drawable/home_item_press">
 
                 <com.gk.mvp.view.custom.CircleImageView
@@ -50,7 +50,7 @@
                     android:gravity="center"
                     android:hint="用户名"
                     android:textColor="#302f30"
-                    android:textSize="@dimen/font_17_sp" />
+                    android:textSize="@dimen/font_16_sp" />
 
                 <TextView
                     android:id="@+id/tv_user_level"
@@ -86,8 +86,8 @@
                     android:textSize="@dimen/font_14_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="@dimen/space_16_dp"
@@ -99,7 +99,7 @@
                 android:id="@+id/ll_wish_report"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginTop="@dimen/space_25_dp"
+                android:layout_marginTop="@dimen/space_12_dp"
                 android:background="@drawable/home_item_press"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -118,11 +118,11 @@
                     android:layout_weight="1"
                     android:text="志愿报告"
                     android:textColor="@color/color030303"
-                    android:textSize="@dimen/font_17_sp" />
+                    android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -131,7 +131,7 @@
                 android:id="@+id/ll_vip_choose"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginTop="@dimen/space_25_dp"
+                android:layout_marginTop="@dimen/space_12_dp"
                 android:background="@drawable/home_item_press"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -150,11 +150,11 @@
                     android:layout_weight="1"
                     android:text="VIP智选"
                     android:textColor="@color/color030303"
-                    android:textSize="@dimen/font_17_sp" />
+                    android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -182,11 +182,11 @@
                     android:layout_weight="1"
                     android:text="人工审核"
                     android:textColor="@color/color030303"
-                    android:textSize="@dimen/font_17_sp" />
+                    android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -216,11 +216,11 @@
                     android:layout_weight="1"
                     android:text="专家面对面"
                     android:textColor="@color/color030303"
-                    android:textSize="@dimen/font_17_sp" />
+                    android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -229,7 +229,7 @@
                 android:id="@+id/ll_help_center"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_marginTop="@dimen/space_25_dp"
+                android:layout_marginTop="@dimen/space_12_dp"
                 android:background="@drawable/home_item_press"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -248,11 +248,11 @@
                     android:layout_weight="1"
                     android:text="帮助中心"
                     android:textColor="@color/color030303"
-                    android:textSize="@dimen/font_17_sp" />
+                    android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -280,11 +280,11 @@
                     android:layout_weight="1"
                     android:text="联系客服"
                     android:textColor="@color/color030303"
-                    android:textSize="@dimen/font_17_sp" />
+                    android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -314,11 +314,11 @@
                     android:layout_weight="1"
                     android:text="设置"
                     android:textColor="@color/color030303"
-                    android:textSize="@dimen/font_17_sp" />
+                    android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>

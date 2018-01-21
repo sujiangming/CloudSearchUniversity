@@ -149,10 +149,8 @@ public class LoginBean implements Serializable {
     }
 
     public void saveLoginBean(LoginBean loginBean) {
-        Log.e(LoginBean.class.getName() + "-before-saveLoginBean:", JSON.toJSONString(instance));
         setInstance(loginBean);
         save();
-        Log.e(LoginBean.class.getName() + "-after-saveLoginBean:", JSON.toJSONString(LoginBean.getInstance()));
     }
 
     public void save() {

@@ -62,8 +62,8 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/space_16_dp"
+                    android:layout_height="@dimen/space_16_dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -104,8 +104,8 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/space_16_dp"
+                    android:layout_height="@dimen/space_16_dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -141,8 +141,8 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/space_16_dp"
+                    android:layout_height="@dimen/space_16_dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -183,8 +183,8 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/space_16_dp"
+                    android:layout_height="@dimen/space_16_dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -225,8 +225,8 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/space_16_dp"
+                    android:layout_height="@dimen/space_16_dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -267,8 +267,8 @@
                     android:textSize="@dimen/font_16_sp" />
 
                 <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
+                    android:layout_width="@dimen/space_16_dp"
+                    android:layout_height="@dimen/space_16_dp"
                     android:layout_gravity="end|center_vertical"
                     android:src="@drawable/more" />
             </LinearLayout>
@@ -317,7 +317,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_44_dp"
-        android:background="@color/color1A000000"
+        android:background="@android:color/transparent"
         android:gravity="center"
         android:text="@string/main_tab_txt3"
         android:textColor="@android:color/white"

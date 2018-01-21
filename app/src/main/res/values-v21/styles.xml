@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--定义适用与5.0系统的AppTheme，在5.0系统中提出的变色状态栏-->
+    <style name="AppTheme" parent="BaseAppTheme" />
+</resources>

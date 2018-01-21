@@ -124,7 +124,7 @@ public class MainActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        setStatusBarTransparent();
+        //setStatusBarTransparent();
         initView();
     }
 

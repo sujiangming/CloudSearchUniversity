@@ -3,6 +3,8 @@ package com.gk.tools;
 import android.content.Context;
 import android.content.SharedPreferences;
 
+import com.gk.global.YXXApplication;
+
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -63,6 +65,18 @@ public class JdryPersistence {
 
     public static String getObject(Context context, String objName) {
         SharedPreferences sp = context.getSharedPreferences(objName, Context.MODE_PRIVATE);
+        return sp.getString(objName, null);
+    }
+
+    public static void saveByAppContext(String strObject, String objName) {
+        SharedPreferences sp = YXXApplication.getInstance().getApplicationContext().getSharedPreferences(objName, Context.MODE_PRIVATE);
+        SharedPreferences.Editor edit = sp.edit();
+        edit.putString(objName, strObject);
+        edit.commit();
+    }
+
+    public static String getObjectByAppContext(String objName) {
+        SharedPreferences sp = YXXApplication.getInstance().getApplicationContext().getSharedPreferences(objName, Context.MODE_PRIVATE);
         return sp.getString(objName, null);
     }
 

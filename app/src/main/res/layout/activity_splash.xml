@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/lanch">
+    android:background="@drawable/yxxx1080x1920">
 
 </android.support.constraint.ConstraintLayout>

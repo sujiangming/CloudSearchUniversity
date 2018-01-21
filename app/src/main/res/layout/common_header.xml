@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="40dp"
     android:background="@color/colorNavigation">
 
     <TextView
@@ -14,11 +14,11 @@
         android:gravity="center"
         android:text="标题"
         android:textColor="@color/color4a4a4a"
-        android:textSize="@dimen/font_16_sp" />
+        android:textSize="@dimen/font_14_sp" />
 
     <ImageView
         android:id="@+id/back_image"
-        android:layout_width="60dp"
+        android:layout_width="40dp"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"

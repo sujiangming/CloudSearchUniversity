@@ -8,12 +8,7 @@ public class YXXConstants {
     public static final String EXTRA_IS_BARRAGE_MSG = "is_barrage_msg";
     public static final String CMD_PRAISE = "cmd_live_praise";
     public static final String EXTRA_PRAISE_COUNT = "live_praise_count";
-    public static final String ENTER_LOGIN_PAGE_FLAG = "login";
-    public static final int FROM_MAIN_FLAG = 1;
-    public static final int FROM_OTHER_FLAG = 2;
-    public static final int FROM_SPLASH_FLAG = 3;
     public static final int LOGIN_SET_RESULT = 512;
-    public static final int MAIN_TO_LOGIN_REQUEST = 514;
 
     public static final String HOST = "http://101.132.143.37/cloudsch/";//"http://120.76.65.54:18080/cloudsch/";//http://101.132.143.37/cloudsch/";
     public static final int INVOKE_API_DEFAULT_TIME = 1;
@@ -28,5 +23,6 @@ public class YXXConstants {
     //序列化标志
     public static final String LOGIN_INFO_SERIALIZE_KEY = "loginBean";
     public static final String ADS_INFO_SERIALIZE_KEY = "ads";
+    public static final String MAJOR_JSON_SERIALIZE_KEY = "majorJson";
 
 }

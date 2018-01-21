@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.util.TypedValue;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -158,6 +159,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         initListView();
         invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
         showSearch();
+        //setSearchview();
     }
 
     private void initListView() {
@@ -172,6 +174,23 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 openNewActivityByIntent(SchoolDetailActivity.class, intent);
             }
         });
+    }
+
+    private void setSearchview() {
+        if (searchview == null) {
+            return;
+        }
+        //获取到TextView的ID
+        int id = searchview.getContext().getResources().getIdentifier("android:id/search_src_text", null, null);
+        //获取到TextView的控件
+        TextView textView = (TextView) searchview.findViewById(id);
+        //设置字体大小为14sp
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_SP, 14);//14sp
+        //设置字体颜色
+        textView.setTextColor(getResources().getColor(R.color.color808080));
+        //设置提示文字颜色
+        textView.setHintTextColor(getResources().getColor(R.color.colorc8c7cc));
+
     }
 
     private String getEnumName(int index) {

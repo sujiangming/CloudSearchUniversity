@@ -13,7 +13,7 @@
     <LinearLayout
         android:id="@+id/ll_account"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginTop="@dimen/space_20_dp"
         android:background="@drawable/home_item_press"
         android:gravity="center_vertical"
@@ -39,7 +39,7 @@
     <LinearLayout
         android:id="@+id/ll_about"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="50dp"
         android:layout_marginTop="@dimen/space_20_dp"
         android:background="@drawable/home_item_press"
         android:gravity="center_vertical"
@@ -66,7 +66,7 @@
         android:id="@+id/tv_logout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_60_dp"
-        android:layout_marginTop="@dimen/space_60_dp"
+        android:layout_marginTop="@dimen/space_90_dp"
         android:background="@drawable/home_item_press"
         android:gravity="center"
         android:text="退出登录"

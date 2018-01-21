@@ -94,7 +94,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "个人信息", 0);
         if (loginBean.getHeadImg() != null && !"".equals(loginBean.getHeadImg())) {
-            glideImageLoader.displayImage(this, loginBean.getHeadImg(), ivUserHead);
+            glideImageLoader.displayByImgRes(this, loginBean.getHeadImg(), ivUserHead,R.drawable.my);
         }
         setViewData(tvUserCname, loginBean.getCname());
         setViewData(tvUserNickName, loginBean.getNickName());
@@ -128,18 +128,18 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 showVipDialog();
                 break;
             case R.id.tv_user_cname:
-                if (TextUtils.isEmpty(tvUserCname.getText())) {
+                if (TextUtils.isEmpty(tvUserCname.getText()) || "未填写".equals(tvUserCname.getText().toString())) {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 2);
                     startActivityForResult(intent, 2);
-                }else{
+                } else {
                     toast(editInfo);
                 }
                 break;
             case R.id.tv_student_source:
                 if (TextUtils.isEmpty(tvStudentSource.getText())) {
                     showMultiChoiceDialog();
-                }else{
+                } else {
                     toast(editInfo);
                 }
                 break;
@@ -148,7 +148,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 4);
                     startActivityForResult(intent, 4);
-                }else{
+                } else {
                     toast(editInfo);
                 }
                 break;
@@ -157,23 +157,23 @@ public class PersonInfoActivity extends SjmBaseActivity {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 5);
                     startActivityForResult(intent, 5);
-                }else{
+                } else {
                     toast(editInfo);
                 }
                 break;
             case R.id.tv_wen_li_ke:
                 if (TextUtils.isEmpty(tvWenLiKe.getText())) {
                     showDialog();
-                }else{
+                } else {
                     toast(editInfo);
                 }
                 break;
             case R.id.tv_user_nick_name:
-                if(TextUtils.isEmpty(tvUserNickName.getText())){
+                if (TextUtils.isEmpty(tvUserNickName.getText())) {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 7);
                     startActivityForResult(intent, 7);
-                }else{
+                } else {
                     toast(editInfo);
                 }
                 break;

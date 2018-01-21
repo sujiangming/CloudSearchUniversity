@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--定义适用与4.4系统的AppTheme，
+        在4.4系统中提出的是透明状态栏，
+        因此这里我们定义一个AppTheme继承于BaseAppTheme，其中只要实现透明状态栏-->
+    <style name="AppTheme" parent="BaseAppTheme">
+        <item name="android:windowTranslucentStatus">true</item>
+    </style>
+</resources>

@@ -24,7 +24,8 @@
 
         <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@color/colorE8E8E8">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -164,7 +165,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_10_dp"
                     android:background="@drawable/border_radius_vip"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/space_16_dp">
 
                     <com.gk.mvp.view.custom.RichText
                         android:id="@+id/rtv_diamond_price"
@@ -350,10 +352,11 @@
                 <LinearLayout
                     android:id="@+id/ll_gold"
                     android:layout_width="match_parent"
-                    android:layout_height="360dp"
+                    android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_10_dp"
                     android:background="@drawable/border_radius_vip"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/space_16_dp">
 
                     <com.gk.mvp.view.custom.RichText
                         android:id="@+id/rtv_gold_price"
@@ -526,7 +529,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_10_dp"
                     android:background="@drawable/border_radius_vip"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/space_16_dp">
 
                     <com.gk.mvp.view.custom.RichText
                         android:id="@+id/rtv_silver_price"

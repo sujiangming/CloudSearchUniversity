@@ -103,8 +103,9 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
         setTopBar(topBarView, "客服中心", 0);
         initKeyBoardParameter();
         rootView.addOnLayoutChangeListener(this);
-        jsonObject.put("username", LoginBean.getInstance().getUsername());
-        getMyMessageList();
+        initAdapter();
+        delayShowClientInfo();
+        delayShowMessageInfo();
     }
 
     private void initAdapter() {
@@ -136,7 +137,8 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
                 }
                 mDatas.addAll(chatMessageBeans);
                 mDatas = removeDuplicate(mDatas);
-                initAdapter();
+                adapter.notifyDataSetChanged();
+                //initAdapter();
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 toast(commonBean.getMessage());
@@ -156,6 +158,16 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
+    }
+
+    private void delayShowMessageInfo() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                jsonObject.put("username", LoginBean.getInstance().getUsername());
+                getMyMessageList();
+            }
+        }, 3000);
     }
 
     private void delayShowClientInfo() {
