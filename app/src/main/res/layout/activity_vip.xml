@@ -173,11 +173,11 @@
                         android:padding="@dimen/space_10_dp"
                         android:text="钻石卡会员服务 ￥4999元"
                         android:textColor="#FEA527"
-                        android:textSize="@dimen/font_17_sp"
-                        app:drawable_height="@dimen/space_50_dp"
+                        android:textSize="@dimen/font_15_sp"
+                        app:drawable_height="@dimen/space_30_dp"
                         app:drawable_location="left"
                         app:drawable_src="@drawable/diamond_icon"
-                        app:drawable_width="@dimen/space_50_dp" />
+                        app:drawable_width="@dimen/space_30_dp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -363,11 +363,11 @@
                         android:padding="@dimen/space_10_dp"
                         android:text="金卡会员服务 ￥2999元"
                         android:textColor="#DEDB12"
-                        android:textSize="@dimen/font_17_sp"
-                        app:drawable_height="@dimen/space_50_dp"
+                        android:textSize="@dimen/font_15_sp"
+                        app:drawable_height="@dimen/space_30_dp"
                         app:drawable_location="left"
                         app:drawable_src="@drawable/vip3x"
-                        app:drawable_width="@dimen/space_50_dp" />
+                        app:drawable_width="@dimen/space_30_dp" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -537,11 +537,11 @@
                         android:padding="@dimen/space_10_dp"
                         android:text="银卡会员服务 ￥999元"
                         android:textColor="@color/color808080"
-                        android:textSize="@dimen/font_17_sp"
-                        app:drawable_height="@dimen/space_50_dp"
+                        android:textSize="@dimen/font_15_sp"
+                        app:drawable_height="@dimen/space_30_dp"
                         app:drawable_location="left"
                         app:drawable_src="@drawable/vip_silver3x"
-                        app:drawable_width="@dimen/space_50_dp" />
+                        app:drawable_width="@dimen/space_30_dp" />
 
                     <TextView
                         android:layout_width="match_parent"

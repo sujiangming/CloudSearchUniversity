@@ -33,6 +33,8 @@ public class HelpCenterActivity extends SjmBaseActivity {
     LinearLayout llWebChatNumber;
     @BindView(R.id.tv_phone)
     TextView tv_phone;
+    @BindView(R.id.tv_link)
+    TextView tvLink;
 
     @Override
     public int getResouceId() {
@@ -42,6 +44,13 @@ public class HelpCenterActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "帮助中心", 0);
+
+//        //创建一个 SpannableString对象
+//        SpannableString sp = new SpannableString("http://www.yunxunxiao.com");
+//        sp.setSpan(new URLSpan("http://www.yunxunxiao.com"), 0, sp.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);//设置超链接
+//        sp.setSpan(new ForegroundColorSpan(0xff19B4D4), 0, sp.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);//设置高亮样式一
+//        tvLink.setText(sp);
+//        tvLink.setMovementMethod(LinkMovementMethod.getInstance());//设置TextView可点击
     }
 
     @OnClick({R.id.ll_wish_report, R.id.ll_vip_open, R.id.ll_solve, R.id.ll_hot_line, R.id.ll_web_chat_number})

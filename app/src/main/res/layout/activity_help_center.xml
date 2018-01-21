@@ -183,10 +183,10 @@
             android:textSize="@dimen/font_14_sp" />
 
         <TextView
+            android:id="@+id/tv_link"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/space_30_dp"
-            android:autoLink="web"
             android:linksClickable="true"
             android:text="http://www.yunxunxiao.com"
             android:textColor="@color/color19B4D4"
