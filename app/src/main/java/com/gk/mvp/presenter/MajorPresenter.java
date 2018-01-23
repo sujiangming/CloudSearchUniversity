@@ -18,8 +18,11 @@ public class MajorPresenter<T> implements IPresenterCallback<T> {
 
     public MajorPresenter(IView view) {
         this.iView = view;
-        iView.showProgress();
         majorModel = new MajorModel(this);
+    }
+
+    public void getMajorTypeList() {
+        majorModel.httpRequest();
     }
 
     public void queryMajorByName(String name, int type) {

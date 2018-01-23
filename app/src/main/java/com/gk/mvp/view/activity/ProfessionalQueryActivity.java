@@ -85,9 +85,10 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         majorJson = JdryPersistence.getObjectByAppContext(YXXConstants.MAJOR_JSON_SERIALIZE_KEY);
+        majorPresenter = new MajorPresenter(this);
         if (null == majorJson || "".equals(majorJson)) {
             showProgress();
-            majorPresenter = new MajorPresenter(this);
+            majorPresenter.getMajorTypeList();
             return;
         }
         //取出存储的数据，直接显示

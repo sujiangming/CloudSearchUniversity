@@ -30,12 +30,13 @@ public class MajorModel {
     private MajorBean majorBean;
     private String errorMsg;
     private MajorQueryBean majorQueryBean;
+    private IPresenterCallback iPresenterCallback;
 
     public MajorModel(IPresenterCallback iPresenterCallback) {
-        httpRequest(iPresenterCallback);
+        this.iPresenterCallback = iPresenterCallback;
     }
 
-    public void httpRequest(final IPresenterCallback iPresenterCallback) {
+    public void httpRequest() {
         RetrofitUtil.getInstance().createReq(IService.class).getMajorTypeList().enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

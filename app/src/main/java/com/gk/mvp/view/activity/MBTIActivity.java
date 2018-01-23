@@ -223,7 +223,9 @@ public class MBTIActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        if(order == YXXConstants.INVOKE_API_SECOND_TIME){
+            toast((String) t);
+        }
         hideProgress();
     }
 
