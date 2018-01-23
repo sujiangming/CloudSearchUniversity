@@ -157,6 +157,12 @@ public class MaterialListActivity extends SjmBaseActivity {
         lvMaterial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (1 == list.get(i).getType()) {
+                    Intent intent = new Intent();
+                    intent.putExtra("bean",list.get(i));
+                    openNewActivityByIntent(MsJtDetailActivity.class,intent);
+                    return;
+                }
                 openOrDownloadFile(list.get(i));
             }
         });

@@ -236,6 +236,10 @@
             android:name=".mvp.view.activity.VideoListActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".mvp.view.activity.MsJtDetailActivity"
+            android:screenOrientation="portrait" />
+
         <!--网络监听广播-->
         <receiver android:name=".listener.ConnectionChangeReceiver">
             <intent-filter>
