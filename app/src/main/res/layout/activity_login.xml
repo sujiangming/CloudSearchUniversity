@@ -19,8 +19,8 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_44_dp"
-        android:paddingLeft="@dimen/space_12_dp"
-        android:paddingRight="@dimen/space_12_dp"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
         android:layout_marginTop="45dp"
         app:tabIndicatorColor="@color/color4c90bf"
         app:tabMode="fixed"
@@ -29,7 +29,6 @@
         app:tabTextColor="@color/color4a4a4a">
 
     </android.support.design.widget.TabLayout>
-
 
     <TextView
         android:layout_width="match_parent"

@@ -92,6 +92,7 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
         }
         //取出存储的数据，直接显示
         new DownTask().execute("execute");
+        setSearchViewText(searchView);
     }
 
     /**

@@ -3,7 +3,6 @@ package com.gk.mvp.view.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -68,6 +67,7 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         jsonObject = new JSONObject();
         invoke();
         showSearch();
+        setSearchViewText(searchView);
     }
 
     private void invoke() {
@@ -83,11 +83,9 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
     private void showSearch() {
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            private String TAG = getClass().getSimpleName();
 
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d(TAG, "onQueryTextSubmit = " + s);
                 searchKey = YxxUtils.URLEncode(s);
                 invoke();
                 if (searchView != null) {
@@ -116,11 +114,7 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
     @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-        } else {
-            stopRefreshLayout();
-        }
+        stopLayoutRefreshByTag(isLoadMore);
         CommonBean commonBean = (CommonBean) t;
         List<SchoolZSBean> beanList = JSON.parseArray(commonBean.getData().toString(), SchoolZSBean.class);
         if (isLoadMore) {
@@ -136,13 +130,7 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
                 return;
             }
             hideTvNoData();
-            int currentSize = schoolBeanList.size();
-            schoolBeanList.addAll(beanList);
-            schoolBeanList = removeDuplicate(schoolBeanList);
-            int afterSize = schoolBeanList.size();
-            if (currentSize == afterSize) {
-                return;
-            }
+            schoolBeanList = beanList;
         }
         lvQuerySchool.setAdapter(adapter = new CommonAdapter<SchoolZSBean>(this, R.layout.school_zhaosheng_list_item, schoolBeanList) {
             @Override
@@ -163,29 +151,11 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         });
     }
 
-    private void showTvNoData() {
-        lvQuerySchool.setVisibility(View.GONE);
-        tvNoData.setVisibility(View.VISIBLE);
-    }
-
-    private void hideTvNoData() {
-        if (lvQuerySchool.getVisibility() == View.GONE) {
-            lvQuerySchool.setVisibility(View.VISIBLE);
-        }
-        if (tvNoData.getVisibility() == View.VISIBLE) {
-            tvNoData.setVisibility(View.GONE);
-        }
-    }
-
     @Override
     public <T> void fillWithNoData(T t, int order) {
         toast((String) t);
         hideProgress();
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-        } else {
-            stopRefreshLayout();
-        }
+        stopLayoutRefreshByTag(isLoadMore);
     }
 
     @Override
@@ -202,14 +172,18 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         invoke();
     }
 
-    public List<SchoolZSBean> removeDuplicate(List<SchoolZSBean> list) {
-        for (int i = 0; i < list.size() - 1; i++) {
-            for (int j = list.size() - 1; j > i; j--) {
-                if (list.get(j).getId().equals(list.get(i).getId())) {
-                    list.remove(j);
-                }
-            }
-        }
-        return list;
+    private void showTvNoData() {
+        lvQuerySchool.setVisibility(View.GONE);
+        tvNoData.setVisibility(View.VISIBLE);
     }
+
+    private void hideTvNoData() {
+        if (lvQuerySchool.getVisibility() == View.GONE) {
+            lvQuerySchool.setVisibility(View.VISIBLE);
+        }
+        if (tvNoData.getVisibility() == View.VISIBLE) {
+            tvNoData.setVisibility(View.GONE);
+        }
+    }
+
 }

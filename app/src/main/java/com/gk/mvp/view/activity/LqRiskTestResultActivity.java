@@ -13,11 +13,13 @@ import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.LuQuRiskBean;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.YxxUtils;
 
 import java.util.List;
 
@@ -56,6 +58,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
     private String valueDesc;
     private int flag = 0;
     private String aimSchool = "目标院校： ";
+    private String schoolName;
 
     @Override
     public int getResouceId() {
@@ -67,39 +70,48 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         setTopBar(topBar, "录取风险", 0);
         flag = getIntent().getIntExtra("flag", 0);
         valueDesc = getIntent().getStringExtra("aim");
-        httpRequest();
         initData();
     }
 
     private void initData() {
         tvMyScore.setText("我的成绩：" + LoginBean.getInstance().getScore() + "分");
         if (flag == 2) {
-            String schoolName = getIntent().getStringExtra("schoolName");
+            schoolName = getIntent().getStringExtra("schoolName");
             tv_my_aim_major.setVisibility(View.VISIBLE);
             tv_my_aim_major.setText("目标专业： " + valueDesc);
             tvMyAimUniversity.setText(aimSchool + schoolName);
+            evaluateMajorReport();
         } else {
             tvMyAimUniversity.setText(aimSchool + valueDesc);
+            evaluateReport();
         }
     }
 
-    private void httpRequest() {
+    private void evaluateReport() { //按高校生成报告
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("score", LoginBean.getInstance().getScore());
-        jsonObject.put("subjectName", LoginBean.getInstance().getSubjectType());
-        if (flag == 1) {
-            jsonObject.put("intentSch", valueDesc);
-            jsonObject.put("intentMajor", "");
-        } else {
-            jsonObject.put("intentSch", "");
-            jsonObject.put("intentMajor", valueDesc);
-        }
+        jsonObject.put("schoolName", YxxUtils.URLEncode(valueDesc));
+        jsonObject.put("username", valueDesc);
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .evaluateReport(jsonObject.toJSONString()))
-                .request();
+                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+    }
+
+    private void evaluateMajorReport() { //按专业生成报告
+        showProgress();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("score", LoginBean.getInstance().getScore());
+        jsonObject.put("schoolName", YxxUtils.URLEncode(schoolName));
+        jsonObject.put("username", valueDesc);
+        jsonObject.put("majorName", YxxUtils.URLEncode(valueDesc));
+        PresenterManager.getInstance()
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class)
+                        .evaluateMajorReport(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_SECOND_TIME);
     }
 
     @Override

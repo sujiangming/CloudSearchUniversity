@@ -73,6 +73,7 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
         setLvQuerySchool();
         invoke();
         showSearch();
+        setSearchViewText(searchView);
     }
 
     private void invoke() {

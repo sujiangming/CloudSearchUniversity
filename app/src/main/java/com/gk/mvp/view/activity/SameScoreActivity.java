@@ -1,8 +1,13 @@
 package com.gk.mvp.view.activity;
 
+import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AlertDialog;
+import android.text.TextUtils;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -10,23 +15,35 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alipay.sdk.app.PayTask;
+import com.baoyz.actionsheet.ActionSheet;
 import com.gk.R;
+import com.gk.beans.AuthResult;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
+import com.gk.beans.PayResult;
 import com.gk.beans.SameScoreItem;
+import com.gk.beans.VipOrderBean;
+import com.gk.beans.WeiXinPay;
+import com.gk.global.YXXApplication;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by JDRY-SJM on 2017/10/30.
@@ -85,9 +102,23 @@ public class SameScoreActivity extends SjmBaseActivity {
         tvAddress.setText(loginBean.getAddress() == null ? "" : loginBean.getAddress());
         tvWeli.setText(loginBean.getWlDesc());
         tvScore.setText(loginBean.getScore());
+        vipLevel = loginBean.getVipLevel();
 
-        getSameScoreDirection();
+        initListView();
+        showUpgradeDialog();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        int vip = LoginBean.getInstance().getVipLevel();
+        if (vip > vipLevel) {
+            getSameScoreDirection();
+        }
+    }
+
+    private void initListView() {
+        //getSameScoreDirection();
         lvSameScore.setAdapter(adapter = new CommonAdapter<SameScoreItem>(this, R.layout.same_score_item, list) {
             @Override
             protected void convert(ViewHolder viewHolder, SameScoreItem item, int position) {
@@ -109,12 +140,6 @@ public class SameScoreActivity extends SjmBaseActivity {
                 for (int i = min; i < (max * 2); i++) {
                     progressBar.setProgress(i);
                 }
-            }
-        });
-        lvSameScore.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toast("当前点击的是:" + i + " 名称：" + list.get(i).getSchoolName());
             }
         });
     }
@@ -172,6 +197,244 @@ public class SameScoreActivity extends SjmBaseActivity {
         mPage++;
         isLoadMore = true;
         getSameScoreDirection();
+    }
+
+    private int vipLevel = 0;
+    private int vipType = 0;
+
+    private void showUpgradeDialog() {
+        int vip = LoginBean.getInstance().getVipLevel();
+        if (vip <= vipLevel) {
+            showNormalVipDialog();
+        }
+    }
+
+    private void showNormalVipDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("温馨提示");
+        builder.setMessage("VIP会员免费使用，普通会员需要付费才能进行测试，确定付费进行测试吗？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                showPayWay(13);//13 同分去向
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+                closeActivity(SameScoreActivity.this);
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void showPayWay(final int vipLevel) {
+        new ActionSheet.Builder(this, getSupportFragmentManager())
+                .setCancelButtonTitle("取消")
+                .setOtherButtonTitles("支付宝支付", "微信支付")
+                .setCancelableOnTouchOutside(true)
+                .setListener(new ActionSheet.ActionSheetListener() {
+                    @Override
+                    public void onDismiss(ActionSheet actionSheet, boolean isCancel) {
+                        if (isCancel) {
+                            closeActivity(SameScoreActivity.this);
+                        }
+                    }
+
+                    @Override
+                    public void onOtherButtonClick(ActionSheet actionSheet, int index) {
+                        switch (index) {
+                            case 0:
+                                submitOrder(vipLevel);
+                                break;
+                            case 1:
+                                weiXinPay(vipLevel);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }).show();
+    }
+
+    private void weiXinPay(int level) {
+        showProgress();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("vipLevel", level);
+        RetrofitUtil.getInstance().createReq(IService.class)
+                .prepay(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            if (commonBean.getData() == null) {
+                                toast("获取订单信息失败");
+                                return;
+                            }
+                            WeiXinPay weiXinPay = JSON.parseObject(commonBean.getData().toString(), WeiXinPay.class);
+                            payForWeiXin(weiXinPay);
+                            hideProgress();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        toast(t.getMessage());
+                        hideProgress();
+                    }
+                });
+    }
+
+    private void payForWeiXin(WeiXinPay weiXinPay) {
+        PayReq req = new PayReq();
+        req.appId = weiXinPay.getAppid();
+        req.partnerId = weiXinPay.getPartnerid();
+        req.prepayId = weiXinPay.getPrepayid();
+        req.nonceStr = weiXinPay.getNoncestr();
+        req.timeStamp = weiXinPay.getTimestamp();
+        req.packageValue = weiXinPay.getPackAge();
+        req.sign = weiXinPay.getSign();
+        toast("这在调起微信支付……");
+
+        LoginBean.getInstance().setVipLevelTmp(vipLevel);
+        LoginBean.getInstance().setOrderNo(weiXinPay.getOrderNo());
+
+        YXXApplication.payApi.sendReq(req);
+    }
+
+    private void submitOrder(int level) {
+        showProgress();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("vipLevel", level);
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .addUserOrder(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        hideProgress();
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            VipOrderBean vipOrderBean = JSON.parseObject(commonBean.getData().toString(), VipOrderBean.class);
+                            String sign = vipOrderBean.getSign();
+                            LoginBean.getInstance().setOrderNo(vipOrderBean.getOrderNo());
+                            payV2(sign);
+                            return;
+                        }
+                        toast("支付失败，请重新支付！");
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        toast("支付失败，请重新支付！");
+                    }
+                });
+    }
+
+    /**
+     * 支付宝支付业务
+     *
+     * @param info
+     */
+    public void payV2(String info) {
+        final String orderInfo = info;
+        Runnable payRunnable = new Runnable() {
+            @Override
+            public void run() {
+                PayTask alipay = new PayTask(SameScoreActivity.this);
+                Map<String, String> result = alipay.payV2(orderInfo, true);
+                Message msg = new Message();
+                msg.what = SDK_PAY_FLAG;
+                msg.obj = result;
+                mHandler.sendMessage(msg);
+            }
+        };
+
+        Thread payThread = new Thread(payRunnable);
+        payThread.start();
+    }
+
+    private static final int SDK_PAY_FLAG = 1;
+    private static final int SDK_AUTH_FLAG = 2;
+
+    @SuppressLint("HandlerLeak")
+    private Handler mHandler = new Handler() {
+        @SuppressWarnings("unused")
+        public void handleMessage(Message msg) {
+            switch (msg.what) {
+                case SDK_PAY_FLAG: {
+                    @SuppressWarnings("unchecked")
+                    PayResult payResult = new PayResult((Map<String, String>) msg.obj);
+                    String resultInfo = payResult.getResult();// 同步返回需要验证的信息
+                    String resultStatus = payResult.getResultStatus();
+                    // 判断resultStatus 为9000则代表支付成功
+                    if (TextUtils.equals(resultStatus, "9000")) {
+                        // 该笔订单是否真实支付成功，需要依赖服务端的异步通知。
+                        toast("支付成功");
+                        LoginBean.getInstance().setVipLevel(vipLevel);
+                        LoginBean.getInstance().save();
+                        LoginBean.getInstance().setVipLevelTmp(vipLevel);
+                        vipType = LoginBean.getInstance().getVipLevel();
+                        tempOrderPaySuccess();
+                    } else {
+                        // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
+                        toast("支付失败");
+                    }
+                    break;
+                }
+                case SDK_AUTH_FLAG: {
+                    @SuppressWarnings("unchecked")
+                    AuthResult authResult = new AuthResult((Map<String, String>) msg.obj, true);
+                    String resultStatus = authResult.getResultStatus();
+                    // 判断resultStatus 为“9000”且result_code
+                    // 为“200”则代表授权成功，具体状态码代表含义可参考授权接口文档
+                    if (TextUtils.equals(resultStatus, "9000") && TextUtils.equals(authResult.getResultCode(), "200")) {
+                        // 获取alipay_open_id，调支付时作为参数extern_token 的value
+                        // 传入，则支付账户为该授权账户
+                        toast("授权成功\n" + String.format("authCode:%s", authResult.getAuthCode()));
+                    } else {
+                        // 其他状态值则为授权失败
+                        toast("授权失败" + String.format("authCode:%s", authResult.getAuthCode()));
+
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    };
+
+    private void tempOrderPaySuccess() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("orderNo", LoginBean.getInstance().getOrderNo());
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .tempOrderPaySuccess(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            toast(commonBean.getMessage());
+                            getSameScoreDirection();
+                        } else {
+                            toast("支付失败，请重新支付！");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        toast("支付失败，请重新支付！");
+                    }
+                });
     }
 
 }

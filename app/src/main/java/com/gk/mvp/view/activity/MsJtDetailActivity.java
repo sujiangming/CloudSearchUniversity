@@ -28,24 +28,14 @@ import butterknife.OnClick;
 public class MsJtDetailActivity extends SjmBaseActivity {
     @BindView(R.id.video_player_live_detail)
     StandardGSYVideoPlayer videoPlayerLiveDetail;
-
     @BindView(R.id.tv_zan)
     TextView tvZan;
-
-    @BindView(R.id.tv_comment)
-    TextView tvComment;
-
     @BindView(R.id.tv_video_name)
     TextView tvVideoName;
     @BindView(R.id.tv_video_count)
     TextView tvVideoCount;
-    @BindView(R.id.tv_brief)
-    TextView tvBrief;
-    @BindView(R.id.root_view)
-    View rootView;
 
     private boolean isTvZan = false;
-    private boolean isIvZan = false;
 
 
     @OnClick(R.id.tv_zan)
@@ -80,7 +70,7 @@ public class MsJtDetailActivity extends SjmBaseActivity {
     }
 
     private void initData() {
-        tvVideoCount.setText("播放次数：" + liveBean.getAttentionNum());
+        tvVideoCount.setText("关注人数：" + liveBean.getAttentionNum());
         tvZan.setText("点赞:  0");
         tvVideoName.setText("" + liveBean.getName());
     }

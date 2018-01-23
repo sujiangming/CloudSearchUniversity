@@ -399,7 +399,7 @@ public interface IService {
     Call<CommonBean> generateWishReport(@Field("data") String data);
 
     /**
-     * 录取风险接口
+     * 录取风险接口 - 按高校
      *
      * @param data
      * @return
@@ -407,6 +407,16 @@ public interface IService {
     @FormUrlEncoded
     @POST("app/api/adrisk/evaluateReport")
     Call<CommonBean> evaluateReport(@Field("data") String data);
+
+    /**
+     * 录取风险接口 - 按专业
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/adrisk/evaluateMajorReport")
+    Call<CommonBean> evaluateMajorReport(@Field("data") String data);
 
     /**
      * 更新考生意向高校接口

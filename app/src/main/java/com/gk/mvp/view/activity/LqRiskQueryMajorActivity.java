@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -58,6 +57,7 @@ public class LqRiskQueryMajorActivity extends SjmBaseActivity {
         majorPresenter = new MajorPresenter(this);
         majorPresenter.queryMajorByName("", 1);//默认查询的是本科 2 是专科
         showSearch();
+        setSearchViewText(searchview);
     }
 
     @Override
@@ -112,7 +112,6 @@ public class LqRiskQueryMajorActivity extends SjmBaseActivity {
 
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d(TAG, "onQueryTextSubmit = " + s);
                 majorPresenter.queryMajorByName(YxxUtils.URLEncode(s), 1);
                 if (searchview != null) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

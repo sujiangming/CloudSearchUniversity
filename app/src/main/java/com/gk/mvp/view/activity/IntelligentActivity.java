@@ -112,6 +112,9 @@ public class IntelligentActivity extends SjmBaseActivity {
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         CommonBean commonBean = (CommonBean) t;
+        if (null == commonBean.getData() || "".equals(commonBean.getData())) {
+            return;
+        }
         WishResultBean wishResultBean = JSON.parseObject(commonBean.getData().toString(), WishResultBean.class);
         String status = wishResultBean.getReportStatus();
         switch (order) {

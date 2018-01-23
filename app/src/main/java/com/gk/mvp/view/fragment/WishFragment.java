@@ -412,6 +412,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
             });
             AlertDialog dialog = builder.create();
             dialog.show();
+
         } else {
             openNewActivity(VIPActivity.class);
         }

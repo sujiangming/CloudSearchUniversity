@@ -6,6 +6,8 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item><!-- toolbar -->
         <item name="colorAccent">@color/colorAccent</item> <!-- 重点 -->
         <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
+        <!--自定义AlertDialog-->
+        <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert.Self</item>
     </style>
 
     <style name="jdryStyle" parent="BaseAppTheme">
@@ -64,5 +66,11 @@
         <item name="otherButtonSpacing">0dp</item>
         <item name="cancelButtonMarginTop">10dp</item>
         <item name="actionSheetTextSize">12sp</item>
+    </style>
+
+    <!--自定义alertDialog样式-->
+    <style name="Theme.AppCompat.Light.Dialog.Alert.Self" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <!--修改AlertDialog按钮的颜色-->
+        <item name="colorAccent">#3F51B5</item>
     </style>
 </resources>

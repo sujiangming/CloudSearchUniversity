@@ -3,7 +3,6 @@ package com.gk.mvp.view.activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -69,16 +68,14 @@ public class MaterialQueryActivity extends SjmBaseActivity {
         imageLoader = new GlideImageLoader();
         list = new ArrayList<>();
         showSearch();
+        setSearchViewText(searchView);
     }
 
     private void showSearch() {
         searchView.setSubmitButtonEnabled(true);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            private String TAG = getClass().getSimpleName();
-
             @Override
             public boolean onQueryTextSubmit(String s) {
-                Log.d(TAG, "onQueryTextSubmit = " + s);
                 searchKey = s;
                 invoke(CourseTypeEnum.getPinYin(s));
                 if (searchView != null) {

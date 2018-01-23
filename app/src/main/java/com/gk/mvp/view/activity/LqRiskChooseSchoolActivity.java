@@ -61,6 +61,7 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
         initSmartRefreshLayout(smartRfQuerySchool, true);
         invoke(nullString, nullString, nullString, nullString, nullString);
         showSearch();
+        setSearchViewText(searchview);
     }
 
     private void showSearch() {

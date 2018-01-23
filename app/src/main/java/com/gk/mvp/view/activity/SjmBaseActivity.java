@@ -1,17 +1,24 @@
 package com.gk.mvp.view.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.SearchView;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AutoCompleteTextView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.gk.R;
 import com.gk.mvp.view.IView;
 import com.gk.mvp.view.custom.SjmProgressBar;
 import com.gk.mvp.view.custom.TopBarView;
@@ -23,6 +30,8 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+
+import java.lang.reflect.Field;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -91,6 +100,48 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
                 closeActivity(SjmBaseActivity.this);
             }
         });
+    }
+
+    public void setSearchViewText(SearchView searchView) {
+        if (searchView == null) {
+            return;
+        }
+        LinearLayout linearLayout1 = (LinearLayout) searchView.getChildAt(0);
+        LinearLayout linearLayout2 = (LinearLayout) linearLayout1.getChildAt(2);
+        LinearLayout linearLayout3 = (LinearLayout) linearLayout2.getChildAt(1);
+        AutoCompleteTextView autoComplete = (AutoCompleteTextView) linearLayout3.getChildAt(0);
+        autoComplete.setTextSize(12);
+        //设置字体颜色
+        autoComplete.setTextColor(getResources().getColor(R.color.color808080));
+        //设置提示文字颜色
+        autoComplete.setHintTextColor(getResources().getColor(R.color.colorc8c7cc));
+    }
+
+    /**
+     * 动态修改AlertDialog字体颜色
+     * @param dialog
+     * @param msgColor
+     * @param positiveBtnColor
+     * @param negativeBtnColor
+     */
+    public void setAlertDialogTextColor(AlertDialog dialog, int msgColor, int positiveBtnColor, int negativeBtnColor) {
+        //修改内容颜色
+        try {
+            Field mAlert = AlertDialog.class.getDeclaredField("mAlert");
+            mAlert.setAccessible(true);
+            Object mAlertController = mAlert.get(dialog);
+            Field mMessage = mAlertController.getClass().getDeclaredField("mMessageView");
+            mMessage.setAccessible(true);
+            TextView mMessageView = (TextView) mMessage.get(mAlertController);
+            mMessageView.setTextColor(msgColor);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        //修改按钮颜色
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE);
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
     }
 
     @Override
