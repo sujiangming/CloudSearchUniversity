@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -168,7 +167,6 @@ public class LoginRightFragment extends SjmBaseFragment {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("username", userName);
                 jsonObject.put("password", MD5Util.encrypt(pwd));
-                Log.d(LoginRightFragment.class.getName(), MD5Util.encrypt(pwd));
                 PresenterManager.getInstance()
                         .setmIView(this)
                         .setCall(RetrofitUtil.getInstance().createReq(IService.class).login(jsonObject.toJSONString()))

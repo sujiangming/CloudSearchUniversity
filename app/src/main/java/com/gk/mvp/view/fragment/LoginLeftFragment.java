@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -208,7 +207,6 @@ public class LoginLeftFragment extends SjmBaseFragment {
                 String user = jsonObject.get("data").toString();
                 LoginBean loginBean = JSON.parseObject(user, LoginBean.class);
                 LoginBean.getInstance().saveLoginBean(loginBean);
-                Log.e(LoginLeftFragment.class.getName(), JSON.toJSONString(LoginBean.getInstance()));
                 getAdsInfo();
                 break;
             case YXXConstants.INVOKE_API_THREE_TIME:
