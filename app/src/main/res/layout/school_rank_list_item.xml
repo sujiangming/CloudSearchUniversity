@@ -6,9 +6,11 @@
 
     <ImageView
         android:id="@+id/iv_query_item"
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:layout_margin="@dimen/space_10_dp"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/space_10_dp"
+        android:layout_marginRight="@dimen/space_10_dp"
         android:src="@drawable/qinghuadaxue3x" />
 
     <TextView
@@ -31,11 +33,11 @@
         android:layout_alignParentRight="true"
         android:background="@drawable/school_rank_border"
         android:gravity="center"
+        android:hint="无排名信息"
         android:paddingBottom="@dimen/space_9_dp"
         android:paddingLeft="@dimen/space_12_dp"
         android:paddingRight="@dimen/space_12_dp"
         android:paddingTop="@dimen/space_9_dp"
-        android:hint="无排名信息"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -46,11 +48,11 @@
         android:layout_alignParentRight="true"
         android:layout_below="@id/tv_school_rank_0"
         android:background="@drawable/school_rank_border"
+        android:hint="无排名信息"
         android:paddingBottom="@dimen/space_9_dp"
         android:paddingLeft="@dimen/space_12_dp"
         android:paddingRight="@dimen/space_12_dp"
         android:paddingTop="@dimen/space_9_dp"
-        android:hint="无排名信息"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp"
         android:visibility="gone" />

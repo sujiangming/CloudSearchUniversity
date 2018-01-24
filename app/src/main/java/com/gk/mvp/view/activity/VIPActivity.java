@@ -132,6 +132,9 @@ public class VIPActivity extends SjmBaseActivity {
         }
     }
 
+    private static final String NO_OPEN_VIP = "立即开通";
+    private static final String YES_OPEN_VIP = "已经开通";
+
     @Override
     public int getResouceId() {
         return R.layout.activity_vip;
@@ -153,6 +156,28 @@ public class VIPActivity extends SjmBaseActivity {
     private void initData() {
         loginBean = LoginBean.getInstance();
         vipType = LoginBean.getInstance().getVipLevel();
+        switch (vipType) {
+            case 1:
+                tvOpenDiamond.setText(NO_OPEN_VIP);
+                tvOpenGold.setText(NO_OPEN_VIP);
+                tvOpenSilver.setText(NO_OPEN_VIP);
+                break;
+            case 2:
+                tvOpenDiamond.setText(NO_OPEN_VIP);
+                tvOpenGold.setText(NO_OPEN_VIP);
+                tvOpenSilver.setText(YES_OPEN_VIP);
+                break;
+            case 3:
+                tvOpenDiamond.setText(NO_OPEN_VIP);
+                tvOpenGold.setText(YES_OPEN_VIP);
+                tvOpenSilver.setText(NO_OPEN_VIP);
+                break;
+            case 4:
+                tvOpenDiamond.setText(YES_OPEN_VIP);
+                tvOpenGold.setText(NO_OPEN_VIP);
+                tvOpenSilver.setText(NO_OPEN_VIP);
+                break;
+        }
     }
 
     private void initUIByForm() {

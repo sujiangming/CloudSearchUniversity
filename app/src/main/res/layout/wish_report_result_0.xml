@@ -85,7 +85,7 @@
         android:layout_below="@id/tv_wish_province"
         android:layout_marginTop="@dimen/space_5_dp"
         android:paddingLeft="@dimen/space_15_dp"
-        android:text="意向专业：  "
+        android:text="意向大学：  "
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 

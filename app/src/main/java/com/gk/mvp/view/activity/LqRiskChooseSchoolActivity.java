@@ -45,11 +45,17 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
         closeActivity(this);
     }
 
-    private List<QuerySchoolBean.DataBean> schoolBeanList = new ArrayList<>();
+    private List<String> schoolBeanList = new ArrayList<>();
     private JSONObject jsonObject = new JSONObject();
     private int mPage = 0;
     private boolean isLoadMore = false;
     private String nullString = "";
+    private String[] schoolArray = {"清华大学", "北京大学", "中国人民大学", "北京交通大学", "北京工业大学",
+            "北京航空航天大学", "北京理工大学", "北京科技大学", "中国政法大学",
+            "中央财经大学", "华北电力大学", "北京体育大学", "上海外国语大学", "复旦大学",
+            "华东师范大学", "上海大学", "河北工业大学"};
+
+    private CommonAdapter<String> adapter;
 
     @Override
     public int getResouceId() {
@@ -59,9 +65,16 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         initSmartRefreshLayout(smartRfQuerySchool, true);
-        invoke(nullString, nullString, nullString, nullString, nullString);
         showSearch();
         setSearchViewText(searchview);
+        initData();
+    }
+
+    private void initData() {
+        for (int i = 0; i < schoolArray.length; i++) {
+            schoolBeanList.add(schoolArray[i]);
+        }
+        initListView();
     }
 
     private void showSearch() {
@@ -112,20 +125,6 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
     }
 
     @Override
-    public void refresh() {
-        mPage = 0;
-        isLoadMore = false;
-        invoke(nullString, nullString, nullString, nullString, nullString);
-    }
-
-    @Override
-    public void loadMore() {
-        mPage++;
-        isLoadMore = true;
-        invoke(nullString, nullString, nullString, nullString, nullString);
-    }
-
-    @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         String data = (String) t;
@@ -134,23 +133,17 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
             return;
         }
         QuerySchoolBean querySchoolBean = JSON.parseObject(data, QuerySchoolBean.class);
-        if (mPage == 0 && !isLoadMore) {
-            schoolBeanList = querySchoolBean.getData();
-            initListView();
-            stopRefreshLayout();
+        List<QuerySchoolBean.DataBean> dataBeanList = querySchoolBean.getData();
+        if (null == dataBeanList || dataBeanList.size() == 0) {
+            toast("没有相关数据");
             return;
         }
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-            List<QuerySchoolBean.DataBean> dataBeans = querySchoolBean.getData();
-            if (data == null) {
-                toast("没有更多数据了");
-                return;
-            }
-            schoolBeanList.addAll(dataBeans);
-            initListView();
-            lvQuerySchool.smoothScrollByOffset(lvQuerySchool.getHeight());
+        schoolBeanList.clear();
+        for (int i = 0; i < dataBeanList.size(); i++) {
+            schoolBeanList.add(dataBeanList.get(i).getSchoolName());
         }
+        initListView();
+        stopRefreshLayout();
     }
 
     @Override
@@ -161,17 +154,17 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
     }
 
     private void initListView() {
-        lvQuerySchool.setAdapter(new CommonAdapter<QuerySchoolBean.DataBean>(this, R.layout.risk_test_query_item, schoolBeanList) {
+        lvQuerySchool.setAdapter(adapter = new CommonAdapter<String>(this, R.layout.risk_test_query_item, schoolBeanList) {
             @Override
-            protected void convert(ViewHolder viewHolder, QuerySchoolBean.DataBean item, int position) {
-                viewHolder.setText(R.id.tv_name, item.getSchoolName());
+            protected void convert(ViewHolder viewHolder, String item, int position) {
+                viewHolder.setText(R.id.tv_name, item);
             }
         });
         lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
-                intent.putExtra("schoolName", schoolBeanList.get(i).getSchoolName());
+                intent.putExtra("schoolName", schoolBeanList.get(i));
                 LqRiskChooseSchoolActivity.this.setResult(110, intent);
                 closeActivity(LqRiskChooseSchoolActivity.this);
             }

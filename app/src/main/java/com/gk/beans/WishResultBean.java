@@ -14,7 +14,7 @@ public class WishResultBean {
      * firstBatch : [{"admissionProbability":"30%","isAdjust":"1","lastYearLowestScore":"2016年最低分 666","recommend_majors":"土木工程、计算机科学与技术、岩土工程、软件工程、法学、数学与应用教学","schoolArea":"贵州","schoolName":"大学名称"},{"admissionProbability":"30%","isAdjust":"1","lastYearLowestScore":"2016年最低分 666","recommend_majors":"土木工程、计算机科学与技术、岩土工程、软件工程、法学、数学与应用教学","schoolArea":"贵州","schoolName":"大学名称"},{"admissionProbability":"30%","isAdjust":"1","lastYearLowestScore":"2016年最低分 666","recommend_majors":"土木工程、计算机科学与技术、岩土工程、软件工程、法学、数学与应用教学","schoolArea":"贵州","schoolName":"大学名称"}]
      * heartTest : 创新能力强、动手快...创新能力强、动手快...创新能力强、动手快...
      * intentArea : 北京、上海、山东
-     * intentMajors : 机械工程、电子、计算机
+     * intentSch : 机械工程、电子、计算机
      * scoreRanking : 500分  28645名
      * secondBatch : [{"admissionProbability":"30%","isAdjust":"1","lastYearLowestScore":"2016年最低分 666","recommend_majors":"土木工程、计算机科学与技术、岩土工程、软件工程、法学、数学与应用教学","schoolArea":"贵州","schoolName":"大学名称"},{"admissionProbability":"30%","isAdjust":"1","lastYearLowestScore":"2016年最低分 666","recommend_majors":"土木工程、计算机科学与技术、岩土工程、软件工程、法学、数学与应用教学","schoolArea":"贵州","schoolName":"大学名称"},{"admissionProbability":"30%","isAdjust":"1","lastYearLowestScore":"2016年最低分 666","recommend_majors":"土木工程、计算机科学与技术、岩土工程、软件工程、法学、数学与应用教学","schoolArea":"贵州","schoolName":"大学名称"}]
      * subjectName : 理科
@@ -24,7 +24,7 @@ public class WishResultBean {
     private String cname;
     private String heartTest;
     private String intentArea;
-    private String intentMajors;
+    private String intentSch;
     private String scoreRanking;
     private String reportStatus;
     private String subjectName;
@@ -71,12 +71,12 @@ public class WishResultBean {
         this.intentArea = intentArea;
     }
 
-    public String getIntentMajors() {
-        return intentMajors;
+    public String getIntentSch() {
+        return intentSch;
     }
 
-    public void setIntentMajors(String intentMajors) {
-        this.intentMajors = intentMajors;
+    public void setIntentSch(String intentSch) {
+        this.intentSch = intentSch;
     }
 
     public String getScoreRanking() {

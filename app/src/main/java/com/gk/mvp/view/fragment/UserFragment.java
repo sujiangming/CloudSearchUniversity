@@ -54,7 +54,7 @@ public class UserFragment extends SjmBaseFragment {
 
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
-        glideImageLoader.displayImage(getContext(), LoginBean.getInstance().getHeadImg(), ivUserHead);
+        glideImageLoader.displayByImgRes(getContext(), LoginBean.getInstance().getHeadImg(), ivUserHead, R.drawable.my);
         initData();
     }
 

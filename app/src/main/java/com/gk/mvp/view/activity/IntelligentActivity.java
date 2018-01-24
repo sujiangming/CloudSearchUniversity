@@ -120,6 +120,8 @@ public class IntelligentActivity extends SjmBaseActivity {
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 showDifferentMsg(status, order);
+                tvSWantCity.setText("" + (wishResultBean.getIntentArea() == null ? "未知" : wishResultBean.getIntentArea()));
+                tvZy.setText("" + (wishResultBean.getIntentSch() == null ? "未知" : wishResultBean.getIntentSch()));
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 showDifferentMsg(status, order);

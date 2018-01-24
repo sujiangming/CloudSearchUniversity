@@ -244,7 +244,7 @@ public class LqRiskActivity extends SjmBaseActivity {
 
     private void showUpgradeDialog() {
         int vip = LoginBean.getInstance().getVipLevel();
-        if (vip <= vipLevel) {
+        if (vip <= 1) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setIcon(android.R.drawable.ic_dialog_info);
             builder.setTitle("温馨提示");

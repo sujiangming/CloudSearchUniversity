@@ -112,7 +112,7 @@ public class SameScoreActivity extends SjmBaseActivity {
     protected void onResume() {
         super.onResume();
         int vip = LoginBean.getInstance().getVipLevel();
-        if (vip > vipLevel) {
+        if (vip > 1) {
             getSameScoreDirection();
         }
     }
@@ -204,8 +204,10 @@ public class SameScoreActivity extends SjmBaseActivity {
 
     private void showUpgradeDialog() {
         int vip = LoginBean.getInstance().getVipLevel();
-        if (vip <= vipLevel) {
+        if (vip <= 1) {
             showNormalVipDialog();
+        } else {
+            getSameScoreDirection();
         }
     }
 

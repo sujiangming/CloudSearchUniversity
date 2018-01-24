@@ -38,7 +38,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/space_15_dp"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/zhanweitu" />
+                    android:src="@drawable/my" />
 
                 <TextView
                     android:id="@+id/tv_user_name"

@@ -101,7 +101,7 @@ public class WishReportResultActivity extends SjmBaseActivity {
         tvStudentScoreAndRank.setText("成绩：  " + (wishResultBean.getScoreRanking() == null ? "----" : wishResultBean.getScoreRanking()));
         tvWenLiKe.setText("文理科：  " + wishResultBean.getSubjectName());
         tvWishProvince.setText("意向省市：  " + (wishResultBean.getIntentArea() == null ? "----" : wishResultBean.getIntentArea()));
-        tvWishZy.setText("意向专业：  " + (wishResultBean.getIntentMajors() == null ? "----" : wishResultBean.getIntentMajors()));
+        tvWishZy.setText("意向大学：  " + (wishResultBean.getIntentSch() == null ? "----" : wishResultBean.getIntentSch()));
         tvMindTestResult.setText(wishResultBean.getHeartTest());
         initFirstBatch(wishResultBean.getFirstBatch());
         initSecondBatch(wishResultBean.getSecondBatch());
@@ -131,23 +131,25 @@ public class WishReportResultActivity extends SjmBaseActivity {
                 tvMinScore.setText(firstBean.getLastYearLowestScore());
                 tvLuQuRate.setText("录取概率  " + firstBean.getAdmissionProbability());
 
-                String[] recommendMajors = firstBean.getRecommend_majors().split("、");
-                if (recommendMajors != null && recommendMajors.length > 0) {
-                    for (int j = 0; j < recommendMajors.length; j++) {
-                        View view1 = View.inflate(this, R.layout.wish_result_item_child, null);
-                        TextView tvLeft = view1.findViewById(R.id.tv_left);
-                        TextView tvRight = view1.findViewById(R.id.tv_right);
+                if(null != firstBean.getRecommend_majors() && !"".equals(firstBean.getRecommend_majors())){
+                    String[] recommendMajors = firstBean.getRecommend_majors().split("、");
+                    if (recommendMajors != null && recommendMajors.length > 0) {
+                        for (int j = 0; j < recommendMajors.length; j++) {
+                            View view1 = View.inflate(this, R.layout.wish_result_item_child, null);
+                            TextView tvLeft = view1.findViewById(R.id.tv_left);
+                            TextView tvRight = view1.findViewById(R.id.tv_right);
 
-                        int mode = j % 2;
+                            int mode = j % 2;
 
-                        if (mode == 0) {
-                            tvLeft.setText(j + "、" + recommendMajors[j]);
-                            if (j != (recommendMajors.length - 1)) {
-                                tvRight.setText((j + 1) + "、" + recommendMajors[j + 1]);
+                            if (mode == 0) {
+                                tvLeft.setText(j + "、" + recommendMajors[j]);
+                                if (j != (recommendMajors.length - 1)) {
+                                    tvRight.setText((j + 1) + "、" + recommendMajors[j + 1]);
+                                }
+                                llTuijuanZy.addView(view1);
                             }
-                            llTuijuanZy.addView(view1);
-                        }
 
+                        }
                     }
                 }
 
@@ -180,25 +182,26 @@ public class WishReportResultActivity extends SjmBaseActivity {
                 tvMinScore.setText(firstBean.getLastYearLowestScore());
                 tvLuQuRate.setText("录取概率  " + firstBean.getAdmissionProbability());
 
-                String[] recommendMajors = firstBean.getRecommend_majors().split("、");
-                if (recommendMajors != null && recommendMajors.length > 0) {
-                    for (int j = 0; j < recommendMajors.length; j++) {
-                        View view1 = View.inflate(this, R.layout.wish_result_item_child, null);
-                        TextView tvLeft = view1.findViewById(R.id.tv_left);
-                        TextView tvRight = view1.findViewById(R.id.tv_right);
+                if(null != firstBean.getRecommend_majors() && !"".equals(firstBean.getRecommend_majors())){
+                    String[] recommendMajors = firstBean.getRecommend_majors().split("、");
+                    if (recommendMajors != null && recommendMajors.length > 0) {
+                        for (int j = 0; j < recommendMajors.length; j++) {
+                            View view1 = View.inflate(this, R.layout.wish_result_item_child, null);
+                            TextView tvLeft = view1.findViewById(R.id.tv_left);
+                            TextView tvRight = view1.findViewById(R.id.tv_right);
 
-                        int mode = j % 2;
+                            int mode = j % 2;
 
-                        if (mode == 0) {
-                            tvLeft.setText(j + "、" + recommendMajors[j]);
-                            if (j != (recommendMajors.length - 1)) {
-                                tvRight.setText((j + 1) + "、" + recommendMajors[j + 1]);
+                            if (mode == 0) {
+                                tvLeft.setText(j + "、" + recommendMajors[j]);
+                                if (j != (recommendMajors.length - 1)) {
+                                    tvRight.setText((j + 1) + "、" + recommendMajors[j + 1]);
+                                }
+                                llTuijuanZy.addView(view1);
                             }
-                            llTuijuanZy.addView(view1);
                         }
                     }
                 }
-
                 llReportContainer.addView(view);
             }
         }
