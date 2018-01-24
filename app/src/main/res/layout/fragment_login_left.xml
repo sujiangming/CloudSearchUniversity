@@ -101,7 +101,7 @@
         android:layout_height="@dimen/space_44_dp"
         android:layout_marginLeft="@dimen/space_12_dp"
         android:layout_marginRight="@dimen/space_12_dp"
-        android:layout_marginTop="@dimen/space_40_dp"
+        android:layout_marginTop="@dimen/space_70_dp"
         android:background="@color/color878787"
         android:gravity="center"
         android:text="登录"

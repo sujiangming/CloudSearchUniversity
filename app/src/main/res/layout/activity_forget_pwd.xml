@@ -14,7 +14,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/space_44_dp"
-        android:layout_marginTop="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_40_dp"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingLeft="@dimen/space_12_dp"
@@ -107,7 +107,7 @@
         android:layout_height="@dimen/space_44_dp"
         android:layout_marginLeft="@dimen/space_12_dp"
         android:layout_marginRight="@dimen/space_12_dp"
-        android:layout_marginTop="@dimen/space_40_dp"
+        android:layout_marginTop="@dimen/space_90_dp"
         android:background="@color/color878787"
         android:gravity="center"
         android:text="登录"
