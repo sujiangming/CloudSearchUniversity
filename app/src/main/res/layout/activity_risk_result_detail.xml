@@ -244,7 +244,8 @@
                 android:id="@+id/tv_line_2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_1_px"
-                android:background="#979797" />
+                android:background="#979797"
+                android:visibility="gone"/>
 
             <LinearLayout
                 android:id="@+id/ll_tuijuan_list"
