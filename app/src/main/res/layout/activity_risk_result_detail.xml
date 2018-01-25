@@ -30,11 +30,13 @@
             android:orientation="vertical">
 
             <LinearLayout
+                android:id="@+id/ll_up_score"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
                 android:orientation="vertical"
-                android:padding="@dimen/space_12_dp">
+                android:padding="@dimen/space_12_dp"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_my_score"
@@ -66,10 +68,12 @@
             </LinearLayout>
 
             <RelativeLayout
+                android:id="@+id/rl_up_data"
                 android:layout_width="match_parent"
                 android:layout_height="234dp"
                 android:layout_marginTop="@dimen/space_10_dp"
-                android:background="@color/colorWhite">
+                android:background="@color/colorWhite"
+                android:visibility="gone">
 
                 <TextView
                     android:id="@+id/tv_lq_fx_desc"
@@ -233,7 +237,8 @@
                 android:paddingTop="@dimen/space_7_dp"
                 android:text="相关推荐"
                 android:textColor="@color/color555555"
-                android:textSize="@dimen/font_12_sp" />
+                android:textSize="@dimen/font_12_sp"
+                android:visibility="gone" />
 
             <TextView
                 android:id="@+id/tv_line_2"

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -54,6 +55,14 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
     TextView tvOtherData;
     @BindView(R.id.ll_tuijuan_list)
     LinearLayout llTuijuanList;
+    @BindView(R.id.ll_up_score)
+    LinearLayout ll_up_score;
+    @BindView(R.id.tv_tuijuan_desc)
+    TextView tv_tuijuan_desc;
+    @BindView(R.id.rl_up_data)
+    RelativeLayout rl_up_data;
+    @BindView(R.id.tv_line_2)
+    TextView tv_line_2;
 
     private String valueDesc;
     private int flag = 0;
@@ -87,12 +96,26 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         }
     }
 
+    private void showGoneView() {
+        ll_up_score.setVisibility(View.VISIBLE);
+        rl_up_data.setVisibility(View.VISIBLE);
+        tv_tuijuan_desc.setVisibility(View.VISIBLE);
+        tv_line_2.setVisibility(View.VISIBLE);
+    }
+
+    private void hideGoneView() {
+        ll_up_score.setVisibility(View.GONE);
+        rl_up_data.setVisibility(View.GONE);
+        tv_tuijuan_desc.setVisibility(View.GONE);
+        tv_line_2.setVisibility(View.GONE);
+    }
+
     private void evaluateReport() { //按高校生成报告
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("score", LoginBean.getInstance().getScore());
         jsonObject.put("schoolName", YxxUtils.URLEncode(valueDesc));
-        jsonObject.put("username", valueDesc);
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
@@ -105,7 +128,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("score", LoginBean.getInstance().getScore());
         jsonObject.put("schoolName", YxxUtils.URLEncode(schoolName));
-        jsonObject.put("username", valueDesc);
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("majorName", YxxUtils.URLEncode(valueDesc));
         PresenterManager.getInstance()
                 .setmIView(this)
@@ -120,8 +143,10 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         CommonBean commonBean = (CommonBean) t;
         LuQuRiskBean luQuRiskBean = JSON.parseObject(commonBean.getData().toString(), LuQuRiskBean.class);
         if (luQuRiskBean == null) {
+            hideGoneView();
             return;
         }
+        showGoneView();
         tvChart.setText(luQuRiskBean.getAdmissionProbability());
         initAddViews(luQuRiskBean.getRecommendSchs());
     }
