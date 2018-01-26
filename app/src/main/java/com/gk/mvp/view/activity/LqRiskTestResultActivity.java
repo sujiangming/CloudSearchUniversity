@@ -153,7 +153,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast("没有查询到数据");
         hideProgress();
     }
 

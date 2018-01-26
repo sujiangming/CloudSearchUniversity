@@ -11,6 +11,11 @@ android {
         versionCode 2
         versionName "2.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        ndk {
+            //APP的build.gradle设置支持的SO库架构
+            abiFilters 'armeabi', 'armeabi-v7a', 'x86'
+        }
+
     }
     buildTypes {
         release {
@@ -55,8 +60,10 @@ dependencies {
     compile files('libs/fastjson-1.2.2.jar')
     //add greenDao library
     compile 'org.greenrobot:greendao:3.2.2'
-    //视频播放器
-    compile 'com.shuyu:GSYVideoPlayer:2.1.0'
+    //视频播放器 //根据你的需求添加so文件
+    //compile 'com.shuyu:GSYVideoPlayer:2.1.0'
+    compile 'com.shuyu:gsyVideoPlayer-java:3.0.0'
+    compile 'com.shuyu:gsyVideoPlayer-ex_so:3.0.0'
     //万能adapter for listView
     compile 'com.zhy:base-adapter:3.0.3'
     //万能adapter for RecyclerView
