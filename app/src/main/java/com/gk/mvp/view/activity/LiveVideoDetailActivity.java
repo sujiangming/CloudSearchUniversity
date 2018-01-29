@@ -157,6 +157,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         tvVideoCount.setText("播放次数：" + liveBean.getAttentionNum());
         tvZan.setText("点赞:  " + liveBean.getZanNum());
         tvVideoName.setText(liveBean.getVideoName());
+        tvBrief.setText(liveBean.getVideoSummary() == null ? "无简介" : liveBean.getVideoSummary());
     }
 
     private void initKeyBoardParameter() {

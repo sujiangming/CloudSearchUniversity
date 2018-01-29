@@ -2,6 +2,7 @@ package com.gk.mvp.view.activity;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -20,6 +21,7 @@ import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.MBTIResultBean;
 import com.gk.beans.PayResult;
+import com.gk.beans.UserRechargeTimes;
 import com.gk.beans.VipOrderBean;
 import com.gk.beans.WeiXinPay;
 import com.gk.global.YXXApplication;
@@ -64,6 +66,12 @@ public class MBTIActivity extends SjmBaseActivity {
         httpReqest();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getUserRechargeTimes();
+    }
+
     @OnClick({R.id.btn_mbti_test, R.id.btn_mbti_query})
     public void onViewClicked(View view) {
         switch (view.getId()) {
@@ -71,9 +79,15 @@ public class MBTIActivity extends SjmBaseActivity {
                 showUpgradeDialog();
                 break;
             case R.id.btn_mbti_query:
-                openNewActivity(MBTITestResultActivity.class);
+                openResultWin();
                 break;
         }
+    }
+
+    private void openResultWin() {
+        Intent intent = new Intent();
+        intent.putExtra("flag", 1);
+        openNewActivityByIntent(MBTITestResultActivity.class, intent);
     }
 
     private void httpReqest() {
@@ -86,31 +100,70 @@ public class MBTIActivity extends SjmBaseActivity {
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
+
+    private UserRechargeTimes.Data rechargeTimesData = null;
+
+    private void getUserRechargeTimes() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        RetrofitUtil.getInstance().createReq(IService.class)
+                .getUserRechargeTimes(jsonObject.toJSONString())
+                .enqueue(new Callback<UserRechargeTimes>() {
+                    @Override
+                    public void onResponse(Call<UserRechargeTimes> call, Response<UserRechargeTimes> response) {
+                        if (response.isSuccessful()) {
+                            UserRechargeTimes rechargeTimes = response.body();
+                            rechargeTimesData = rechargeTimes.getData();
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserRechargeTimes> call, Throwable t) {
+
+                    }
+                });
+    }
+
     private void showUpgradeDialog() {
         int vip = LoginBean.getInstance().getVipLevel();
         if (vip <= 1) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setIcon(android.R.drawable.ic_dialog_info);
-            builder.setTitle("温馨提示");
-            builder.setMessage("VIP会员免费使用，普通会员需要付费才能进行测试，确定付费进行测试吗？");
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    showPayWay(11);//心理测试 传参是 11
-                }
-            });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        } else {
+            if (null == rechargeTimesData) {
+                showDialog();
+                return;
+            }
+            if ("0".equals(rechargeTimesData.getHeartTestNum())) {
+                showDialog();
+                return;
+            }
+            //普通会员已经付费
             openNewActivity(MBTITestDetailActivity.class);
+            return;
         }
+        //VIP会员免费使用
+        openNewActivity(MBTITestDetailActivity.class);
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("温馨提示");
+        builder.setMessage("VIP会员免费使用，普通会员需要付费才能进行测试，确定付费进行测试吗？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                showPayWay(11);//心理测试 传参是 11
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void showPayWay(final int vipLevel) {
@@ -223,7 +276,7 @@ public class MBTIActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        if(order == YXXConstants.INVOKE_API_SECOND_TIME){
+        if (order == YXXConstants.INVOKE_API_SECOND_TIME) {
             toast((String) t);
         }
         hideProgress();

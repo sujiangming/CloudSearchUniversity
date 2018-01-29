@@ -1,5 +1,7 @@
 package com.gk.beans;
 
+import java.util.List;
+
 /**
  * Created by JDRY-SJM on 2017/10/30.
  */
@@ -15,47 +17,17 @@ public class SchoolZSBean {
      * uniId : 2c948a825fb579f7015fb57fc1bf0001
      * yearPlan : 2017
      */
-
-    private int advanceBatch;
-    private String area;
-    private String id;
+    private String schoolId;
     private String schoolLogo;
-    private int specializedSubject;
-    private int undergraduate;
-    private String uniId;
-    private String yearPlan;
     private String schoolName;
+    private List<RecruitPlan> recruitPlan;
 
-    public String getSchoolName() {
-        return schoolName;
+    public String getSchoolId() {
+        return schoolId;
     }
 
-    public void setSchoolName(String schoolName) {
-        this.schoolName = schoolName;
-    }
-
-    public int getAdvanceBatch() {
-        return advanceBatch;
-    }
-
-    public void setAdvanceBatch(int advanceBatch) {
-        this.advanceBatch = advanceBatch;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public void setSchoolId(String schoolId) {
+        this.schoolId = schoolId;
     }
 
     public String getSchoolLogo() {
@@ -66,35 +38,40 @@ public class SchoolZSBean {
         this.schoolLogo = schoolLogo;
     }
 
-    public int getSpecializedSubject() {
-        return specializedSubject;
+    public String getSchoolName() {
+        return schoolName;
     }
 
-    public void setSpecializedSubject(int specializedSubject) {
-        this.specializedSubject = specializedSubject;
+    public void setSchoolName(String schoolName) {
+        this.schoolName = schoolName;
     }
 
-    public int getUndergraduate() {
-        return undergraduate;
+    public List<RecruitPlan> getRecruitPlan() {
+        return recruitPlan;
     }
 
-    public void setUndergraduate(int undergraduate) {
-        this.undergraduate = undergraduate;
+    public void setRecruitPlan(List<RecruitPlan> recruitPlan) {
+        this.recruitPlan = recruitPlan;
     }
 
-    public String getUniId() {
-        return uniId;
-    }
+    public static class RecruitPlan{
+        private String yearStr;
+        private String planNum;
 
-    public void setUniId(String uniId) {
-        this.uniId = uniId;
-    }
+        public String getYearStr() {
+            return yearStr;
+        }
 
-    public String getYearPlan() {
-        return yearPlan;
-    }
+        public void setYearStr(String yearStr) {
+            this.yearStr = yearStr;
+        }
 
-    public void setYearPlan(String yearPlan) {
-        this.yearPlan = yearPlan;
+        public String getPlanNum() {
+            return planNum;
+        }
+
+        public void setPlanNum(String planNum) {
+            this.planNum = planNum;
+        }
     }
 }

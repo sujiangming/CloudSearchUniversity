@@ -21,6 +21,7 @@ import com.gk.beans.AuthResult;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.PayResult;
+import com.gk.beans.UserRechargeTimes;
 import com.gk.beans.VipOrderBean;
 import com.gk.beans.WeiXinPay;
 import com.gk.global.YXXApplication;
@@ -85,6 +86,7 @@ public class LqRiskActivity extends SjmBaseActivity {
     protected void onResume() {
         super.onResume();
         initData();
+        getUserRechargeTimes();
     }
 
     private void initData() {
@@ -242,31 +244,70 @@ public class LqRiskActivity extends SjmBaseActivity {
     private int vipLevel = 0;
     private int vipType = 0;
 
+    private UserRechargeTimes.Data rechargeTimesData = null;
+
+    private void getUserRechargeTimes() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        RetrofitUtil.getInstance().createReq(IService.class)
+                .getUserRechargeTimes(jsonObject.toJSONString())
+                .enqueue(new Callback<UserRechargeTimes>() {
+                    @Override
+                    public void onResponse(Call<UserRechargeTimes> call, Response<UserRechargeTimes> response) {
+                        if (response.isSuccessful()) {
+                            UserRechargeTimes rechargeTimes = response.body();
+                            rechargeTimesData = rechargeTimes.getData();
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserRechargeTimes> call, Throwable t) {
+
+                    }
+                });
+    }
+
     private void showUpgradeDialog() {
         int vip = LoginBean.getInstance().getVipLevel();
-        if (vip <= 1) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setIcon(android.R.drawable.ic_dialog_info);
-            builder.setTitle("温馨提示");
-            builder.setMessage("VIP会员免费使用，普通会员需要付费才能进行测试，确定付费进行测试吗？");
-            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                    showPayWay(12);//12 录取风险
-                }
-            });
-            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    dialogInterface.dismiss();
-                }
-            });
-            AlertDialog dialog = builder.create();
-            dialog.show();
-        } else {
-            rightNowTest();//立即测试
+        if (vip <= 1) { //针对普通会员
+            if (null == rechargeTimesData) {
+                showDialog();
+                return;
+            }
+            if ("0".equals(rechargeTimesData.getAdmissionRiskNum())) {
+                showDialog();
+                return;
+            }
+            //普通会员已经付费，立即测试
+            rightNowTest();
+
+            return;
         }
+        //VIP会员免费，立即测试
+        rightNowTest();
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("温馨提示");
+        builder.setMessage("VIP会员免费使用，普通会员需要付费才能进行测试，确定付费进行测试吗？");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                showPayWay(12);//12 录取风险
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void showPayWay(final int vipLevel) {

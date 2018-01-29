@@ -25,6 +25,9 @@ import com.gk.mvp.view.custom.TopBarView;
 import java.util.List;
 
 import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by JDRY-SJM on 2017/12/12.
@@ -131,6 +134,32 @@ public class MBTITestResultActivity extends SjmBaseActivity {
         mbtiTypesTvsDesc = new TextView[]{tvForIv1, tvForIv2, tvForIv3, tvForIv4};
         mbtiCareerSummaryTvs = new TextView[]{tvTz1, tvTz2, tvTz3, tvTz4};
         getReport();
+        int flag = getIntent().getIntExtra("flag", 0);
+        if (2 == flag) { //正常答题完毕的时候，需要调用减1的接口
+            minusUserRechargeTimes();
+        }
+    }
+
+    private void minusUserRechargeTimes() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("rechargeType", 11);//11 心理测试
+        RetrofitUtil.getInstance().createReq(IService.class)
+                .minusUserRechargeTimes(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean rechargeTimes = response.body();
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+
+                    }
+                });
     }
 
     private String getAnswers() {

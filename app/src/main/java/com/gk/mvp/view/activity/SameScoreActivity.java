@@ -23,6 +23,7 @@ import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.PayResult;
 import com.gk.beans.SameScoreItem;
+import com.gk.beans.UserRechargeTimes;
 import com.gk.beans.VipOrderBean;
 import com.gk.beans.WeiXinPay;
 import com.gk.global.YXXApplication;
@@ -115,6 +116,7 @@ public class SameScoreActivity extends SjmBaseActivity {
         if (vip > 1) {
             getSameScoreDirection();
         }
+        getUserRechargeTimes();
     }
 
     private void initListView() {
@@ -211,27 +213,57 @@ public class SameScoreActivity extends SjmBaseActivity {
         }
     }
 
+    private UserRechargeTimes.Data rechargeTimesData = null;
+
+    private void getUserRechargeTimes() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        RetrofitUtil.getInstance().createReq(IService.class)
+                .getUserRechargeTimes(jsonObject.toJSONString())
+                .enqueue(new Callback<UserRechargeTimes>() {
+                    @Override
+                    public void onResponse(Call<UserRechargeTimes> call, Response<UserRechargeTimes> response) {
+                        if (response.isSuccessful()) {
+                            UserRechargeTimes rechargeTimes = response.body();
+                            rechargeTimesData = rechargeTimes.getData();
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<UserRechargeTimes> call, Throwable t) {
+
+                    }
+                });
+    }
+
     private void showNormalVipDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setIcon(android.R.drawable.ic_dialog_info);
-        builder.setTitle("温馨提示");
-        builder.setMessage("VIP会员免费使用，普通会员需要付费才能进行测试，确定付费进行测试吗？");
-        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
-                showPayWay(13);//13 同分去向
-            }
-        });
-        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                closeActivity(SameScoreActivity.this);
-            }
-        });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        if (null == rechargeTimesData || TextUtils.isEmpty(rechargeTimesData.getHeartTestNum())) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setIcon(android.R.drawable.ic_dialog_info);
+            builder.setTitle("温馨提示");
+            builder.setMessage("VIP会员免费使用，普通会员需要付费才能进行测试，确定付费进行测试吗？");
+            builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                    showPayWay(13);//13 同分去向
+                }
+            });
+            builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                    closeActivity(SameScoreActivity.this);
+                }
+            });
+            AlertDialog dialog = builder.create();
+            dialog.show();
+
+            return;
+        }
+
+        getSameScoreDirection();
     }
 
     private void showPayWay(final int vipLevel) {

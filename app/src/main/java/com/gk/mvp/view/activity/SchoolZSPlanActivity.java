@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -135,18 +134,31 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         lvQuerySchool.setAdapter(adapter = new CommonAdapter<SchoolZSBean>(this, R.layout.school_zhaosheng_list_item, schoolBeanList) {
             @Override
             protected void convert(ViewHolder viewHolder, SchoolZSBean item, int position) {
-                viewHolder.setText(R.id.tv_school_plan, item.getYearPlan() + "年招生计划");
-                viewHolder.setText(R.id.tv_school_address, item.getArea());
-                viewHolder.setText(R.id.tv_bk_num, item.getUndergraduate() + "");
-                viewHolder.setText(R.id.tv_zk_num, item.getSpecializedSubject() + "");
-                viewHolder.setText(R.id.tv_tiqian, item.getAdvanceBatch() + "");
+
+                viewHolder.setText(R.id.tv_school_plan, "2017年招生计划");
+                viewHolder.setText(R.id.tv_school_address, item.getSchoolName());
                 viewHolder.setText(R.id.tv_school_name, item.getSchoolName() == null ? "未知" : item.getSchoolName());
-            }
-        });
-        lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                toast("您点击的是：" + i);
+
+                List<SchoolZSBean.RecruitPlan> recruitPlanList = item.getRecruitPlan();
+                if (null != recruitPlanList && recruitPlanList.size() > 0) {
+                    for (int i = 0; i < recruitPlanList.size(); i++) {
+                        switch (i) {
+                            case 0:
+                                viewHolder.setText(R.id.tv_bk_num, item.getRecruitPlan().get(i).getPlanNum() + "");
+                                break;
+                            case 1:
+                                viewHolder.setText(R.id.tv_zk_num, item.getRecruitPlan().get(i).getPlanNum() + "");
+                                break;
+                            case 2:
+                                viewHolder.setText(R.id.tv_tiqian, item.getRecruitPlan().get(i).getPlanNum() + "");
+                                break;
+                        }
+                    }
+                } else {
+                    viewHolder.setText(R.id.tv_bk_num, "0");
+                    viewHolder.setText(R.id.tv_zk_num, "0");
+                    viewHolder.setText(R.id.tv_tiqian, "0");
+                }
             }
         });
     }

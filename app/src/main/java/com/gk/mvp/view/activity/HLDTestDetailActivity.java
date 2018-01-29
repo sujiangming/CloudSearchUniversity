@@ -1,6 +1,7 @@
 package com.gk.mvp.view.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -62,7 +63,7 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
                 return;
             }
             toast("已作答完毕");
-            openNewActivity(HLDTestResultActivity.class);
+            openResultWin();
             closeActivity(this);
             LoginBean.getInstance().setIsHeartTest("1");
             LoginBean.getInstance().save();
@@ -74,6 +75,12 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         updatePage();
         tableList = getFiveRec();
         createUI();
+    }
+
+    private void openResultWin() {
+        Intent intent = new Intent();
+        intent.putExtra("flag", 2);
+        openNewActivityByIntent(HLDTestResultActivity.class, intent);
     }
 
     private List<RadioGroup> radioGroups = new ArrayList<>();

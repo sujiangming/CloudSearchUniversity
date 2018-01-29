@@ -29,6 +29,9 @@ import com.gk.mvp.view.custom.TopBarView;
 import java.util.List;
 
 import butterknife.BindView;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by JDRY-SJM on 2017/12/11.
@@ -81,6 +84,8 @@ public class HLDTestResultActivity extends SjmBaseActivity {
     private TextView[] textViews;
     private TextView[] textViewType;
     private HldReportBean hldReportBean;
+    private int flag = 0;
+
     @Override
     public int getResouceId() {
         return R.layout.activity_hld_test_result;
@@ -92,6 +97,32 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         textViews = new TextView[]{tv1, tv2, tv3};
         textViewType = new TextView[]{tvForIv1, tvForIv2, tvForIv3};
         httpRequest();
+        flag = getIntent().getIntExtra("flag", 0);
+        if (2 == flag) { //正常答题完毕的时候，需要调用减1的接口
+            minusUserRechargeTimes();
+        }
+    }
+
+    private void minusUserRechargeTimes() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("rechargeType", 11);//11 心理测试
+        RetrofitUtil.getInstance().createReq(IService.class)
+                .minusUserRechargeTimes(jsonObject.toJSONString())
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean rechargeTimes = response.body();
+                            return;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+
+                    }
+                });
     }
 
     private void httpRequest() {

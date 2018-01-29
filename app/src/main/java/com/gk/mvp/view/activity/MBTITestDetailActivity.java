@@ -1,6 +1,7 @@
 package com.gk.mvp.view.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
@@ -183,14 +184,20 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                openNewActivity(MBTITestResultActivity.class);
-                closeActivity(MBTITestDetailActivity.this);
                 LoginBean.getInstance().setIsHeartTest("1");
                 LoginBean.getInstance().save();
+                openResultWin();
+                closeActivity(MBTITestDetailActivity.this);
             }
         });
         AlertDialog dialog = builder.create();
         dialog.show();
+    }
+
+    private void openResultWin() {
+        Intent intent = new Intent();
+        intent.putExtra("flag", 2);
+        openNewActivityByIntent(MBTITestResultActivity.class, intent);
     }
 
     private void showDialog() {

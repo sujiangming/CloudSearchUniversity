@@ -2,6 +2,7 @@ package com.gk.http;
 
 import com.gk.beans.CommonBean;
 import com.gk.beans.MaterialItemBean;
+import com.gk.beans.UserRechargeTimes;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -592,5 +593,22 @@ public interface IService {
     @POST("app/api/major/getMajorRecruitPlan")
     Call<CommonBean> getMajorRecruitPlan(@Field("data") String data);
 
+    /**
+     * 查询用户 充值的 心理测试 录取风险  同分去向 的充值次数
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/user/getUserRechargeTimes")
+    Call<UserRechargeTimes> getUserRechargeTimes(@Field("data") String data);
+
+    /**
+     * 减去1 心理测试 录取风险  同分去向 的充值次数
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/user/minusUserRechargeTimes")
+    Call<CommonBean> minusUserRechargeTimes(@Field("data") String data);
 
 }
