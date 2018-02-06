@@ -254,6 +254,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             public boolean onQueryTextSubmit(String s) {
                 searchKey = YxxUtils.URLEncode(s);
                 isLoadMore = false;
+                mPage = 0;
                 invoke(nullStr, nullStr, nullStr, nullStr, searchKey);
                 clearSearch();
                 return true;
@@ -294,10 +295,10 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
         showProgress();
         jsonObject.put("page", mPage);
-        jsonObject.put("schoolArea", schoolArea);//学校地区
-        jsonObject.put("schoolCategory", schoolCategory);//学校类别
-        jsonObject.put("schoolType", schoolType);//学校类型（1本科、2专业）
-        jsonObject.put("tese", tese);//特色
+        jsonObject.put("schoolArea", schoolArea);
+        jsonObject.put("schoolCategory", schoolCategory);
+        jsonObject.put("schoolBatch", tese);
+        jsonObject.put("tese", schoolType);
         jsonObject.put("schoolName", schoolName);
         PresenterManager.getInstance()
                 .setmIView(this)

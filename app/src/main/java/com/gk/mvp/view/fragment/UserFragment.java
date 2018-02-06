@@ -69,6 +69,8 @@ public class UserFragment extends SjmBaseFragment {
         if (userImage != null) {
             if (!userImage.equals(userHeadImage)) {
                 glideImageLoader.displayImage(getContext(), userImage, ivUserHead);
+            } else {
+                glideImageLoader.displayImage(getContext(), userHeadImage, ivUserHead);
             }
         }
         if (nickName != null) {
