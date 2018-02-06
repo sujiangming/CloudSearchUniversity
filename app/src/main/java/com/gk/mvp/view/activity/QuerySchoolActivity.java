@@ -65,6 +65,8 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     Button btnChoose;
     @BindView(R.id.rl_choose)
     LinearLayout rlChoose;
+    @BindView(R.id.tv_muti_choose)
+    TextView tv_muti_choose;
 
     @OnClick({R.id.back_image, R.id.spinner1, R.id.spinner2,
             R.id.spinner3, R.id.spinner4, R.id.btn_choose, R.id.tv_bg_click})
@@ -76,6 +78,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             case R.id.spinner1:
                 if (!isSpinner1Clicked) {
                     rlChoose.setVisibility(View.VISIBLE);
+                    tv_muti_choose.setVisibility(View.VISIBLE);
                     gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityAreaEnum.getAreaList(), 1);
                     initGridViewAdapter();
                     isSpinner1Clicked = true;
@@ -88,6 +91,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             case R.id.spinner2:
                 if (!isSpinner2Clicked) {
                     rlChoose.setVisibility(View.VISIBLE);
+                    tv_muti_choose.setVisibility(View.GONE);
                     gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityTypeEnum.getUniversityList(), 2);
                     initGridViewAdapter();
                     isSpinner2Clicked = true;
@@ -100,7 +104,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             case R.id.spinner3:
                 if (!isSpinner3Clicked) {
                     rlChoose.setVisibility(View.VISIBLE);
-                    rlChoose.setVisibility(View.VISIBLE);
+                    tv_muti_choose.setVisibility(View.GONE);
                     gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityFeatureEnum.getUniversityFeatureList(), 3);
                     initGridViewAdapter();
                     isSpinner3Clicked = true;
@@ -114,6 +118,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             case R.id.spinner4:
                 if (!isSpinner4Clicked) {
                     rlChoose.setVisibility(View.VISIBLE);
+                    tv_muti_choose.setVisibility(View.GONE);
                     gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityLevelEnum.getUniversityLevelList(), 4);
                     initGridViewAdapter();
                     isSpinner4Clicked = true;
@@ -161,6 +166,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 break;
             case R.id.tv_bg_click:
                 rlChoose.setVisibility(View.GONE);
+                tv_muti_choose.setVisibility(View.GONE);
                 break;
         }
     }

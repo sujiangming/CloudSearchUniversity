@@ -170,6 +170,7 @@
             android:paddingTop="@dimen/space_16_dp">
 
             <TextView
+                android:id="@+id/tv_muti_choose"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -177,7 +178,8 @@
                 android:layout_marginLeft="@dimen/space_20_dp"
                 android:text="支持多选"
                 android:textColor="@color/color353535"
-                android:textSize="@dimen/font_12_sp" />
+                android:textSize="@dimen/font_12_sp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btn_choose"
