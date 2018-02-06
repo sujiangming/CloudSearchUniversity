@@ -33,6 +33,7 @@
             android:gravity="right"
             android:maxLines="1"
             android:paddingRight="@dimen/space_12_dp"
+            android:text="贵州"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_12_sp" />
     </LinearLayout>
