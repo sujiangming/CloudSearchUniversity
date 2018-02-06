@@ -76,6 +76,7 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
     }
 
     private void invoke() {
+        showProgress();
         jsonObject.put("page", mPage);
         jsonObject.put("schoolName", searchKey);
         PresenterManager.getInstance()

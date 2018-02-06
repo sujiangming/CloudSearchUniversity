@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="wrap_content"
     android:background="@android:color/white"
     android:orientation="vertical">
 
@@ -17,24 +17,12 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
+            android:hint="清华大学"
             android:maxLines="1"
             android:paddingLeft="@dimen/space_12_dp"
             android:paddingRight="@dimen/space_12_dp"
-            android:text="清华大学"
             android:textColor="#302f30"
             android:textSize="@dimen/font_17_sp" />
-
-        <TextView
-            android:id="@+id/tv_school_plan"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:ellipsize="end"
-            android:maxLines="1"
-            android:paddingRight="@dimen/space_12_dp"
-            android:text="2017年招生计划"
-            android:textColor="@color/color808080"
-            android:textSize="@dimen/font_12_sp" />
 
         <TextView
             android:id="@+id/tv_school_address"
@@ -42,89 +30,158 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:ellipsize="end"
-            android:gravity="center"
+            android:gravity="right"
             android:maxLines="1"
             android:paddingRight="@dimen/space_12_dp"
-            android:text="贵州"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_12_sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="@dimen/space_5_dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_10_dp"
+        android:paddingTop="@dimen/space_10_dp">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/school_rank_border"
             android:gravity="center"
-            android:text="提前批次"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_12_sp" />
 
         <TextView
+            android:id="@+id/tv_year_1"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/school_rank_border"
             android:gravity="center"
-            android:text="本科"
+            android:hint="2015"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_12_sp" />
 
         <TextView
+            android:id="@+id/tv_year_2"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/school_rank_border"
             android:gravity="center"
-            android:text="专科"
+            android:hint="2016"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_12_sp" />
+
+        <TextView
+            android:id="@+id/tv_year_3"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="2017"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_12_sp" />
     </LinearLayout>
+
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_10_dp"
+        android:paddingTop="@dimen/space_10_dp">
 
         <TextView
-            android:id="@+id/tv_tiqian"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/school_rank_border"
             android:gravity="center"
-            android:text="---------"
+            android:text="文科"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_12_sp" />
 
         <TextView
-            android:id="@+id/tv_bk_num"
+            android:id="@+id/tv_wk_year_1_num"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/school_rank_border"
             android:gravity="center"
-            android:text="20"
+            android:hint="0"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_12_sp" />
 
         <TextView
-            android:id="@+id/tv_zk_num"
+            android:id="@+id/tv_wk_year_2_num"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@drawable/school_rank_border"
             android:gravity="center"
-            android:text="30"
+            android:hint="0"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_12_sp" />
+
+        <TextView
+            android:id="@+id/tv_wk_year_3_num"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="0"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_12_sp" />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_1_px"
+        android:background="@color/color808080" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingBottom="@dimen/space_10_dp"
+        android:paddingTop="@dimen/space_10_dp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="理科"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_12_sp" />
+
+        <TextView
+            android:id="@+id/tv_lk_year_1_num"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="0"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_12_sp" />
+
+        <TextView
+            android:id="@+id/tv_lk_year_2_num"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="0"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_12_sp" />
+
+        <TextView
+            android:id="@+id/tv_lk_year_3_num"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="0"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_12_sp" />
+    </LinearLayout>
+
 </LinearLayout>

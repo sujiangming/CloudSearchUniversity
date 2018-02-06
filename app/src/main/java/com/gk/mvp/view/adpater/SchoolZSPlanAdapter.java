@@ -28,52 +28,80 @@ public class SchoolZSPlanAdapter extends JdryBaseAdapter {
         } else {
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.school_zhaosheng_list_item, null);
-            viewHolder.tv_school_mark_0 = convertView.findViewById(R.id.tv_school_plan);
-            viewHolder.tv_school_mark_1 = convertView.findViewById(R.id.tv_school_address);
-            viewHolder.tv_school_mark_2 = convertView.findViewById(R.id.tv_school_name);
-            viewHolder.tv_bk_num = convertView.findViewById(R.id.tv_bk_num);
-            viewHolder.tv_zk_num = convertView.findViewById(R.id.tv_zk_num);
-            viewHolder.tv_tiqian = convertView.findViewById(R.id.tv_tiqian);
+            viewHolder.tv_school_name = convertView.findViewById(R.id.tv_school_name);
+            viewHolder.tv_school_address = convertView.findViewById(R.id.tv_school_address);
+            viewHolder.tv_year_1 = convertView.findViewById(R.id.tv_year_1);
+            viewHolder.tv_year_2 = convertView.findViewById(R.id.tv_year_2);
+            viewHolder.tv_year_3 = convertView.findViewById(R.id.tv_year_3);
+            viewHolder.tv_wk_year_1_num = convertView.findViewById(R.id.tv_wk_year_1_num);
+            viewHolder.tv_wk_year_2_num = convertView.findViewById(R.id.tv_wk_year_2_num);
+            viewHolder.tv_wk_year_3_num = convertView.findViewById(R.id.tv_wk_year_3_num);
+            viewHolder.tv_lk_year_1_num = convertView.findViewById(R.id.tv_lk_year_1_num);
+            viewHolder.tv_lk_year_2_num = convertView.findViewById(R.id.tv_lk_year_2_num);
+            viewHolder.tv_lk_year_3_num = convertView.findViewById(R.id.tv_lk_year_3_num);
+
             convertView.setTag(viewHolder);
         }
 
         SchoolZSBean item = (SchoolZSBean) list.get(position);
 
-        viewHolder.tv_school_mark_0.setText("2017年招生计划");
-        viewHolder.tv_school_mark_1.setText(item.getSchoolName());
-        viewHolder.tv_school_mark_2.setText(item.getSchoolName() == null ? "未知" : item.getSchoolName());
+        viewHolder.tv_school_name.setText(item.getSchoolName());
 
-        List<SchoolZSBean.RecruitPlan> recruitPlanList = item.getRecruitPlan();
+        List<SchoolZSBean.RecruitPlan1Bean> recruitPlanList = item.getRecruitPlan1();
         if (null != recruitPlanList && recruitPlanList.size() > 0) {
             for (int i = 0; i < recruitPlanList.size(); i++) {
+                SchoolZSBean.RecruitPlan1Bean recruitPlan1Bean = recruitPlanList.get(i);
                 switch (i) {
                     case 0:
-                        viewHolder.tv_bk_num.setText(item.getRecruitPlan().get(i).getPlanNum() + "");
+                        viewHolder.tv_year_1.setText(recruitPlan1Bean.getYearStr());
+                        viewHolder.tv_wk_year_1_num.setText(recruitPlan1Bean.getPlanNum());
                         break;
                     case 1:
-                        viewHolder.tv_zk_num.setText(item.getRecruitPlan().get(i).getPlanNum() + "");
+                        viewHolder.tv_year_2.setText(recruitPlan1Bean.getYearStr());
+                        viewHolder.tv_wk_year_2_num.setText(recruitPlan1Bean.getPlanNum());
                         break;
                     case 2:
-                        viewHolder.tv_tiqian.setText(item.getRecruitPlan().get(i).getPlanNum() + "");
+                        viewHolder.tv_year_3.setText(recruitPlan1Bean.getYearStr());
+                        viewHolder.tv_wk_year_3_num.setText(recruitPlan1Bean.getPlanNum());
                         break;
                 }
             }
-        } else {
-            viewHolder.tv_bk_num.setText("0");
-            viewHolder.tv_zk_num.setText("0");
-            viewHolder.tv_tiqian.setText("0");
+        }
+        List<SchoolZSBean.RecruitPlan2Bean> recruitPlan2BeanList = item.getRecruitPlan2();
+        if (null != recruitPlan2BeanList && recruitPlan2BeanList.size() > 0) {
+            for (int i = 0; i < recruitPlan2BeanList.size(); i++) {
+                SchoolZSBean.RecruitPlan2Bean recruitPlan2Bean = recruitPlan2BeanList.get(i);
+                switch (i) {
+                    case 0:
+                        viewHolder.tv_lk_year_1_num.setText(recruitPlan2Bean.getPlanNum());
+                        break;
+                    case 1:
+                        viewHolder.tv_lk_year_2_num.setText(recruitPlan2Bean.getPlanNum());
+                        break;
+                    case 2:
+                        viewHolder.tv_lk_year_3_num.setText(recruitPlan2Bean.getPlanNum());
+                        break;
+                }
+            }
         }
         return convertView;
     }
 
     public static class ViewHolder {
-        TextView tv_school_mark_0;
-        TextView tv_school_mark_1;
-        TextView tv_school_mark_2;
+        TextView tv_school_name;
+        TextView tv_school_address;
 
-        TextView tv_bk_num;
-        TextView tv_zk_num;
-        TextView tv_tiqian;
+        TextView tv_year_1;
+        TextView tv_year_2;
+        TextView tv_year_3;
+
+        TextView tv_wk_year_1_num;
+        TextView tv_wk_year_2_num;
+        TextView tv_wk_year_3_num;
+
+        TextView tv_lk_year_1_num;
+        TextView tv_lk_year_2_num;
+        TextView tv_lk_year_3_num;
 
     }
 }
