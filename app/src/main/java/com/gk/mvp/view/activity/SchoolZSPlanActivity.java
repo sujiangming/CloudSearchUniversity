@@ -16,10 +16,9 @@ import com.gk.beans.SchoolZSBean;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.SchoolZSPlanAdapter;
 import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,7 +51,7 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
     private int mPage = 0;
     private boolean isLoadMore = false;
     private String searchKey = "";
-    private CommonAdapter<SchoolZSBean> adapter;
+    private SchoolZSPlanAdapter adapter;
 
     @Override
     public int getResouceId() {
@@ -64,9 +63,16 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         initSmartRefreshLayout(smartRfQuerySchool, true);
         schoolBeanList = new ArrayList<>();
         jsonObject = new JSONObject();
+        initAdapter();
         invoke();
         showSearch();
         setSearchViewText(searchView);
+    }
+
+    private void initAdapter() {
+        adapter = new SchoolZSPlanAdapter(this);
+        lvQuerySchool.setAdapter(adapter);
+        adapter.update(schoolBeanList);
     }
 
     private void invoke() {
@@ -122,45 +128,17 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
                 return;
             }
             schoolBeanList.addAll(beanList);
-        } else {
-            if (beanList == null || beanList.size() == 0) {
-                toast("没有查询到数据");
-                showTvNoData();
-                return;
-            }
-            hideTvNoData();
-            schoolBeanList = beanList;
+            adapter.update(schoolBeanList);
+            return;
         }
-        lvQuerySchool.setAdapter(adapter = new CommonAdapter<SchoolZSBean>(this, R.layout.school_zhaosheng_list_item, schoolBeanList) {
-            @Override
-            protected void convert(ViewHolder viewHolder, SchoolZSBean item, int position) {
-
-                viewHolder.setText(R.id.tv_school_plan, "2017年招生计划");
-                viewHolder.setText(R.id.tv_school_address, item.getSchoolName());
-                viewHolder.setText(R.id.tv_school_name, item.getSchoolName() == null ? "未知" : item.getSchoolName());
-
-                List<SchoolZSBean.RecruitPlan> recruitPlanList = item.getRecruitPlan();
-                if (null != recruitPlanList && recruitPlanList.size() > 0) {
-                    for (int i = 0; i < recruitPlanList.size(); i++) {
-                        switch (i) {
-                            case 0:
-                                viewHolder.setText(R.id.tv_bk_num, item.getRecruitPlan().get(i).getPlanNum() + "");
-                                break;
-                            case 1:
-                                viewHolder.setText(R.id.tv_zk_num, item.getRecruitPlan().get(i).getPlanNum() + "");
-                                break;
-                            case 2:
-                                viewHolder.setText(R.id.tv_tiqian, item.getRecruitPlan().get(i).getPlanNum() + "");
-                                break;
-                        }
-                    }
-                } else {
-                    viewHolder.setText(R.id.tv_bk_num, "0");
-                    viewHolder.setText(R.id.tv_zk_num, "0");
-                    viewHolder.setText(R.id.tv_tiqian, "0");
-                }
-            }
-        });
+        if (beanList == null || beanList.size() == 0) {
+            toast("没有查询到数据");
+            showTvNoData();
+            return;
+        }
+        hideTvNoData();
+        schoolBeanList = beanList;
+        adapter.update(schoolBeanList);
     }
 
     @Override

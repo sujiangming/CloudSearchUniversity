@@ -12,14 +12,12 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
-import com.gk.beans.CourseTypeEnum;
 import com.gk.beans.MaterialItemBean;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
@@ -28,13 +26,11 @@ import com.gk.http.download.DownloadApi;
 import com.gk.http.download.DownloadProgressHandler;
 import com.gk.http.download.ProgressHelper;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.MaterialListAdapter;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryFileUtil;
-import com.gk.tools.JdryTime;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -74,6 +70,7 @@ public class MaterialListActivity extends SjmBaseActivity {
     private String course;
     private boolean isLoadMore = false;
     private JSONObject jsonObject = new JSONObject();
+    private MaterialListAdapter adapter;
 
     @Override
     public int getResouceId() {
@@ -87,6 +84,7 @@ public class MaterialListActivity extends SjmBaseActivity {
         type = getIntent().getIntExtra("type", 0);
         course = getIntent().getStringExtra("course");
         setTitleByType();
+        initAdapter();
         showProgress();
         invoke();
 
@@ -96,10 +94,28 @@ public class MaterialListActivity extends SjmBaseActivity {
         if (type == 1) {
             setTopBar(topBar, "名师讲堂", 0);
         } else if (type == 2) {
-            setTopBar(topBar, "历史真题", 0);
+            setTopBar(topBar, "历年真题", 0);
         } else {
             setTopBar(topBar, "模拟试卷", 0);
         }
+    }
+
+    private void initAdapter() {
+        adapter = new MaterialListAdapter(this, type);
+        adapter.update(list);
+        lvMaterial.setAdapter(adapter);
+        lvMaterial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (1 == list.get(i).getType()) {
+                    Intent intent = new Intent();
+                    intent.putExtra("bean", list.get(i));
+                    openNewActivityByIntent(MsJtDetailActivity.class, intent);
+                    return;
+                }
+                openOrDownloadFile(list.get(i));
+            }
+        });
     }
 
     private void invoke() {
@@ -124,48 +140,17 @@ public class MaterialListActivity extends SjmBaseActivity {
                 return;
             }
             list.addAll(beanList);
-        } else {
-            int currentSize = list.size();
-            list.addAll(beanList);
-            list = removeDuplicate(list);
-            int afterSize = list.size();
-            if (currentSize == afterSize) {
-                return;
-            }
+            adapter.update(list);
+            return;
         }
-
-        lvMaterial.setAdapter(new CommonAdapter<MaterialItemBean.DataBean>(this, R.layout.material_item, list) {
-            @Override
-            protected void convert(ViewHolder viewHolder, MaterialItemBean.DataBean item, int position) {
-                viewHolder.setText(R.id.tv_live_title, item.getName());
-                viewHolder.setText(R.id.tv_time_content, JdryTime.getFullTimeBySec(item.getUploadTime()));
-                viewHolder.setText(R.id.tv_km_content, CourseTypeEnum.getSubjectTypeName(item.getCourse()));
-                switch (type) {
-                    case 1:
-                        viewHolder.setText(R.id.tv_type_content, "名师讲堂");
-                        break;
-                    case 2:
-                        viewHolder.setText(R.id.tv_type_content, "历史真题");
-                        break;
-                    case 3:
-                        viewHolder.setText(R.id.tv_type_content, "模拟试卷");
-                        break;
-                }
-                imageLoader.displayImage(MaterialListActivity.this, item.getLogo(), (ImageView) viewHolder.getView(R.id.iv_item));
-            }
-        });
-        lvMaterial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (1 == list.get(i).getType()) {
-                    Intent intent = new Intent();
-                    intent.putExtra("bean",list.get(i));
-                    openNewActivityByIntent(MsJtDetailActivity.class,intent);
-                    return;
-                }
-                openOrDownloadFile(list.get(i));
-            }
-        });
+        int currentSize = list.size();
+        list.addAll(beanList);
+        list = removeDuplicate(list);
+        int afterSize = list.size();
+        if (currentSize == afterSize) {
+            return;
+        }
+        adapter.update(list);
     }
 
     @Override

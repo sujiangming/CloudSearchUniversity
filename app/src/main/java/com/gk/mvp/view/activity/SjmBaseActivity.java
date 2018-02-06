@@ -110,15 +110,16 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
         LinearLayout linearLayout2 = (LinearLayout) linearLayout1.getChildAt(2);
         LinearLayout linearLayout3 = (LinearLayout) linearLayout2.getChildAt(1);
         AutoCompleteTextView autoComplete = (AutoCompleteTextView) linearLayout3.getChildAt(0);
-        autoComplete.setTextSize(12);
+        autoComplete.setTextSize(14);
         //设置字体颜色
         autoComplete.setTextColor(getResources().getColor(R.color.color808080));
         //设置提示文字颜色
-        autoComplete.setHintTextColor(getResources().getColor(R.color.colorc8c7cc));
+        autoComplete.setHintTextColor(getResources().getColor(R.color.color808080));
     }
 
     /**
      * 动态修改AlertDialog字体颜色
+     *
      * @param dialog
      * @param msgColor
      * @param positiveBtnColor

@@ -11,8 +11,7 @@
         android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/space_10_dp"
-        android:layout_marginRight="@dimen/space_10_dp"
-        android:src="@drawable/qinghuadaxue3x" />
+        android:layout_marginRight="@dimen/space_10_dp" />
 
     <TextView
         android:id="@+id/tv_school_name"
@@ -23,7 +22,6 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingRight="@dimen/space_12_dp"
-        android:text="清华大学"
         android:textColor="#302f30"
         android:textSize="@dimen/font_17_sp" />
 
@@ -47,7 +45,6 @@
             android:paddingLeft="@dimen/space_10_dp"
             android:paddingRight="@dimen/space_10_dp"
             android:paddingTop="@dimen/space_5_dp"
-            android:text="985"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_12_sp"
             android:visibility="invisible" />
@@ -63,7 +60,6 @@
             android:paddingLeft="@dimen/space_10_dp"
             android:paddingRight="@dimen/space_10_dp"
             android:paddingTop="@dimen/space_5_dp"
-            android:text="211"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_12_sp"
             android:visibility="invisible" />
@@ -79,7 +75,6 @@
             android:paddingLeft="@dimen/space_10_dp"
             android:paddingRight="@dimen/space_10_dp"
             android:paddingTop="@dimen/space_5_dp"
-            android:text="双一流"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_12_sp"
             android:visibility="invisible" />
@@ -92,7 +87,6 @@
         android:layout_below="@id/ll_shool_mark"
         android:layout_marginTop="@dimen/space_8_dp"
         android:layout_toRightOf="@id/iv_query_item"
-        android:text="综合"
         android:textColor="#808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -104,7 +98,6 @@
         android:layout_marginLeft="@dimen/space_25_dp"
         android:layout_marginTop="@dimen/space_8_dp"
         android:layout_toRightOf="@id/tv_school_type"
-        android:text="本科"
         android:textColor="#808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -116,7 +109,6 @@
         android:layout_below="@id/ll_shool_mark"
         android:layout_marginRight="@dimen/space_10_dp"
         android:layout_marginTop="@dimen/space_8_dp"
-        android:text="本科"
         android:textColor="#808080"
         android:textSize="@dimen/font_12_sp" />
 </RelativeLayout>

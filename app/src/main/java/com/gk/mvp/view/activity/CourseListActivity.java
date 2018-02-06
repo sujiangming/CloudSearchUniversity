@@ -12,25 +12,21 @@ import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
-import com.gk.beans.CourseTypeEnum;
 import com.gk.beans.MaterialItemBean;
 import com.gk.global.YXXConstants;
 import com.gk.http.download.DownloadApi;
 import com.gk.http.download.DownloadProgressHandler;
 import com.gk.http.download.ProgressHelper;
 import com.gk.mvp.presenter.MaterialPresenter;
+import com.gk.mvp.view.adpater.MaterialListAdapter;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryFileUtil;
-import com.gk.tools.JdryTime;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -70,6 +66,7 @@ public class CourseListActivity extends SjmBaseActivity {
     private boolean isLoadMore = false;
     private JSONObject jsonObject = new JSONObject();
     private MaterialPresenter<MaterialItemBean> materialPresenter;
+    private MaterialListAdapter adapter;
 
     @Override
     public int getResouceId() {
@@ -87,8 +84,26 @@ public class CourseListActivity extends SjmBaseActivity {
         initSmartRefreshLayout(smartMaterial, true);
         course = getIntent().getStringExtra("course");
         setTitleByType();
+        initAdapter();
         materialPresenter = new MaterialPresenter<MaterialItemBean>(this);
         materialPresenter.httpRequestMaterialsByCourse(page, course);
+    }
+
+    private void initAdapter() {
+        adapter = new MaterialListAdapter(this, 0);
+        lvMaterial.setAdapter(adapter);
+        lvMaterial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (1 == list.get(i).getType()) {
+                    Intent intent = new Intent();
+                    intent.putExtra("bean", list.get(i));
+                    openNewActivityByIntent(MsJtDetailActivity.class, intent);
+                    return;
+                }
+                openOrDownloadFile(list.get(i));
+            }
+        });
     }
 
     private void setTitleByType() {
@@ -147,41 +162,11 @@ public class CourseListActivity extends SjmBaseActivity {
         }
         if (isLoadMore) {
             list.addAll(beanList);
+            adapter.update(list);
         } else {
             list = beanList;
+            adapter.update(list);
         }
-        lvMaterial.setAdapter(new CommonAdapter<MaterialItemBean.DataBean>(this, R.layout.material_item, list) {
-            @Override
-            protected void convert(ViewHolder viewHolder, MaterialItemBean.DataBean item, int position) {
-                viewHolder.setText(R.id.tv_live_title, item.getName());
-                viewHolder.setText(R.id.tv_time_content, JdryTime.getFullTimeBySec(item.getUploadTime()));
-                viewHolder.setText(R.id.tv_km_content, CourseTypeEnum.getSubjectTypeName(item.getCourse()));
-                switch (item.getType()) {
-                    case 1:
-                        viewHolder.setText(R.id.tv_type_content, "名师讲堂");
-                        break;
-                    case 2:
-                        viewHolder.setText(R.id.tv_type_content, "历史真题");
-                        break;
-                    case 3:
-                        viewHolder.setText(R.id.tv_type_content, "模拟试卷");
-                        break;
-                }
-                imageLoader.displayImage(CourseListActivity.this, item.getLogo(), (ImageView) viewHolder.getView(R.id.iv_item));
-            }
-        });
-        lvMaterial.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                if (1 == list.get(i).getType()) {
-                    Intent intent = new Intent();
-                    intent.putExtra("bean",list.get(i));
-                    openNewActivityByIntent(MsJtDetailActivity.class,intent);
-                    return;
-                }
-                openOrDownloadFile(list.get(i));
-            }
-        });
     }
 
     @Override

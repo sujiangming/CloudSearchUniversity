@@ -52,7 +52,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/space_12_dp"
-        android:src="@drawable/lq_yx3x" />
+        android:src="@drawable/yuanxiao" />
 
     <TextView
         android:id="@+id/tv_wen_li_desc"

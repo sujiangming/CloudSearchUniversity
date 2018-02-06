@@ -176,7 +176,7 @@ public class LqRiskActivity extends SjmBaseActivity {
     }
 
     private void tvLevel1Click() {
-        imageView.setImageResource(R.drawable.lq_yx3x);
+        imageView.setImageResource(R.drawable.yuanxiao);
         tvLevel1.setBackgroundResource(R.drawable.fault_level_left_press);
         tvLevel1.setTextColor(0xFFFFFFFF);
         tvLevel2.setBackgroundResource(R.drawable.fault_level_right_normal);
@@ -188,7 +188,7 @@ public class LqRiskActivity extends SjmBaseActivity {
     }
 
     private void tvLevel2Click() {
-        imageView.setImageResource(R.drawable.lq_zy3x);
+        imageView.setImageResource(R.drawable.zhuanyebg);
         tvLevel1.setBackgroundResource(R.drawable.fault_level_left_normal);
         tvLevel1.setTextColor(0xFF555555);
         tvLevel2.setBackgroundResource(R.drawable.fault_level_right_press);

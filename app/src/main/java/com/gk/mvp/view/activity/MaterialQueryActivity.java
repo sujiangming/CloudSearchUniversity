@@ -63,7 +63,7 @@ public class MaterialQueryActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        initSmartRefreshLayout(smartLayout, true);
+        initSmartRefreshLayout(smartLayout, false);
         jsonObject = new JSONObject();
         imageLoader = new GlideImageLoader();
         list = new ArrayList<>();

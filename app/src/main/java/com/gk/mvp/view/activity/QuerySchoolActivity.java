@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -73,28 +74,54 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 closeActivity(this);
                 break;
             case R.id.spinner1:
-                rlChoose.setVisibility(View.VISIBLE);
-                gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityAreaEnum.getAreaList(), 1);
-                initGridViewAdapter();
+                if (!isSpinner1Clicked) {
+                    rlChoose.setVisibility(View.VISIBLE);
+                    gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityAreaEnum.getAreaList(), 1);
+                    initGridViewAdapter();
+                    isSpinner1Clicked = true;
+                } else {
+                    rlChoose.setVisibility(View.GONE);
+                    isSpinner1Clicked = false;
+                }
                 type = 1;
                 break;
             case R.id.spinner2:
-                rlChoose.setVisibility(View.VISIBLE);
-                gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityTypeEnum.getUniversityList(), 2);
-                initGridViewAdapter();
+                if (!isSpinner2Clicked) {
+                    rlChoose.setVisibility(View.VISIBLE);
+                    gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityTypeEnum.getUniversityList(), 2);
+                    initGridViewAdapter();
+                    isSpinner2Clicked = true;
+                } else {
+                    rlChoose.setVisibility(View.GONE);
+                    isSpinner2Clicked = false;
+                }
                 type = 2;
                 break;
             case R.id.spinner3:
-                rlChoose.setVisibility(View.VISIBLE);
-                rlChoose.setVisibility(View.VISIBLE);
-                gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityFeatureEnum.getUniversityFeatureList(), 3);
-                initGridViewAdapter();
+                if (!isSpinner3Clicked) {
+                    rlChoose.setVisibility(View.VISIBLE);
+                    rlChoose.setVisibility(View.VISIBLE);
+                    gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityFeatureEnum.getUniversityFeatureList(), 3);
+                    initGridViewAdapter();
+                    isSpinner3Clicked = true;
+                } else {
+                    rlChoose.setVisibility(View.GONE);
+                    isSpinner3Clicked = false;
+                }
+
                 type = 3;
                 break;
             case R.id.spinner4:
-                rlChoose.setVisibility(View.VISIBLE);
-                gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityLevelEnum.getUniversityLevelList(), 4);
-                initGridViewAdapter();
+                if (!isSpinner4Clicked) {
+                    rlChoose.setVisibility(View.VISIBLE);
+                    gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityLevelEnum.getUniversityLevelList(), 4);
+                    initGridViewAdapter();
+                    isSpinner4Clicked = true;
+                } else {
+                    rlChoose.setVisibility(View.GONE);
+                    isSpinner4Clicked = false;
+                }
+
                 type = 4;
                 break;
             case R.id.btn_choose:
@@ -115,18 +142,21 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                     }
                 }
                 if (!strName.equals(nullStr)) {
-                    setEnumName(strName);
+                    setEnumName(strName, str);
                 }
+                isLoadMore = false;
                 if (type == 1) {
-                    invoke(str, nullStr, nullStr, nullStr, nullStr);
+                    spinner1.setTag(str);
+                    invoke(str, spinner2.getTag().toString(), spinner3.getTag().toString(), spinner4.getTag().toString(), nullStr);
                 } else if (type == 2) {
-                    invoke(nullStr, str, nullStr, nullStr, nullStr);
+                    spinner2.setTag(str);
+                    invoke(spinner1.getTag().toString(), str, spinner3.getTag().toString(), spinner4.getTag().toString(), nullStr);
                 } else if (type == 3) {
-                    invoke(nullStr, nullStr, nullStr, str, nullStr);
+                    spinner3.setTag(str);
+                    invoke(spinner1.getTag().toString(), spinner2.getTag().toString(), str, spinner4.getTag().toString(), nullStr);
                 } else if (type == 4) {
-                    invoke(nullStr, nullStr, nullStr, nullStr, str);
-                } else {
-                    invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
+                    spinner4.setTag(str);
+                    invoke(spinner1.getTag().toString(), spinner2.getTag().toString(), spinner3.getTag().toString(), str, nullStr);
                 }
                 break;
             case R.id.tv_bg_click:
@@ -145,6 +175,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     private String nullStr = "";
     private String searchKey = nullStr;
     private QuerySchoolAdapter adapter;
+    private boolean isSpinner1Clicked, isSpinner2Clicked, isSpinner3Clicked, isSpinner4Clicked;
 
 
     @Override
@@ -189,15 +220,19 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         return name;
     }
 
-    private void setEnumName(String name) {
+    private void setEnumName(String name, String tag) {
         if (type == 1) {
             spinner1.setText(name);
+            spinner1.setTag(tag);
         } else if (type == 2) {
             spinner2.setText(name);
+            spinner2.setTag(tag);
         } else if (type == 3) {
             spinner3.setText(name);
+            spinner3.setTag(tag);
         } else {
             spinner4.setText(name);
+            spinner4.setTag(tag);
         }
     }
 
@@ -214,11 +249,12 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     private void showSearch() {
         searchview.setSubmitButtonEnabled(true);
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            private String TAG = getClass().getSimpleName();
 
             @Override
             public boolean onQueryTextSubmit(String s) {
-                invoke(nullStr, nullStr, nullStr, nullStr, YxxUtils.URLEncode(s));
+                searchKey = YxxUtils.URLEncode(s);
+                isLoadMore = false;
+                invoke(nullStr, nullStr, nullStr, nullStr, searchKey);
                 clearSearch();
                 return true;
             }
@@ -274,15 +310,22 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     public void refresh() {
         mPage = 0;
         isLoadMore = false;
-        invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
-
+        invoke(spinner1.getTag().toString(),
+                spinner2.getTag().toString(),
+                spinner3.getTag().toString(),
+                spinner4.getTag().toString(),
+                nullStr);
     }
 
     @Override
     public void loadMore() {
         mPage++;
         isLoadMore = true;
-        invoke(nullStr, nullStr, nullStr, nullStr, nullStr);
+        invoke(spinner1.getTag().toString(),
+                spinner2.getTag().toString(),
+                spinner3.getTag().toString(),
+                spinner4.getTag().toString(),
+                nullStr);
     }
 
     @Override
@@ -295,7 +338,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             return;
         }
         QuerySchoolBean querySchoolBean = JSON.parseObject(data, QuerySchoolBean.class);
-        if (mPage == 0 && !isLoadMore) {
+        if (!isLoadMore) {
             schoolBeanList = querySchoolBean.getData();
             adapter.update(schoolBeanList);
             return;
@@ -322,5 +365,25 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         stopLayoutRefreshByTag(isLoadMore);
     }
 
+    private String getTextViewText(TextView textView) {
+        String ret = "";
+        if (TextUtils.isEmpty(textView.getText())) {
+            return ret;
+        }
+        ret = textView.getText().toString();
+        if ("高校类型".equals(ret)) {
+            return nullStr;
+        }
+        if ("所在地".equals(ret)) {
+            return nullStr;
+        }
+        if ("重点院校".equals(ret)) {
+            return nullStr;
+        }
+        if ("批次".equals(ret)) {
+            return nullStr;
+        }
+        return ret;
+    }
 
 }

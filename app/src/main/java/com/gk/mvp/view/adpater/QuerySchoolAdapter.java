@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.gk.R;
 import com.gk.beans.QuerySchoolBean;
 import com.gk.beans.UniversityAreaEnum;
+import com.gk.beans.UniversityTypeEnum;
 import com.gk.tools.GlideImageLoader;
 
 /**
@@ -63,7 +64,10 @@ public class QuerySchoolAdapter extends JdryBaseAdapter {
         glideImageLoader.displayByImgRes(mContext, dataBean.getSchoolLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);
         viewHolder.tv_school_name.setText(dataBean.getSchoolName());
         viewHolder.tv_school_type.setText(getPici(dataBean.getSchoolBatch()));
-        viewHolder.tv_school_level.setText("1".equals(dataBean.getSchoolCategory()) ? "综合类" : "教育类");
+        if (null != dataBean.getSchoolCategory() && !"".equals(dataBean.getSchoolCategory())) {
+            int category = Integer.valueOf(dataBean.getSchoolCategory());
+            viewHolder.tv_school_level.setText(UniversityTypeEnum.getName(category));
+        }
         viewHolder.tv_school_address.setText(UniversityAreaEnum.getName(Integer.valueOf(dataBean.getSchoolArea())));
 
 

@@ -22,8 +22,9 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/mbti3x" />
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/mbti" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -112,10 +113,10 @@
                         android:layout_height="@dimen/space_60_dp"
                         android:layout_marginLeft="@dimen/space_15_dp"
                         android:background="@drawable/mbti_blue"
-                        android:textSize="@dimen/font_14_sp"
-                        android:textColor="@android:color/white"
                         android:gravity="center"
-                        android:text="权威"/>
+                        android:text="权威"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_14_sp" />
 
                 </RelativeLayout>
 
@@ -146,10 +147,10 @@
                         android:layout_height="@dimen/space_60_dp"
                         android:layout_marginLeft="@dimen/space_15_dp"
                         android:background="@drawable/mbti_zs"
-                        android:textSize="@dimen/font_14_sp"
-                        android:textColor="@android:color/white"
                         android:gravity="center"
-                        android:text="清晰"/>
+                        android:text="清晰"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_14_sp" />
 
                 </RelativeLayout>
 
@@ -180,10 +181,10 @@
                         android:layout_height="@dimen/space_60_dp"
                         android:layout_marginLeft="@dimen/space_15_dp"
                         android:background="@drawable/mbti_deep_blue"
-                        android:textSize="@dimen/font_14_sp"
-                        android:textColor="@android:color/white"
                         android:gravity="center"
-                        android:text="实用"/>
+                        android:text="实用"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/font_14_sp" />
 
                 </RelativeLayout>
             </LinearLayout>

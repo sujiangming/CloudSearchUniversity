@@ -7,7 +7,7 @@
     <LinearLayout
         android:id="@+id/ll_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_44_dp"
+        android:layout_height="@dimen/space_55_dp"
         android:background="@color/colorNavigation"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -25,7 +25,7 @@
         <android.support.v7.widget.SearchView
             android:id="@+id/searchview"
             android:layout_width="0dp"
-            android:layout_height="@dimen/space_30_dp"
+            android:layout_height="@dimen/space_44_dp"
             android:layout_weight="1"
             android:background="@color/colorNavigation"
             android:focusable="false"
@@ -56,6 +56,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:paddingRight="@dimen/space_12_dp"
+            android:tag=""
             android:text="所在地"
             android:textColor="@color/color353535"
             android:textSize="@dimen/font_12_sp" />
@@ -73,6 +74,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:paddingRight="@dimen/space_12_dp"
+            android:tag=""
             android:text="高校类型"
             android:textColor="@color/color353535"
             android:textSize="@dimen/font_12_sp" />
@@ -89,6 +91,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:paddingRight="@dimen/space_12_dp"
+            android:tag=""
             android:text="重点院校"
             android:textColor="@color/color353535"
             android:textSize="@dimen/font_12_sp" />
@@ -104,6 +107,7 @@
             android:gravity="center"
             android:maxLines="1"
             android:paddingRight="@dimen/space_12_dp"
+            android:tag=""
             android:text="批次"
             android:textColor="@color/color353535"
             android:textSize="@dimen/font_12_sp" />

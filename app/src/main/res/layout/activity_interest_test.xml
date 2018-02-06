@@ -22,8 +22,9 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/interest3x" />
+                android:layout_height="200dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/hldbg" />
 
             <TextView
                 android:layout_width="match_parent"
@@ -117,11 +118,11 @@
                         android:layout_marginVertical="@dimen/space_20_dp"
                         android:background="@drawable/hld"
                         android:gravity="center"
-                        android:paddingRight="@dimen/space_12_dp"
                         android:paddingBottom="@dimen/space_2_dp"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:text="@string/a_type"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_14_sp"
-                        android:text="@string/a_type"/>
+                        android:textSize="@dimen/font_14_sp" />
 
                 </RelativeLayout>
 
@@ -156,11 +157,11 @@
                         android:layout_marginVertical="@dimen/space_20_dp"
                         android:background="@drawable/hld_blue"
                         android:gravity="center"
-                        android:paddingRight="@dimen/space_12_dp"
                         android:paddingBottom="@dimen/space_2_dp"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:text="@string/c_type"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_14_sp"
-                        android:text="@string/c_type"/>
+                        android:textSize="@dimen/font_14_sp" />
 
                 </RelativeLayout>
 
@@ -195,11 +196,11 @@
                         android:layout_marginVertical="@dimen/space_20_dp"
                         android:background="@drawable/hld"
                         android:gravity="center"
-                        android:paddingRight="@dimen/space_12_dp"
                         android:paddingBottom="@dimen/space_2_dp"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:text="@string/e_type"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_14_sp"
-                        android:text="@string/e_type"/>
+                        android:textSize="@dimen/font_14_sp" />
 
                 </RelativeLayout>
 
@@ -234,11 +235,11 @@
                         android:layout_marginVertical="@dimen/space_20_dp"
                         android:background="@drawable/hld_blue"
                         android:gravity="center"
-                        android:paddingRight="@dimen/space_12_dp"
                         android:paddingBottom="@dimen/space_2_dp"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:text="@string/i_type"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_14_sp"
-                        android:text="@string/i_type"/>
+                        android:textSize="@dimen/font_14_sp" />
 
                 </RelativeLayout>
 
@@ -273,11 +274,11 @@
                         android:layout_marginVertical="@dimen/space_20_dp"
                         android:background="@drawable/hld"
                         android:gravity="center"
-                        android:paddingRight="@dimen/space_12_dp"
                         android:paddingBottom="@dimen/space_2_dp"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:text="@string/r_type"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_14_sp"
-                        android:text="@string/r_type"/>
+                        android:textSize="@dimen/font_14_sp" />
 
                 </RelativeLayout>
 
@@ -312,11 +313,11 @@
                         android:layout_marginVertical="@dimen/space_20_dp"
                         android:background="@drawable/hld_blue"
                         android:gravity="center"
-                        android:paddingRight="@dimen/space_12_dp"
                         android:paddingBottom="@dimen/space_2_dp"
+                        android:paddingRight="@dimen/space_12_dp"
+                        android:text="@string/s_type"
                         android:textColor="@android:color/white"
-                        android:textSize="@dimen/font_14_sp"
-                        android:text="@string/s_type"/>
+                        android:textSize="@dimen/font_14_sp" />
 
                 </RelativeLayout>
             </LinearLayout>

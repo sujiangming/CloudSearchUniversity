@@ -21,6 +21,7 @@ import java.util.List;
 public class GridViewChooseAdapter<T> extends JdryBaseAdapter {
     private List<Boolean> isCheck;
     private List<String> checkedArray;
+    private List<TextView> textViewList;
     private int type;
     ViewHolder holder = null;
 
@@ -29,6 +30,7 @@ public class GridViewChooseAdapter<T> extends JdryBaseAdapter {
         this.mContext = context;
         checkedArray = new ArrayList<>();
         isCheck = new ArrayList<>();
+        textViewList = new ArrayList<>();
         this.type = type;
         list.clear();
         list.addAll(list1);
@@ -104,6 +106,14 @@ public class GridViewChooseAdapter<T> extends JdryBaseAdapter {
      * @param post
      */
     public void choiceState(int post, View view) {
+        if (type == 1) {
+            choiceMutilState(post, view);
+        } else {
+            choiceSingleState(view);
+        }
+    }
+
+    public void choiceMutilState(int post, View view) {
         /**
          *  传递过来所点击的position,如果是本身已经是选中状态,就让他变成不是选中状态,
          *  如果本身不是选中状态,就让他变成选中状态
@@ -122,6 +132,26 @@ public class GridViewChooseAdapter<T> extends JdryBaseAdapter {
         this.notifyDataSetChanged();
     }
 
+    public void choiceSingleState(View view) {
+        /**
+         *  传递过来所点击的position,如果是本身已经是选中状态,就让他变成不是选中状态,
+         *  如果本身不是选中状态,就让他变成选中状态
+         */
+        TextView textView = (TextView) view;
+        textView.setBackgroundResource(R.drawable.more_data_bg);
+        textView.setTextColor(0xFFFFFFFF);
+        checkedArray.add(textView.getHint().toString());
+        textViewList.add(textView);
+        for (int i = 0; i < textViewList.size(); i++) {
+            CharSequence textName = textViewList.get(i).getText();
+            if (!textView.getText().equals(textName)) {
+                textViewList.get(i).setBackgroundResource(R.color.transparent);
+                textViewList.get(i).setTextColor(0xFF353535);
+                checkedArray.remove(textViewList.get(i).getHint().toString());
+            }
+        }
+        this.notifyDataSetChanged();
+    }
 
     public static class ViewHolder {
         TextView textView;
