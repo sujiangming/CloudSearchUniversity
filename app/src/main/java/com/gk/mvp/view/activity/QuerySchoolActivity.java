@@ -150,6 +150,8 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                     setEnumName(strName, str);
                 }
                 isLoadMore = false;
+                mPage = 0;
+                isSearcher = false;
                 if (type == 1) {
                     spinner1.setTag(str);
                     invoke(str, spinner2.getTag().toString(), spinner3.getTag().toString(), spinner4.getTag().toString(), nullStr);
@@ -182,6 +184,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     private String searchKey = nullStr;
     private QuerySchoolAdapter adapter;
     private boolean isSpinner1Clicked, isSpinner2Clicked, isSpinner3Clicked, isSpinner4Clicked;
+    private boolean isSearcher = false;
 
 
     @Override
@@ -260,7 +263,24 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             public boolean onQueryTextSubmit(String s) {
                 searchKey = YxxUtils.URLEncode(s);
                 isLoadMore = false;
+                isSearcher = true;
                 mPage = 0;
+                if (!TextUtils.isEmpty(spinner1.getTag().toString())) {
+                    spinner1.setTag("");
+                    spinner1.setText("所在地");
+                }
+                if (!TextUtils.isEmpty(spinner2.getTag().toString())) {
+                    spinner2.setTag("");
+                    spinner2.setText("高校类型");
+                }
+                if (!TextUtils.isEmpty(spinner3.getTag().toString())) {
+                    spinner3.setTag("");
+                    spinner3.setText("重点院校");
+                }
+                if (!TextUtils.isEmpty(spinner4.getTag().toString())) {
+                    spinner4.setTag("");
+                    spinner4.setText("批次");
+                }
                 invoke(nullStr, nullStr, nullStr, nullStr, searchKey);
                 clearSearch();
                 return true;
@@ -317,6 +337,10 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     public void refresh() {
         mPage = 0;
         isLoadMore = false;
+        if (isSearcher) {
+            invoke(nullStr, nullStr, nullStr, nullStr, searchKey);
+            return;
+        }
         invoke(spinner1.getTag().toString(),
                 spinner2.getTag().toString(),
                 spinner3.getTag().toString(),
@@ -328,6 +352,10 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     public void loadMore() {
         mPage++;
         isLoadMore = true;
+        if (isSearcher) {
+            invoke(nullStr, nullStr, nullStr, nullStr, searchKey);
+            return;
+        }
         invoke(spinner1.getTag().toString(),
                 spinner2.getTag().toString(),
                 spinner3.getTag().toString(),
@@ -367,30 +395,8 @@ public class QuerySchoolActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
         stopLayoutRefreshByTag(isLoadMore);
     }
-
-    private String getTextViewText(TextView textView) {
-        String ret = "";
-        if (TextUtils.isEmpty(textView.getText())) {
-            return ret;
-        }
-        ret = textView.getText().toString();
-        if ("高校类型".equals(ret)) {
-            return nullStr;
-        }
-        if ("所在地".equals(ret)) {
-            return nullStr;
-        }
-        if ("重点院校".equals(ret)) {
-            return nullStr;
-        }
-        if ("批次".equals(ret)) {
-            return nullStr;
-        }
-        return ret;
-    }
-
 }

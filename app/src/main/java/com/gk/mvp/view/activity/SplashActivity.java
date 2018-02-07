@@ -1,19 +1,24 @@
 package com.gk.mvp.view.activity;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
 import com.gk.beans.DaoSession;
 import com.gk.beans.LoginBean;
+import com.gk.beans.SaltBean;
 import com.gk.beans.VersionBean;
 import com.gk.beans.VersionBeanDao;
 import com.gk.global.YXXApplication;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.tools.MD5Util;
 import com.gk.tools.PackageUtils;
 
 import java.util.List;
@@ -37,7 +42,8 @@ public class SplashActivity extends SjmBaseActivity {
         if (isNewVersionExit()) {
             openNewActivity(NewFeatureActivity.class);
         } else {
-            getAdsInfo();
+            //getAdsInfo();
+            autoLogin();
         }
     }
 
@@ -59,35 +65,74 @@ public class SplashActivity extends SjmBaseActivity {
         return false;
     }
 
+
+    private String userName;
+    private String password;
+
+    private void autoLogin() {
+        LoginBean loginBean = LoginBean.getInstance();
+        if (loginBean == null) {
+            openNewActivity(LoginActivity.class);
+            return;
+        }
+        userName = LoginBean.getInstance().getUsername();
+        password = LoginBean.getInstance().getPassword();
+        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
+            openNewActivity(LoginActivity.class);
+            return;
+        }
+        showProgress();
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("username", userName);
+        PresenterManager.getInstance()
+                .setmContext(this)
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getSalt(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+    }
+
     private void getAdsInfo() {
         PresenterManager.getInstance()
                 .setmContext(this)
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList())
-                .request();
+                .request(YXXConstants.INVOKE_API_THREE_TIME);
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
-        List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean.getData().toString(), AdsBean.MDataBean.class);
-        AdsBean.getInstance().saveAdsBean(mDataBeans);
-        goMainActivity();
+        switch (order) {
+            case YXXConstants.INVOKE_API_DEFAULT_TIME:
+                SaltBean saltBean = JSON.parseObject(commonBean.getData().toString(), SaltBean.class);
+                String pwd = userName + saltBean.getSalt() + password;// + password;
+                JSONObject jsonObject = new JSONObject();
+                jsonObject.put("username", userName);
+                jsonObject.put("password", MD5Util.encrypt(pwd));
+                PresenterManager.getInstance()
+                        .setmIView(this)
+                        .setCall(RetrofitUtil.getInstance().createReq(IService.class).login(jsonObject.toJSONString()))
+                        .request(YXXConstants.INVOKE_API_SECOND_TIME);
+                break;
+            case YXXConstants.INVOKE_API_SECOND_TIME:
+                LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
+                LoginBean.getInstance().saveLoginBean(loginBean);
+                LoginBean.getInstance().setPassword(password).save();
+                getAdsInfo();
+                break;
+            case YXXConstants.INVOKE_API_THREE_TIME:
+                List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean.getData().toString(), AdsBean.MDataBean.class);
+                AdsBean.getInstance().saveAdsBean(mDataBeans);
+                openNewActivity(MainActivity.class);
+                break;
+        }
+        hideProgress();
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
-        goMainActivity();
-    }
-
-    private void goMainActivity() {
-        LoginBean loginBean = LoginBean.getInstance();
-        if (loginBean != null && loginBean.getUsername() != null) {
-            openNewActivity(MainActivity.class);
-        } else {
-            openNewActivity(LoginActivity.class);
-        }
+        openNewActivity(LoginActivity.class);
+        hideProgress();
     }
 
     public void updateVersion(int code) {

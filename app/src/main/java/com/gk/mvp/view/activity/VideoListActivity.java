@@ -116,7 +116,7 @@ public class VideoListActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast("获取失败");
         hideProgress();
         stopLayoutRefreshByTag(isLoadMore);
     }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.parser.Feature;
 import com.gk.R;
 import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
@@ -205,7 +206,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
                     return;
                 }
                 String user = jsonObject.get("data").toString();
-                LoginBean loginBean = JSON.parseObject(user, LoginBean.class);
+                LoginBean loginBean = JSON.parseObject(user, LoginBean.class, Feature.IgnoreNotMatch);
                 LoginBean.getInstance().saveLoginBean(loginBean);
                 getAdsInfo();
                 break;
@@ -221,7 +222,6 @@ public class LoginLeftFragment extends SjmBaseFragment {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
         hideProgress();
         switch (order) {
             case YXXConstants.INVOKE_API_THREE_TIME:

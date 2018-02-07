@@ -102,6 +102,10 @@ public class PresenterManager {
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                 if (response.isSuccessful()) {
                     CommonBean commonBean = response.body();
+                    if (null == commonBean) {
+                        mIView.fillWithNoData(response.message(), mOrder);
+                        return;
+                    }
                     render(commonBean);
                 } else {
                     mIView.fillWithNoData(response.message(), mOrder);
@@ -143,6 +147,10 @@ public class PresenterManager {
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                 if (response.isSuccessful()) {
                     CommonBean commonBean = response.body();
+                    if (null == commonBean) {
+                        mIView.fillWithNoData(response.message(), invokeFlag);
+                        return;
+                    }
                     render(commonBean, invokeFlag);
                 } else {
                     mIView.fillWithNoData(response.message(), invokeFlag);

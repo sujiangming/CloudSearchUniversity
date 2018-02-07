@@ -4,6 +4,7 @@ package com.gk.http;
 import android.support.annotation.NonNull;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.parser.Feature;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
@@ -29,11 +30,11 @@ public class FastJsonResponseBodyConverter<T> implements Converter<ResponseBody,
     * 转换方法
     */
     @Override
-    public T convert(@NonNull ResponseBody value) throws IOException  {
+    public T convert(@NonNull ResponseBody value) throws IOException {
         BufferedSource bufferedSource = Okio.buffer(value.source());
         String tempStr = bufferedSource.readUtf8();
         bufferedSource.close();
-        return JSON.parseObject(tempStr, type);
+        return JSON.parseObject(tempStr, type, Feature.SupportAutoType,Feature.SupportNonPublicField,Feature.IgnoreNotMatch);
 
     }
 }

@@ -25,4 +25,6 @@ public class YXXConstants {
     public static final String ADS_INFO_SERIALIZE_KEY = "ads";
     public static final String MAJOR_JSON_SERIALIZE_KEY = "majorJson";
 
+    public static final String ERROR_INFO = "请求失败";
+
 }

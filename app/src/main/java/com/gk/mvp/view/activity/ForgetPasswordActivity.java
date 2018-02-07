@@ -177,7 +177,7 @@ public class ForgetPasswordActivity extends SjmBaseActivity {
 
                     @Override
                     public void onFailure(Call<CommonBean> call, Throwable t) {
-                        toast(t.getMessage());
+                        toast("获取失败");
                         hideProgress();
                     }
                 });

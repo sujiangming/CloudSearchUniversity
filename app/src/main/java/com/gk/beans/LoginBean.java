@@ -15,33 +15,46 @@ import java.io.Serializable;
  */
 
 public class LoginBean implements Serializable {
-
     /**
-     * "address": "贵州",
-     * "administrator": false,
-     * "banned": false,
-     * "cname": "苏江明",
-     * "createDate": 1512214834000,
-     * "enabled": true,
-     * "headImg": "http://wx.qlogo.cn/mmopen/vi_32/kftYk0rZ92WmibSz1pgXBoMZyAxRQw2cm1diaPtl3JJR549Rh1ZlIYT6DEPAKibQicjKJL2tBpfqQX6boPuuH9AWYg/132",
-     * "isHeartTest": "1",
-     * "latestLoginIp": "1.204.215.0",
-     * "latestLoginTime": 1515726747098,
-     * "male": true,
-     * "mobile": "18275128970",
-     * "nickName": "若兰幽竹",
-     * "password": "08ce5105ea96a708d588b178086e7ee7",
-     * "ranking": "130",
-     * "salt": "138",
-     * "score": "668",
-     * "subjectType": "2",
-     * "username": "18275128970",
-     * "vipLevel": "2",
-     * "weixin": "oroNF01XOGhYlN0_sY1T3-VIgDQg"
+     * address :
+     * administrator : false
+     * admissionRiskNum :
+     * banned : false
+     * birthday :
+     * classGrade : null
+     * cname : 未填写
+     * companyId :
+     * createDate : 1518011645740
+     * depts :
+     * email :
+     * enabled : true
+     * ename :
+     * headImg :
+     * heartTestNum :
+     * isHeartTest :
+     * isLive :
+     * latestLoginIp : 223.104.24.111
+     * latestLoginTime : 1518011646037
+     * male : true
+     * mobile : 18275128970
+     * nation :
+     * nickName : 未填写
+     * password : 808248770360cebc92dcb0d5d41441b5
+     * ranking :
+     * roles :
+     * salt : 182
+     * sameScoreToNum :
+     * school :
+     * score :
+     * subjectType :
+     * type :
+     * username : 18275128970
+     * vipLevel : 1
+     * weixin :
      */
-
     private String address;
     private boolean administrator;
+    private String admissionRiskNum;
     private boolean banned;
     private long birthday;
     private String classGrade;
@@ -53,7 +66,9 @@ public class LoginBean implements Serializable {
     private boolean enabled;
     private String ename;
     private String headImg;
+    private String heartTestNum;
     private String isHeartTest;
+    private String isLive;
     private String latestLoginIp;
     private long latestLoginTime;
     private boolean male;
@@ -64,6 +79,7 @@ public class LoginBean implements Serializable {
     private String ranking;
     private String roles;
     private String salt;
+    private String sameScoreToNum;
     private String school;
     private String score;
     private int subjectType;
@@ -248,6 +264,46 @@ public class LoginBean implements Serializable {
                 break;
         }
         return imageIndex;
+    }
+
+    public String getAdmissionRiskNum() {
+        return admissionRiskNum;
+    }
+
+    public void setAdmissionRiskNum(String admissionRiskNum) {
+        this.admissionRiskNum = admissionRiskNum;
+    }
+
+    public String getHeartTestNum() {
+        return heartTestNum;
+    }
+
+    public void setHeartTestNum(String heartTestNum) {
+        this.heartTestNum = heartTestNum;
+    }
+
+    public String getIsHeartTest() {
+        return isHeartTest;
+    }
+
+    public void setIsHeartTest(String isHeartTest) {
+        this.isHeartTest = isHeartTest;
+    }
+
+    public String getIsLive() {
+        return isLive;
+    }
+
+    public void setIsLive(String isLive) {
+        this.isLive = isLive;
+    }
+
+    public String getSameScoreToNum() {
+        return sameScoreToNum;
+    }
+
+    public void setSameScoreToNum(String sameScoreToNum) {
+        this.sameScoreToNum = sameScoreToNum;
     }
 
     public boolean isAdministrator() {
@@ -549,14 +605,6 @@ public class LoginBean implements Serializable {
         return instance;
     }
 
-    public String getIsHeartTest() {
-        return isHeartTest;
-    }
-
-    public void setIsHeartTest(String isHeartTest) {
-        this.isHeartTest = isHeartTest;
-    }
-
     public String getWeiXinHeadImg() {
         return weiXinHeadImg;
     }
@@ -596,4 +644,6 @@ public class LoginBean implements Serializable {
     public void setOrderNo(String orderNo) {
         this.orderNo = orderNo;
     }
+
+
 }

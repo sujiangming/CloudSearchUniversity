@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -171,12 +172,12 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         switch (view.getId()) {
             case R.id.ll_user_score:
                 if (TextUtils.isEmpty(tvScore.getText())) {
-                    updateInfo(view, 1);
+                    updateInfo(tvScore, 1);
                 }
                 break;
             case R.id.ll_rank:
                 if (TextUtils.isEmpty(tvRank.getText())) {
-                    updateInfo(view, 2);
+                    updateInfo(tvRank, 2);
                 }
                 break;
             case R.id.ll_wenli:
@@ -310,17 +311,19 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
-    private void updateInfo(View view, int key) {
-        TextView textView = (TextView) view;
+    private void updateInfo(TextView textView, int key) {
         if (TextUtils.isEmpty(textView.getText())) {
-            showCommonEditDialog();
+            showCommonEditDialog(key);
             requestCode = key;
         }
     }
 
-    private void showCommonEditDialog() {
+    private void showCommonEditDialog(int key) {
         if (commonInfoEdit.getVisibility() == View.GONE) {
             commonInfoEdit.setVisibility(View.VISIBLE);
+            if (1 == key) {
+                et_comment_common.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+            }
             YxxUtils.showSoftInputFromWindow(et_comment_common);
         }
     }
@@ -477,14 +480,11 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
      * @param value 文科 1 理科 2
      */
     private void invokeService(int flag, int value) {
-        if (flag == 0 && isNull()) {
+        if (flag == 0 && TextUtils.isEmpty(et_comment_common.getText())) {
             toast(etHitStr);
             return;
         }
         showProgress();
-        PresenterManager presenterManager = PresenterManager.getInstance()
-                .setmContext(getContext())
-                .setmIView(this);
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         switch (requestCode) {
             case 1:
@@ -497,16 +497,11 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 jsonObject.put("subjectType", value);
                 break;
         }
-        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
+        PresenterManager.getInstance()
+                .setmContext(getContext())
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
-    }
-
-    private boolean isNull() {
-        if (TextUtils.isEmpty(et_comment_common.getText())) {
-            toast(etHitStr);
-            return true;
-        }
-        return false;
     }
 
     @Override
@@ -536,7 +531,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
         switch (requestCode) {
             case 1:
             case 2:
@@ -560,6 +554,8 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
+    private static final String ERROR_MSG = "更改失败";
+
     private void updateWishUniversity(String intentSch) {
         showProgress();
         JSONObject jsonObject = new JSONObject();
@@ -572,6 +568,10 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
+                            if (null == commonBean) {
+                                toast(ERROR_MSG);
+                                return;
+                            }
                             toast(commonBean.getMessage());
                         } else {
                             toast(response.message());
@@ -581,7 +581,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
 
                     @Override
                     public void onFailure(Call<CommonBean> call, Throwable t) {
-                        toast(t.getMessage());
+                        toast(ERROR_MSG);
                         hideProgress();
                     }
                 });
@@ -599,6 +599,10 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
+                            if (null == commonBean) {
+                                toast(ERROR_MSG);
+                                return;
+                            }
                             toast(commonBean.getMessage());
                         } else {
                             toast(response.message());
@@ -608,7 +612,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
 
                     @Override
                     public void onFailure(Call<CommonBean> call, Throwable t) {
-                        toast(t.getMessage());
+                        toast(ERROR_MSG);
                         hideProgress();
                     }
                 });
@@ -629,6 +633,9 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
+                            if (null == commonBean) {
+                                return;
+                            }
                             List<WishSchoolBean> wishSchoolBean = JSON.parseArray(commonBean.getData().toString(), WishSchoolBean.class);
                             if (wishSchoolBean != null && wishSchoolBean.size() > 0) {
                                 tvYixiang.setText("已选" + wishSchoolBean.size() + "个");
@@ -665,6 +672,9 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
+                            if (null == commonBean) {
+                                return;
+                            }
                             List<WishProvinceBean> wishSchoolBean = JSON.parseArray(commonBean.getData().toString(), WishProvinceBean.class);
                             if (wishSchoolBean != null && wishSchoolBean.size() > 0) {
                                 tvProvince.setText("已选" + wishSchoolBean.size() + "个");

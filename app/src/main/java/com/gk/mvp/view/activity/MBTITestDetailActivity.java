@@ -19,6 +19,7 @@ import com.gk.beans.MBITTbale;
 import com.gk.beans.MBITTbaleDao;
 import com.gk.beans.MBITTestBean;
 import com.gk.global.YXXApplication;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
@@ -98,7 +99,7 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
         setTvSelectGone(tvSelect1);
         setTvSelectGone(tvSelect2);

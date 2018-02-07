@@ -117,17 +117,23 @@ public class SchoolDetailActivity extends SjmBaseActivity {
         if (schoolCategory != null && !"".equals(schoolCategory)) {
             tvSchoolType.setText(UniversityTypeEnum.getName(Integer.valueOf(schoolCategory)));
         }
-        String isNef = uniName.getIsNef();
-        if (isNef != null && !"".equals(isNef) && "1".equals(isNef)) {
+        int isNef = uniName.getIsNef();
+        if (isNef == 1) {
             tvSchoolMark0.setVisibility(View.VISIBLE);
+        }else{
+            tvSchoolMark0.setVisibility(View.GONE);
         }
-        String isToo = uniName.getIsToo();
-        if (isToo != null && !"".equals(isToo) && "1".equals(isToo)) {
+        int isToo = uniName.getIsToo();
+        if (isToo == 1) {
             tvSchoolMark1.setVisibility(View.VISIBLE);
+        }else {
+            tvSchoolMark1.setVisibility(View.GONE);
         }
-        String isDouble = uniName.getIsDoubleTop();
-        if (isDouble != null && !"".equals(isDouble) && "1".equals(isDouble)) {
+        int isDouble = uniName.getIsDoubleTop();
+        if (isDouble == 1) {
             tvSchoolMark2.setVisibility(View.VISIBLE);
+        }else {
+            tvSchoolMark2.setVisibility(View.GONE);
         }
     }
 

@@ -44,21 +44,27 @@ public class QuerySchoolAdapter extends JdryBaseAdapter {
         }
 
         QuerySchoolBean.DataBean dataBean = (QuerySchoolBean.DataBean) list.get(position);
-        String isDoubleTop = dataBean.getIsDoubleTop();
-        String isNef = dataBean.getIsNef();
-        String isToo = dataBean.getIsToo();
+        int isDoubleTop = dataBean.getIsDoubleTop();
+        int isNef = dataBean.getIsNef();
+        int isToo = dataBean.getIsToo();
 
-        if (isNef != null && !"".equals(isNef) && "1".equals(isNef)) {
+        if (isNef == 1) {
             viewHolder.tv_school_mark_0.setVisibility(View.VISIBLE);
             viewHolder.tv_school_mark_0.setText("985");
+        } else {
+            viewHolder.tv_school_mark_0.setVisibility(View.GONE);
         }
-        if (isDoubleTop != null && !"".equals(isDoubleTop) && "1".equals(isDoubleTop)) {
+        if (isDoubleTop == 1) {
             viewHolder.tv_school_mark_1.setVisibility(View.VISIBLE);
             viewHolder.tv_school_mark_1.setText("211");
+        } else {
+            viewHolder.tv_school_mark_1.setVisibility(View.GONE);
         }
-        if (isToo != null && !"".equals(isToo) && "1".equals(isToo)) {
+        if (isToo == 1) {
             viewHolder.tv_school_mark_2.setVisibility(View.VISIBLE);
             viewHolder.tv_school_mark_2.setText("双一流");
+        } else {
+            viewHolder.tv_school_mark_2.setVisibility(View.GONE);
         }
 
         glideImageLoader.displayByImgRes(mContext, dataBean.getSchoolLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);

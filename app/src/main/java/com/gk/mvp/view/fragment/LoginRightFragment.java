@@ -191,7 +191,9 @@ public class LoginRightFragment extends SjmBaseFragment {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        if (YXXConstants.INVOKE_API_SECOND_TIME == order) {
+            toast("登录失败");
+        }
         hideProgress();
     }
 }

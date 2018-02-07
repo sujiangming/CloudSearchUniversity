@@ -12,6 +12,7 @@ import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.WishResultBean;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
@@ -91,7 +92,7 @@ public class WishReportResultActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
     }
 

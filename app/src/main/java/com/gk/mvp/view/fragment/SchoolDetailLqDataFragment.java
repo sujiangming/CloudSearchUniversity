@@ -8,6 +8,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.UniversityLuQuDataBean;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
@@ -30,7 +31,7 @@ public class SchoolDetailLqDataFragment extends SjmBaseFragment {
     @BindView(R.id.lv_score)
     ListView lvScore;
 
-    private List<UniversityLuQuDataBean.MajorAdmissionsDataBean> list = new ArrayList<>();
+    private List<UniversityLuQuDataBean> list = new ArrayList<>();
     private String uniName;
 
     @Override
@@ -58,7 +59,7 @@ public class SchoolDetailLqDataFragment extends SjmBaseFragment {
         jsonObject.put("schoolId", uniName);
         PresenterManager.getInstance()
                 .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getMajorAdmissionsData(jsonObject.toJSONString()))
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getUniMajorAdmissionData(jsonObject.toJSONString()))
                 .request();
     }
 
@@ -66,6 +67,10 @@ public class SchoolDetailLqDataFragment extends SjmBaseFragment {
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         CommonBean commonBean = (CommonBean) t;
+        if (null == commonBean || null == commonBean.getData()) {
+            toast("获取数据失败");
+            return;
+        }
         List<UniversityLuQuDataBean> luQuDataBeans = JSON.parseArray(commonBean.getData().toString(), UniversityLuQuDataBean.class);
         if (luQuDataBeans == null) {
             toast(commonBean.getMessage());
@@ -76,23 +81,21 @@ public class SchoolDetailLqDataFragment extends SjmBaseFragment {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
     }
 
     private void handleData(List<UniversityLuQuDataBean> luQuDataBeans) {
         list.clear();
-        for (int i = 0; i < luQuDataBeans.size(); i++) {
-            List<UniversityLuQuDataBean.MajorAdmissionsDataBean> admissionsDataBeanList = luQuDataBeans.get(i).getMajorAdmissionsData();
-            list.addAll(admissionsDataBeanList);
-        }
-        lvScore.setAdapter(new CommonAdapter<UniversityLuQuDataBean.MajorAdmissionsDataBean>(getContext(), R.layout.school_detail_luqu_item, list) {
+        list = luQuDataBeans;
+        lvScore.setAdapter(new CommonAdapter<UniversityLuQuDataBean>(getContext(), R.layout.school_detail_luqu_item, list) {
             @Override
-            protected void convert(ViewHolder viewHolder, UniversityLuQuDataBean.MajorAdmissionsDataBean item, int position) {
-                viewHolder.setText(R.id.tv_year, item.getYearStr());
-                viewHolder.setText(R.id.tv_type, item.getSubjectType());
+            protected void convert(ViewHolder viewHolder, UniversityLuQuDataBean item, int position) {
+                viewHolder.setText(R.id.tv_year, item.getArea());
+                viewHolder.setText(R.id.tv_type, item.getMajorName());
                 viewHolder.setText(R.id.tv_score_hight, item.getHighestScore());
                 viewHolder.setText(R.id.tv_score_lower, item.getLowestScore());
+                viewHolder.setText(R.id.tv_plan_num, item.getPlanNum());
             }
         });
     }

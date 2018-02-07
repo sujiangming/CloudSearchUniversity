@@ -120,7 +120,6 @@ public class AccountSaveActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
         hideProgress();
     }
 }

@@ -1,7 +1,5 @@
 package com.gk.beans;
 
-import java.util.List;
-
 /**
  * Created by JDRY-SJM on 2018/1/9.
  */
@@ -9,21 +7,25 @@ import java.util.List;
 public class UniversityZsPlanBean {
 
     /**
-     * message : 查询成功
-     * status : 1
-     * data : [{"majorId":"402881fb5fce47d2015fce6030ca0001","majorName":"哲学","majorRecruitPlan":[{"area":"贵州","id":"402881fb5fce47d2015fce6030ca0001","majorBasicId":"402881fb5fce47d2015fce6030ca0001","planNum":100,"subjectType":"理科","yearStr":"2017"},{"area":"贵州","id":"402881fb5fce47d2015fce6030ca0002","majorBasicId":"402881fb5fce47d2015fce6030ca0001","planNum":65,"subjectType":"文科","yearStr":"2016"}]}]
+     * area : 贵州
+     * majorName : 农业机械化及其自动化
+     * planNum : 2
+     * subjectType : 理科
+     * yearStr : 2017
      */
 
-    private String majorId;
+    private String area;
     private String majorName;
-    private List<MajorRecruitPlanBean> majorRecruitPlan;
+    private String planNum;
+    private String subjectType;
+    private String yearStr;
 
-    public String getMajorId() {
-        return majorId;
+    public String getArea() {
+        return area;
     }
 
-    public void setMajorId(String majorId) {
-        this.majorId = majorId;
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public String getMajorName() {
@@ -34,77 +36,27 @@ public class UniversityZsPlanBean {
         this.majorName = majorName;
     }
 
-    public List<MajorRecruitPlanBean> getMajorRecruitPlan() {
-        return majorRecruitPlan;
+    public String getPlanNum() {
+        return planNum;
     }
 
-    public void setMajorRecruitPlan(List<MajorRecruitPlanBean> majorRecruitPlan) {
-        this.majorRecruitPlan = majorRecruitPlan;
+    public void setPlanNum(String planNum) {
+        this.planNum = planNum;
     }
 
-    public static class MajorRecruitPlanBean {
-        /**
-         * area : 贵州
-         * id : 402881fb5fce47d2015fce6030ca0001
-         * majorBasicId : 402881fb5fce47d2015fce6030ca0001
-         * planNum : 100
-         * subjectType : 理科
-         * yearStr : 2017
-         */
+    public String getSubjectType() {
+        return subjectType;
+    }
 
-        private String area;
-        private String id;
-        private String majorBasicId;
-        private String planNum;
-        private String subjectType;
-        private String yearStr;
+    public void setSubjectType(String subjectType) {
+        this.subjectType = subjectType;
+    }
 
-        public String getArea() {
-            return area;
-        }
+    public String getYearStr() {
+        return yearStr;
+    }
 
-        public void setArea(String area) {
-            this.area = area;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getMajorBasicId() {
-            return majorBasicId;
-        }
-
-        public void setMajorBasicId(String majorBasicId) {
-            this.majorBasicId = majorBasicId;
-        }
-
-        public String getPlanNum() {
-            return planNum;
-        }
-
-        public void setPlanNum(String planNum) {
-            this.planNum = planNum;
-        }
-
-        public String getSubjectType() {
-            return subjectType;
-        }
-
-        public void setSubjectType(String subjectType) {
-            this.subjectType = subjectType;
-        }
-
-        public String getYearStr() {
-            return yearStr;
-        }
-
-        public void setYearStr(String yearStr) {
-            this.yearStr = yearStr;
-        }
+    public void setYearStr(String yearStr) {
+        this.yearStr = yearStr;
     }
 }

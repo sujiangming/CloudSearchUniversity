@@ -186,7 +186,7 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
         if (order == YXXConstants.INVOKE_API_SECOND_TIME) {
             hideSoftKey();

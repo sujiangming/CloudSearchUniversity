@@ -78,7 +78,7 @@ public class LqRiskQueryMajorActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
         stopRefreshLayout();
     }

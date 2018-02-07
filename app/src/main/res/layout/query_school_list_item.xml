@@ -28,7 +28,7 @@
     <LinearLayout
         android:id="@+id/ll_shool_mark"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/space_30_dp"
         android:layout_below="@id/tv_school_name"
         android:layout_marginTop="@dimen/space_5_dp"
         android:layout_toRightOf="@id/iv_query_item"
@@ -47,7 +47,7 @@
             android:paddingTop="@dimen/space_5_dp"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_12_sp"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_school_mark_1"
@@ -62,7 +62,7 @@
             android:paddingTop="@dimen/space_5_dp"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_12_sp"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_school_mark_2"
@@ -77,7 +77,7 @@
             android:paddingTop="@dimen/space_5_dp"
             android:textColor="@android:color/white"
             android:textSize="@dimen/font_12_sp"
-            android:visibility="invisible" />
+            android:visibility="gone" />
     </LinearLayout>
 
     <TextView

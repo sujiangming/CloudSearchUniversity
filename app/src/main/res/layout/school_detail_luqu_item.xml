@@ -33,8 +33,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
+            android:ellipsize="end"
             android:gravity="center"
             android:hint="----"
+            android:maxLines="2"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_14_sp" />
 
@@ -60,6 +62,21 @@
 
         <TextView
             android:id="@+id/tv_score_lower"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="----"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_14_sp" />
+
+        <View
+            android:layout_width="@dimen/space_1_px"
+            android:layout_height="match_parent"
+            android:background="@color/color353535" />
+
+        <TextView
+            android:id="@+id/tv_plan_num"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

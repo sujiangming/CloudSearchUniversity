@@ -280,7 +280,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
     }
 

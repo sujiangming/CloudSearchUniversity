@@ -83,6 +83,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
     private GlideImageLoader glideImageLoader = new GlideImageLoader();
     private DialogInterface mDialog;
     private String editInfo = "您已经编辑过了";
+    private String noFilled = "未填写";
 
     @Override
     public int getResouceId() {
@@ -94,7 +95,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "个人信息", 0);
         if (loginBean.getHeadImg() != null && !"".equals(loginBean.getHeadImg())) {
-            glideImageLoader.displayByImgRes(this, loginBean.getHeadImg(), ivUserHead,R.drawable.my);
+            glideImageLoader.displayByImgRes(this, loginBean.getHeadImg(), ivUserHead, R.drawable.my);
         }
         setViewData(tvUserCname, loginBean.getCname());
         setViewData(tvUserNickName, loginBean.getNickName());
@@ -128,7 +129,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 showVipDialog();
                 break;
             case R.id.tv_user_cname:
-                if (TextUtils.isEmpty(tvUserCname.getText()) || "未填写".equals(tvUserCname.getText().toString())) {
+                if (TextUtils.isEmpty(tvUserCname.getText()) || noFilled.equals(tvUserCname.getText().toString())) {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 2);
                     startActivityForResult(intent, 2);
@@ -137,14 +138,14 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 }
                 break;
             case R.id.tv_student_source:
-                if (TextUtils.isEmpty(tvStudentSource.getText())) {
+                if (TextUtils.isEmpty(tvStudentSource.getText()) || noFilled.equals(tvStudentSource.getText())) {
                     showMultiChoiceDialog();
                 } else {
                     toast(editInfo);
                 }
                 break;
             case R.id.tv_student_score:
-                if (TextUtils.isEmpty(tvStudentScore.getText())) {
+                if (TextUtils.isEmpty(tvStudentScore.getText()) || noFilled.equals(tvStudentScore.getText())) {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 4);
                     startActivityForResult(intent, 4);
@@ -153,7 +154,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 }
                 break;
             case R.id.tv_student_rank:
-                if (TextUtils.isEmpty(tvStudentRank.getText())) {
+                if (TextUtils.isEmpty(tvStudentRank.getText()) || noFilled.equals(tvStudentRank.getText())) {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 5);
                     startActivityForResult(intent, 5);
@@ -162,14 +163,14 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 }
                 break;
             case R.id.tv_wen_li_ke:
-                if (TextUtils.isEmpty(tvWenLiKe.getText())) {
+                if (TextUtils.isEmpty(tvWenLiKe.getText()) || noFilled.equals(tvWenLiKe.getText())) {
                     showDialog();
                 } else {
                     toast(editInfo);
                 }
                 break;
             case R.id.tv_user_nick_name:
-                if (TextUtils.isEmpty(tvUserNickName.getText())) {
+                if (TextUtils.isEmpty(tvUserNickName.getText()) || noFilled.equals(tvUserNickName.getText())) {
                     intent.setClass(this, UpdateUserInfoActivity.class);
                     intent.putExtra(CODE_KEY, 7);
                     startActivityForResult(intent, 7);
@@ -277,8 +278,8 @@ public class PersonInfoActivity extends SjmBaseActivity {
 
     private void showPhoto() {
         new ActionSheet.Builder(this, getSupportFragmentManager())
-                .setCancelButtonTitle("取消(Cancel)")
-                .setOtherButtonTitles("打开相册(Open Gallery)", "拍照(Camera)")
+                .setCancelButtonTitle("取消")
+                .setOtherButtonTitles("打开相册", "拍照")
                 .setCancelableOnTouchOutside(true)
                 .setListener(new ActionSheet.ActionSheetListener() {
                     @Override
@@ -455,7 +456,6 @@ public class PersonInfoActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 break;

@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.beans.MajorInfoBean;
+import com.gk.global.YXXConstants;
 import com.gk.mvp.presenter.MajorDeatilPresenter;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
@@ -118,7 +119,7 @@ public class ProfessionalDetailActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
     }
 

@@ -156,7 +156,7 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
     }
 

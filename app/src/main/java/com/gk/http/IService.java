@@ -566,6 +566,7 @@ public interface IService {
 
     /**
      * 通过专业名称查询高校
+     *
      * @param data
      * @return
      */
@@ -576,6 +577,7 @@ public interface IService {
 
     /**
      * 大学专业录取数据
+     *
      * @param data
      * @return
      */
@@ -586,6 +588,7 @@ public interface IService {
 
     /**
      * 大学招生计划
+     *
      * @param data
      * @return
      */
@@ -595,6 +598,7 @@ public interface IService {
 
     /**
      * 查询用户 充值的 心理测试 录取风险  同分去向 的充值次数
+     *
      * @param data
      * @return
      */
@@ -604,11 +608,33 @@ public interface IService {
 
     /**
      * 减去1 心理测试 录取风险  同分去向 的充值次数
+     *
      * @param data
      * @return
      */
     @FormUrlEncoded
     @POST("app/api/user/minusUserRechargeTimes")
     Call<CommonBean> minusUserRechargeTimes(@Field("data") String data);
+
+
+    /**
+     * 大学详情 - 专业招生计划查询接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/university/getUniMajorPlan")
+    Call<CommonBean> getUniMajorPlan(@Field("data") String data);
+
+    /**
+     * 大学详情 - 专业录取数据查询接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/university/getUniMajorAdmissionData")
+    Call<CommonBean> getUniMajorAdmissionData(@Field("data") String data);
 
 }

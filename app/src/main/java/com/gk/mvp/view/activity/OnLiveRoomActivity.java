@@ -192,7 +192,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:

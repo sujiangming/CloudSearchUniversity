@@ -13,9 +13,7 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
-
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
+import com.gk.tools.YxxUtils;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -53,19 +51,12 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
             return;
         }
         String value = etUserPwd.getText().toString();
-        try {
-            value = URLEncoder.encode(value, "utf-8");
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        }
+        value = YxxUtils.URLEncode(value);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         switch (requestCode) {
             case 2:
                 jsonObject.put("cname", value);
-                break;
-            case 3:
-                jsonObject.put("address", value);
                 break;
             case 4:
                 jsonObject.put("score", value);
@@ -117,7 +108,6 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
         hideProgress();
     }
 }

@@ -277,7 +277,7 @@ public class HldInterestActivity extends SjmBaseActivity {
     @Override
     public <T> void fillWithNoData(T t, int order) {
         if (order == YXXConstants.INVOKE_API_SECOND_TIME) {
-            toast((String) t);
+            toast(YXXConstants.ERROR_INFO);
         }
         hideProgress();
     }

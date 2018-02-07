@@ -61,9 +61,9 @@ public class QuerySchoolBean implements Serializable{
          * stuRecruitBrochure:xxxx
          */
 
-        private String isDoubleTop;
-        private String isNef;
-        private String isToo;
+        private int isDoubleTop;
+        private int isNef;
+        private int isToo;
         private String schoolAffiliate;
         private String schoolArea;
         private String schoolBatch;
@@ -84,27 +84,27 @@ public class QuerySchoolBean implements Serializable{
             this.stuRecruitBrochure = stuRecruitBrochure;
         }
 
-        public String getIsDoubleTop() {
+        public int getIsDoubleTop() {
             return isDoubleTop;
         }
 
-        public void setIsDoubleTop(String isDoubleTop) {
+        public void setIsDoubleTop(int isDoubleTop) {
             this.isDoubleTop = isDoubleTop;
         }
 
-        public String getIsNef() {
+        public int getIsNef() {
             return isNef;
         }
 
-        public void setIsNef(String isNef) {
+        public void setIsNef(int isNef) {
             this.isNef = isNef;
         }
 
-        public String getIsToo() {
+        public int getIsToo() {
             return isToo;
         }
 
-        public void setIsToo(String isToo) {
+        public void setIsToo(int isToo) {
             this.isToo = isToo;
         }
 

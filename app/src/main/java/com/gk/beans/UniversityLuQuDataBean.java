@@ -1,7 +1,5 @@
 package com.gk.beans;
 
-import java.util.List;
-
 /**
  * Created by JDRY-SJM on 2018/1/9.
  */
@@ -9,27 +7,25 @@ import java.util.List;
 public class UniversityLuQuDataBean {
 
     /**
-     * message : 查询成功
-     * status : 1
-     * mData : [{"majorAdmissionsData":[{"area":"贵州","highestScore":"650","id":"402881fb5fce61ac015fcec85ccb0001","lowestScore":"498","majorBasicId":"402881fb5fce61ac015fcec85ccb0009","subjectType":"理科","yearStr":"2017"},{"area":"贵州","highestScore":"688","id":"402881fb5fce61ac015fcec85ccb0002","lowestScore":"480","majorBasicId":"402881fb5fce61ac015fcec85ccb0009","subjectType":"理科","yearStr":"2016"}],"majorId":"402881fb5fce61ac015fcec85ccb0009","majorName":"作物生产技术"},{"majorAdmissionsData":[{"area":"贵州","highestScore":"605","id":"402881fb5fce47d2015fce6030ca0003","lowestScore":"420","majorBasicId":"402881fb5fce47d2015fce6030ca0001","subjectType":"理科","yearStr":"2017"},{"area":"贵州","highestScore":"655","id":"402881fb5fce47d2015fce6030ca0004","lowestScore":"400","majorBasicId":"402881fb5fce47d2015fce6030ca0001","subjectType":"理科","yearStr":"2016"}],"majorId":"402881fb5fce47d2015fce6030ca0001","majorName":"哲学"}]
+     * area : 贵州
+     * majorName : 农业机械化及其自动化
+     * planNum : 2
+     * highestScore : 666
+     * lowestScore : 555
      */
 
-    /**
-     * majorAdmissionsData : [{"area":"贵州","highestScore":"650","id":"402881fb5fce61ac015fcec85ccb0001","lowestScore":"498","majorBasicId":"402881fb5fce61ac015fcec85ccb0009","subjectType":"理科","yearStr":"2017"},{"area":"贵州","highestScore":"688","id":"402881fb5fce61ac015fcec85ccb0002","lowestScore":"480","majorBasicId":"402881fb5fce61ac015fcec85ccb0009","subjectType":"理科","yearStr":"2016"}]
-     * majorId : 402881fb5fce61ac015fcec85ccb0009
-     * majorName : 作物生产技术
-     */
-
-    private String majorId;
+    private String area;
     private String majorName;
-    private List<MajorAdmissionsDataBean> majorAdmissionsData;
+    private String planNum;
+    private String highestScore;
+    private String lowestScore;
 
-    public String getMajorId() {
-        return majorId;
+    public String getArea() {
+        return area;
     }
 
-    public void setMajorId(String majorId) {
-        this.majorId = majorId;
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public String getMajorName() {
@@ -40,87 +36,27 @@ public class UniversityLuQuDataBean {
         this.majorName = majorName;
     }
 
-    public List<MajorAdmissionsDataBean> getMajorAdmissionsData() {
-        return majorAdmissionsData;
+    public String getPlanNum() {
+        return planNum;
     }
 
-    public void setMajorAdmissionsData(List<MajorAdmissionsDataBean> majorAdmissionsData) {
-        this.majorAdmissionsData = majorAdmissionsData;
+    public void setPlanNum(String planNum) {
+        this.planNum = planNum;
     }
 
-    public static class MajorAdmissionsDataBean {
-        /**
-         * area : 贵州
-         * highestScore : 650
-         * id : 402881fb5fce61ac015fcec85ccb0001
-         * lowestScore : 498
-         * majorBasicId : 402881fb5fce61ac015fcec85ccb0009
-         * subjectType : 理科
-         * yearStr : 2017
-         */
+    public String getHighestScore() {
+        return highestScore;
+    }
 
-        private String area;
-        private String highestScore;
-        private String id;
-        private String lowestScore;
-        private String majorBasicId;
-        private String subjectType;
-        private String yearStr;
+    public void setHighestScore(String highestScore) {
+        this.highestScore = highestScore;
+    }
 
-        public String getArea() {
-            return area;
-        }
+    public String getLowestScore() {
+        return lowestScore;
+    }
 
-        public void setArea(String area) {
-            this.area = area;
-        }
-
-        public String getHighestScore() {
-            return highestScore;
-        }
-
-        public void setHighestScore(String highestScore) {
-            this.highestScore = highestScore;
-        }
-
-        public String getId() {
-            return id;
-        }
-
-        public void setId(String id) {
-            this.id = id;
-        }
-
-        public String getLowestScore() {
-            return lowestScore;
-        }
-
-        public void setLowestScore(String lowestScore) {
-            this.lowestScore = lowestScore;
-        }
-
-        public String getMajorBasicId() {
-            return majorBasicId;
-        }
-
-        public void setMajorBasicId(String majorBasicId) {
-            this.majorBasicId = majorBasicId;
-        }
-
-        public String getSubjectType() {
-            return subjectType;
-        }
-
-        public void setSubjectType(String subjectType) {
-            this.subjectType = subjectType;
-        }
-
-        public String getYearStr() {
-            return yearStr;
-        }
-
-        public void setYearStr(String yearStr) {
-            this.yearStr = yearStr;
-        }
+    public void setLowestScore(String lowestScore) {
+        this.lowestScore = lowestScore;
     }
 }

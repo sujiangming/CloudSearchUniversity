@@ -13,6 +13,7 @@ import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.CourseTypeEnum;
 import com.gk.beans.MaterialItemBean;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
@@ -174,7 +175,7 @@ public class MaterialQueryActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        toast((String) t);
+        toast(YXXConstants.ERROR_INFO);
         hideProgress();
         stopLayoutRefreshByTag(isLoadMore);
     }
