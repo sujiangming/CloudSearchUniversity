@@ -134,10 +134,13 @@ public class MBTITestResultActivity extends SjmBaseActivity {
         mbtiTypesTvs = new TextView[]{iv1, iv2, iv3, iv4};
         mbtiTypesTvsDesc = new TextView[]{tvForIv1, tvForIv2, tvForIv3, tvForIv4};
         mbtiCareerSummaryTvs = new TextView[]{tvTz1, tvTz2, tvTz3, tvTz4};
-        getReport();
         int flag = getIntent().getIntExtra("flag", 0);
         if (2 == flag) { //正常答题完毕的时候，需要调用减1的接口
             minusUserRechargeTimes();
+            getReport();
+        } else {
+            mbtiResultBean = (MBTIResultBean) getIntent().getSerializableExtra("bean");
+            initData();
         }
     }
 
@@ -195,19 +198,22 @@ public class MBTITestResultActivity extends SjmBaseActivity {
         hideProgress();
         CommonBean commonBean = (CommonBean) t;
         mbtiResultBean = JSON.parseObject(commonBean.getData().toString(), MBTIResultBean.class);
-        if (mbtiResultBean == null) {
-            return;
-        }
-        initCommon();
-        initProgressBars();
-        addTypicalSubView();
-
+        initData();
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
         toast(YXXConstants.ERROR_INFO);
         hideProgress();
+    }
+
+    private void initData() {
+        if (mbtiResultBean == null) {
+            return;
+        }
+        initCommon();
+        initProgressBars();
+        addTypicalSubView();
     }
 
     private void initCommon() {

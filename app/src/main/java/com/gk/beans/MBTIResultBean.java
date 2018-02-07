@@ -1,10 +1,12 @@
 package com.gk.beans;
 
+import java.io.Serializable;
+
 /**
  * Created by JDRY-SJM on 2017/12/13.
  */
 
-public class MBTIResultBean {
+public class MBTIResultBean implements Serializable {
 
     /**
      * id : 2c948a82603a601301603a638e060000

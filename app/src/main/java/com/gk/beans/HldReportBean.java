@@ -1,10 +1,12 @@
 package com.gk.beans;
 
+import java.io.Serializable;
+
 /**
  * Created by JDRY-SJM on 2017/12/11.
  */
 
-public class HldReportBean {
+public class HldReportBean implements Serializable{
 
     /**
      * id : 4028819c60358739016035878a7d0000

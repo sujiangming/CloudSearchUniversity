@@ -54,6 +54,7 @@ public class MBTIActivity extends SjmBaseActivity {
 
     private int vipType = 0;
     private int vipLevel = 0;
+    private MBTIResultBean hldReportBean = null;
 
     @Override
     public int getResouceId() {
@@ -87,6 +88,7 @@ public class MBTIActivity extends SjmBaseActivity {
     private void openResultWin() {
         Intent intent = new Intent();
         intent.putExtra("flag", 1);
+        intent.putExtra("bean",hldReportBean);
         openNewActivityByIntent(MBTITestResultActivity.class, intent);
     }
 
@@ -96,7 +98,7 @@ public class MBTIActivity extends SjmBaseActivity {
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
-                        .getHldTestReportByUser(jsonObject.toJSONString()))
+                        .getMbtiTestReportByUser(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
@@ -258,7 +260,7 @@ public class MBTIActivity extends SjmBaseActivity {
         CommonBean commonBean = (CommonBean) t;
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                MBTIResultBean hldReportBean = JSON.parseObject(commonBean.getData().toString(), MBTIResultBean.class);
+                hldReportBean = JSON.parseObject(commonBean.getData().toString(), MBTIResultBean.class);
                 if (hldReportBean == null || hldReportBean.getId() == null) {
                     return;
                 }

@@ -97,10 +97,13 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         setTopBar(topBar, "兴趣测试", 0);
         textViews = new TextView[]{tv1, tv2, tv3};
         textViewType = new TextView[]{tvForIv1, tvForIv2, tvForIv3};
-        httpRequest();
         flag = getIntent().getIntExtra("flag", 0);
         if (2 == flag) { //正常答题完毕的时候，需要调用减1的接口
             minusUserRechargeTimes();
+            httpRequest();
+        } else {
+            hldReportBean = (HldReportBean) getIntent().getSerializableExtra("bean");
+            initData();
         }
     }
 
@@ -162,6 +165,16 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         hideProgress();
         CommonBean commonBean = (CommonBean) t;
         hldReportBean = JSON.parseObject(commonBean.getData().toString(), HldReportBean.class);
+        initData();
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+        toast(YXXConstants.ERROR_INFO);
+        hideProgress();
+    }
+
+    private void initData() {
         if (hldReportBean == null) {
             return;
         }
@@ -171,12 +184,6 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         initCommon();
         addCommonSubView();
         addTypicalSubView();
-    }
-
-    @Override
-    public <T> void fillWithNoData(T t, int order) {
-        toast(YXXConstants.ERROR_INFO);
-        hideProgress();
     }
 
     private void initCommon() {

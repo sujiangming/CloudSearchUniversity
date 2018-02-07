@@ -66,6 +66,7 @@ public class HldInterestActivity extends SjmBaseActivity {
 
     private int vipType = 0;
     private int vipLevel = 0;
+    private HldReportBean hldReportBean = null;
 
     @Override
     public int getResouceId() {
@@ -87,6 +88,7 @@ public class HldInterestActivity extends SjmBaseActivity {
     private void openResultWin() {
         Intent intent = new Intent();
         intent.putExtra("flag", 1);
+        intent.putExtra("bean",hldReportBean);
         openNewActivityByIntent(HLDTestResultActivity.class, intent);
     }
 
@@ -121,7 +123,7 @@ public class HldInterestActivity extends SjmBaseActivity {
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
-                        .getMbtiTestReportByUser(jsonObject.toJSONString()))
+                        .getHldTestReportByUser(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
@@ -258,7 +260,7 @@ public class HldInterestActivity extends SjmBaseActivity {
         CommonBean commonBean = (CommonBean) t;
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                HldReportBean hldReportBean = JSON.parseObject(commonBean.getData().toString(), HldReportBean.class);
+                hldReportBean = JSON.parseObject(commonBean.getData().toString(), HldReportBean.class);
                 if (hldReportBean == null || hldReportBean.getId() == null) {
                     return;
                 }
