@@ -426,7 +426,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/space_4_dp"
                         android:layout_toRightOf="@id/progressBar_1_right"
-                        android:text="内向（E）"
+                        android:text="内向（I）"
                         android:textColor="@color/color808080"
                         android:textSize="@dimen/font_14_sp" />
 

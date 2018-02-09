@@ -28,6 +28,7 @@ import com.gk.mvp.view.activity.ForgetPasswordActivity;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.mvp.view.activity.UserAgreementActivity;
 import com.gk.tools.ToastUtils;
+import com.gk.tools.YxxUtils;
 
 import java.util.List;
 
@@ -147,6 +148,10 @@ public class LoginLeftFragment extends SjmBaseFragment {
         userName = etUserPhone.getText().toString();
         if (userName.isEmpty()) {
             toast("请输入手机号");
+            return;
+        }
+        if(!YxxUtils.isMobile(userName)){
+            toast("请输入正确的手机号");
             return;
         }
         JSONObject jsonObject = new JSONObject();

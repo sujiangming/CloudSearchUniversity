@@ -23,6 +23,7 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.listener.SjmStandardVideoAllCallBackListener;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.mvp.view.custom.SjmListView;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryTime;
@@ -240,6 +241,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                 .request(YXXConstants.INVOKE_API_FORTH_TIME);
     }
 
+    private GlideImageLoader imageLoader = new GlideImageLoader();
 
     @Override
     public <T> void fillWithData(T t, int order) {
@@ -252,13 +254,18 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                 lvComment.setAdapter(new CommonAdapter<CommentVideoBean>(this, R.layout.video_comment, commentVideoBeans) {
                     @Override
                     protected void convert(ViewHolder viewHolder, CommentVideoBean item, int position) {
-                        viewHolder.setImageResource(R.id.iv_user_icon, R.drawable.ym);
+                        CircleImageView imageView = viewHolder.getView(R.id.iv_user_icon);
                         viewHolder.setText(R.id.tv_user, item.getNickName());
                         viewHolder.setText(R.id.tv_time, JdryTime.format(JdryTime.getFullDate(JdryTime.getFullTimeBySec(item.getCreateTime()))));
                         viewHolder.setText(R.id.tv_comment_content, item.getContent());
                         int tmp = position % 2;
                         if (tmp == 0) { //偶数
                             viewHolder.setBackgroundColor(R.id.rl_comment_root, 0xFFF2F2F2);
+                        }
+                        if (!TextUtils.isEmpty(item.getHeadImg())) {
+                            imageLoader.displayByImgRes(LiveVideoDetailActivity.this, item.getHeadImg(), imageView, R.drawable.my);
+                        } else {
+                            imageView.setImageResource(R.drawable.my);
                         }
                     }
                 });

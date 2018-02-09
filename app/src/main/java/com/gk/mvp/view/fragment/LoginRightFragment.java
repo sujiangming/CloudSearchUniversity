@@ -23,6 +23,7 @@ import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.ForgetPasswordActivity;
 import com.gk.mvp.view.activity.MainActivity;
 import com.gk.tools.MD5Util;
+import com.gk.tools.YxxUtils;
 
 import java.util.List;
 
@@ -117,10 +118,13 @@ public class LoginRightFragment extends SjmBaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_login:
-                showProgress();
                 userName = etUserPhone.getText().toString();
                 if (userName.isEmpty()) {
                     toast("请输入手机号");
+                    return;
+                }
+                if (!YxxUtils.isMobile(userName)) {
+                    toast("请输入正确的手机号");
                     return;
                 }
                 JSONObject jsonObject = new JSONObject();
@@ -129,6 +133,7 @@ public class LoginRightFragment extends SjmBaseFragment {
                     toast("请输入密码");
                     return;
                 }
+                showProgress();
                 jsonObject.put("username", userName);
                 PresenterManager.getInstance()
                         .setmContext(getContext())

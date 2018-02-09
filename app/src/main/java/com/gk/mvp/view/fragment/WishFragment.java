@@ -491,7 +491,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 jsonObject.put("score", et_comment_common.getText().toString());
                 break;
             case 2:
-                jsonObject.put("ranking", et_comment_common.getText().toString());
+                jsonObject.put("ranking", YxxUtils.URLEncode(et_comment_common.getText().toString()));
                 break;
             case 3:
                 jsonObject.put("subjectType", value);

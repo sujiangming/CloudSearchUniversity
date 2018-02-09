@@ -10,7 +10,7 @@ public class YXXConstants {
     public static final String EXTRA_PRAISE_COUNT = "live_praise_count";
     public static final int LOGIN_SET_RESULT = 512;
 
-    public static final String HOST = "http://101.132.143.37/cloudsch/";//"http://120.76.65.54:18080/cloudsch/";//http://101.132.143.37/cloudsch/";
+    public static final String HOST = "http://101.132.143.37/cloudsch/";//"http://101.132.143.37/cloudsch/";//http://101.132.143.37/cloudsch/";
     public static final int INVOKE_API_DEFAULT_TIME = 1;
     public static final int INVOKE_API_SECOND_TIME = 2;
     public static final int INVOKE_API_THREE_TIME = 3;
