@@ -186,6 +186,9 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
             case YXXConstants.INVOKE_API_FORTH_TIME:
                 onLiveRoomInfo = (OnLiveRoomInfo) t;
                 initRoomInfo(onLiveRoomInfo);
+                if (2 == onLiveRoomInfo.getLiveStatus()) { //直播已经结束
+                    showCommonTipeDialog("直播结束");
+                }
                 break;
         }
     }
@@ -210,7 +213,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         if (onlyOneTime == 0) {
             onlyOneTime = 1;
             if (roomInfo.getHeadImg() != null && !"".equals(roomInfo.getHeadImg())) {
-                imageLoader.displayByImgRes(this, roomInfo.getHeadImg(), circleImageView,R.drawable.my);
+                imageLoader.displayByImgRes(this, roomInfo.getHeadImg(), circleImageView, R.drawable.my);
             }
             if (roomInfo.getNickName() != null && !"".equals(roomInfo.getNickName())) {
                 tvNickName.setText(roomInfo.getNickName());
@@ -225,7 +228,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                 for (String url : stringSet) {
                     View view = View.inflate(this, R.layout.on_live_images, null);
                     CircleImageView circleImageView = view.findViewById(R.id.civ_image);
-                    imageLoader.displayByImgRes(this, url, circleImageView,R.drawable.my);
+                    imageLoader.displayByImgRes(this, url, circleImageView, R.drawable.my);
                     llImages.addView(view);
                 }
             }
