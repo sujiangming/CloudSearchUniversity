@@ -666,7 +666,7 @@ public interface IService {
      */
     @FormUrlEncoded
     @POST("app/api/self/getSelfRecruitUniversityLikeName")
-    Call<CommonBean> getSelfRecruitUniversityLikeName(@Field("data") String data);
+    Call<ResponseBody> getSelfRecruitUniversityLikeName(@Field("data") String data);
 
 
 }

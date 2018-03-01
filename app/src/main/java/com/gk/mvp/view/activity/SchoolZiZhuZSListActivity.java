@@ -47,6 +47,7 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
     SmartRefreshLayout smartRfQuerySchool;
 
     private List<SchoolZZZsBean> schoolBeanList = new ArrayList<>();
+    private List<SchoolZZZsBean> schoolBeanListTmp = new ArrayList<>();
     private JSONObject jsonObject = new JSONObject();
     private int mPage = 0;
     private boolean isLoadMore = false;
@@ -103,14 +104,6 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
                 return true;
             }
         });
-        searchview.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-                searchview.setQueryHint("请输入关键字");
-                hideSoftKey();
-                return true;
-            }
-        });
     }
 
     private void clearSearch() {
@@ -163,7 +156,7 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
 
     private void search(String selfUniversityName) {
         showProgress();
-        jsonObject.put("selfUniversityName", YxxUtils.URLEncode(selfUniversityName));
+        jsonObject.put("selfUniversityName", selfUniversityName);
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
@@ -207,6 +200,7 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
         List<SchoolZZZsBean> querySchoolBean = JSONObject.parseArray(jsonObject.getString("data"), SchoolZZZsBean.class);
         if (!isLoadMore) {
             schoolBeanList = querySchoolBean;
+            schoolBeanListTmp = schoolBeanList;
             adapter.update(schoolBeanList);
             return;
         }
@@ -218,6 +212,7 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
                 return;
             }
             schoolBeanList.addAll(dataBeans);
+            schoolBeanListTmp = schoolBeanList;
             adapter.update(dataBeans, true);
             if (lvQuerySchool != null) {
                 lvQuerySchool.smoothScrollToPosition(lvQuerySchool.getLastVisiblePosition(), 0);
@@ -232,6 +227,10 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
         }
         JSONObject jsonObject = JSON.parseObject(data);
         List<SchoolZZZsBean> querySchoolBean = JSONObject.parseArray(jsonObject.getString("data"), SchoolZZZsBean.class);
+        if (null == querySchoolBean || 0 == querySchoolBean.size()) {
+            toast("找不到相关数据");
+            return;
+        }
         schoolBeanList = querySchoolBean;
         adapter.update(schoolBeanList);
     }
