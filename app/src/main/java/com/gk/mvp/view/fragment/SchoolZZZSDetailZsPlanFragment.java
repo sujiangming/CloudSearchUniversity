@@ -15,6 +15,7 @@ import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.adpater.CommonAdapter;
 import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.RichText;
+import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import java.util.ArrayList;
@@ -93,7 +94,7 @@ public class SchoolZZZSDetailZsPlanFragment extends SjmBaseFragment {
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("page", page);
-        jsonObject.put("selfUniversityName", uniName);
+        jsonObject.put("selfUniversityName", YxxUtils.URLEncode(uniName));
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getSelfRecruitMajor(jsonObject.toJSONString()))
