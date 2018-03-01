@@ -637,4 +637,36 @@ public interface IService {
     @POST("app/api/university/getUniMajorAdmissionData")
     Call<CommonBean> getUniMajorAdmissionData(@Field("data") String data);
 
+
+    /**
+     * 自主招生 - 自主招生大学基础信息查询接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/self/getSelfRecruitUniversity")
+    Call<ResponseBody> getSelfRecruitUniversity(@Field("data") String data);
+
+    /**
+     * 自主招生 - 专业招生计划查询接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/self/getSelfRecruitMajor")
+    Call<CommonBean> getSelfRecruitMajor(@Field("data") String data);
+
+    /**
+     * 自主招生 - 自主招生大学名称模糊查询基础信息接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/self/getSelfRecruitUniversityLikeName")
+    Call<CommonBean> getSelfRecruitUniversityLikeName(@Field("data") String data);
+
+
 }

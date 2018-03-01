@@ -1,11 +1,13 @@
 package com.gk.http;
 
 
+import com.gk.BuildConfig;
 import com.gk.global.YXXConstants;
 
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
+import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 
@@ -23,12 +25,20 @@ public class RetrofitUtil {
      * 私有构造方法
      */
     private RetrofitUtil() {
+
+        HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
+
+        if (BuildConfig.DEBUG) {
+            logging.setLevel(HttpLoggingInterceptor.Level.BODY);
+        }
+
         //可以利用okhttp实现缓存
         OkHttpClient client = new OkHttpClient.Builder()
                 .retryOnConnectionFailure(true)//连接失败后是否重新连接
                 .connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .readTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
                 .writeTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS)
+                .addInterceptor(logging)
                 .build();
 
         //创建retrofit对象

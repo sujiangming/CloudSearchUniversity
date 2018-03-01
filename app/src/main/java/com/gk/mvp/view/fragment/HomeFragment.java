@@ -21,8 +21,8 @@ import com.gk.mvp.view.activity.ProfessionalQueryActivity;
 import com.gk.mvp.view.activity.QWActivity;
 import com.gk.mvp.view.activity.QuerySchoolActivity;
 import com.gk.mvp.view.activity.SameScoreActivity;
-import com.gk.mvp.view.activity.SchoolRankActivity;
 import com.gk.mvp.view.activity.SchoolZSPlanActivity;
+import com.gk.mvp.view.activity.SchoolZiZhuZSListActivity;
 import com.gk.mvp.view.activity.VIPActivity;
 import com.gk.mvp.view.activity.VideoListActivity;
 import com.gk.mvp.view.activity.WishReportEnterActivity;
@@ -166,7 +166,7 @@ public class HomeFragment extends SjmBaseFragment {
                 openNewActivity(SchoolZSPlanActivity.class);
                 break;
             case R.id.rtv_rank_school:
-                openNewActivity(SchoolRankActivity.class);
+                openNewActivity(SchoolZiZhuZSListActivity.class);
                 break;
             case R.id.rtv_vip:
                 openNewActivity(VIPActivity.class);

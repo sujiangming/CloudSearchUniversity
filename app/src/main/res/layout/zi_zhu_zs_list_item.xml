@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="110dp"
+    android:background="@android:color/white"
+    android:paddingBottom="@dimen/space_10_dp">
+
+    <ImageView
+        android:id="@+id/iv_query_item"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/space_10_dp"
+        android:layout_marginRight="@dimen/space_10_dp"
+        android:src="@drawable/zhanweitu"/>
+
+    <TextView
+        android:id="@+id/tv_school_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_10_dp"
+        android:layout_toRightOf="@id/iv_query_item"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:paddingRight="@dimen/space_12_dp"
+        android:textColor="#302f30"
+        android:textSize="@dimen/font_17_sp" />
+
+    <LinearLayout
+        android:id="@+id/ll_shool_mark"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_30_dp"
+        android:layout_below="@id/tv_school_name"
+        android:layout_marginTop="@dimen/space_5_dp"
+        android:layout_toRightOf="@id/iv_query_item"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_school_mark_0"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_2_dp"
+            android:background="@drawable/shool_mark"
+            android:gravity="center"
+            android:paddingBottom="@dimen/space_5_dp"
+            android:paddingLeft="@dimen/space_10_dp"
+            android:paddingRight="@dimen/space_10_dp"
+            android:paddingTop="@dimen/space_5_dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_12_sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_school_mark_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_2_dp"
+            android:background="@drawable/shool_mark"
+            android:gravity="center"
+            android:paddingBottom="@dimen/space_5_dp"
+            android:paddingLeft="@dimen/space_10_dp"
+            android:paddingRight="@dimen/space_10_dp"
+            android:paddingTop="@dimen/space_5_dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_12_sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_school_mark_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/space_2_dp"
+            android:background="@drawable/shool_mark"
+            android:gravity="center"
+            android:paddingBottom="@dimen/space_5_dp"
+            android:paddingLeft="@dimen/space_10_dp"
+            android:paddingRight="@dimen/space_10_dp"
+            android:paddingTop="@dimen/space_5_dp"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/font_12_sp"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tv_school_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_shool_mark"
+        android:layout_marginTop="@dimen/space_8_dp"
+        android:layout_toRightOf="@id/iv_query_item"
+        android:textColor="#808080"
+        android:textSize="@dimen/font_12_sp" />
+
+    <TextView
+        android:id="@+id/tv_school_level"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_shool_mark"
+        android:layout_marginLeft="@dimen/space_25_dp"
+        android:layout_marginTop="@dimen/space_8_dp"
+        android:layout_toRightOf="@id/tv_school_type"
+        android:textColor="#808080"
+        android:textSize="@dimen/font_12_sp" />
+
+    <TextView
+        android:id="@+id/tv_school_address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/ll_shool_mark"
+        android:layout_marginRight="@dimen/space_10_dp"
+        android:layout_marginTop="@dimen/space_8_dp"
+        android:textColor="#808080"
+        android:textSize="@dimen/font_12_sp" />
+</RelativeLayout>

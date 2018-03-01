@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:expandableTextView="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorBackground"
+        android:orientation="vertical">
+
+        <com.gk.mvp.view.custom.RichText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_40_dp"
+            android:layout_marginTop="@dimen/space_12_dp"
+            android:background="@color/colorWhite"
+            android:drawablePadding="@dimen/space_8_dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/space_10_dp"
+            android:text="招生简介"
+            app:drawable_height="@dimen/space_30_dp"
+            app:drawable_src="@drawable/ic_shuxian_blue"
+            app:drawable_width="@dimen/space_8_dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_1_px"
+            android:background="@color/color19B4D4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <include
+                android:id="@+id/expand_text_1"
+                layout="@layout/text_item" />
+
+        </LinearLayout>
+
+        <com.gk.mvp.view.custom.RichText
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_40_dp"
+            android:layout_marginTop="@dimen/space_12_dp"
+            android:background="@color/colorWhite"
+            android:drawablePadding="@dimen/space_8_dp"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/space_10_dp"
+            android:text="学校简介"
+            app:drawable_height="@dimen/space_30_dp"
+            app:drawable_src="@drawable/ic_shuxian_blue"
+            app:drawable_width="@dimen/space_8_dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_1_px"
+            android:background="@color/color19B4D4" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/space_16_dp">
+
+            <include
+                android:id="@+id/expand_text_2"
+                layout="@layout/text_item" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

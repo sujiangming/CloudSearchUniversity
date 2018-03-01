@@ -157,4 +157,24 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
             this.mRefreshLayout = mRefreshLayout;
         }
     }
+
+    public void stopRefreshLayout() {
+        if (mRefreshLayout != null) {
+            mRefreshLayout.finishRefresh();
+        }
+    }
+
+    public void stopRefreshLayoutLoadMore() {
+        if (mRefreshLayout != null) {
+            mRefreshLayout.finishLoadmore();
+        }
+    }
+
+    public void stopLayoutRefreshByTag(boolean isLoadMore) {
+        if (isLoadMore) {
+           stopRefreshLayoutLoadMore();
+        } else {
+            stopRefreshLayout();
+        }
+    }
 }
