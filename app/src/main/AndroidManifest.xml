@@ -248,6 +248,18 @@
             android:name=".mvp.view.activity.SchoolZZZSDetailActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".mvp.view.activity.VIPGoldProtocolActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.VIPSilverProtocolActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.VIPDiamondProtocolActivity"
+            android:screenOrientation="portrait" />
+
         <!--网络监听广播-->
         <receiver android:name=".listener.ConnectionChangeReceiver">
             <intent-filter>

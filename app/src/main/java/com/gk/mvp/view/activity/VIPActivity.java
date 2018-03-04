@@ -93,7 +93,12 @@ public class VIPActivity extends SjmBaseActivity {
     private int vipLevel = 0;
 
 
-    @OnClick({R.id.tv_open_gold, R.id.tv_open_silver, R.id.tv_open_diamond})
+    @OnClick({R.id.tv_open_gold,
+            R.id.tv_open_silver,
+            R.id.tv_open_diamond,
+            R.id.tv_diamond_vip,
+            R.id.tv_gold_vip,
+            R.id.tv_silver_vip})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_open_gold:
@@ -130,6 +135,16 @@ public class VIPActivity extends SjmBaseActivity {
                     toast("您已经是银卡用户了，您可要升级为金卡或者钻石卡用户哦~");
                 }
                 break;
+            case R.id.tv_diamond_vip:
+                openNewActivity(VIPDiamondProtocolActivity.class);
+                break;
+            case R.id.tv_gold_vip:
+                openNewActivity(VIPGoldProtocolActivity.class);
+                break;
+            case R.id.tv_silver_vip:
+                openNewActivity(VIPSilverProtocolActivity.class);
+                break;
+
         }
     }
 

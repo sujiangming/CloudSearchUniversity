@@ -27,14 +27,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by JDRY-SJM on 2017/9/27.
  */
 
 public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
-
-
     @BindView(R.id.back_image)
     ImageView backImage;
     @BindView(R.id.searchview)
@@ -46,6 +45,11 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
     @BindView(R.id.smart_rf_query_school)
     SmartRefreshLayout smartRfQuerySchool;
 
+    @OnClick(R.id.back_image)
+    public void onClickView() {
+        closeActivity(this);
+    }
+
     private List<SchoolZZZsBean> schoolBeanList = new ArrayList<>();
     private List<SchoolZZZsBean> schoolBeanListTmp = new ArrayList<>();
     private JSONObject jsonObject = new JSONObject();
@@ -55,7 +59,6 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
     private String searchKey = nullStr;
     private SchoolZZZSAdapter adapter;
     private boolean isSearcher = false;
-
 
     @Override
     public int getResouceId() {
