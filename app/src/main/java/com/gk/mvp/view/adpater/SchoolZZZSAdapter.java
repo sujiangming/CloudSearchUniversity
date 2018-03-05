@@ -52,13 +52,13 @@ public class SchoolZZZSAdapter extends JdryBaseAdapter {
         } else {
             viewHolder.tv_school_mark_0.setVisibility(View.GONE);
         }
-        if ("是".equals(isDoubleTop)) {
+        if ("是".equals(isToo)) {
             viewHolder.tv_school_mark_1.setVisibility(View.VISIBLE);
             viewHolder.tv_school_mark_1.setText("211");
         } else {
             viewHolder.tv_school_mark_1.setVisibility(View.GONE);
         }
-        if ("是".equals(isToo)) {
+        if ("是".equals(isDoubleTop)) {
             viewHolder.tv_school_mark_2.setVisibility(View.VISIBLE);
             viewHolder.tv_school_mark_2.setText("双一流");
         } else {

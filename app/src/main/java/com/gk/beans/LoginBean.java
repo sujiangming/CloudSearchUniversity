@@ -1,7 +1,5 @@
 package com.gk.beans;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.gk.R;
 import com.gk.global.YXXApplication;
@@ -113,7 +111,7 @@ public class LoginBean implements Serializable {
                 }
             }
         }
-        Log.e(LoginBean.class.getName(), JSON.toJSONString(instance));
+        //Log.e(LoginBean.class.getName(), JSON.toJSONString(instance));
         return instance;
     }
 

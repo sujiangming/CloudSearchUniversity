@@ -1,7 +1,5 @@
 package com.gk.beans;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
@@ -51,7 +49,6 @@ public class AdsBean implements Serializable {
     public void saveAdsBean(List<MDataBean> mDataBeans) {
         setMData(mDataBeans);
         save();
-        Log.e(AdsBean.class.getName(), JSON.toJSONString(this.getMData()));
     }
 
     public void save() {
