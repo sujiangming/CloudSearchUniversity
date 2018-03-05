@@ -150,7 +150,7 @@ public class HldInterestActivity extends SjmBaseActivity {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setIcon(android.R.drawable.ic_dialog_info);
         builder.setTitle("温馨提示");
-        builder.setMessage("VIP会员免费使用，普通会员需要付费才能进行测试，确定付费进行测试吗？");
+        builder.setMessage("非VIP会员进行测试，需要付费");
         builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

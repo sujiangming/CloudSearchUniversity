@@ -8,8 +8,8 @@ public class UniversityZsPlanBean {
 
     /**
      * area : 贵州
-     * majorName : 农业机械化及其自动化
-     * planNum : 2
+     * majorName : 中草药栽培与鉴定
+     * planNum : 75
      * subjectType : 理科
      * yearStr : 2017
      */

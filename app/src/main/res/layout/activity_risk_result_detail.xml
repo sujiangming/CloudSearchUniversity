@@ -146,6 +146,7 @@
                     android:textSize="@dimen/font_10_sp" />
 
                 <TextView
+                    android:id="@+id/tv_zs_plan"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_risk_desc"
@@ -245,7 +246,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/space_1_px"
                 android:background="#979797"
-                android:visibility="gone"/>
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/ll_tuijuan_list"

@@ -109,6 +109,20 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
         });
     }
 
+    @Override
+    public void refresh() {
+        mPage = 0;
+        isLoadMore = false;
+        invoke(nullString, nullString, nullString, nullString, nullString);
+    }
+
+    @Override
+    public void loadMore() {
+        mPage++;
+        isLoadMore = true;
+        invoke(nullString, nullString, nullString, nullString, nullString);
+    }
+
     private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
         showProgress();
         jsonObject.put("page", mPage);
@@ -143,7 +157,7 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
             schoolBeanList.add(dataBeanList.get(i).getSchoolName());
         }
         initListView();
-        stopRefreshLayout();
+        stopLayoutRefreshByTag(isLoadMore);
     }
 
     @Override

@@ -14,7 +14,7 @@
         android:drawablePadding="@dimen/space_8_dp"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/space_10_dp"
-        android:text="招生计划(贵州)"
+        android:text="招生计划"
         app:drawable_height="@dimen/space_30_dp"
         app:drawable_src="@drawable/ic_shuxian_blue"
         app:drawable_width="@dimen/space_8_dp" />

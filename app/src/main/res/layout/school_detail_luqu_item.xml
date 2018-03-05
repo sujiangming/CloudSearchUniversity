@@ -1,12 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/space_44_dp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/space_43_dp"
+        android:layout_height="wrap_content"
         android:orientation="horizontal">
+
+        <View
+            android:layout_width="@dimen/space_1_px"
+            android:layout_height="match_parent"
+            android:background="@color/color353535" />
+
+        <TextView
+            android:id="@+id/tv_zy_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:hint="----"
+            android:paddingBottom="@dimen/space_12_dp"
+            android:paddingTop="@dimen/space_12_dp"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_14_sp" />
 
         <View
             android:layout_width="@dimen/space_1_px"
@@ -20,6 +37,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:hint="----"
+            android:paddingBottom="@dimen/space_12_dp"
+            android:paddingTop="@dimen/space_12_dp"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_14_sp" />
 
@@ -33,10 +52,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:ellipsize="end"
             android:gravity="center"
             android:hint="----"
-            android:maxLines="2"
+            android:paddingBottom="@dimen/space_12_dp"
+            android:paddingTop="@dimen/space_12_dp"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_14_sp" />
 
@@ -52,6 +71,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:hint="----"
+            android:paddingBottom="@dimen/space_12_dp"
+            android:paddingTop="@dimen/space_12_dp"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_14_sp" />
 
@@ -67,21 +88,8 @@
             android:layout_weight="1"
             android:gravity="center"
             android:hint="----"
-            android:textColor="@color/color808080"
-            android:textSize="@dimen/font_14_sp" />
-
-        <View
-            android:layout_width="@dimen/space_1_px"
-            android:layout_height="match_parent"
-            android:background="@color/color353535" />
-
-        <TextView
-            android:id="@+id/tv_plan_num"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:hint="----"
+            android:paddingBottom="@dimen/space_12_dp"
+            android:paddingTop="@dimen/space_12_dp"
             android:textColor="@color/color808080"
             android:textSize="@dimen/font_14_sp" />
 

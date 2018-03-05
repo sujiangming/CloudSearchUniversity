@@ -77,10 +77,13 @@ public class SameScoreActivity extends SjmBaseActivity {
 
     @OnClick(R.id.tv_more_data)
     public void tvMoreDataClick() {
-        tvSameTop10.setVisibility(View.GONE);
-        relativeLayout.setVisibility(View.GONE);
-        lvSameScore.setPadding(0, 0, 0, 0);
-        adapter.notifyDataSetChanged();
+//        tvSameTop10.setVisibility(View.GONE);
+//        relativeLayout.setVisibility(View.GONE);
+//        lvSameScore.setPadding(0, 0, 0, 0);
+//        adapter.notifyDataSetChanged();
+        mPage++;
+        isLoadMore = true;
+        getSameScoreDirection();
     }
 
     @Override
@@ -98,7 +101,7 @@ public class SameScoreActivity extends SjmBaseActivity {
                 closeActivity();
             }
         });
-        initSmartRefreshLayout(smartRefreshLayout, true);
+        initSmartRefreshLayout(smartRefreshLayout, false);
 
         LoginBean loginBean = LoginBean.getInstance();
         tvAddress.setText(loginBean.getAddress() == null ? "" : loginBean.getAddress());
@@ -195,12 +198,12 @@ public class SameScoreActivity extends SjmBaseActivity {
         getSameScoreDirection();
     }
 
-    @Override
-    public void loadMore() {
-        mPage++;
-        isLoadMore = true;
-        getSameScoreDirection();
-    }
+//    @Override
+//    public void loadMore() {
+//        mPage++;
+//        isLoadMore = true;
+//        getSameScoreDirection();
+//    }
 
     private int vipLevel = 0;
     private int vipType = 0;

@@ -5,44 +5,19 @@ package com.gk.beans;
  */
 
 public class UniversityLuQuDataBean {
-
     /**
-     * area : 贵州
-     * majorName : 农业机械化及其自动化
-     * planNum : 2
-     * highestScore : 666
-     * lowestScore : 555
+     * highestScore :
+     * lowestScore :
+     * majorName : 中草药栽培与鉴定
+     * subjectType : 理科
+     * yearStr : 2017
      */
 
-    private String area;
-    private String majorName;
-    private String planNum;
     private String highestScore;
     private String lowestScore;
-
-    public String getArea() {
-        return area;
-    }
-
-    public void setArea(String area) {
-        this.area = area;
-    }
-
-    public String getMajorName() {
-        return majorName;
-    }
-
-    public void setMajorName(String majorName) {
-        this.majorName = majorName;
-    }
-
-    public String getPlanNum() {
-        return planNum;
-    }
-
-    public void setPlanNum(String planNum) {
-        this.planNum = planNum;
-    }
+    private String majorName;
+    private String subjectType;
+    private String yearStr;
 
     public String getHighestScore() {
         return highestScore;
@@ -58,5 +33,29 @@ public class UniversityLuQuDataBean {
 
     public void setLowestScore(String lowestScore) {
         this.lowestScore = lowestScore;
+    }
+
+    public String getMajorName() {
+        return majorName;
+    }
+
+    public void setMajorName(String majorName) {
+        this.majorName = majorName;
+    }
+
+    public String getSubjectType() {
+        return subjectType;
+    }
+
+    public void setSubjectType(String subjectType) {
+        this.subjectType = subjectType;
+    }
+
+    public String getYearStr() {
+        return yearStr;
+    }
+
+    public void setYearStr(String yearStr) {
+        this.yearStr = yearStr;
     }
 }

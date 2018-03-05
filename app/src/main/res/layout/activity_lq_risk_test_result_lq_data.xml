@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:orientation="vertical">
+
+    <com.gk.mvp.view.custom.TopBarView
+        android:id="@+id/top_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <com.gk.mvp.view.custom.RichText
+        android:id="@+id/rtv_data"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_40_dp"
+        android:layout_marginTop="@dimen/space_12_dp"
+        android:background="@color/colorBackground"
+        android:drawablePadding="@dimen/space_8_dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/space_10_dp"
+        android:text="录取数据"
+        app:drawable_height="@dimen/space_16_dp"
+        app:drawable_src="@drawable/ic_shuxian_blue"
+        app:drawable_width="@dimen/space_3_dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/space_44_dp"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_marginTop="@dimen/space_5_dp"
+        android:background="@color/color19B4D4"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/zy_name"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_14_sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/lu_year"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_14_sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/lu_type"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_14_sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/lu_hightest"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_14_sp" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/lu_lowest"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/font_14_sp" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/lv_score"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginLeft="@dimen/space_12_dp"
+        android:layout_marginRight="@dimen/space_12_dp"
+        android:layout_weight="1"
+        android:divider="@null"
+        android:dividerHeight="0dp">
+
+    </ListView>
+
+</LinearLayout>

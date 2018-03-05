@@ -1,17 +1,21 @@
 package com.gk.mvp.view.fragment;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.widget.ListView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
+import com.gk.beans.LoginBean;
 import com.gk.beans.UniversityLuQuDataBean;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.activity.VIPActivity;
 import com.gk.mvp.view.custom.RichText;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
@@ -42,15 +46,51 @@ public class SchoolDetailLqDataFragment extends SjmBaseFragment {
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
         uniName = getArguments().getString("uniName");
-        getMajorAdmissionsData(uniName);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        showUpgradeDialog();
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            getMajorAdmissionsData(uniName);
+            showUpgradeDialog();
         }
+    }
+
+    private void showUpgradeDialog() {
+        int vip = LoginBean.getInstance().getVipLevel();
+        if (vip <= 1) {
+            showDialog();
+            return;
+        }
+        getMajorAdmissionsData(uniName);
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setIcon(android.R.drawable.ic_dialog_info);
+        builder.setTitle("温馨提示");
+        builder.setMessage("您的会员等级过低，需要升级为VIP会员~");
+        builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                openNewActivity(VIPActivity.class);
+            }
+        });
+        builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
     }
 
     private void getMajorAdmissionsData(String uniName) {
@@ -91,11 +131,11 @@ public class SchoolDetailLqDataFragment extends SjmBaseFragment {
         lvScore.setAdapter(new CommonAdapter<UniversityLuQuDataBean>(getContext(), R.layout.school_detail_luqu_item, list) {
             @Override
             protected void convert(ViewHolder viewHolder, UniversityLuQuDataBean item, int position) {
-                viewHolder.setText(R.id.tv_year, item.getArea());
-                viewHolder.setText(R.id.tv_type, item.getMajorName());
+                viewHolder.setText(R.id.tv_zy_name, item.getMajorName());
+                viewHolder.setText(R.id.tv_year, item.getYearStr());
+                viewHolder.setText(R.id.tv_type, item.getSubjectType());
                 viewHolder.setText(R.id.tv_score_hight, item.getHighestScore());
                 viewHolder.setText(R.id.tv_score_lower, item.getLowestScore());
-                viewHolder.setText(R.id.tv_plan_num, item.getPlanNum());
             }
         });
     }

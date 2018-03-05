@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.gk.mvp.view.custom.TopBarView
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="@dimen/space_12_dp"
+                android:paddingRight="@dimen/space_12_dp"
+                android:paddingTop="@dimen/space_15_dp"
+                android:paddingBottom="@dimen/space_15_dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="银卡会员服务协议"
+                    android:textColor="@color/color1E1E1E"
+                    android:textSize="@dimen/font_16_sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10_dp"
+                    android:lineSpacingExtra="@dimen/space_8_dp"
+                    android:text="@string/vip_gold_protocol"
+                    android:textColor="@color/color353535"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10_dp"
+                    android:text="第一章  服务周期与范围"
+                    android:textColor="@color/color1E1E1E"
+                    android:textSize="@dimen/font_16_sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10_dp"
+                    android:lineSpacingExtra="@dimen/space_8_dp"
+                    android:text="@string/vip_silver_protocol_item_1"
+                    android:textColor="@color/color353535"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10_dp"
+                    android:text="第二章  权利与义务"
+                    android:textColor="@color/color1E1E1E"
+                    android:textSize="@dimen/font_16_sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10_dp"
+                    android:lineSpacingExtra="@dimen/space_8_dp"
+                    android:text="@string/vip_gold_protocol_item_2"
+                    android:textColor="@color/color353535"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10_dp"
+                    android:text="第三章  其它"
+                    android:textColor="@color/color1E1E1E"
+                    android:textSize="@dimen/font_16_sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10_dp"
+                    android:lineSpacingExtra="@dimen/space_8_dp"
+                    android:text="@string/vip_gold_protocol_item_3"
+                    android:textColor="@color/color353535"
+                    android:textSize="@dimen/font_14_sp" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_10_dp"
+                    android:gravity="right|center_horizontal"
+                    android:lineSpacingExtra="@dimen/space_5_dp"
+                    android:paddingRight="@dimen/space_12_dp"
+                    android:text="@string/vip_gold_protocol_item_4"
+                    android:textColor="@color/color353535"
+                    android:textSize="@dimen/font_14_sp" />
+
+            </LinearLayout>
+        </ScrollView>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

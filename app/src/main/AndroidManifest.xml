@@ -260,6 +260,14 @@
             android:name=".mvp.view.activity.VIPDiamondProtocolActivity"
             android:screenOrientation="portrait" />
 
+        <activity
+            android:name=".mvp.view.activity.LqRiskTestResultLqDataActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".mvp.view.activity.LqRiskTestResultZZPlanActivity"
+            android:screenOrientation="portrait" />
+
         <!--网络监听广播-->
         <receiver android:name=".listener.ConnectionChangeReceiver">
             <intent-filter>
