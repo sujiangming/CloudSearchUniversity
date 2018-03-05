@@ -88,6 +88,7 @@ public class LqRiskActivity extends SjmBaseActivity {
         super.onResume();
         initData();
         getUserRechargeTimes();
+        getVipLevelAmount();
     }
 
     private void initData() {
