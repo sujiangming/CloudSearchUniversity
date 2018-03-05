@@ -24,6 +24,7 @@ import com.gk.beans.LoginBean;
 import com.gk.beans.PayResult;
 import com.gk.beans.SameScoreItem;
 import com.gk.beans.UserRechargeTimes;
+import com.gk.beans.VIPPriceBean;
 import com.gk.beans.VipOrderBean;
 import com.gk.beans.WeiXinPay;
 import com.gk.global.YXXApplication;
@@ -111,6 +112,7 @@ public class SameScoreActivity extends SjmBaseActivity {
 
         initListView();
         showUpgradeDialog();
+        getVipLevelAmount();
     }
 
     @Override
@@ -198,13 +200,6 @@ public class SameScoreActivity extends SjmBaseActivity {
         getSameScoreDirection();
     }
 
-//    @Override
-//    public void loadMore() {
-//        mPage++;
-//        isLoadMore = true;
-//        getSameScoreDirection();
-//    }
-
     private int vipLevel = 0;
     private int vipType = 0;
 
@@ -241,12 +236,38 @@ public class SameScoreActivity extends SjmBaseActivity {
                 });
     }
 
+    private VIPPriceBean priceBean = null;
+
+    private void getVipLevelAmount() {
+        RetrofitUtil.getInstance()
+                .createReq(IService.class)
+                .getVipLevelAmount()
+                .enqueue(new Callback<CommonBean>() {
+                    @Override
+                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                        if (response.isSuccessful()) {
+                            CommonBean commonBean = response.body();
+                            priceBean = JSON.parseObject(commonBean.getData().toString(), VIPPriceBean.class);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                        toast(t.getMessage());
+                    }
+                });
+    }
+
     private void showNormalVipDialog() {
-        if (null == rechargeTimesData || TextUtils.isEmpty(rechargeTimesData.getHeartTestNum())) {
+        if (null == rechargeTimesData || TextUtils.isEmpty(rechargeTimesData.getSameScoreToNum())) {
+            String tip = "非VIP会员进行测试，需要付费";
+            if (null != priceBean && !TextUtils.isEmpty(priceBean.getHeartTestAmount())) {
+                tip += "￥" + priceBean.getHeartTestAmount();
+            }
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setIcon(android.R.drawable.ic_dialog_info);
             builder.setTitle("温馨提示");
-            builder.setMessage("VIP会员免费使用，普通会员需要付费才能进行测试，确定付费进行测试吗？");
+            builder.setMessage(tip);
             builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
