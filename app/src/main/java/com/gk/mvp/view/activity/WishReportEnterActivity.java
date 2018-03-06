@@ -152,9 +152,10 @@ public class WishReportEnterActivity extends SjmBaseActivity {
                 btnRg.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        Intent intent = new Intent();
-                        intent.putExtra("type", 1);
-                        openNewActivityByIntent(WishReportResultActivity.class, intent);
+//                        Intent intent = new Intent();
+//                        intent.putExtra("type", 1);
+//                        openNewActivityByIntent(WishReportResultActivity.class, intent);
+                        showDialog();
                     }
                 });
             }
