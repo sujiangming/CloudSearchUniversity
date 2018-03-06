@@ -13,12 +13,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/top_bar"
         android:layout_marginLeft="@dimen/space_10_dp"
         android:layout_marginRight="@dimen/space_10_dp"
         android:layout_marginTop="@dimen/space_10_dp"
-        android:background="@android:color/white"
+        android:background="@drawable/same_score_bg"
         android:orientation="vertical">
 
         <LinearLayout
@@ -53,7 +53,8 @@
                 android:layout_marginLeft="@dimen/space_24_dp"
                 android:text="550分"
                 android:textColor="@color/color4a4a4a"
-                android:textSize="@dimen/font_18_sp" />
+                android:textSize="@dimen/font_18_sp"
+                android:visibility="gone" />
         </LinearLayout>
 
         <TextView
@@ -63,26 +64,27 @@
             android:layout_marginRight="@dimen/space_10_dp"
             android:background="@color/color2fa2cb" />
 
-        <TextView
+        <EditText
             android:id="@+id/tv_same_top_10"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/space_30_dp"
             android:layout_marginLeft="@dimen/space_10_dp"
             android:layout_marginRight="@dimen/space_10_dp"
             android:layout_marginTop="@dimen/space_10_dp"
-            android:text="合适高校Top10"
+            android:background="@drawable/same_score_editext_bg"
+            android:gravity="center"
+            android:hint="550"
             android:textColor="@color/color4a4a4a"
             android:textSize="@dimen/font_14_sp" />
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/smart_layout"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="vertical">
 
                 <ListView
@@ -92,7 +94,8 @@
                     android:layout_weight="1"
                     android:divider="@null"
                     android:dividerHeight="0dp"
-                    android:paddingTop="@dimen/space_10_dp">
+                    android:paddingTop="@dimen/space_10_dp"
+                    android:visibility="gone">
 
                 </ListView>
 
@@ -102,6 +105,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/space_10_dp"
                     android:layout_marginRight="@dimen/space_10_dp"
+                    android:layout_marginTop="@dimen/space_10_dp"
                     android:background="@android:color/white">
 
                     <TextView
@@ -109,7 +113,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/space_10_dp"
-                        android:text="*以上数据为最近一年的数据"
+                        android:text="*查询最近年的录取数据"
                         android:textColor="@color/color4a4a4a"
                         android:textSize="@dimen/font_14_sp" />
 
@@ -123,7 +127,8 @@
                         android:layout_marginRight="@dimen/space_10_dp"
                         android:background="@drawable/more_data_bg"
                         android:gravity="center"
-                        android:text="更多往年数据"
+                        android:tag="0"
+                        android:text="查看去向"
                         android:textColor="@android:color/white"
                         android:textSize="@dimen/font_14_sp" />
                 </RelativeLayout>

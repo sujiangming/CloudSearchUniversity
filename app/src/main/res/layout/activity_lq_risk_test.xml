@@ -54,15 +54,39 @@
         android:layout_marginTop="@dimen/space_12_dp"
         android:src="@drawable/yuanxiao" />
 
-    <TextView
-        android:id="@+id/tv_wen_li_desc"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="@dimen/space_5_dp"
-        android:hint="---|---"
-        android:textColor="@color/color808080"
-        android:textSize="@dimen/font_17_sp" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_wen_li_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="---"
+            android:padding="@dimen/space_12_dp"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_17_sp" />
+
+        <TextView
+            android:id="@+id/tv_user_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="---"
+            android:padding="@dimen/space_12_dp"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_17_sp" />
+
+        <TextView
+            android:id="@+id/tv_risk_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="---"
+            android:padding="@dimen/space_12_dp"
+            android:textColor="@color/color808080"
+            android:textSize="@dimen/font_17_sp" />
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/ll_score"

@@ -186,12 +186,12 @@ public class VIPActivity extends SjmBaseActivity {
             case 3:
                 tvOpenDiamond.setText(NO_OPEN_VIP);
                 tvOpenGold.setText(YES_OPEN_VIP);
-                tvOpenSilver.setText(NO_OPEN_VIP);
+                tvOpenSilver.setText(YES_OPEN_VIP);
                 break;
             case 4:
                 tvOpenDiamond.setText(YES_OPEN_VIP);
-                tvOpenGold.setText(NO_OPEN_VIP);
-                tvOpenSilver.setText(NO_OPEN_VIP);
+                tvOpenGold.setText(YES_OPEN_VIP);
+                tvOpenSilver.setText(YES_OPEN_VIP);
                 break;
         }
     }

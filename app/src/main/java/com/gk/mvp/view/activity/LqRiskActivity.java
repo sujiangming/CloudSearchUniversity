@@ -30,6 +30,8 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.custom.CommonTipDialog;
+import com.gk.mvp.view.custom.CommonTipDialog.onNoOnclickListener;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.YxxUtils;
@@ -64,6 +66,10 @@ public class LqRiskActivity extends SjmBaseActivity {
     TextView tv_wen_li_desc;
     @BindView(R.id.tv_test_desc)
     TextView tv_test_desc;
+    @BindView(R.id.tv_user_address)
+    TextView tv_user_address;
+    @BindView(R.id.tv_risk_score)
+    TextView tv_risk_score;
 
     private int faultLevel = 1; //默认显示高校
     private LoginBean loginBean;
@@ -71,6 +77,8 @@ public class LqRiskActivity extends SjmBaseActivity {
     private String rank;
     private String weli;
     private String address;
+    private String schoolName;
+    private CommonTipDialog selfDialog = null;
 
     @Override
     public int getResouceId() {
@@ -98,16 +106,50 @@ public class LqRiskActivity extends SjmBaseActivity {
         weli = loginBean.getWlDesc();
         address = loginBean.getAddress();
         YxxUtils.setViewData(tvStudentScore, score);
-        if (!TextUtils.isEmpty(address) && !TextUtils.isEmpty(weli)) {
-            tv_wen_li_desc.setText(LoginBean.getInstance().getAddress() + "|" + LoginBean.getInstance().getWlDesc());
+        if (!TextUtils.isEmpty(weli)) {
+            tv_wen_li_desc.setText(LoginBean.getInstance().getWlDesc());
         }
+        if (!TextUtils.isEmpty(address)) {
+            tv_user_address.setText(LoginBean.getInstance().getAddress());
+        }
+        if (!TextUtils.isEmpty(score)) {
+            tv_risk_score.setText(score);
+        }
+    }
+
+    private void showUpdateScoreDialog() {
+        selfDialog = new CommonTipDialog(this);
+        selfDialog.setTitle("温馨提示");
+        selfDialog.setYesOnclickListener("确定", new CommonTipDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                String reScore = selfDialog.getMessageTv().getText().toString();
+                if (TextUtils.isEmpty(reScore)) {
+                    toast("请输入您的分数");
+                    return;
+                }
+                tv_risk_score.setText(reScore);
+                tvStudentScore.setText(reScore);
+                selfDialog.dismiss();
+            }
+        });
+        selfDialog.setNoOnclickListener("取消", new onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                selfDialog.dismiss();
+            }
+        });
+        selfDialog.show();
     }
 
     @OnClick({R.id.tv_level_1,
             R.id.tv_level_2,
             R.id.ll_aim,
             R.id.btn_lq_risk_test,
-            R.id.ll_score, R.id.tv_wen_li_desc})
+            R.id.ll_score,
+            R.id.tv_wen_li_desc,
+            R.id.tv_risk_score,
+            R.id.tv_user_address})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_level_1:
@@ -131,6 +173,14 @@ public class LqRiskActivity extends SjmBaseActivity {
                 if (TextUtils.isEmpty(tv_wen_li_desc.getText())) {
                     showVipDialog("请完善个人资料");
                 }
+                break;
+            case R.id.tv_user_address:
+                if (TextUtils.isEmpty(tv_wen_li_desc.getText())) {
+                    showVipDialog("请完善个人资料");
+                }
+                break;
+            case R.id.tv_risk_score:
+                showUpdateScoreDialog();
                 break;
         }
     }
@@ -225,8 +275,6 @@ public class LqRiskActivity extends SjmBaseActivity {
         }
         openNewActivityByIntent(LqRiskTestResultActivity.class, intent);
     }
-
-    private String schoolName;
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

@@ -91,13 +91,13 @@ public class SchoolDetailActivity extends SjmBaseActivity {
         flagStr = getIntent().getStringExtra("flag");
         if (flagStr != null && "query".equals(flagStr)) {
             uniName = (QuerySchoolBean.DataBean) getIntent().getSerializableExtra("uniName");
-            bundle.putString("uniName", uniName.getSchoolId());
+            bundle.putString("uniName", uniName.getSchoolName());
             bundle.putSerializable("schoolBean", uniName);
             bundle.putString("flag", flagStr);
             initDataByQuery();
         } else {
             schoolRankBean = (SchoolRankBean) getIntent().getSerializableExtra("uniName");
-            bundle.putString("uniName", schoolRankBean.getSchoolId());
+            bundle.putString("uniName", schoolRankBean.getSchoolName());
             bundle.putSerializable("schoolBean", schoolRankBean);
             bundle.putString("flag", flagStr);
             initDataByRank();
@@ -120,19 +120,19 @@ public class SchoolDetailActivity extends SjmBaseActivity {
         int isNef = uniName.getIsNef();
         if (isNef == 1) {
             tvSchoolMark0.setVisibility(View.VISIBLE);
-        }else{
+        } else {
             tvSchoolMark0.setVisibility(View.GONE);
         }
         int isToo = uniName.getIsToo();
         if (isToo == 1) {
             tvSchoolMark1.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvSchoolMark1.setVisibility(View.GONE);
         }
         int isDouble = uniName.getIsDoubleTop();
         if (isDouble == 1) {
             tvSchoolMark2.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             tvSchoolMark2.setVisibility(View.GONE);
         }
     }

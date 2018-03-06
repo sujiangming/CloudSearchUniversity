@@ -8,6 +8,7 @@ import android.os.Message;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
@@ -58,7 +59,7 @@ public class SameScoreActivity extends SjmBaseActivity {
     @BindView(R.id.lv_same_score)
     ListView lvSameScore;
     @BindView(R.id.tv_same_top_10)
-    TextView tvSameTop10;
+    EditText etSameTop10;
     @BindView(R.id.rl_more_data)
     RelativeLayout relativeLayout;
     @BindView(R.id.smart_layout)
@@ -69,12 +70,16 @@ public class SameScoreActivity extends SjmBaseActivity {
     TextView tvWeli;
     @BindView(R.id.tv_score)
     TextView tvScore;
+    @BindView(R.id.tv_more_data)
+    TextView tvMoreData;
 
     private List<SameScoreItem> list = new ArrayList<>();
     CommonAdapter adapter = null;
     private JSONObject jsonObject = new JSONObject();
     private int mPage = 0;
     private boolean isLoadMore = false;
+    private int vip = 0;
+    private String queryMoreStr = "查看更多";
 
     @OnClick(R.id.tv_more_data)
     public void tvMoreDataClick() {
@@ -82,6 +87,15 @@ public class SameScoreActivity extends SjmBaseActivity {
 //        relativeLayout.setVisibility(View.GONE);
 //        lvSameScore.setPadding(0, 0, 0, 0);
 //        adapter.notifyDataSetChanged();
+        String tag = tvMoreData.getTag().toString();
+        if ("0".equals(tag)) {
+            if (vip > 1) {
+                getSameScoreDirection();
+            }
+            tvMoreData.setTag("1");
+            tvMoreData.setText(queryMoreStr);
+            return;
+        }
         mPage++;
         isLoadMore = true;
         getSameScoreDirection();
@@ -107,26 +121,22 @@ public class SameScoreActivity extends SjmBaseActivity {
         LoginBean loginBean = LoginBean.getInstance();
         tvAddress.setText(loginBean.getAddress() == null ? "" : loginBean.getAddress());
         tvWeli.setText(loginBean.getWlDesc());
-        tvScore.setText(loginBean.getScore());
+        etSameTop10.setText(loginBean.getScore() == null ? "" : loginBean.getScore());
         vipLevel = loginBean.getVipLevel();
 
         initListView();
         showUpgradeDialog();
-        getVipLevelAmount();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        int vip = LoginBean.getInstance().getVipLevel();
-        if (vip > 1) {
-            getSameScoreDirection();
-        }
+        vip = LoginBean.getInstance().getVipLevel();
+        getVipLevelAmount();
         getUserRechargeTimes();
     }
 
     private void initListView() {
-        //getSameScoreDirection();
         lvSameScore.setAdapter(adapter = new CommonAdapter<SameScoreItem>(this, R.layout.same_score_item, list) {
             @Override
             protected void convert(ViewHolder viewHolder, SameScoreItem item, int position) {
@@ -153,6 +163,7 @@ public class SameScoreActivity extends SjmBaseActivity {
     }
 
     private void getSameScoreDirection() {
+        showProgress();
         jsonObject.put("page", mPage);
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         PresenterManager.getInstance()
@@ -167,14 +178,20 @@ public class SameScoreActivity extends SjmBaseActivity {
             toast("没有数据");
             return;
         }
+        if (lvSameScore.getVisibility() == View.GONE) {
+            lvSameScore.setVisibility(View.VISIBLE);
+        }
         if (!isLoadMore) {//刷新
             list.clear();
             list.addAll(sameScoreItems);
             adapter.notifyDataSetChanged();
+            lvSameScore.smoothScrollToPosition(list.size());
             return;
         }
         list.addAll(sameScoreItems);
         adapter.notifyDataSetChanged();
+        lvSameScore.smoothScrollToPosition(list.size());
+
     }
 
     @Override
@@ -204,11 +221,9 @@ public class SameScoreActivity extends SjmBaseActivity {
     private int vipType = 0;
 
     private void showUpgradeDialog() {
-        int vip = LoginBean.getInstance().getVipLevel();
+        vip = LoginBean.getInstance().getVipLevel();
         if (vip <= 1) {
             showNormalVipDialog();
-        } else {
-            getSameScoreDirection();
         }
     }
 

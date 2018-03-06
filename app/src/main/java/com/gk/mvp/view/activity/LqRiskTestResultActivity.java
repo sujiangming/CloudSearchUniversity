@@ -70,7 +70,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         switch (view.getId()) {
             case R.id.tv_tag_1:
                 Intent intent = new Intent();
-                intent.putExtra("uniName", schoolName);
+                intent.putExtra("uniName", valueDesc);
                 openNewActivityByIntent(LqRiskTestResultLqDataActivity.class, intent);
                 break;
             case R.id.tv_zs_plan:

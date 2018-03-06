@@ -52,7 +52,7 @@ public class LqRiskTestResultLqDataActivity extends SjmBaseActivity {
     private void getMajorAdmissionsData(String uniName) {
         showProgress();
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("schoolId", uniName);
+        jsonObject.put("schoolName", uniName);
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getUniMajorAdmissionData(jsonObject.toJSONString()))

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="110dp"
+    android:layout_height="125dp"
     android:background="@android:color/white"
-    android:paddingBottom="@dimen/space_10_dp">
+    android:paddingBottom="@dimen/space_20_dp"
+    android:paddingTop="@dimen/space_5_dp">
 
     <ImageView
         android:id="@+id/iv_query_item"
