@@ -3,9 +3,9 @@ package com.gk.mvp.view.fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -26,6 +26,7 @@ import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.HldInterestActivity;
 import com.gk.mvp.view.activity.MBTIActivity;
 import com.gk.mvp.view.activity.VIPActivity;
+import com.gk.mvp.view.custom.CommonTipDialog;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.tools.YxxEncoderUtils;
 import com.gk.tools.YxxUtils;
@@ -313,17 +314,52 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
 
     private void updateInfo(TextView textView, int key) {
         if (TextUtils.isEmpty(textView.getText())) {
-            showCommonEditDialog(key);
             requestCode = key;
+            if (1 == key) { //修改分数
+                showUpdateScoreDialog();
+                return;
+            }
+            if (2 == key) { //修改排名
+                et_comment_common.setInputType(InputType.TYPE_CLASS_NUMBER);
+            } else {
+                et_comment_common.setInputType(InputType.TYPE_CLASS_TEXT);
+            }
+            showCommonEditDialog(key);
+
         }
+    }
+
+    private CommonTipDialog selfDialog = null;
+
+    private void showUpdateScoreDialog() {
+        final CommonTipDialog commonTipDialog = new CommonTipDialog(getContext());
+        commonTipDialog.setTitle("温馨提示");
+        commonTipDialog.setYesOnclickListener("确定", new CommonTipDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                String reScore = commonTipDialog.getMessageTv().getText().toString();
+                if (TextUtils.isEmpty(reScore)) {
+                    toast("请输入您的分数");
+                    return;
+                }
+                et_comment_common.setText(reScore);
+                invokeService(0, 0);
+                commonTipDialog.dismiss();
+            }
+        });
+        commonTipDialog.setNoOnclickListener("取消", new CommonTipDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                commonTipDialog.dismiss();
+            }
+        });
+        selfDialog = commonTipDialog;
+        commonTipDialog.show();
     }
 
     private void showCommonEditDialog(int key) {
         if (commonInfoEdit.getVisibility() == View.GONE) {
             commonInfoEdit.setVisibility(View.VISIBLE);
-            if (1 == key) {
-                et_comment_common.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
-            }
             YxxUtils.showSoftInputFromWindow(et_comment_common);
         }
     }
@@ -512,6 +548,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
             case 1:
                 LoginBean.getInstance().setScore(loginBean.getScore()).save();
                 tvScore.setText(loginBean.getScore());
+                et_comment_common.setText("");
                 hideEditDialog();
                 break;
             case 2:

@@ -31,6 +31,7 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.CircleImageView;
+import com.gk.mvp.view.custom.CommonTipDialog;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
@@ -146,9 +147,10 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 break;
             case R.id.tv_student_score:
                 if (TextUtils.isEmpty(tvStudentScore.getText()) || noFilled.equals(tvStudentScore.getText())) {
-                    intent.setClass(this, UpdateUserInfoActivity.class);
-                    intent.putExtra(CODE_KEY, 4);
-                    startActivityForResult(intent, 4);
+//                    intent.setClass(this, UpdateUserInfoActivity.class);
+//                    intent.putExtra(CODE_KEY, 4);
+//                    startActivityForResult(intent, 4);
+                    showUpdateScoreDialog();
                 } else {
                     toast(editInfo);
                 }
@@ -193,6 +195,31 @@ public class PersonInfoActivity extends SjmBaseActivity {
 
     @BindView(R.id.lv_province)
     LinearLayout listView;
+
+
+    private void showUpdateScoreDialog() {
+        final CommonTipDialog selfDialog = new CommonTipDialog(this);
+        selfDialog.setTitle("温馨提示");
+        selfDialog.setYesOnclickListener("确定", new CommonTipDialog.onYesOnclickListener() {
+            @Override
+            public void onYesClick() {
+                String reScore = selfDialog.getMessageTv().getText().toString();
+                if (TextUtils.isEmpty(reScore)) {
+                    toast("请输入您的分数");
+                    return;
+                }
+                invokeService(3, 0, reScore);
+                selfDialog.dismiss();
+            }
+        });
+        selfDialog.setNoOnclickListener("取消", new CommonTipDialog.onNoOnclickListener() {
+            @Override
+            public void onNoClick() {
+                selfDialog.dismiss();
+            }
+        });
+        selfDialog.show();
+    }
 
     List<String> yourChoicesName = new ArrayList<>();
 
@@ -422,10 +449,14 @@ public class PersonInfoActivity extends SjmBaseActivity {
             jsonObject.put("subjectType", value);
             presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
                     .request(YXXConstants.INVOKE_API_SECOND_TIME);
-        } else {
+        } else if (flag == 2) {
             jsonObject.put("address", YxxUtils.URLEncode(imagePath));
             presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
                     .request(YXXConstants.INVOKE_API_THREE_TIME);
+        } else {
+            jsonObject.put("score", imagePath);
+            presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
+                    .request(YXXConstants.INVOKE_API_FORTH_TIME);
         }
     }
 
@@ -449,6 +480,10 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 LoginBean.getInstance().setAddress(yourChoicesName.get(0)).save();
                 tvStudentSource.setText(yourChoicesName.get(0));
                 hideEditDialogProvince();
+                break;
+            case YXXConstants.INVOKE_API_FORTH_TIME:
+                tvStudentScore.setText(loginBean.getScore());
+                LoginBean.getInstance().setScore(loginBean.getScore()).save();
                 break;
         }
         hideProgress();

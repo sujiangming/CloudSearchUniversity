@@ -42,9 +42,7 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(tvTopBar, "更改个人信息", 0);
         requestCode = getIntent().getIntExtra("code", 0);
-        if (requestCode == 4) {
-            etUserPwd.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
-        } else if (requestCode == 5) {
+        if (requestCode == 5) {
             etUserPwd.setInputType(InputType.TYPE_CLASS_NUMBER);
         }
     }
@@ -115,6 +113,7 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
+        toast("修改失败");
         hideProgress();
     }
 }

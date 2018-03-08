@@ -12,7 +12,7 @@
         android:layout_centerInParent="true"
         android:layout_marginLeft="@dimen/space_20_dp"
         android:layout_marginRight="@dimen/space_20_dp"
-        android:background="@android:color/white">
+        android:background="@drawable/white_bg_radius_8_dp">
 
         <TextView
             android:id="@+id/tv_cancel_common"
