@@ -121,7 +121,7 @@ public class WishReportEnterActivity extends SjmBaseActivity {
         }
     }
 
-    private void vipMsgRg(final String status, int flag) {
+    private void vipMsgRg(final String status, final int flag) {
         if (vipLevel <= 2) {//必须金卡用户才能查看
             tvWishReport.setText(lowLevel);
             btnRg.setText(tipUpdate);
@@ -142,32 +142,6 @@ public class WishReportEnterActivity extends SjmBaseActivity {
             });
             return;
         }
-//        if (vipLevel == 2) {
-//            if (flag == YXXConstants.INVOKE_API_DEFAULT_TIME) {
-//                if (status.equals("1")) {
-//                    tvWishReport.setText(noGenerate);
-//                    btnRg.setText(rightNowGen);
-//                } else {
-//                    tvWishReport.setText(generated);
-//                    btnRg.setText(rightNowSee);
-//                }
-//                btnRg.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//                        showDialog();
-//                    }
-//                });
-//            }
-//            tvYhLevelLow.setText(lowLevel);
-//            btnZj.setText(tipUpdate);
-//            btnZj.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    showDialog();
-//                }
-//            });
-//            return;
-//        }
 
         if (vipLevel >= 3) {
             if (flag == YXXConstants.INVOKE_API_DEFAULT_TIME) {
@@ -183,10 +157,9 @@ public class WishReportEnterActivity extends SjmBaseActivity {
                     tvYhLevelLow.setText(noGenerate);
                     btnZj.setText(rightNowGen);
                 } else {
-
                     if (status.equals("1")) {
                         tvYhLevelLow.setText("生成中");
-                        btnZj.setText("耐心等待");
+                        btnZj.setText("生成中");
                     } else {
                         tvYhLevelLow.setText(generated);
                         btnZj.setText(rightNowSee);
@@ -208,8 +181,18 @@ public class WishReportEnterActivity extends SjmBaseActivity {
                 public void onClick(View view) {
                     if (null == wish_zj_btn) {
                         JdryPersistence.saveObject(WishReportEnterActivity.this, "wish_zj_btn", "wish_zj_btn");
+                        showProgress();
+                        btnZj.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                wish_zj_btn = JdryPersistence.getObject(WishReportEnterActivity.this, "wish_zj_btn");
+                                tvYhLevelLow.setText("生成中");
+                                btnZj.setText("生成中");
+                                hideProgress();
+                            }
+                        }, 1500);
                     } else {
-                        if (status.equals("2")) {
+                        if (!"生成中".equals(btnZj.getText().toString())) {
                             Intent intent = new Intent();
                             intent.putExtra("type", 2);
                             openNewActivityByIntent(WishReportResultActivity.class, intent);

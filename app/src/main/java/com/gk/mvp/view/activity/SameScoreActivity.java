@@ -119,10 +119,11 @@ public class SameScoreActivity extends SjmBaseActivity {
         initSmartRefreshLayout(smartRefreshLayout, false);
 
         LoginBean loginBean = LoginBean.getInstance();
-        tvAddress.setText(loginBean.getAddress() == null ? "" : loginBean.getAddress());
-        tvWeli.setText(loginBean.getWlDesc());
-        etSameTop10.setText(loginBean.getScore() == null ? "" : loginBean.getScore());
         vipLevel = loginBean.getVipLevel();
+
+        setTextViewValues(tvAddress, loginBean.getAddress());
+        setTextViewValues(tvWeli, loginBean.getWlDesc());
+        setTextViewValues(etSameTop10, loginBean.getScore());
 
         initListView();
         showUpgradeDialog();
