@@ -80,14 +80,17 @@ public class SameScoreActivity extends SjmBaseActivity {
     private boolean isLoadMore = false;
     private int vip = 0;
     private String queryMoreStr = "查看更多";
+    private String score = "";
 
     @OnClick(R.id.tv_more_data)
     public void tvMoreDataClick() {
-//        tvSameTop10.setVisibility(View.GONE);
-//        relativeLayout.setVisibility(View.GONE);
-//        lvSameScore.setPadding(0, 0, 0, 0);
-//        adapter.notifyDataSetChanged();
         String tag = tvMoreData.getTag().toString();
+        String etValue = etSameTop10.getText().toString();
+        if(!TextUtils.isEmpty(etValue) && !score.equals(etValue)){
+            score = etValue;
+            mPage = 0;
+            tvMoreData.setTag("0");
+        }
         if ("0".equals(tag)) {
             if (vip > 1) {
                 getSameScoreDirection();
@@ -167,6 +170,7 @@ public class SameScoreActivity extends SjmBaseActivity {
         showProgress();
         jsonObject.put("page", mPage);
         jsonObject.put("username", LoginBean.getInstance().getUsername());
+        jsonObject.put("score",score);
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
