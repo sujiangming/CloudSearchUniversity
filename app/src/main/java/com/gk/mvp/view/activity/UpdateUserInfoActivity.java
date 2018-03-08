@@ -2,6 +2,7 @@ package com.gk.mvp.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -41,6 +42,11 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(tvTopBar, "更改个人信息", 0);
         requestCode = getIntent().getIntExtra("code", 0);
+        if (requestCode == 4) {
+            etUserPwd.setInputType(InputType.TYPE_NUMBER_FLAG_DECIMAL);
+        } else if (requestCode == 5) {
+            etUserPwd.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
     }
 
     @OnClick(R.id.tv_login)
@@ -51,11 +57,11 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
             return;
         }
         String value = etUserPwd.getText().toString();
-        value = YxxUtils.URLEncode(value);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         switch (requestCode) {
             case 2:
+                value = YxxUtils.URLEncode(value);
                 jsonObject.put("cname", value);
                 break;
             case 4:
@@ -65,6 +71,7 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
                 jsonObject.put("ranking", value);
                 break;
             case 7:
+                value = YxxUtils.URLEncode(value);
                 jsonObject.put("nickName", value);
                 break;
         }

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -31,7 +32,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="经济学"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/font_16_sp" />
 
@@ -42,7 +42,6 @@
                     android:layout_below="@id/tv_major_name"
                     android:layout_marginTop="@dimen/space_12_dp"
                     android:gravity="center"
-                    android:text="专业代码：120008"
                     android:textColor="@android:color/white"
                     android:textSize="@dimen/font_14_sp" />
 
@@ -88,7 +87,6 @@
                 android:paddingLeft="@dimen/space_20_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_12_dp"
-                android:text="@string/mbti_desc_1"
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_14_sp" />
 
@@ -144,7 +142,6 @@
                 android:paddingLeft="@dimen/space_5_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_12_dp"
-                android:text="@string/mbti_desc_1"
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_14_sp" />
 
@@ -171,7 +168,6 @@
                 android:paddingLeft="@dimen/space_5_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_12_dp"
-                android:text="@string/mbti_desc_1"
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_14_sp" />
 
@@ -188,7 +184,7 @@
 
             <TextView
                 android:id="@+id/tv_fx_content"
-                android:layout_width="match_parent"
+                android:layout_width="158dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_bx_content"
                 android:layout_toRightOf="@id/tv_mb_desc"
@@ -198,9 +194,10 @@
                 android:paddingLeft="@dimen/space_5_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_12_dp"
-                android:text="@string/mbti_desc_1"
                 android:textColor="@color/color555555"
-                android:textSize="@dimen/font_14_sp" />
+                android:textSize="@dimen/font_14_sp"
+                tools:layout_editor_absoluteX="218dp"
+                tools:layout_editor_absoluteY="146dp" />
 
             <TextView
                 android:id="@+id/tv_jn_desc"
@@ -225,7 +222,6 @@
                 android:paddingLeft="@dimen/space_5_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_12_dp"
-                android:text="@string/mbti_desc_1"
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_14_sp" />
 
@@ -281,7 +277,6 @@
                 android:paddingLeft="@dimen/space_5_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_14_dp"
-                android:text="英语四级、计算机二级"
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_14_sp" />
 
@@ -308,7 +303,6 @@
                 android:paddingLeft="@dimen/space_5_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_14_dp"
-                android:text="@string/mbti_desc_1"
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_14_sp" />
 
@@ -335,7 +329,6 @@
                 android:paddingLeft="@dimen/space_5_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_14_dp"
-                android:text="@string/mbti_desc_1"
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_14_sp" />
 
@@ -362,7 +355,6 @@
                 android:paddingLeft="@dimen/space_5_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_14_dp"
-                android:text="@string/mbti_desc_1"
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_14_sp" />
 
@@ -389,7 +381,6 @@
                 android:paddingLeft="@dimen/space_5_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_14_dp"
-                android:text="@string/mbti_desc_1"
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_14_sp" />
 
@@ -416,7 +407,6 @@
                 android:paddingLeft="@dimen/space_5_dp"
                 android:paddingRight="@dimen/space_20_dp"
                 android:paddingTop="@dimen/space_14_dp"
-                android:text="@string/mbti_desc_1"
                 android:textColor="@color/color555555"
                 android:textSize="@dimen/font_14_sp" />
 

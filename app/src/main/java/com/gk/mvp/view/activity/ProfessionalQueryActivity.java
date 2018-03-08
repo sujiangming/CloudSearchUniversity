@@ -107,7 +107,7 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
         }
 
         protected MajorBean doInBackground(String... params) {  //三个点，代表可变参数
-            majorJson = JdryPersistence.getObjectByAppContext(YXXConstants.MAJOR_JSON_SERIALIZE_KEY);
+            //majorJson = JdryPersistence.getObjectByAppContext(YXXConstants.MAJOR_JSON_SERIALIZE_KEY);
             majorBean = JSON.parseObject(majorJson, MajorBean.class);
             return majorBean;
         }
@@ -122,7 +122,6 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
     }
 
     private void handleData() {
-        List<List<MajorBean.DataBean.NodesBeanXX>> listList = new ArrayList<>();
         List<MajorBean.DataBean> bzTypeList = majorBean.getData();
         for (MajorBean.DataBean dataBean : bzTypeList) {
             String name = dataBean.getName();

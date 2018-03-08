@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/space_40_dp"
+    android:layout_marginRight="@dimen/space_40_dp"
+    android:background="@drawable/white_bg_radius_8_dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/space_20_dp"
+        android:gravity="center"
+        android:text="温馨提示"
+        android:textColor="@color/color1E1E1E"
+        android:textSize="@dimen/font_16_sp" />
+
+    <EditText
+        android:id="@+id/message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title"
+        android:layout_marginLeft="@dimen/space_16_dp"
+        android:layout_marginRight="@dimen/space_16_dp"
+        android:layout_marginTop="@dimen/space_20_dp"
+        android:background="@drawable/same_score_editext_bg"
+        android:hint="请输入您的分数"
+        android:inputType="numberDecimal"
+        android:padding="@dimen/space_10_dp"
+        android:textColor="@color/color353535"
+        android:textColorHint="@color/color979797"
+        android:textCursorDrawable="@null"
+        android:textSize="@dimen/font_14_sp" />
+
+
+    <TextView
+        android:id="@+id/no"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/message"
+        android:layout_marginBottom="@dimen/space_20_dp"
+        android:layout_marginLeft="@dimen/space_38_dp"
+        android:layout_marginTop="@dimen/space_20_dp"
+        android:background="@drawable/menu_tap_bg"
+        android:paddingBottom="@dimen/space_5_dp"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp"
+        android:paddingTop="@dimen/space_5_dp"
+        android:text="取消"
+        android:textColor="@color/color2fa2cb"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/yes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/message"
+        android:layout_marginBottom="@dimen/space_20_dp"
+        android:layout_marginRight="@dimen/space_38_dp"
+        android:layout_marginTop="@dimen/space_20_dp"
+        android:background="@drawable/menu_tap_bg"
+        android:paddingBottom="@dimen/space_5_dp"
+        android:paddingLeft="@dimen/space_12_dp"
+        android:paddingRight="@dimen/space_12_dp"
+        android:paddingTop="@dimen/space_5_dp"
+        android:text="确认"
+        android:textColor="@color/color2fa2cb"
+        android:textSize="16sp" />
+</RelativeLayout>

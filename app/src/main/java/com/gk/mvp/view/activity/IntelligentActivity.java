@@ -19,6 +19,7 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.tools.JdryPersistence;
 
 import butterknife.BindView;
 
@@ -64,6 +65,7 @@ public class IntelligentActivity extends SjmBaseActivity {
     private String generated = "已生成";
     private String rightNowGen = "立即生成";
     private String rightNowSee = "立即查看";
+    private String intel_zj_btn = null;
 
     @Override
     public int getResouceId() {
@@ -80,6 +82,7 @@ public class IntelligentActivity extends SjmBaseActivity {
         super.onResume();
         initData();
         httpGetData();
+        intel_zj_btn = JdryPersistence.getObject(this, "intel_zj_btn");
     }
 
     private void initData() {
@@ -144,19 +147,16 @@ public class IntelligentActivity extends SjmBaseActivity {
     }
 
     private void normalVip() {
-        if (vipLevel <= 1) {
+        if (vipLevel <= 2) {
             tvWishReport.setText(lowLevel);
             btnRg.setText(tipUpdate);
-            tvYhLevelLow.setText(lowLevel);
-            btnZj.setText(tipUpdate);
-        } else if (vipLevel == 2) {
             tvYhLevelLow.setText(lowLevel);
             btnZj.setText(tipUpdate);
         }
     }
 
-    private void vipMsgRg(String status, int flag) {
-        if (vipLevel <= 1) {
+    private void vipMsgRg(final String status, int flag) {
+        if (vipLevel <= 2) {
             tvWishReport.setText(lowLevel);
             btnRg.setText(tipUpdate);
             tvYhLevelLow.setText(lowLevel);
@@ -176,37 +176,34 @@ public class IntelligentActivity extends SjmBaseActivity {
             });
             return;
         }
-        if (vipLevel == 2) {
-            if (flag == YXXConstants.INVOKE_API_DEFAULT_TIME) {
-                if (status.equals("1")) {
-                    tvWishReport.setText(noGenerate);
-                    btnRg.setText(rightNowGen);
-                } else {
-                    tvWishReport.setText(generated);
-                    btnRg.setText(rightNowSee);
-                }
-                btnRg.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-//                        Intent intent = new Intent();
-//                        intent.putExtra("type", 1);
-//                        openNewActivityByIntent(WishReportResultActivity.class, intent);
-                        showDialog();
-                    }
-                });
-            }
-            tvYhLevelLow.setText(lowLevel);
-            btnZj.setText(tipUpdate);
-            btnZj.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showDialog();
-                }
-            });
-            return;
-        }
+//        if (vipLevel == 2) {
+//            if (flag == YXXConstants.INVOKE_API_DEFAULT_TIME) {
+//                if (status.equals("1")) {
+//                    tvWishReport.setText(noGenerate);
+//                    btnRg.setText(rightNowGen);
+//                } else {
+//                    tvWishReport.setText(generated);
+//                    btnRg.setText(rightNowSee);
+//                }
+//                btnRg.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        showDialog();
+//                    }
+//                });
+//            }
+//            tvYhLevelLow.setText(lowLevel);
+//            btnZj.setText(tipUpdate);
+//            btnZj.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) {
+//                    showDialog();
+//                }
+//            });
+//            return;
+//        }
 
-        if (vipLevel == 3) {
+        if (vipLevel >= 3) {
             if (flag == YXXConstants.INVOKE_API_DEFAULT_TIME) {
                 if (status.equals("1")) {
                     tvWishReport.setText(noGenerate);
@@ -216,12 +213,18 @@ public class IntelligentActivity extends SjmBaseActivity {
                     btnRg.setText(rightNowSee);
                 }
             } else {
-                if (status.equals("1")) {
+                if (null == intel_zj_btn) {
                     tvYhLevelLow.setText(noGenerate);
                     btnZj.setText(rightNowGen);
                 } else {
-                    tvYhLevelLow.setText(generated);
-                    btnZj.setText(rightNowSee);
+
+                    if (status.equals("1")) {
+                        tvYhLevelLow.setText("生成中");
+                        btnZj.setText("耐心等待");
+                    } else {
+                        tvYhLevelLow.setText(generated);
+                        btnZj.setText(rightNowSee);
+                    }
                 }
             }
 
@@ -237,9 +240,17 @@ public class IntelligentActivity extends SjmBaseActivity {
             btnZj.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.putExtra("type", 2);
-                    openNewActivityByIntent(WishReportResultActivity.class, intent);
+                    if (null == intel_zj_btn) {
+                        JdryPersistence.saveObject(IntelligentActivity.this, "intel_zj_btn", "intel_zj_btn");
+                    } else {
+                        if (status.equals("2")) {
+                            Intent intent = new Intent();
+                            intent.putExtra("type", 2);
+                            openNewActivityByIntent(WishReportResultActivity.class, intent);
+                        } else {
+                            toast("正在生成中，请耐心等待……");
+                        }
+                    }
                 }
             });
             return;

@@ -14,6 +14,7 @@ import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.tools.YxxUtils;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
@@ -52,7 +53,7 @@ public class LqRiskTestResultZZPlanActivity extends SjmBaseActivity {
     private void getMajorAdmissionsData(String uniName) {
         showProgress();
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("schoolName", uniName);
+        jsonObject.put("schoolName", YxxUtils.URLEncode(uniName));
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getUniMajorPlan(jsonObject.toJSONString()))

@@ -22,9 +22,9 @@
 
             <ImageView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="200dp"
                 android:scaleType="fitXY"
-                android:src="@drawable/wish_report" />
+                android:src="@drawable/wish_report_bg" />
 
             <TextView
                 android:layout_width="100dp"
