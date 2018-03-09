@@ -86,11 +86,13 @@ public class SameScoreActivity extends SjmBaseActivity {
     public void tvMoreDataClick() {
         String tag = tvMoreData.getTag().toString();
         String etValue = etSameTop10.getText().toString();
-        if(!TextUtils.isEmpty(etValue) && !score.equals(etValue)){
+        if (!TextUtils.isEmpty(etValue) && !score.equals(etValue)) {
             score = etValue;
             mPage = 0;
+            isLoadMore = false;
             tvMoreData.setTag("0");
         }
+        tag = tvMoreData.getTag().toString();
         if ("0".equals(tag)) {
             if (vip > 1) {
                 getSameScoreDirection();
@@ -170,7 +172,7 @@ public class SameScoreActivity extends SjmBaseActivity {
         showProgress();
         jsonObject.put("page", mPage);
         jsonObject.put("username", LoginBean.getInstance().getUsername());
-        jsonObject.put("score",score);
+        jsonObject.put("score", etSameTop10.getText().toString());
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
@@ -179,10 +181,7 @@ public class SameScoreActivity extends SjmBaseActivity {
     }
 
     private void handleData(List<SameScoreItem> sameScoreItems) {
-        if (sameScoreItems == null || sameScoreItems.size() == 0) {
-            toast("没有数据");
-            return;
-        }
+
         if (lvSameScore.getVisibility() == View.GONE) {
             lvSameScore.setVisibility(View.VISIBLE);
         }
@@ -191,6 +190,11 @@ public class SameScoreActivity extends SjmBaseActivity {
             list.addAll(sameScoreItems);
             adapter.notifyDataSetChanged();
             lvSameScore.smoothScrollToPosition(list.size());
+            return;
+        }
+
+        if (sameScoreItems == null || sameScoreItems.size() == 0) {
+            toast("没有数据");
             return;
         }
         list.addAll(sameScoreItems);

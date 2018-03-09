@@ -73,7 +73,8 @@
             android:layout_marginTop="@dimen/space_10_dp"
             android:background="@drawable/same_score_editext_bg"
             android:gravity="center"
-            android:hint="550"
+            android:inputType="numberDecimal"
+            android:hint="输入分数~"
             android:textColor="@color/color4a4a4a"
             android:textSize="@dimen/font_14_sp" />
 
