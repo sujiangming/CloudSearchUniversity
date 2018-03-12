@@ -64,6 +64,7 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
     }
 
     private void invoke() {
+        showProgress();
         jsonObject.put("majorName", YxxUtils.URLEncode(majorName));
         PresenterManager.getInstance()
                 .setmIView(this)
