@@ -135,31 +135,13 @@ public class QWActivity extends SjmBaseActivity {
             return;
         }
         if (!isLoadMore) {//刷新
-            int beforeSize = list.size();
+            list.clear();
             list.addAll(qwBeans);
-            list = removeDuplicate(list);
-            int afterSize = list.size();
-            if (beforeSize == afterSize) {
-                toast("没有最新数据");
-                return;
-            }
             adapter.notifyDataSetChanged();
             return;
         }
 
         list.addAll(qwBeans);
         adapter.notifyDataSetChanged();
-
-    }
-
-    public List<QWListBean> removeDuplicate(List<QWListBean> list) {
-        for (int i = 0; i < list.size() - 1; i++) {
-            for (int j = list.size() - 1; j > i; j--) {
-                if (list.get(j).getQueId().equals(list.get(i).getQueId())) {
-                    list.remove(j);
-                }
-            }
-        }
-        return list;
     }
 }

@@ -2,6 +2,7 @@ package com.gk.mvp.view.activity;
 
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,9 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.beans.UserBean;
-import com.gk.beans.UserBeanDao;
-import com.gk.global.YXXApplication;
+import com.gk.beans.LoginBean;
 import com.gk.mvp.view.adpater.SjmFragmentPagerAdapter;
 
 import java.util.ArrayList;
@@ -44,7 +43,6 @@ public class NewFeatureActivity extends SjmBaseActivity implements ViewPager.OnP
     private ImageView iv_point;
     private ImageView[] ivPointArray;
 
-
     @Override
     public int getResouceId() {
         return R.layout.activity_new_feature;
@@ -64,9 +62,8 @@ public class NewFeatureActivity extends SjmBaseActivity implements ViewPager.OnP
     }
 
     private void goMainActivity() {
-        UserBeanDao userBeanDao = YXXApplication.getDaoSession().getUserBeanDao();
-        List<UserBean> userBeans = userBeanDao.loadAll();
-        if (userBeans != null && userBeans.size() > 0) {
+        LoginBean loginBean = LoginBean.getInstance();
+        if (loginBean != null && !TextUtils.isEmpty(loginBean.getUsername())) {
             openNewActivity(MainActivity.class);
         } else {
             openNewActivity(LoginActivity.class);

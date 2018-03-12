@@ -8,11 +8,10 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
-import com.gk.beans.DaoSession;
 import com.gk.beans.LoginBean;
 import com.gk.beans.SaltBean;
 import com.gk.beans.VersionBean;
-import com.gk.beans.VersionBeanDao;
+import com.gk.beans.VersionResultBean;
 import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
@@ -29,8 +28,6 @@ import java.util.List;
 
 public class SplashActivity extends SjmBaseActivity {
 
-    private static DaoSession daoSession;
-
     @Override
     public int getResouceId() {
         return R.layout.activity_splash;
@@ -39,32 +36,8 @@ public class SplashActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setStatusBarTransparent();
-        if (isNewVersionExit()) {
-            openNewActivity(NewFeatureActivity.class);
-        } else {
-            //getAdsInfo();
-            autoLogin();
-        }
+        checkVersion();
     }
-
-    private boolean isNewVersionExit() {
-        daoSession = YXXApplication.getDaoSession();
-        VersionBeanDao versionBeanDao = daoSession.getVersionBeanDao();
-        List<VersionBean> list = versionBeanDao.loadAll();
-        if (list == null || list.size() == 0) { //第一次安装，本地数据是没有数据的，说明是最新的版本
-            int firstVersionCode = PackageUtils.getVersionCode(this);
-            updateVersion(firstVersionCode);
-            return true;
-        }
-        int oldVersion = list.get(0).getVersionCode();
-        int newVersion = PackageUtils.getVersionCode(this);
-        if (newVersion > oldVersion) {//如果有更新版本，则更新本地库
-            updateVersion(newVersion);
-            return true;
-        }
-        return false;
-    }
-
 
     private String userName;
     private String password;
@@ -99,9 +72,23 @@ public class SplashActivity extends SjmBaseActivity {
                 .request(YXXConstants.INVOKE_API_THREE_TIME);
     }
 
+    private void checkVersion() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("version", PackageUtils.getVersionName(this));
+        PresenterManager.getInstance()
+                .setmContext(this)
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).checkVersion(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_FORTH_TIME);
+    }
+
     @Override
     public <T> void fillWithData(T t, int order) {
+        hideProgress();
         CommonBean commonBean = (CommonBean) t;
+        if (1 != commonBean.getStatus()) {
+            return;
+        }
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 SaltBean saltBean = JSON.parseObject(commonBean.getData().toString(), SaltBean.class);
@@ -125,8 +112,15 @@ public class SplashActivity extends SjmBaseActivity {
                 AdsBean.getInstance().saveAdsBean(mDataBeans);
                 openNewActivity(MainActivity.class);
                 break;
+            case YXXConstants.INVOKE_API_FORTH_TIME:
+                VersionResultBean versionResultBean = JSON.parseObject(commonBean.getData().toString(), VersionResultBean.class);
+                if (isNewVersion(versionResultBean)) {//有更新
+                    openNewActivity(NewFeatureActivity.class);
+                } else {
+                    autoLogin();
+                }
+                break;
         }
-        hideProgress();
     }
 
     @Override
@@ -135,9 +129,42 @@ public class SplashActivity extends SjmBaseActivity {
         hideProgress();
     }
 
-    public void updateVersion(int code) {
+    private boolean isNewVersion(VersionResultBean versionResultBean) {
+        boolean isNew = false;
+        String newVersion = versionResultBean.getVersion();
+        String oldVersion = PackageUtils.getVersionName(this);
+        String[] oldVersionArray = oldVersion.split("\\.");
+        String[] newVersionArray = newVersion.split("\\.");
+
+        if (oldVersionArray.length >= newVersionArray.length) {
+            for (int i = 0; i < newVersionArray.length; i++) {
+                int oldIndex = Integer.valueOf(oldVersionArray[i]);
+                int newIndex = Integer.valueOf(newVersionArray[i]);
+                if (newIndex > oldIndex) {//如果有更新版本，则更新本地库
+                    updateVersion(versionResultBean);
+                    isNew = true;
+                }
+            }
+        } else {
+            for (int i = 0; i < oldVersionArray.length; i++) {
+                int oldIndex = Integer.valueOf(oldVersionArray[i]);
+                int newIndex = Integer.valueOf(newVersionArray[i]);
+                if (newIndex > oldIndex) {//如果有更新版本，则更新本地库
+                    updateVersion(versionResultBean);
+                    isNew = true;
+                }
+            }
+        }
+
+        return isNew;
+    }
+
+    public void updateVersion(VersionResultBean versionResultBean) {
         VersionBean versionBean = new VersionBean();
-        versionBean.setVersionCode(code);
-        daoSession.getVersionBeanDao().insertOrReplace(versionBean);
+        versionBean.setVersionCode(versionResultBean.getVersion());
+        versionBean.setDownUrl(versionResultBean.getDownUrl());
+        versionBean.setPublishTime(versionResultBean.getPublishTime());
+        versionBean.setUpdateContent(versionResultBean.getUpdateContent());
+        YXXApplication.getDaoSession().getVersionBeanDao().insertOrReplace(versionBean);
     }
 }

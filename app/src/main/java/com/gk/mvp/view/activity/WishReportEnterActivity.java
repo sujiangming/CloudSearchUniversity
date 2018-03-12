@@ -86,6 +86,10 @@ public class WishReportEnterActivity extends SjmBaseActivity {
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         CommonBean commonBean = (CommonBean) t;
+        if (null == commonBean.getData()) {
+            toast("请求失败");
+            return;
+        }
         WishResultBean wishResultBean = JSON.parseObject(commonBean.getData().toString(), WishResultBean.class);
         String status = wishResultBean.getReportStatus();
         switch (order) {

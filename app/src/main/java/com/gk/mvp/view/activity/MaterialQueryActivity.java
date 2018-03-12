@@ -19,6 +19,7 @@ import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryTime;
+import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
@@ -64,7 +65,7 @@ public class MaterialQueryActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        initSmartRefreshLayout(smartLayout, false);
+        initSmartRefreshLayout(smartLayout, true);
         jsonObject = new JSONObject();
         imageLoader = new GlideImageLoader();
         list = new ArrayList<>();
@@ -78,7 +79,7 @@ public class MaterialQueryActivity extends SjmBaseActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 searchKey = s;
-                invoke(CourseTypeEnum.getPinYin(s));
+                invoke(s);//CourseTypeEnum.getPinYin(s)
                 if (searchView != null) {
                     // 得到输入管理对象
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -106,8 +107,9 @@ public class MaterialQueryActivity extends SjmBaseActivity {
     }
 
     private void invoke(String name) {
+        showProgress();
         jsonObject.put("page", mPage);
-        jsonObject.put("name", name);
+        jsonObject.put("name", YxxUtils.URLEncode(name));
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
@@ -138,6 +140,7 @@ public class MaterialQueryActivity extends SjmBaseActivity {
         CommonBean commonBean = (CommonBean) t;
         List<MaterialItemBean.DataBean> beanList = JSON.parseArray(commonBean.getData().toString(), MaterialItemBean.DataBean.class);
         if (beanList == null || beanList.size() == 0) {
+            toast("没有查到相关数据");
             return;
         }
         if (isLoadMore) {

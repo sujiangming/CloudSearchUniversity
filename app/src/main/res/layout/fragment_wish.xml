@@ -27,7 +27,7 @@
                 android:layout_marginBottom="@dimen/space_3_dp"
                 android:layout_marginTop="@dimen/space_24_dp"
                 android:paddingLeft="@dimen/space_16_dp"
-                android:text="*请认证填写高考成绩，此成绩只允许编辑一次"
+                android:text="*请认真填写个人信息，此信息只准编辑一次"
                 android:textColor="@color/colorA9A9A9"
                 android:textSize="@dimen/font_12_sp" />
 

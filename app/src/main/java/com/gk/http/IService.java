@@ -669,4 +669,14 @@ public interface IService {
     Call<ResponseBody> getSelfRecruitUniversityLikeName(@Field("data") String data);
 
 
+    /**
+     * 版本更新 - Android
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/version/checkVersion")
+    Call<CommonBean> checkVersion(@Field("data") String data);
+
 }

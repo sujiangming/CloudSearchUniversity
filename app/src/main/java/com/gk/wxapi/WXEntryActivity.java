@@ -270,7 +270,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         jsonObject.put("verifyCode", verifyCode);
         RetrofitUtil.getInstance()
                 .createReq(IService.class)
-                .weixinLogin(jsonObject.toJSONString())
+                .userBindingWeixin(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
                     public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {

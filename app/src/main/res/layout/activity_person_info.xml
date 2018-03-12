@@ -19,6 +19,15 @@
         android:layout_below="@id/top_bar"
         android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/space_12_dp"
+            android:paddingLeft="@dimen/space_14_dp"
+            android:text="*请认真填写个人信息，此信息只准编辑一次"
+            android:textColor="@color/colorFFFF0000"
+            android:textSize="@dimen/font_12_sp" />
+
         <LinearLayout
             android:layout_marginTop="@dimen/space_12_dp"
             android:layout_width="match_parent"

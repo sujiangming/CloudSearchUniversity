@@ -126,7 +126,7 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         List<SchoolZSBean> beanList = JSON.parseArray(commonBean.getData().toString(), SchoolZSBean.class);
         if (isLoadMore) {
             if (beanList == null || beanList.size() == 0) {
-                toast("已经扯到底啦");
+                toast("没有查询到数据");
                 return;
             }
             schoolBeanList.addAll(beanList);

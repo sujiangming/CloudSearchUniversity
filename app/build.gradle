@@ -8,8 +8,8 @@ android {
         applicationId "com.gk"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 2
-        versionName "2.0"
+        versionCode 1
+        versionName "1.0.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
         ndk {
             //APP的build.gradle设置支持的SO库架构
@@ -24,7 +24,7 @@ android {
         }
         greendao {
             //每次新增表或者新增字段或者删除表，都需要更改这个地方的数值，只认正整数
-            schemaVersion 3
+            schemaVersion 5
         }
     }
     //关于超过64K方法分Dex的解决办法

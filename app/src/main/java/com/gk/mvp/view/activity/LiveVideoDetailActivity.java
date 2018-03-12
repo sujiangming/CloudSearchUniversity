@@ -185,10 +185,11 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("videoId", liveBean.getId());
+        String json = jsonObject.toJSONString();
         PresenterManager.getInstance()
                 .setmContext(this)
                 .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoCommentList(jsonObject.toJSONString()))
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoCommentList(json))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 

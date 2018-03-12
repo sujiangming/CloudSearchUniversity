@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -20,13 +21,18 @@ import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.beans.LoginBean;
+import com.gk.beans.VersionBean;
+import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.mvp.view.fragment.HomeFragment;
 import com.gk.mvp.view.fragment.LectureFragment;
 import com.gk.mvp.view.fragment.LiveVideoFragment;
 import com.gk.mvp.view.fragment.UserFragment;
 import com.gk.mvp.view.fragment.WishFragment;
+import com.gk.tools.AppUpdateUtils;
+import com.gk.tools.AppVersion;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.PackageUtils;
 
 import java.util.ArrayList;
 
@@ -116,6 +122,7 @@ public class MainActivity extends SjmBaseActivity {
 
     private int index = 0;
     private GlideImageLoader glideImageLoader = new GlideImageLoader();
+    private VersionBean versionBean = null;
 
     @Override
     public int getResouceId() {
@@ -125,6 +132,35 @@ public class MainActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         initView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                upgradeVersion();
+            }
+        }, 2000);
+
+    }
+
+    public void upgradeVersion() {
+        versionBean = YXXApplication.getDaoSession().getVersionBeanDao().queryBuilder().unique();
+        if (versionBean == null) {
+            return;
+        }
+        String url = versionBean.getDownUrl();
+        AppVersion appVersion = new AppVersion();
+        appVersion.setContent(versionBean.getUpdateContent());
+        appVersion.setUrl(url);
+        appVersion.setApkName(PackageUtils.getAppName(this) + ".apk");
+        appVersion.setVersionName(versionBean.getVersionCode());
+        String sha1 = PackageUtils.getSHa1(this);
+        appVersion.setSha1(sha1 == null ? null : sha1);
+        AppUpdateUtils.init(this, appVersion, false, true);
+        AppUpdateUtils.upDate();
     }
 
     private void initView() {

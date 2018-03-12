@@ -77,6 +77,10 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
         hideProgress();
         stopRefreshLayout();
         CommonBean commonBean = (CommonBean) t;
+        if (null == commonBean.getData()) {
+            toast("请求失败");
+            return;
+        }
         schoolBeanList = JSON.parseArray(commonBean.getData().toString(), QuerySchoolByMajorBean.class);
         if (schoolBeanList.size() == 0) {
             return;
@@ -112,7 +116,7 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent();
                 intent.putExtra("majorName", majorName);
-                intent.putExtra("schoolName",schoolBeanList.get(i).getSchoolName());
+                intent.putExtra("schoolName", schoolBeanList.get(i).getSchoolName());
                 LqRiskTestMajorSchoolActivity.this.setResult(119, intent);
                 closeActivity(LqRiskTestMajorSchoolActivity.this);
             }

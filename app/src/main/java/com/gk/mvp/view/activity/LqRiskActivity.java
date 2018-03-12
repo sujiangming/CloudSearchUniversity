@@ -130,6 +130,7 @@ public class LqRiskActivity extends SjmBaseActivity {
                 }
                 tv_risk_score.setText(reScore);
                 tvStudentScore.setText(reScore);
+                score = reScore;
                 selfDialog.dismiss();
             }
         });
@@ -186,7 +187,7 @@ public class LqRiskActivity extends SjmBaseActivity {
     }
 
     private void needZDCkeck() {
-        if (TextUtils.isEmpty(score)) {
+        if (TextUtils.isEmpty(tvStudentScore.getText())) {
             showVipDialog("请完善您的个人信息-分数还未填写");
             return;
         }
