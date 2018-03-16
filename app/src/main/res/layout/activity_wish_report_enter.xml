@@ -73,6 +73,7 @@
                     android:layout_marginRight="@dimen/space_12_dp"
                     android:layout_marginTop="@dimen/space_20_dp"
                     android:background="@drawable/mbti_btn_bg3x"
+                    android:tag="0"
                     android:text="立即生成"
                     android:textColor="@android:color/white" />
             </RelativeLayout>
@@ -112,7 +113,7 @@
                     android:layout_marginLeft="@dimen/space_10_dp"
                     android:layout_marginTop="@dimen/space_5_dp"
                     android:layout_toRightOf="@id/tv_wish_desc_1"
-                    android:text="会员等级低，不能生成"
+                    android:text="未生成"
                     android:textColor="#ff0000"
                     android:textSize="@dimen/font_14_sp" />
 
@@ -125,6 +126,7 @@
                     android:layout_marginRight="@dimen/space_12_dp"
                     android:layout_marginTop="@dimen/space_20_dp"
                     android:background="@drawable/mbti_btn_bg3x"
+                    android:tag="0"
                     android:text="立即生成"
                     android:textColor="@android:color/white" />
             </RelativeLayout>

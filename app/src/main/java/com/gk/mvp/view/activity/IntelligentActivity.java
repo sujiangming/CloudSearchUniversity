@@ -22,6 +22,7 @@ import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.JdryPersistence;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 /**
  * Created by JDRY-SJM on 2017/11/3.
@@ -57,14 +58,30 @@ public class IntelligentActivity extends SjmBaseActivity {
     @BindView(R.id.btn_2)
     Button btnZj;
 
+    @OnClick({R.id.btn_1, R.id.btn_2})
+    public void btnOnClicked(View view) {
+        switch (view.getId()) {
+            case R.id.btn_1:
+                btnClicked(view, btnRg, 1, YXXConstants.INVOKE_API_THREE_TIME);
+                break;
+            case R.id.btn_2:
+                btnClicked(view, btnZj, 2, YXXConstants.INVOKE_API_FORTH_TIME);
+                break;
+        }
+    }
+
     private int vipLevel = 0;
     private JSONObject jsonObject = new JSONObject();
     private String tipUpdate = "立即升级";
     private String lowLevel = "会员等级低，不能生成";
     private String noGenerate = "未生成";
+    private String generating = "生成中";
     private String generated = "已生成";
     private String rightNowGen = "立即生成";
     private String rightNowSee = "立即查看";
+    private String rightAfterSee = "请稍后查看";
+    private String generatingTip = "正在生成，请稍后进来查看";
+    private WishResultBean wishResultBean = null;
     private String intel_zj_btn = null;
 
     @Override
@@ -86,8 +103,10 @@ public class IntelligentActivity extends SjmBaseActivity {
     }
 
     private void initData() {
-        vipLevel = LoginBean.getInstance().getVipLevel();
         LoginBean loginBean = LoginBean.getInstance();
+        vipLevel = loginBean.getVipLevel();
+        initTextViewAndBtn(btnRg, tvWishReport);
+        initTextViewAndBtn(btnZj, tvYhLevelLow);
         String address = loginBean.getAddress();
         String wenli = loginBean.getWlDesc();
         String score = loginBean.getScore();
@@ -99,35 +118,50 @@ public class IntelligentActivity extends SjmBaseActivity {
 
     private void httpGetData() {
         jsonObject.put("username", LoginBean.getInstance().getUsername());
-        generateReportStatus(YXXConstants.INVOKE_API_DEFAULT_TIME);
-        generateReportStatus(YXXConstants.INVOKE_API_SECOND_TIME);
+        queryUserVolunteerReport(YXXConstants.INVOKE_API_DEFAULT_TIME);
+        queryUserVolunteerReport(YXXConstants.INVOKE_API_SECOND_TIME);
     }
 
-    private void generateReportStatus(int time) {
+    private void queryUserVolunteerReport(int time) {
         showProgress();
         jsonObject.put("reportType", time);
         PresenterManager.getInstance().setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).generateWishReport(jsonObject.toJSONString()))
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).queryUserVolunteerReport(jsonObject.toJSONString()))
                 .request(time);
+    }
+
+    private void generateReport(int type, int order) {
+        showProgress();
+        jsonObject.put("reportType", type);
+        PresenterManager.getInstance().setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).generateWishReport(jsonObject.toJSONString()))
+                .request(order);
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         CommonBean commonBean = (CommonBean) t;
-        if (null == commonBean.getData() || "".equals(commonBean.getData())) {
-            return;
-        }
-        WishResultBean wishResultBean = JSON.parseObject(commonBean.getData().toString(), WishResultBean.class);
-        String status = wishResultBean.getReportStatus();
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                showDifferentMsg(status, order);
+                setWishResultBean(commonBean);
+                setTextViewAndBtn(btnRg, tvWishReport, commonBean);
                 tvSWantCity.setText("" + (wishResultBean.getIntentArea() == null ? "未知" : wishResultBean.getIntentArea()));
                 tvZy.setText("" + (wishResultBean.getIntentSch() == null ? "未知" : wishResultBean.getIntentSch()));
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
-                showDifferentMsg(status, order);
+                setWishResultBean(commonBean);
+                setTextViewAndBtn(btnZj, tvYhLevelLow, commonBean);
+                break;
+            case YXXConstants.INVOKE_API_THREE_TIME:
+                btnRg.setText(rightAfterSee);
+                tvWishReport.setText(generating);
+                toast(commonBean.getMessage());
+                break;
+            case YXXConstants.INVOKE_API_FORTH_TIME:
+                btnZj.setText(rightAfterSee);
+                tvYhLevelLow.setText(generating);
+                toast(commonBean.getMessage());
                 break;
         }
     }
@@ -138,109 +172,61 @@ public class IntelligentActivity extends SjmBaseActivity {
         hideProgress();
     }
 
-    private void showDifferentMsg(String status, int flag) {
-        if (status == null || "".equals(status)) {
-            normalVip();
-            return;
-        }
-        vipMsgRg(status, flag);
-    }
-
-    private void normalVip() {
+    private void initTextViewAndBtn(Button button, TextView textView) {
         if (vipLevel <= 2) {
-            tvWishReport.setText(lowLevel);
-            btnRg.setText(tipUpdate);
-            tvYhLevelLow.setText(lowLevel);
-            btnZj.setText(tipUpdate);
+            textView.setText(lowLevel);
+            button.setText(tipUpdate);
         }
     }
 
-    private void vipMsgRg(final String status, final int flag) {
+    private void btnClicked(View view, Button button, int type, int order) {
         if (vipLevel <= 2) {
-            tvWishReport.setText(lowLevel);
-            btnRg.setText(tipUpdate);
-            tvYhLevelLow.setText(lowLevel);
-            btnZj.setText(tipUpdate);
-
-            btnRg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showDialog();
-                }
-            });
-            btnZj.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    showDialog();
-                }
-            });
+            showDialog();
             return;
         }
-
-        if (vipLevel >= 3) {
-            if (flag == YXXConstants.INVOKE_API_DEFAULT_TIME) {
-                if (status.equals("1")) {
-                    tvWishReport.setText(noGenerate);
-                    btnRg.setText(rightNowGen);
-                } else {
-                    tvWishReport.setText(generated);
-                    btnRg.setText(rightNowSee);
-                }
-            } else {
-                if (null == intel_zj_btn) {
-                    tvYhLevelLow.setText(noGenerate);
-                    btnZj.setText(rightNowGen);
-                } else {
-
-                    if (status.equals("1")) {
-                        tvYhLevelLow.setText("生成中");
-                        btnZj.setText("生成中");
-                    } else {
-                        tvYhLevelLow.setText(generated);
-                        btnZj.setText(rightNowSee);
-                    }
-                }
-            }
-
-            btnRg.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent = new Intent();
-                    intent.putExtra("type", 1);
-                    openNewActivityByIntent(WishReportResultActivity.class, intent);
-                }
-            });
-
-            btnZj.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (null == intel_zj_btn) {
-                        JdryPersistence.saveObject(IntelligentActivity.this, "intel_zj_btn", "intel_zj_btn");
-                        showProgress();
-                        btnZj.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                intel_zj_btn = JdryPersistence.getObject(IntelligentActivity.this, "intel_zj_btn");
-                                tvYhLevelLow.setText("生成中");
-                                btnZj.setText("生成中");
-                                hideProgress();
-                            }
-                        }, 1500);
-                    } else {
-                        if (flag == YXXConstants.INVOKE_API_SECOND_TIME) {
-                            if (!"生成中".equals(btnZj.getText().toString())) {
-                                Intent intent = new Intent();
-                                intent.putExtra("type", 2);
-                                openNewActivityByIntent(WishReportResultActivity.class, intent);
-                            } else {
-                                toast("正在生成中，请耐心等待……");
-                            }
-                        }
-                    }
-                }
-            });
-            return;
+        Integer tag = (Integer) view.getTag();
+        switch (tag.intValue()) {
+            case 0:
+                generateReport(type, order);
+                break;
+            case 1:
+                toast(generatingTip);
+                break;
+            case 2:
+                goResultWin(type);
+                break;
         }
+    }
+
+    private void setWishResultBean(CommonBean commonBean) {
+        if (null != commonBean.getData()) {
+            wishResultBean = JSON.parseObject(commonBean.getData().toString(), WishResultBean.class);
+        }
+    }
+
+    private void setTextViewAndBtn(Button button, TextView textView, CommonBean commonBean) {
+        button.setTag(commonBean.getFlag());
+        switch (commonBean.getFlag()) {
+            case 0:
+                textView.setText(noGenerate);
+                button.setText(rightNowGen);
+                break;
+            case 1:
+                textView.setText(generating);
+                button.setText(rightAfterSee);
+                break;
+            case 2:
+                textView.setText(generated);
+                button.setText(rightNowSee);
+                break;
+        }
+    }
+
+    private void goResultWin(int type) {
+        Intent intent = new Intent();
+        intent.putExtra("type", type);
+        intent.putExtra("bean", wishResultBean);
+        openNewActivityByIntent(WishReportResultActivity.class, intent);
     }
 
     private void showDialog() {

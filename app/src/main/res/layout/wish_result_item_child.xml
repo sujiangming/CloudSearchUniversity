@@ -12,7 +12,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="1、土木工程"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 
@@ -23,7 +22,6 @@
         android:layout_marginLeft="1dp"
         android:layout_weight="1"
         android:gravity="right"
-        android:text="2、计算机科学与技术"
         android:textColor="@color/color808080"
         android:textSize="@dimen/font_12_sp" />
 </LinearLayout>

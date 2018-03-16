@@ -679,4 +679,15 @@ public interface IService {
     @POST("app/api/version/checkVersion")
     Call<CommonBean> checkVersion(@Field("data") String data);
 
+
+    /**
+     * 志愿报告-查询接口
+     *
+     * @param data
+     * @return
+     */
+    @FormUrlEncoded
+    @POST("app/api/report/queryUserVolunteerReport")
+    Call<CommonBean> queryUserVolunteerReport(@Field("data") String data);
+
 }

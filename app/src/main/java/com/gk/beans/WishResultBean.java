@@ -1,12 +1,13 @@
 package com.gk.beans;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by JDRY-SJM on 2017/12/7.
  */
 
-public class WishResultBean {
+public class WishResultBean implements Serializable{
 
     /**
      * birthPlace : 贵州
@@ -111,7 +112,7 @@ public class WishResultBean {
         this.secondBatch = secondBatch;
     }
 
-    public static class FirstBatchBean {
+    public static class FirstBatchBean implements Serializable{
         /**
          * admissionProbability : 30%
          * isAdjust : 1
@@ -177,7 +178,7 @@ public class WishResultBean {
         }
     }
 
-    public static class SecondBatchBean {
+    public static class SecondBatchBean implements Serializable{
         /**
          * admissionProbability : 30%
          * isAdjust : 1

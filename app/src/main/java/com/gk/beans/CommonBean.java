@@ -5,9 +5,18 @@ package com.gk.beans;
  */
 
 public class CommonBean<T> {
+    private int flag;
     private int status;
     private String message;
     private T mData;
+
+    public int getFlag() {
+        return flag;
+    }
+
+    public void setFlag(int flag) {
+        this.flag = flag;
+    }
 
     public int getStatus() {
         return status;

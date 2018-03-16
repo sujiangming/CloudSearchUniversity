@@ -56,6 +56,8 @@ public class WishReportResultActivity extends SjmBaseActivity {
     private String[] orderIndex = {"①  ", "②  ", "③  ", "④  ", "⑤  ", "⑥  ", "⑦  ", "⑧  ", "⑨  ", "⑩  "};
     private int type = 0;
 
+    private WishResultBean wishResultBean = null;
+
     @Override
     public int getResouceId() {
         return R.layout.activity_wish_report_result;
@@ -65,7 +67,10 @@ public class WishReportResultActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "我的志愿报告", 0);
         type = getIntent().getIntExtra("type", 0);
-        httpRequest();
+        wishResultBean = (WishResultBean) getIntent().getSerializableExtra("bean");
+        if (null != wishResultBean) {
+            initData(wishResultBean);
+        }
     }
 
     private void httpRequest() {
@@ -128,12 +133,12 @@ public class WishReportResultActivity extends SjmBaseActivity {
                     tvTuiJuan.setText("(推荐志愿" + firstBatchBeans.size() + "个）");
                 }
                 tvUniversityName.setText(orderIndex[i] + firstBean.getSchoolName());
-                tvIsTiaoji.setText("服从调剂： " + (firstBean.getIsAdjust().equals("1") ? "是" : "否"));
+                tvIsTiaoji.setText("服从调剂： " + (firstBean.getIsAdjust().equals("服从") ? "是" : "否"));
                 tvMinScore.setText(firstBean.getLastYearLowestScore());
                 tvLuQuRate.setText("录取概率  " + firstBean.getAdmissionProbability());
 
-                if(null != firstBean.getRecommend_majors() && !"".equals(firstBean.getRecommend_majors())){
-                    String[] recommendMajors = firstBean.getRecommend_majors().split("、");
+                if (null != firstBean.getRecommend_majors() && !"".equals(firstBean.getRecommend_majors())) {
+                    String[] recommendMajors = firstBean.getRecommend_majors().split(",");
                     if (recommendMajors != null && recommendMajors.length > 0) {
                         for (int j = 0; j < recommendMajors.length; j++) {
                             View view1 = View.inflate(this, R.layout.wish_result_item_child, null);
@@ -143,9 +148,10 @@ public class WishReportResultActivity extends SjmBaseActivity {
                             int mode = j % 2;
 
                             if (mode == 0) {
-                                tvLeft.setText(j + "、" + recommendMajors[j]);
+                                int tmp = (j+1);
+                                tvLeft.setText(tmp + "、" + recommendMajors[j]);
                                 if (j != (recommendMajors.length - 1)) {
-                                    tvRight.setText((j + 1) + "、" + recommendMajors[j + 1]);
+                                    tvRight.setText((tmp + 1) + "、" + recommendMajors[j + 1]);
                                 }
                                 llTuijuanZy.addView(view1);
                             }
@@ -179,12 +185,12 @@ public class WishReportResultActivity extends SjmBaseActivity {
                     tvTuiJuan.setText("(推荐志愿" + firstBatchBeans.size() + "个）");
                 }
                 tvUniversityName.setText(orderIndex[i] + firstBean.getSchoolName());
-                tvIsTiaoji.setText("服从调剂： " + (firstBean.getIsAdjust().equals("1") ? "是" : "否"));
+                tvIsTiaoji.setText("服从调剂： " + (firstBean.getIsAdjust().equals("服从") ? "是" : "否"));
                 tvMinScore.setText(firstBean.getLastYearLowestScore());
                 tvLuQuRate.setText("录取概率  " + firstBean.getAdmissionProbability());
 
-                if(null != firstBean.getRecommend_majors() && !"".equals(firstBean.getRecommend_majors())){
-                    String[] recommendMajors = firstBean.getRecommend_majors().split("、");
+                if (null != firstBean.getRecommend_majors() && !"".equals(firstBean.getRecommend_majors())) {
+                    String[] recommendMajors = firstBean.getRecommend_majors().split(",");
                     if (recommendMajors != null && recommendMajors.length > 0) {
                         for (int j = 0; j < recommendMajors.length; j++) {
                             View view1 = View.inflate(this, R.layout.wish_result_item_child, null);
@@ -194,9 +200,10 @@ public class WishReportResultActivity extends SjmBaseActivity {
                             int mode = j % 2;
 
                             if (mode == 0) {
-                                tvLeft.setText(j + "、" + recommendMajors[j]);
+                                int tmp = (j+1);
+                                tvLeft.setText(tmp + "、" + recommendMajors[j]);
                                 if (j != (recommendMajors.length - 1)) {
-                                    tvRight.setText((j + 1) + "、" + recommendMajors[j + 1]);
+                                    tvRight.setText((tmp + 1) + "、" + recommendMajors[j + 1]);
                                 }
                                 llTuijuanZy.addView(view1);
                             }
