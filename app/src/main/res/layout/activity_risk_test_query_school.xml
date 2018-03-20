@@ -43,7 +43,7 @@
         android:layout_below="@id/ll_top_bar"
         android:background="@color/color353535" />
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <LinearLayout
         android:id="@+id/smart_rf_query_school"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -59,6 +59,6 @@
             android:dividerHeight="@dimen/space_1_px">
 
         </ListView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </LinearLayout>
 
 </RelativeLayout>

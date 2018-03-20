@@ -18,7 +18,6 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.tools.YxxUtils;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.zhy.adapter.abslistview.CommonAdapter;
 import com.zhy.adapter.abslistview.ViewHolder;
 
@@ -35,8 +34,6 @@ import butterknife.OnClick;
 public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
     @BindView(R.id.lv_query_school)
     ListView lvQuerySchool;
-    @BindView(R.id.smart_rf_query_school)
-    SmartRefreshLayout smartRfQuerySchool;
     @BindView(R.id.searchview)
     SearchView searchview;
 
@@ -48,7 +45,6 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
     private List<String> schoolBeanList = new ArrayList<>();
     private JSONObject jsonObject = new JSONObject();
     private int mPage = 0;
-    private boolean isLoadMore = false;
     private String nullString = "";
     private String[] schoolArray = {"清华大学", "北京大学", "中国人民大学", "北京交通大学", "北京工业大学",
             "北京航空航天大学", "北京理工大学", "北京科技大学", "中国政法大学",
@@ -64,7 +60,6 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        initSmartRefreshLayout(smartRfQuerySchool, true);
         showSearch();
         setSearchViewText(searchview);
         initData();
@@ -80,7 +75,6 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
     private void showSearch() {
         searchview.setSubmitButtonEnabled(true);
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            private String TAG = getClass().getSimpleName();
 
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -107,20 +101,6 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
                 return true;
             }
         });
-    }
-
-    @Override
-    public void refresh() {
-        mPage = 0;
-        isLoadMore = false;
-        invoke(nullString, nullString, nullString, nullString, nullString);
-    }
-
-    @Override
-    public void loadMore() {
-        mPage++;
-        isLoadMore = true;
-        invoke(nullString, nullString, nullString, nullString, nullString);
     }
 
     private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
@@ -157,14 +137,12 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
             schoolBeanList.add(dataBeanList.get(i).getSchoolName());
         }
         initListView();
-        stopLayoutRefreshByTag(isLoadMore);
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
         toast(YXXConstants.ERROR_INFO);
         hideProgress();
-        stopLayoutRefreshByTag(isLoadMore);
     }
 
     private void initListView() {

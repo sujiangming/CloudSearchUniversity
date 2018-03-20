@@ -70,12 +70,21 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         switch (view.getId()) {
             case R.id.tv_tag_1:
                 Intent intent = new Intent();
-                intent.putExtra("uniName", valueDesc);
+                if (flag == 2) {
+                    intent.putExtra("uniName", schoolName);
+                } else {
+                    intent.putExtra("uniName", valueDesc);
+                }
                 openNewActivityByIntent(LqRiskTestResultLqDataActivity.class, intent);
                 break;
             case R.id.tv_zs_plan:
                 Intent intent1 = new Intent();
-                intent1.putExtra("uniName", schoolName);
+                if (flag == 2) {
+                    intent1.putExtra("uniName", schoolName);
+                } else {
+                    intent1.putExtra("uniName", valueDesc);
+                }
+                //intent1.putExtra("uniName", schoolName);
                 openNewActivityByIntent(LqRiskTestResultZZPlanActivity.class, intent1);
                 break;
         }
@@ -146,7 +155,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         jsonObject.put("score", LoginBean.getInstance().getScore());
         jsonObject.put("schoolName", YxxUtils.URLEncode(schoolName));
         jsonObject.put("username", LoginBean.getInstance().getUsername());
-        jsonObject.put("majorName", YxxUtils.URLEncode(valueDesc));
+        jsonObject.put("majorName", (valueDesc == null ? "" : YxxUtils.URLEncode(valueDesc)));
         PresenterManager.getInstance()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)

@@ -88,13 +88,13 @@ public class LqRiskActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "录取测试", 0);
-        vipLevel = LoginBean.getInstance().getVipLevel();
+        initData();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        initData();
+        vipLevel = LoginBean.getInstance().getVipLevel();
         getUserRechargeTimes();
         getVipLevelAmount();
     }
@@ -282,13 +282,16 @@ public class LqRiskActivity extends SjmBaseActivity {
         if (data == null) {
             return;
         }
-        if (resultCode == 110) {//高校选择返回结果
-            String schoolName = data.getStringExtra("schoolName");
-            tvStudentMb.setText(schoolName);
-        } else {
-            schoolName = data.getStringExtra("schoolName");
-            String majorName = data.getStringExtra("majorName");
-            tvStudentMb.setText(majorName);
+        switch (resultCode){
+            case 110:
+                String returnSchoolName = data.getStringExtra("schoolName");
+                setTextViewValues(tvStudentMb,returnSchoolName);
+                break;
+            case 119:
+                schoolName = data.getStringExtra("schoolName");
+                String majorName = data.getStringExtra("majorName");
+                setTextViewValues(tvStudentMb,majorName);
+                break;
         }
     }
 
