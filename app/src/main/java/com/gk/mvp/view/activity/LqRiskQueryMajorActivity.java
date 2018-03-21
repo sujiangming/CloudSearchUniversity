@@ -87,6 +87,9 @@ public class LqRiskQueryMajorActivity extends SjmBaseActivity {
      * 以下为搜索部分
      */
     private void initQueryData() {
+        if (null == listQuery) {
+            return;
+        }
         lvQuerySchool.setAdapter(adapter = new CommonAdapter<MajorQueryBean.DataBean>(this, R.layout.professional_query_item, listQuery) {
             @Override
             protected void convert(ViewHolder viewHolder, MajorQueryBean.DataBean item, int position) {

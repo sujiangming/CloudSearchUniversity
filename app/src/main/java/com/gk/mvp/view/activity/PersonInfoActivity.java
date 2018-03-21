@@ -357,7 +357,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
         String descriptionString = file.getName();
         RequestBody description = RequestBody.create(MediaType.parse("multipart/form-data"), descriptionString);
         // 执行请求
-        Call<ResponseBody> call = RetrofitUtil.getInstance().createReq(IService.class).uploadImage(LoginBean.getInstance().getUsername(), description, body);
+        Call<ResponseBody> call = RetrofitUtil.getInstance().createReq(IService.class).uploadImage("user", description, body);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
