@@ -79,7 +79,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
     @BindView(R.id.tv_user_nick_name)
     RichText tvUserNickName;
 
-    private LoginBean loginBean = LoginBean.getInstance();
+    private LoginBean loginBean;
     private static final String CODE_KEY = "code";
     private GlideImageLoader glideImageLoader = new GlideImageLoader();
     private DialogInterface mDialog;
@@ -95,8 +95,11 @@ public class PersonInfoActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "个人信息", 0);
+        loginBean = LoginBean.getInstance();
         if (loginBean.getHeadImg() != null && !"".equals(loginBean.getHeadImg())) {
-            glideImageLoader.displayByImgRes(this, loginBean.getHeadImg(), ivUserHead, R.drawable.my);
+            glideImageLoader.displayImage(this, loginBean.getHeadImg(), ivUserHead);
+        } else {
+            ivUserHead.setImageResource(R.drawable.my);
         }
         setViewData(tvUserCname, loginBean.getCname());
         setViewData(tvUserNickName, loginBean.getNickName());
@@ -147,9 +150,6 @@ public class PersonInfoActivity extends SjmBaseActivity {
                 break;
             case R.id.tv_student_score:
                 if (TextUtils.isEmpty(tvStudentScore.getText()) || noFilled.equals(tvStudentScore.getText())) {
-//                    intent.setClass(this, UpdateUserInfoActivity.class);
-//                    intent.putExtra(CODE_KEY, 4);
-//                    startActivityForResult(intent, 4);
                     showUpdateScoreDialog();
                 } else {
                     toast(editInfo);
@@ -466,24 +466,20 @@ public class PersonInfoActivity extends SjmBaseActivity {
         LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                LoginBean.getInstance()
-                        .setHeadImg(loginBean.getHeadImg())
-                        .save();
+                LoginBean.getInstance().saveLoginBean(loginBean);
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
-                LoginBean.getInstance()
-                        .setSubjectType(loginBean.getSubjectType())
-                        .save();
+                LoginBean.getInstance().saveLoginBean(loginBean);
                 mDialog.dismiss();
                 break;
             case YXXConstants.INVOKE_API_THREE_TIME:
-                LoginBean.getInstance().setAddress(yourChoicesName.get(0)).save();
+                LoginBean.getInstance().saveLoginBean(loginBean);
                 tvStudentSource.setText(yourChoicesName.get(0));
                 hideEditDialogProvince();
                 break;
             case YXXConstants.INVOKE_API_FORTH_TIME:
                 tvStudentScore.setText(loginBean.getScore());
-                LoginBean.getInstance().setScore(loginBean.getScore()).save();
+                LoginBean.getInstance().saveLoginBean(loginBean);
                 break;
         }
         hideProgress();
