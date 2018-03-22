@@ -57,7 +57,6 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     //轮播图
     compile 'com.youth.banner:banner:1.4.10'
-    //compile files('libs/fastjson-1.2.2.jar')
     //add greenDao library
     compile 'org.greenrobot:greendao:3.2.2'
     //视频播放器 //根据你的需求添加so文件

@@ -43,22 +43,16 @@
         android:layout_below="@id/ll_top_bar"
         android:background="@color/color353535" />
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/smart_rf_query_school"
+    <ListView
+        android:id="@+id/lv_query_school"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tv_line"
         android:background="@color/colorF0EFF3"
+        android:divider="@color/colorF0EFF3"
+        android:dividerHeight="@dimen/space_1_px"
         android:paddingTop="@dimen/space_12_dp">
 
-        <ListView
-            android:id="@+id/lv_query_school"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:divider="@color/colorF0EFF3"
-            android:dividerHeight="@dimen/space_1_px">
-
-        </ListView>
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+    </ListView>
 
 </RelativeLayout>

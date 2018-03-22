@@ -13,10 +13,9 @@ import com.gk.R;
 import com.gk.beans.MajorQueryBean;
 import com.gk.global.YXXConstants;
 import com.gk.mvp.presenter.MajorPresenter;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.tools.YxxUtils;
-import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,8 +30,6 @@ import butterknife.OnClick;
 public class LqRiskQueryMajorActivity extends SjmBaseActivity {
     @BindView(R.id.lv_query_school)
     ListView lvQuerySchool;
-    @BindView(R.id.smart_rf_query_school)
-    SmartRefreshLayout smartRfQuerySchool;
     @BindView(R.id.searchview)
     SearchView searchview;
 
@@ -44,6 +41,13 @@ public class LqRiskQueryMajorActivity extends SjmBaseActivity {
     private List<MajorQueryBean.DataBean> listQuery = new ArrayList<>();
     private MajorPresenter majorPresenter;
     private CommonAdapter<MajorQueryBean.DataBean> adapter;
+    private String[] majors = {
+            "工程造价", "制药工程", "经济学",
+            "机械设计制造及自动化", "数学与应用数学",
+            "计算机科学与技术", "通信工程", "哲学", "物理",
+            "会计学", "统计学", "工商管理", "汉语言文学", "对外汉语",
+            "航空航天工程"
+    };
 
     @Override
     public int getResouceId() {
@@ -52,50 +56,39 @@ public class LqRiskQueryMajorActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        initSmartRefreshLayout(smartRfQuerySchool, true);
-        showProgress();
         majorPresenter = new MajorPresenter(this);
-        majorPresenter.queryMajorByName("", 1);//默认查询的是本科 2 是专科
+        initQueryData();
         showSearch();
         setSearchViewText(searchview);
     }
 
     @Override
-    public void refresh() {
-        showProgress();
-        majorPresenter.queryMajorByName("", 1);//默认查询的是本科 2 是专科
-    }
-
-    @Override
     public <T> void fillWithData(T t, int order) {
-        switch (order) {
-            case YXXConstants.INVOKE_API_SECOND_TIME:
-                listQuery = (List<MajorQueryBean.DataBean>) t;
-                initQueryData();
-                break;
-        }
+        listQuery = (List<MajorQueryBean.DataBean>) t;
+        adapter.setItems(listQuery);
     }
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
         toast(YXXConstants.ERROR_INFO);
-        hideProgress();
-        stopRefreshLayout();
     }
 
     /**
      * 以下为搜索部分
      */
     private void initQueryData() {
-        if (null == listQuery) {
-            return;
+        for (int i = 0; i < majors.length; i++) {
+            MajorQueryBean.DataBean dataBean = new MajorQueryBean.DataBean();
+            dataBean.setMajorName(majors[i]);
+            listQuery.add(dataBean);
         }
-        lvQuerySchool.setAdapter(adapter = new CommonAdapter<MajorQueryBean.DataBean>(this, R.layout.professional_query_item, listQuery) {
+        adapter = new CommonAdapter<MajorQueryBean.DataBean>(this, listQuery, R.layout.professional_query_item) {
             @Override
-            protected void convert(ViewHolder viewHolder, MajorQueryBean.DataBean item, int position) {
+            public void convert(ViewHolder viewHolder, MajorQueryBean.DataBean item) {
                 viewHolder.setText(R.id.tv_zy_name, item.getMajorName());
             }
-        });
+        };
+        lvQuerySchool.setAdapter(adapter);
         lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -111,8 +104,6 @@ public class LqRiskQueryMajorActivity extends SjmBaseActivity {
     private void showSearch() {
         searchview.setSubmitButtonEnabled(true);
         searchview.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            private String TAG = getClass().getSimpleName();
-
             @Override
             public boolean onQueryTextSubmit(String s) {
                 majorPresenter.queryMajorByName(YxxUtils.URLEncode(s), 1);

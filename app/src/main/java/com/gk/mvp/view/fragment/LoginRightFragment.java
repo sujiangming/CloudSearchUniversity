@@ -180,7 +180,7 @@ public class LoginRightFragment extends SjmBaseFragment {
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
                 LoginBean.getInstance().saveLoginBean(loginBean);
-                LoginBean.getInstance().setPassword(password).save();
+                //LoginBean.getInstance().setPassword(password).save();
                 getAdsInfo();
                 break;
             case YXXConstants.INVOKE_API_THREE_TIME:

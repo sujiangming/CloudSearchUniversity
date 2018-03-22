@@ -178,7 +178,7 @@ public interface IService {
      * @return
      */
     @FormUrlEncoded
-    @POST(" app/api/major/getMajorListByName")
+    @POST("app/api/major/getMajorListByName")
     Call<ResponseBody> getMajorListByName(@Field("data") String data);
 
     /**

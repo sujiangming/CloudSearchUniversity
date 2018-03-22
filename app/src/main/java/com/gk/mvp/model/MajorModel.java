@@ -1,7 +1,5 @@
 package com.gk.mvp.model;
 
-import android.util.Log;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.beans.MajorBean;
@@ -28,7 +26,6 @@ import retrofit2.Response;
 public class MajorModel {
 
     private MajorBean majorBean;
-    private String errorMsg;
     private MajorQueryBean majorQueryBean;
     private IPresenterCallback iPresenterCallback;
 
@@ -80,7 +77,7 @@ public class MajorModel {
         iPresenterCallback.httpRequestSuccess(listList, 1);
     }
 
-    public void httpQueryRequest(String key, int type, final IPresenterCallback iPresenterCallback) {
+    public void queryMajorByName(String key, int type, final IPresenterCallback iPresenterCallback) {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("majorName", key);
         jsonObject.put("type", "");
@@ -90,7 +87,6 @@ public class MajorModel {
                 if (response.isSuccessful()) {
                     try {
                         String body = response.body().string();
-                        Log.e("body", body);
                         majorQueryBean = JSON.parseObject(body, MajorQueryBean.class);
                         iPresenterCallback.httpRequestSuccess(majorQueryBean.getData(), 2);
                     } catch (IOException e) {

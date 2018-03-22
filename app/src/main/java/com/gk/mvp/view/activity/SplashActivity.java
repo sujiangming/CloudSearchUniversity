@@ -8,16 +8,15 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
+import com.gk.beans.LocalVersionBean;
 import com.gk.beans.LoginBean;
-import com.gk.beans.SaltBean;
-import com.gk.beans.VersionBean;
 import com.gk.beans.VersionResultBean;
 import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
-import com.gk.tools.MD5Util;
+import com.gk.tools.AppUpdateUtils;
 import com.gk.tools.PackageUtils;
 
 import java.util.List;
@@ -36,7 +35,7 @@ public class SplashActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setStatusBarTransparent();
-        checkVersion();
+        goWinByVersion();
     }
 
     private String userName;
@@ -49,18 +48,25 @@ public class SplashActivity extends SjmBaseActivity {
             return;
         }
         userName = LoginBean.getInstance().getUsername();
-        password = LoginBean.getInstance().getPassword();
-        if (TextUtils.isEmpty(userName) || TextUtils.isEmpty(password)) {
+        if (TextUtils.isEmpty(userName)) {
             openNewActivity(LoginActivity.class);
             return;
         }
+
+        password = LoginBean.getInstance().getPassword();
+        if (TextUtils.isEmpty(password)) {
+            openNewActivity(LoginActivity.class);
+            return;
+        }
+
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", userName);
+        jsonObject.put("password", password);
         PresenterManager.getInstance()
                 .setmContext(this)
                 .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getSalt(jsonObject.toJSONString()))
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).login(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
@@ -91,17 +97,6 @@ public class SplashActivity extends SjmBaseActivity {
         }
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                SaltBean saltBean = JSON.parseObject(commonBean.getData().toString(), SaltBean.class);
-                String pwd = userName + saltBean.getSalt() + password;// + password;
-                JSONObject jsonObject = new JSONObject();
-                jsonObject.put("username", userName);
-                jsonObject.put("password", MD5Util.encrypt(pwd));
-                PresenterManager.getInstance()
-                        .setmIView(this)
-                        .setCall(RetrofitUtil.getInstance().createReq(IService.class).login(jsonObject.toJSONString()))
-                        .request(YXXConstants.INVOKE_API_SECOND_TIME);
-                break;
-            case YXXConstants.INVOKE_API_SECOND_TIME:
                 LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
                 LoginBean.getInstance().saveLoginBean(loginBean);
                 LoginBean.getInstance().setPassword(password).save();
@@ -110,15 +105,12 @@ public class SplashActivity extends SjmBaseActivity {
             case YXXConstants.INVOKE_API_THREE_TIME:
                 List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean.getData().toString(), AdsBean.MDataBean.class);
                 AdsBean.getInstance().saveAdsBean(mDataBeans);
-                openNewActivity(MainActivity.class);
+                checkVersion();
                 break;
             case YXXConstants.INVOKE_API_FORTH_TIME:
                 VersionResultBean versionResultBean = JSON.parseObject(commonBean.getData().toString(), VersionResultBean.class);
-                if (isNewVersion(versionResultBean)) {//有更新
-                    openNewActivity(NewFeatureActivity.class);
-                } else {
-                    autoLogin();
-                }
+                AppUpdateUtils.updateVersion(versionResultBean);//有更新
+                openNewActivity(MainActivity.class);
                 break;
         }
     }
@@ -129,42 +121,28 @@ public class SplashActivity extends SjmBaseActivity {
         hideProgress();
     }
 
-    private boolean isNewVersion(VersionResultBean versionResultBean) {
-        boolean isNew = false;
-        String newVersion = versionResultBean.getVersion();
-        String oldVersion = PackageUtils.getVersionName(this);
-        String[] oldVersionArray = oldVersion.split("\\.");
-        String[] newVersionArray = newVersion.split("\\.");
-
-        if (oldVersionArray.length >= newVersionArray.length) {
-            for (int i = 0; i < newVersionArray.length; i++) {
-                int oldIndex = Integer.valueOf(oldVersionArray[i]);
-                int newIndex = Integer.valueOf(newVersionArray[i]);
-                if (newIndex > oldIndex) {//如果有更新版本，则更新本地库
-                    updateVersion(versionResultBean);
-                    isNew = true;
-                }
-            }
+    private void goWinByVersion() {
+        if (isNewVersion()) {
+            openNewActivity(NewFeatureActivity.class);
         } else {
-            for (int i = 0; i < oldVersionArray.length; i++) {
-                int oldIndex = Integer.valueOf(oldVersionArray[i]);
-                int newIndex = Integer.valueOf(newVersionArray[i]);
-                if (newIndex > oldIndex) {//如果有更新版本，则更新本地库
-                    updateVersion(versionResultBean);
-                    isNew = true;
-                }
-            }
+            autoLogin();
         }
-
-        return isNew;
     }
 
-    public void updateVersion(VersionResultBean versionResultBean) {
-        VersionBean versionBean = new VersionBean();
-        versionBean.setVersionCode(versionResultBean.getVersion());
-        versionBean.setDownUrl(versionResultBean.getDownUrl());
-        versionBean.setPublishTime(versionResultBean.getPublishTime());
-        versionBean.setUpdateContent(versionResultBean.getUpdateContent());
-        YXXApplication.getDaoSession().getVersionBeanDao().insertOrReplace(versionBean);
+    private boolean isNewVersion() {
+        LocalVersionBean localVersionBean = YXXApplication.getDaoSession().getLocalVersionBeanDao().queryBuilder().unique();
+        String currentVersion = PackageUtils.getVersionName(this);
+        if (null == localVersionBean || TextUtils.isEmpty(localVersionBean.getVersionName())) {
+            localVersionBean = new LocalVersionBean();
+            localVersionBean.setVersionName(currentVersion);
+            YXXApplication.getDaoSession().getLocalVersionBeanDao().insertOrReplace(localVersionBean);
+            return true;
+        }
+        if (!currentVersion.equals(localVersionBean.getVersionName())) {
+            localVersionBean.setVersionName(currentVersion);
+            YXXApplication.getDaoSession().getLocalVersionBeanDao().insertOrReplace(localVersionBean);
+            return true;
+        }
+        return false;
     }
 }

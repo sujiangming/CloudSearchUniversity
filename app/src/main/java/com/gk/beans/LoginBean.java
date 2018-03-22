@@ -158,6 +158,7 @@ public class LoginBean implements Serializable {
         this.setSubjectType(loginBean.getSubjectType());
         this.setType(loginBean.getType());
         this.setUsername(loginBean.getUsername());
+        this.setPassword(loginBean.getPassword());
         this.setVipLevel(loginBean.getVipLevel());
         this.setWeixin(loginBean.getWeixin());
     }
@@ -202,6 +203,7 @@ public class LoginBean implements Serializable {
         this.setSubjectType(0);
         this.setType(empty);
         this.setUsername(empty);
+        this.setPassword(empty);
         this.setVipLevel(0);
         this.setWeixin(empty);
         this.setIsHeartTest(empty);

@@ -14,7 +14,6 @@ import java.util.List;
 public class MajorPresenter<T> implements IPresenterCallback<T> {
     private IView iView;
     private MajorModel majorModel;
-    public MajorBean majorBean;
 
     public MajorPresenter(IView view) {
         this.iView = view;
@@ -26,7 +25,8 @@ public class MajorPresenter<T> implements IPresenterCallback<T> {
     }
 
     public void queryMajorByName(String name, int type) {
-        majorModel.httpQueryRequest(name, type, this);
+        iView.showProgress();
+        majorModel.queryMajorByName(name, type, this);
     }
 
     @Override

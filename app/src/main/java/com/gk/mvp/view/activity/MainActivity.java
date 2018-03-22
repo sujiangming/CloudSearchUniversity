@@ -19,11 +19,18 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
+import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
 import com.gk.beans.VersionBean;
+import com.gk.beans.VersionResultBean;
 import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
+import com.gk.http.IService;
+import com.gk.http.RetrofitUtil;
+import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.fragment.HomeFragment;
 import com.gk.mvp.view.fragment.LectureFragment;
 import com.gk.mvp.view.fragment.LiveVideoFragment;
@@ -140,17 +147,52 @@ public class MainActivity extends SjmBaseActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                upgradeVersion();
+                checkHasNewVersion();
             }
         }, 2000);
 
     }
 
-    public void upgradeVersion() {
+    private void checkHasNewVersion() {
         versionBean = YXXApplication.getDaoSession().getVersionBeanDao().queryBuilder().unique();
         if (versionBean == null) {
+            checkVersion();
             return;
         }
+        upgradeVersion();
+    }
+
+    private void checkVersion() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("version", PackageUtils.getVersionName(this));
+        PresenterManager.getInstance()
+                .setmContext(this)
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).checkVersion(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+    }
+
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        CommonBean commonBean = (CommonBean) t;
+        if (1 != commonBean.getStatus()) {
+            return;
+        }
+        if (null == commonBean.getData()) {
+            return;
+        }
+        VersionResultBean versionResultBean = JSON.parseObject(commonBean.getData().toString(), VersionResultBean.class);
+        AppUpdateUtils.updateVersion(versionResultBean);//有更新
+        versionBean = YXXApplication.getDaoSession().getVersionBeanDao().queryBuilder().unique();
+        upgradeVersion();
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+
+    }
+
+    public void upgradeVersion() {
         String url = versionBean.getDownUrl();
         AppVersion appVersion = new AppVersion();
         appVersion.setContent(versionBean.getUpdateContent());

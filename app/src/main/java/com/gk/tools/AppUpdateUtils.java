@@ -14,6 +14,9 @@ import android.os.Environment;
 import android.widget.RemoteViews;
 
 import com.gk.R;
+import com.gk.beans.VersionBean;
+import com.gk.beans.VersionResultBean;
+import com.gk.global.YXXApplication;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -161,9 +164,8 @@ public class AppUpdateUtils {
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog,
                                                 int whichButton) {
-                                // 点击"取消"按钮之后退出程序
                                 dialog.dismiss();
-                                //AppManager.getAppManager().AppExit(mContext);
+                                cancelUpDate();
                             }
                         });
         // 创建
@@ -206,7 +208,7 @@ public class AppUpdateUtils {
     /**
      * 取消更新
      */
-    public void cancelUpDate() {
+    public static void cancelUpDate() {
         if (mDownloadFileAsyncTask != null) {
             if (!mDownloadFileAsyncTask.isCancelled()) {
                 mDownloadFileAsyncTask.cancel(true);
@@ -405,4 +407,44 @@ public class AppUpdateUtils {
         mProgressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
         mProgressDialog.show();
     }
+
+    public static void updateVersion(VersionResultBean versionResultBean) {
+        VersionBean versionBean = new VersionBean();
+        versionBean.setVersionCode(versionResultBean.getVersion());
+        versionBean.setDownUrl(versionResultBean.getDownUrl());
+        versionBean.setPublishTime(versionResultBean.getPublishTime());
+        versionBean.setUpdateContent(versionResultBean.getUpdateContent());
+        YXXApplication.getDaoSession().getVersionBeanDao().insertOrReplace(versionBean);
+    }
+
+    public static boolean isNewVersion(Context context, VersionResultBean versionResultBean) {
+        boolean isNew = false;
+        String newVersion = versionResultBean.getVersion();
+        String oldVersion = PackageUtils.getVersionName(context);
+        String[] oldVersionArray = oldVersion.split("\\.");
+        String[] newVersionArray = newVersion.split("\\.");
+
+        if (oldVersionArray.length >= newVersionArray.length) {
+            for (int i = 0; i < newVersionArray.length; i++) {
+                int oldIndex = Integer.valueOf(oldVersionArray[i]);
+                int newIndex = Integer.valueOf(newVersionArray[i]);
+                if (newIndex > oldIndex) {//如果有更新版本，则更新本地库
+                    updateVersion(versionResultBean);
+                    isNew = true;
+                }
+            }
+        } else {
+            for (int i = 0; i < oldVersionArray.length; i++) {
+                int oldIndex = Integer.valueOf(oldVersionArray[i]);
+                int newIndex = Integer.valueOf(newVersionArray[i]);
+                if (newIndex > oldIndex) {//如果有更新版本，则更新本地库
+                    updateVersion(versionResultBean);
+                    isNew = true;
+                }
+            }
+        }
+
+        return isNew;
+    }
+
 }
