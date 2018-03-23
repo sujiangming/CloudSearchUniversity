@@ -1,6 +1,7 @@
 package com.gk.mvp.view.adpater;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -11,6 +12,7 @@ import com.gk.beans.QuerySchoolBean;
 import com.gk.beans.UniversityAreaEnum;
 import com.gk.beans.UniversityTypeEnum;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.YxxUtils;
 
 /**
  * Created by JDRY-SJM on 2018/1/16.
@@ -68,14 +70,18 @@ public class QuerySchoolAdapter extends JdryBaseAdapter {
         }
 
         glideImageLoader.displayByImgRes(mContext, dataBean.getSchoolLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);
-        viewHolder.tv_school_name.setText(dataBean.getSchoolName());
-        viewHolder.tv_school_type.setText(getPici(dataBean.getSchoolBatch()));
-        if (null != dataBean.getSchoolCategory() && !"".equals(dataBean.getSchoolCategory())) {
+
+        YxxUtils.setViewData(viewHolder.tv_school_name,dataBean.getSchoolName());
+        YxxUtils.setViewData(viewHolder.tv_school_type,getPici(dataBean.getSchoolBatch()));
+
+        if (!TextUtils.isEmpty(dataBean.getSchoolCategory())) {
             int category = Integer.valueOf(dataBean.getSchoolCategory());
             viewHolder.tv_school_level.setText(UniversityTypeEnum.getName(category));
         }
-        viewHolder.tv_school_address.setText(UniversityAreaEnum.getName(Integer.valueOf(dataBean.getSchoolArea())));
 
+        if(!TextUtils.isEmpty(dataBean.getSchoolArea())){
+            viewHolder.tv_school_address.setText(UniversityAreaEnum.getName(Integer.valueOf(dataBean.getSchoolArea())));
+        }
 
         return convertView;
     }

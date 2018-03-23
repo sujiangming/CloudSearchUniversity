@@ -1,6 +1,7 @@
 package com.gk.mvp.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.adpater.SchoolZSPlanAdapter;
+import com.gk.tools.AppManager;
 import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -47,8 +49,8 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         closeActivity(this);
     }
 
-    private List<SchoolZSBean> schoolBeanList;
-    private JSONObject jsonObject;
+    private List<SchoolZSBean> schoolBeanList = new ArrayList<>();
+    private JSONObject jsonObject = new JSONObject();
     private int mPage = 0;
     private boolean isLoadMore = false;
     private String searchKey = "";
@@ -62,12 +64,21 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         initSmartRefreshLayout(smartRfQuerySchool, true);
-        schoolBeanList = new ArrayList<>();
-        jsonObject = new JSONObject();
         initAdapter();
         invoke();
         showSearch();
         setSearchViewText(searchView);
+
+        AppManager.printAllActivity();
+
+        YxxUtils.printAllRunningActivity(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {//使用了launchMode:SingleTask 栈内复用模式
+        super.onNewIntent(intent);
+        setIntent(intent);
+        invoke();
     }
 
     private void initAdapter() {

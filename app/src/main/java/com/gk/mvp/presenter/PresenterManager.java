@@ -1,6 +1,7 @@
 package com.gk.mvp.presenter;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.gk.beans.CommonBean;
 import com.gk.mvp.model.ModelManager;
@@ -26,7 +27,7 @@ public class PresenterManager {
     private Call mCall;
     private int mOrder = 1;//默认每次只是调用一次接口
     private boolean mIsShow = false;
-    private String errorInfo = "No Data Return";
+    private String errorInfo = "请求失败";
 
     private PresenterManager() {
 
@@ -100,16 +101,23 @@ public class PresenterManager {
         ModelManager.getInstance(mCall, null).getServerData(new Callback<CommonBean>() {
             @Override
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                if (response.isSuccessful()) {
-                    CommonBean commonBean = response.body();
-                    if (null == commonBean) {
-                        mIView.fillWithNoData(response.message(), mOrder);
-                        return;
-                    }
-                    render(commonBean);
-                } else {
-                    mIView.fillWithNoData(response.message(), mOrder);
+                if (!response.isSuccessful()) {
+                    mIView.fillWithNoData(errorInfo, mOrder);
+                    return;
                 }
+                if (null == response.body()) {
+                    mIView.fillWithNoData(errorInfo, mOrder);
+                    return;
+                }
+
+                CommonBean commonBean = response.body();
+
+                if (1 != commonBean.getStatus()) {
+                    mIView.fillWithNoData(errorInfo, mOrder);
+                    return;
+                }
+
+                render(commonBean);
             }
 
             @Override
@@ -122,15 +130,7 @@ public class PresenterManager {
     }
 
     private void render(CommonBean commonBean) {
-        if (commonBean == null) {
-            mIView.fillWithNoData(errorInfo, mOrder);
-            return;
-        }
-        if (commonBean.getStatus() == 1) {
-            mIView.fillWithData(commonBean, mOrder);
-        } else {
-            mIView.fillWithNoData(commonBean.getMessage(), mOrder);
-        }
+        mIView.fillWithData(commonBean, mOrder);
     }
 
     /**
@@ -145,16 +145,24 @@ public class PresenterManager {
         ModelManager.getInstance(mCall, null).getServerData(new Callback<CommonBean>() {
             @Override
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                if (response.isSuccessful()) {
-                    CommonBean commonBean = response.body();
-                    if (null == commonBean) {
-                        mIView.fillWithNoData(response.message(), invokeFlag);
-                        return;
-                    }
-                    render(commonBean, invokeFlag);
-                } else {
-                    mIView.fillWithNoData(response.message(), invokeFlag);
+
+                if (!response.isSuccessful()) {
+                    mIView.fillWithNoData(errorInfo, invokeFlag);
+                    return;
                 }
+                if (null == response.body()) {
+                    mIView.fillWithNoData(errorInfo, invokeFlag);
+                    return;
+                }
+
+                CommonBean commonBean = response.body();
+
+                if (1 != commonBean.getStatus()) {
+                    mIView.fillWithNoData(errorInfo, invokeFlag);
+                    return;
+                }
+
+                render(commonBean, invokeFlag);
             }
 
             @Override
@@ -174,15 +182,7 @@ public class PresenterManager {
      * @param flag
      */
     private void render(CommonBean commonBean, int flag) {
-        if (commonBean == null) {
-            mIView.fillWithNoData(errorInfo, flag);
-            return;
-        }
-        if (commonBean.getStatus() == 1) {
-            mIView.fillWithData(commonBean, flag);
-        } else {
-            mIView.fillWithNoData(commonBean.getMessage(), flag);
-        }
+        mIView.fillWithData(commonBean, flag);
     }
 
     public PresenterManager requestForResponseBody(int flag) {
@@ -211,6 +211,10 @@ public class PresenterManager {
         }
         try {
             String data = responseBody.string();
+            if (TextUtils.isEmpty(data)) {
+                mIView.fillWithNoData(errorInfo, flag);
+                return;
+            }
             mIView.fillWithData(data, flag);
         } catch (IOException e) {
             e.printStackTrace();

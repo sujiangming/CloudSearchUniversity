@@ -56,12 +56,12 @@ public class LoginActivity extends SjmBaseActivity {
         initData();
         pager.setAdapter(new LoginFragmentPagerAdapter(getSupportFragmentManager(), list, mEnterFlag));
         tabLayout.setupWithViewPager(pager);
-        tabLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                setIndicator(tabLayout, 40, 40);
-            }
-        });
+//        tabLayout.post(new Runnable() {
+//            @Override
+//            public void run() {
+//                setIndicator(tabLayout, 40, 40);
+//            }
+//        });
     }
 
     private void initTopBar() {

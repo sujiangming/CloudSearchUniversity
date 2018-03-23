@@ -1,6 +1,7 @@
 package com.gk.mvp.view.adpater;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -9,6 +10,7 @@ import android.widget.TextView;
 import com.gk.R;
 import com.gk.beans.SchoolZZZsBean;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.YxxUtils;
 
 /**
  * Created by JDRY-SJM on 2018/1/16.
@@ -66,13 +68,18 @@ public class SchoolZZZSAdapter extends JdryBaseAdapter {
         }
 
         glideImageLoader.displayByImgRes(mContext, dataBean.getUniversityLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);
-        viewHolder.tv_school_name.setText(dataBean.getUniversityName());
+
+        YxxUtils.setViewData(viewHolder.tv_school_name, dataBean.getUniversityName());
+
         viewHolder.tv_school_type.setText("一批");
+
         if (null != dataBean.getUniversityCategory() && !"".equals(dataBean.getUniversityCategory())) {
             viewHolder.tv_school_level.setText(dataBean.getUniversityCategory());
         }
-        viewHolder.tv_school_address.setText(dataBean.getUniversityCity());
 
+        if (!TextUtils.isEmpty(dataBean.getUniversityCity())) {
+            viewHolder.tv_school_address.setText(dataBean.getUniversityCity());
+        }
 
         return convertView;
     }

@@ -40,6 +40,7 @@ import com.gk.tools.AppUpdateUtils;
 import com.gk.tools.AppVersion;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.PackageUtils;
+import com.gk.tools.YxxUtils;
 
 import java.util.ArrayList;
 
@@ -150,7 +151,7 @@ public class MainActivity extends SjmBaseActivity {
                 checkHasNewVersion();
             }
         }, 2000);
-
+        YxxUtils.printAllRunningActivity(this);
     }
 
     private void checkHasNewVersion() {

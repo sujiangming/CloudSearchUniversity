@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.beans.SchoolZSBean;
+import com.gk.tools.YxxUtils;
 
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class SchoolZSPlanAdapter extends JdryBaseAdapter {
 
         SchoolZSBean item = (SchoolZSBean) list.get(position);
 
-        viewHolder.tv_school_name.setText(item.getSchoolName());
+        YxxUtils.setViewData(viewHolder.tv_school_name, item.getSchoolName());
 
         List<SchoolZSBean.RecruitPlan1Bean> recruitPlanList = item.getRecruitPlan1();
         if (null != recruitPlanList && recruitPlanList.size() > 0) {
@@ -53,16 +54,16 @@ public class SchoolZSPlanAdapter extends JdryBaseAdapter {
                 SchoolZSBean.RecruitPlan1Bean recruitPlan1Bean = recruitPlanList.get(i);
                 switch (i) {
                     case 0:
-                        viewHolder.tv_year_1.setText(recruitPlan1Bean.getYearStr());
-                        viewHolder.tv_wk_year_1_num.setText(recruitPlan1Bean.getPlanNum());
+                        YxxUtils.setViewData(viewHolder.tv_year_1, recruitPlan1Bean.getYearStr());
+                        YxxUtils.setViewData(viewHolder.tv_wk_year_1_num, recruitPlan1Bean.getPlanNum());
                         break;
                     case 1:
-                        viewHolder.tv_year_2.setText(recruitPlan1Bean.getYearStr());
-                        viewHolder.tv_wk_year_2_num.setText(recruitPlan1Bean.getPlanNum());
+                        YxxUtils.setViewData(viewHolder.tv_year_2, recruitPlan1Bean.getYearStr());
+                        YxxUtils.setViewData(viewHolder.tv_wk_year_2_num, recruitPlan1Bean.getPlanNum());
                         break;
                     case 2:
-                        viewHolder.tv_year_3.setText(recruitPlan1Bean.getYearStr());
-                        viewHolder.tv_wk_year_3_num.setText(recruitPlan1Bean.getPlanNum());
+                        YxxUtils.setViewData(viewHolder.tv_year_3, recruitPlan1Bean.getYearStr());
+                        YxxUtils.setViewData(viewHolder.tv_wk_year_3_num, recruitPlan1Bean.getPlanNum());
                         break;
                 }
             }
@@ -73,13 +74,13 @@ public class SchoolZSPlanAdapter extends JdryBaseAdapter {
                 SchoolZSBean.RecruitPlan2Bean recruitPlan2Bean = recruitPlan2BeanList.get(i);
                 switch (i) {
                     case 0:
-                        viewHolder.tv_lk_year_1_num.setText(recruitPlan2Bean.getPlanNum());
+                        YxxUtils.setViewData(viewHolder.tv_lk_year_1_num, recruitPlan2Bean.getPlanNum());
                         break;
                     case 1:
-                        viewHolder.tv_lk_year_2_num.setText(recruitPlan2Bean.getPlanNum());
+                        YxxUtils.setViewData(viewHolder.tv_lk_year_2_num, recruitPlan2Bean.getPlanNum());
                         break;
                     case 2:
-                        viewHolder.tv_lk_year_3_num.setText(recruitPlan2Bean.getPlanNum());
+                        YxxUtils.setViewData(viewHolder.tv_lk_year_3_num, recruitPlan2Bean.getPlanNum());
                         break;
                 }
             }

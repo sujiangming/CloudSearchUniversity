@@ -7,6 +7,7 @@ package com.gk.tools;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.Context;
+import android.util.Log;
 
 import java.util.Stack;
 
@@ -91,6 +92,17 @@ public class AppManager {
             }
         }
         activityStack.clear();
+    }
+
+    /**
+     * 结束所有Activity
+     */
+    public static void printAllActivity() {
+        for (int i = 0; i < activityStack.size(); i++) {
+            if (null != activityStack.get(i)) {
+                Log.d("activity_name:",activityStack.get(i).getClass().getName());
+            }
+        }
     }
 
     /**

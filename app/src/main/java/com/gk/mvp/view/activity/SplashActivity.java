@@ -117,7 +117,13 @@ public class SplashActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithNoData(T t, int order) {
-        openNewActivity(LoginActivity.class);
+        if (order == YXXConstants.INVOKE_API_THREE_TIME) {
+            openNewActivity(MainActivity.class);
+        } else if (order == YXXConstants.INVOKE_API_FORTH_TIME) {
+            openNewActivity(MainActivity.class);
+        } else {
+            openNewActivity(LoginActivity.class);
+        }
         hideProgress();
     }
 

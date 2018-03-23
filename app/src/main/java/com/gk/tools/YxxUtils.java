@@ -1,5 +1,6 @@
 package com.gk.tools;
 
+import android.app.ActivityManager;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -18,6 +19,8 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by JDRY-SJM on 2017/11/19.
@@ -111,8 +114,10 @@ public class YxxUtils {
     }
 
     public static void setViewData(TextView tv, String value) {
-        if (value != null && !"".equals(value)) {
+        if (!TextUtils.isEmpty(value)) {
             tv.setText(value);
+        } else {
+            tv.setText("");
         }
     }
 
@@ -185,5 +190,13 @@ public class YxxUtils {
         }
     }
 
-
+    public static void printAllRunningActivity(Context context) {
+        ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(30);
+        Iterator<ActivityManager.RunningTaskInfo> itInfo = tasks.iterator();
+        while (itInfo.hasNext()) {
+            ActivityManager.RunningTaskInfo info = itInfo.next();
+            Log.d("activity running:", "【id=" + info.baseActivity.getClass().hashCode() + "】," + info.baseActivity.getClassName());
+        }
+    }
 }
