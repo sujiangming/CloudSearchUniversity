@@ -90,9 +90,11 @@ public class QWActivity extends SjmBaseActivity {
         });
     }
 
+
+
     private void invoke() {
         jsonObject.put("page", mPage);
-        PresenterManager.getInstance()
+        new PresenterManager()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
                         .createReq(IService.class).getQuestionList(jsonObject.toJSONString()))

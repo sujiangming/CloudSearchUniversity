@@ -491,5 +491,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         stopTimer();
         stopHandler();
         roomPresenter.fansExitLiveRooms();
+        handler.removeCallbacksAndMessages(null);
+        handler = null;
     }
 }

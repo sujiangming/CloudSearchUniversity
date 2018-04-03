@@ -205,13 +205,12 @@ public class LectureFragment extends SjmBaseFragment {
         }
     }
 
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
+
     private void invoke(int page) {
         jsonObject.put("page", page);
         jsonObject.put("course", "");
-        PresenterManager.getInstance()
-                .setmContext(getContext())
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getMaterialsList(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).getMaterialsList(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_FORTH_TIME);
     }
 

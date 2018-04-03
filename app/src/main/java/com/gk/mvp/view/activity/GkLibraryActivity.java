@@ -194,12 +194,13 @@ public class GkLibraryActivity extends SjmBaseActivity {
         tvMnsjList = new TextView[]{tvMnsj1, tvMnsj2, tvMnsj3, tvMnsj4};
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void invoke(int page) {
         showProgress();
         jsonObject.put("page", page);
         jsonObject.put("course", "");
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getMaterialsList(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_FORTH_TIME);
     }
@@ -446,4 +447,5 @@ public class GkLibraryActivity extends SjmBaseActivity {
                 break;
         }
     }
+
 }

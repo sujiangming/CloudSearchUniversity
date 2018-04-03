@@ -41,6 +41,8 @@ public class SplashActivity extends SjmBaseActivity {
     private String userName;
     private String password;
 
+    private PresenterManager presenterManager= new PresenterManager().setmIView(this);
+
     private void autoLogin() {
         LoginBean loginBean = LoginBean.getInstance();
         if (loginBean == null) {
@@ -63,28 +65,19 @@ public class SplashActivity extends SjmBaseActivity {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", userName);
         jsonObject.put("password", password);
-        PresenterManager.getInstance()
-                .setmContext(this)
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).login(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).login(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
     private void getAdsInfo() {
-        PresenterManager.getInstance()
-                .setmContext(this)
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList())
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList())
                 .request(YXXConstants.INVOKE_API_THREE_TIME);
     }
 
     private void checkVersion() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("version", PackageUtils.getVersionName(this));
-        PresenterManager.getInstance()
-                .setmContext(this)
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).checkVersion(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).checkVersion(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_FORTH_TIME);
     }
 

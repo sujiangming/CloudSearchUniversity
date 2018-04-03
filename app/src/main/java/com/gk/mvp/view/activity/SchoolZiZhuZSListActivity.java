@@ -147,22 +147,20 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
         invoke();
     }
 
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
+
     private void invoke() {
         showProgress();
         jsonObject.put("page", mPage);
-        PresenterManager.getInstance()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance()
-                        .createReq(IService.class).getSelfRecruitUniversity(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance()
+                .createReq(IService.class).getSelfRecruitUniversity(jsonObject.toJSONString()))
                 .requestForResponseBody(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
     private void search(String selfUniversityName) {
         showProgress();
         jsonObject.put("selfUniversityName", selfUniversityName);
-        PresenterManager.getInstance()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance()
+        presenterManager.setCall(RetrofitUtil.getInstance()
                         .createReq(IService.class).getSelfRecruitUniversityLikeName(jsonObject.toJSONString()))
                 .requestForResponseBody(YXXConstants.INVOKE_API_SECOND_TIME);
     }

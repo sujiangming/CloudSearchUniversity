@@ -54,6 +54,7 @@ public class LoginRightFragment extends SjmBaseFragment {
     private String userName;
     private String password;
     private SaltBean saltBean;
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
 
     @Override
     public int getResourceId() {
@@ -135,10 +136,7 @@ public class LoginRightFragment extends SjmBaseFragment {
                 }
                 showProgress();
                 jsonObject.put("username", userName);
-                PresenterManager.getInstance()
-                        .setmContext(getContext())
-                        .setmIView(this)
-                        .setCall(RetrofitUtil.getInstance().createReq(IService.class).getSalt(jsonObject.toJSONString()))
+                presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).getSalt(jsonObject.toJSONString()))
                         .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
                 break;
             case R.id.tv_forget_pwd:
@@ -155,10 +153,7 @@ public class LoginRightFragment extends SjmBaseFragment {
 
     private void getAdsInfo() {
         showProgress();
-        PresenterManager.getInstance()
-                .setmContext(getContext())
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList())
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList())
                 .request(YXXConstants.INVOKE_API_THREE_TIME);
     }
 
@@ -172,9 +167,7 @@ public class LoginRightFragment extends SjmBaseFragment {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("username", userName);
                 jsonObject.put("password", MD5Util.encrypt(pwd));
-                PresenterManager.getInstance()
-                        .setmIView(this)
-                        .setCall(RetrofitUtil.getInstance().createReq(IService.class).login(jsonObject.toJSONString()))
+                presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).login(jsonObject.toJSONString()))
                         .request(YXXConstants.INVOKE_API_SECOND_TIME);
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:

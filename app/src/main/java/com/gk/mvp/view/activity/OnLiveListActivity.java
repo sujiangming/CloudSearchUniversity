@@ -57,10 +57,11 @@ public class OnLiveListActivity extends SjmBaseActivity {
         getVideoAdsList();
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void getVideoAdsList() {
         showProgress();
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .getVideoAdsList())
                 .request();

@@ -15,6 +15,8 @@ import com.gk.tools.AppManager;
 import com.gk.wxapi.Constant;
 import com.gk.wxapi.WXEntryActivity;
 import com.gk.wxapi.WXPayEntryActivity;
+import com.squareup.leakcanary.LeakCanary;
+import com.squareup.leakcanary.RefWatcher;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 
 import cn.finalteam.galleryfinal.CoreConfig;
@@ -34,6 +36,7 @@ public class YXXApplication extends Application {
     private static CoreConfig coreConfig;
     public static IWXAPI sApi;
     public static IWXAPI payApi;
+    public static RefWatcher refWatcher;
 
     @Override
     public void onCreate() {
@@ -41,6 +44,14 @@ public class YXXApplication extends Application {
         instance = this;
         sApi = WXEntryActivity.initWeiXin(this, Constant.WECHAT_APPID);
         payApi = WXPayEntryActivity.initWeiXinPay(this, Constant.WECHAT_APPID);
+        initLeakCanary();
+    }
+
+    private void initLeakCanary() {
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            return;
+        }
+        refWatcher = LeakCanary.install(this);
         setupGreenDao();
         initAppManager();
         initLoginBean();

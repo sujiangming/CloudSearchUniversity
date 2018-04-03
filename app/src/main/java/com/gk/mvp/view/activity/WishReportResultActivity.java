@@ -78,7 +78,7 @@ public class WishReportResultActivity extends SjmBaseActivity {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("reportType", type);
-        PresenterManager.getInstance()
+        new PresenterManager()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .generateWishReport(jsonObject.toJSONString()))

@@ -39,6 +39,7 @@ public class AccountSaveActivity extends SjmBaseActivity {
 
     private String userName = LoginBean.getInstance().getUsername();
     private String newPwd1;
+    private PresenterManager presenterManager = new PresenterManager();
 
     @Override
     public int getResouceId() {
@@ -85,9 +86,7 @@ public class AccountSaveActivity extends SjmBaseActivity {
                 jsonObject.put("username", userName);
                 jsonObject.put("oldPassword", oldPwds);
                 jsonObject.put("newPassword", newPwds);
-                PresenterManager.getInstance()
-                        .setmContext(this)
-                        .setmIView(this)
+                presenterManager.setmIView(this)
                         .setCall(RetrofitUtil.getInstance().createReq(IService.class).updatePassword(jsonObject.toJSONString()))
                         .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
                 break;
@@ -103,9 +102,7 @@ public class AccountSaveActivity extends SjmBaseActivity {
                 JSONObject jsonObject = new JSONObject();
                 jsonObject.put("username", LoginBean.getInstance().getUsername());
                 showProgress();
-                PresenterManager.getInstance()
-                        .setmContext(this)
-                        .setmIView(this)
+                presenterManager.setmIView(this)
                         .setCall(RetrofitUtil.getInstance().createReq(IService.class).confirmUpdatePassword(jsonObject.toJSONString()))
                         .request(YXXConstants.INVOKE_API_SECOND_TIME);
                 break;

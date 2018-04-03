@@ -464,13 +464,14 @@ public class LqRiskActivity extends SjmBaseActivity {
         YXXApplication.payApi.sendReq(req);
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void submitOrder(int level) {
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("vipLevel", level);
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .addUserOrder(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_THREE_TIME);
@@ -593,5 +594,12 @@ public class LqRiskActivity extends SjmBaseActivity {
                         toast("支付失败，请重新支付！");
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler = null;
     }
 }

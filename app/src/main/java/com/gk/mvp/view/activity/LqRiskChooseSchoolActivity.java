@@ -103,6 +103,8 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
         });
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
         showProgress();
         jsonObject.put("page", mPage);
@@ -111,8 +113,7 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
         jsonObject.put("schoolType", schoolType);//学校类型（1本科、2专业）
         jsonObject.put("tese", tese);//特色
         jsonObject.put("schoolName", schoolName);
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
                         .createReq(IService.class).getUniversityList(jsonObject.toJSONString()))
                 .requestForResponseBody(YXXConstants.INVOKE_API_DEFAULT_TIME);

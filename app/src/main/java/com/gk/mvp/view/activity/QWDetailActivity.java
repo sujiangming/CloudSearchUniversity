@@ -132,29 +132,25 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
         });
     }
 
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
+
     private void getAnswerList() {
         showProgress();
-        PresenterManager.getInstance()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance()
-                        .createReq(IService.class).getAnswerList(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance()
+                .createReq(IService.class).getAnswerList(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
     private void addViewTimes() {
-        PresenterManager.getInstance()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance()
-                        .createReq(IService.class).addViewTimes(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance()
+                .createReq(IService.class).addViewTimes(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_THREE_TIME);
     }
 
     private void addAttentionTimes() {
         showProgress();
-        PresenterManager.getInstance()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance()
-                        .createReq(IService.class).addAttentionTimes(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance()
+                .createReq(IService.class).addAttentionTimes(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_FORTH_TIME);
     }
 
@@ -253,9 +249,7 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
                 addAnsFlag = 1;
                 jsonObject.put("username", LoginBean.getInstance().getUsername());
                 jsonObject.put("ansContent", YxxUtils.URLEncode(etComment.getText().toString()));
-                PresenterManager.getInstance()
-                        .setmIView(this)
-                        .setCall(RetrofitUtil.getInstance()
+               presenterManager.setCall(RetrofitUtil.getInstance()
                                 .createReq(IService.class).addAnswer(jsonObject.toJSONString()))
                         .request(YXXConstants.INVOKE_API_SECOND_TIME);
                 break;

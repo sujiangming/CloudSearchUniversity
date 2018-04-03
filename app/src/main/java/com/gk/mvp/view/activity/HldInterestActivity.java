@@ -118,12 +118,13 @@ public class HldInterestActivity extends SjmBaseActivity {
                 });
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void httpReqest() {
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .getHldTestReportByUser(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
@@ -275,8 +276,7 @@ public class HldInterestActivity extends SjmBaseActivity {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("vipLevel", level);
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .addUserOrder(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_SECOND_TIME);
@@ -408,5 +408,12 @@ public class HldInterestActivity extends SjmBaseActivity {
 
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler = null;
     }
 }

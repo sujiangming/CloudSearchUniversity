@@ -136,14 +136,15 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         tv_line_2.setVisibility(View.GONE);
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void evaluateReport() { //按高校生成报告
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("score", LoginBean.getInstance().getScore());
         jsonObject.put("schoolName", YxxUtils.URLEncode(valueDesc));
         jsonObject.put("username", LoginBean.getInstance().getUsername());
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .evaluateReport(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
@@ -156,7 +157,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         jsonObject.put("schoolName", YxxUtils.URLEncode(schoolName));
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("majorName", (valueDesc == null ? "" : YxxUtils.URLEncode(valueDesc)));
-        PresenterManager.getInstance()
+        presenterManager
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .evaluateMajorReport(jsonObject.toJSONString()))

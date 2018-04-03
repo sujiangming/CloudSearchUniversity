@@ -7,7 +7,6 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -40,7 +39,6 @@ import com.gk.tools.AppUpdateUtils;
 import com.gk.tools.AppVersion;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.PackageUtils;
-import com.gk.tools.YxxUtils;
 
 import java.util.ArrayList;
 
@@ -139,19 +137,8 @@ public class MainActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
+        checkHasNewVersion();
         initView();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                checkHasNewVersion();
-            }
-        }, 2000);
-        YxxUtils.printAllRunningActivity(this);
     }
 
     private void checkHasNewVersion() {
@@ -163,11 +150,12 @@ public class MainActivity extends SjmBaseActivity {
         upgradeVersion();
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void checkVersion() {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("version", PackageUtils.getVersionName(this));
-        PresenterManager.getInstance()
-                .setmContext(this)
+        presenterManager
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).checkVersion(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
@@ -202,7 +190,7 @@ public class MainActivity extends SjmBaseActivity {
         appVersion.setVersionName(versionBean.getVersionCode());
         String sha1 = PackageUtils.getSHa1(this);
         appVersion.setSha1(sha1 == null ? null : sha1);
-        AppUpdateUtils.init(this, appVersion, false, true);
+        AppUpdateUtils.init(getApplicationContext(), appVersion, false, true);
         AppUpdateUtils.upDate();
     }
 
@@ -213,7 +201,8 @@ public class MainActivity extends SjmBaseActivity {
 
     private void showMainView() {
         showWelcome();
-        new LongTimeTask().execute("welcome");
+        asyncTask = new LongTimeTask();
+        asyncTask.execute("welcome");
     }
 
     @Override
@@ -266,6 +255,16 @@ public class MainActivity extends SjmBaseActivity {
             return params[0];
         }
     }
+
+    private LongTimeTask asyncTask;
+
+    private void destroyAsyncTask() {
+        if (asyncTask != null && !asyncTask.isCancelled()) {
+            asyncTask.cancel(true);
+        }
+        asyncTask = null;
+    }
+
 
     private void initFragments() {
         fragmentManager = getSupportFragmentManager();
@@ -372,6 +371,12 @@ public class MainActivity extends SjmBaseActivity {
         glideImageLoader.displayImage(this, LoginBean.getInstance().getHeadImg(), ivUserHeader);
         String userCname = LoginBean.getInstance().getNickName() == null ? "未填写" : LoginBean.getInstance().getNickName();
         tvWelcome.setText(userCname + ",欢迎回来！");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroyAsyncTask();
     }
 
     private String permissionInfo;

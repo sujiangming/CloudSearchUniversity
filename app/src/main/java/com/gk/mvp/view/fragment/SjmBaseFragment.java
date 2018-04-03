@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.gk.global.YXXApplication;
 import com.gk.mvp.view.IView;
 import com.gk.mvp.view.custom.SjmProgressBar;
 import com.gk.tools.AppManager;
@@ -19,6 +20,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.squareup.leakcanary.RefWatcher;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -65,6 +67,9 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        //leakCanary检测内存泄漏的方法
+        RefWatcher refWatcher = YXXApplication.refWatcher;
+        refWatcher.watch(this);
     }
 
     public void openNewActivity(Class<?> cls, Bundle bundle) {

@@ -106,11 +106,13 @@ public class MaterialQueryActivity extends SjmBaseActivity {
         });
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void invoke(String name) {
         showProgress();
         jsonObject.put("page", mPage);
         jsonObject.put("name", YxxUtils.URLEncode(name));
-        PresenterManager.getInstance()
+        presenterManager
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
                         .createReq(IService.class).getMaterialsByName(jsonObject.toJSONString()))

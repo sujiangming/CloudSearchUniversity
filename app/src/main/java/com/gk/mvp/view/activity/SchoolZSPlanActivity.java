@@ -19,7 +19,6 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.adpater.SchoolZSPlanAdapter;
-import com.gk.tools.AppManager;
 import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -68,10 +67,6 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         invoke();
         showSearch();
         setSearchViewText(searchView);
-
-        AppManager.printAllActivity();
-
-        YxxUtils.printAllRunningActivity(this);
     }
 
     @Override
@@ -80,6 +75,8 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         setIntent(intent);
         invoke();
     }
+
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
 
     private void initAdapter() {
         adapter = new SchoolZSPlanAdapter(this);
@@ -91,10 +88,8 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         showProgress();
         jsonObject.put("page", mPage);
         jsonObject.put("schoolName", searchKey);
-        PresenterManager.getInstance()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance()
-                        .createReq(IService.class).getUniRecruitPlanList(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance()
+                .createReq(IService.class).getUniRecruitPlanList(jsonObject.toJSONString()))
                 .request();
     }
 
@@ -134,8 +129,12 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         hideProgress();
         stopLayoutRefreshByTag(isLoadMore);
         CommonBean commonBean = (CommonBean) t;
-        List<SchoolZSBean> beanList = JSON.parseArray(commonBean.getData().toString(), SchoolZSBean.class);
         if (isLoadMore) {
+            if (null == commonBean.getData()) {
+                toast("没有查询到数据");
+                return;
+            }
+            List<SchoolZSBean> beanList = JSON.parseArray(commonBean.getData().toString(), SchoolZSBean.class);
             if (beanList == null || beanList.size() == 0) {
                 toast("没有查询到数据");
                 return;
@@ -144,6 +143,15 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
             adapter.update(schoolBeanList);
             return;
         }
+
+        if (null == commonBean.getData()) {
+            toast("没有查询到数据");
+            showTvNoData();
+            return;
+        }
+
+        List<SchoolZSBean> beanList = JSON.parseArray(commonBean.getData().toString(), SchoolZSBean.class);
+
         if (beanList == null || beanList.size() == 0) {
             toast("没有查询到数据");
             showTvNoData();
@@ -189,4 +197,11 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         }
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != presenterManager) {
+            presenterManager.getCall().cancel();
+        }
+    }
 }

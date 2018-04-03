@@ -77,6 +77,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
     private MyCountDownTimer countDownTimerUtils;
     private final long TIME = 60 * 1000L;
     private final long INTERVAL = 1000L;
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
 
     @Override
     public int getResourceId() {
@@ -159,10 +160,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
         switch (view.getId()) {
             case R.id.btn_code:
                 showProgress();
-                PresenterManager.getInstance()
-                        .setmContext(getContext())
-                        .setmIView(this)
-                        .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVerityfyCode(jsonObject.toJSONString()))
+                presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).getVerityfyCode(jsonObject.toJSONString()))
                         .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
                 startTimer();
                 break;
@@ -174,10 +172,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
                     return;
                 }
                 jsonObject.put("verifyCode", password);
-                PresenterManager.getInstance()
-                        .setmContext(getContext())
-                        .setmIView(this)
-                        .setCall(RetrofitUtil.getInstance().createReq(IService.class).verifyLogin(jsonObject.toJSONString()))
+                presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).verifyLogin(jsonObject.toJSONString()))
                         .requestForResponseBody(YXXConstants.INVOKE_API_SECOND_TIME);
                 break;
         }
@@ -185,10 +180,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
 
     private void getAdsInfo() {
         showProgress();
-        PresenterManager.getInstance()
-                .setmContext(getContext())
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList())
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList())
                 .request(YXXConstants.INVOKE_API_THREE_TIME);
     }
 

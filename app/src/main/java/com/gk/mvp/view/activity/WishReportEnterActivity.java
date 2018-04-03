@@ -89,19 +89,19 @@ public class WishReportEnterActivity extends SjmBaseActivity {
         wish_zj_btn = JdryPersistence.getObject(this, "wish_zj_btn");
     }
 
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
+
     private void queryUserVolunteerReport(int time) {
         showProgress();
         jsonObject.put("reportType", time);
-        PresenterManager.getInstance().setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).queryUserVolunteerReport(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).queryUserVolunteerReport(jsonObject.toJSONString()))
                 .request(time);
     }
 
     private void generateReport(int type, int order) {
         showProgress();
         jsonObject.put("reportType", type);
-        PresenterManager.getInstance().setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).generateWishReport(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).generateWishReport(jsonObject.toJSONString()))
                 .request(order);
     }
 

@@ -81,7 +81,7 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
         showProgress();
         jsonObject.put("page", mPage);
         jsonObject.put("schoolName", searchKey);
-        PresenterManager.getInstance()
+        new PresenterManager()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
                         .createReq(IService.class).getUniRankingList(jsonObject.toJSONString()))

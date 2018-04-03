@@ -181,14 +181,14 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         }
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void getCommentInter() {
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("videoId", liveBean.getId());
         String json = jsonObject.toJSONString();
-        PresenterManager.getInstance()
-                .setmContext(this)
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoCommentList(json))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
@@ -204,8 +204,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         jsonObject.put("videoId", liveBean.getId());
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("content", YxxUtils.URLEncode(edit));
-        PresenterManager.getInstance()
-                .setmContext(this)
+        presenterManager
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).addVideoComment(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_SECOND_TIME);
@@ -215,9 +214,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         showProgress();
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("videoId", liveBean.getId());
-        PresenterManager.getInstance()
-                .setmContext(this)
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).addVideoZan(jsonObject1.toJSONString()))
                 .request(YXXConstants.INVOKE_API_THREE_TIME);
     }
@@ -235,8 +232,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
     private void addFocusInter() {
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("videoId", liveBean.getId());
-        PresenterManager.getInstance()
-                .setmContext(this)
+        presenterManager
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).addVideoAttention(jsonObject1.toJSONString()))
                 .request(YXXConstants.INVOKE_API_FORTH_TIME);

@@ -71,10 +71,11 @@ public class MBTITestDetailActivity extends SjmBaseActivity {
         addListener();
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void httpRequest() {
         showProgress();
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .getCareerTestMbti())
                 .request();

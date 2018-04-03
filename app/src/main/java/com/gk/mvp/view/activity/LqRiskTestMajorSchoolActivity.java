@@ -63,11 +63,12 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
         invoke();
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void invoke() {
         showProgress();
         jsonObject.put("majorName", YxxUtils.URLEncode(majorName));
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
                         .createReq(IService.class).getUniversityByMajor(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);

@@ -75,9 +75,7 @@ public class UpdateUserInfoActivity extends SjmBaseActivity {
         }
         String content = jsonObject.toJSONString();
         showProgress();
-        PresenterManager.getInstance()
-                .setmContext(this)
-                .setmIView(this)
+        new PresenterManager().setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(content))
                 .request();
     }

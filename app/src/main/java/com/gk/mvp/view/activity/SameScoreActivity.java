@@ -173,7 +173,7 @@ public class SameScoreActivity extends SjmBaseActivity {
         jsonObject.put("page", mPage);
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("score", etSameTop10.getText().toString());
-        PresenterManager.getInstance()
+        new PresenterManager()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .getSameScoreDirection(jsonObject.toJSONString()))
@@ -520,4 +520,10 @@ public class SameScoreActivity extends SjmBaseActivity {
                 });
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler = null;
+    }
 }

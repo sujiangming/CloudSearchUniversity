@@ -88,8 +88,7 @@ public class VideoListActivity extends SjmBaseActivity {
     private void invoke(int page) {
         showProgress();
         jsonObject.put("page", page);
-        PresenterManager.getInstance()
-                .setmContext(this)
+        new PresenterManager()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoList(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);

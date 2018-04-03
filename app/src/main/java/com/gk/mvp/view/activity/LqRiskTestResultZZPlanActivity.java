@@ -50,11 +50,13 @@ public class LqRiskTestResultZZPlanActivity extends SjmBaseActivity {
         getMajorAdmissionsData(uniName);
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void getMajorAdmissionsData(String uniName) {
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("schoolName", YxxUtils.URLEncode(uniName));
-        PresenterManager.getInstance()
+        presenterManager
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getUniMajorPlan(jsonObject.toJSONString()))
                 .request();

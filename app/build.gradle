@@ -80,4 +80,8 @@ dependencies {
     //ExpandableTextView
     compile 'com.ms-square:expandableTextView:0.1.4'
     implementation files('libs/fastjson-1.1.68.android.jar')
+    //leakcanary 内存泄漏检查工具
+    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }

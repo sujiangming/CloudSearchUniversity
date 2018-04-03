@@ -180,13 +180,14 @@ public class MBTITestResultActivity extends SjmBaseActivity {
         return answers.toString();
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void getReport() {
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("answers", getAnswers());
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
                         .createReq(IService.class)
                         .getMbtiTestReport(jsonObject.toJSONString()))

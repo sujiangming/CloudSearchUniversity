@@ -118,11 +118,13 @@ public class MaterialListActivity extends SjmBaseActivity {
         });
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void invoke() {
         jsonObject.put("page", page);
         jsonObject.put("type", type);
         jsonObject.put("course", course);
-        PresenterManager.getInstance()
+        presenterManager
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getMaterialsByType(jsonObject.toJSONString()))
                 .request();

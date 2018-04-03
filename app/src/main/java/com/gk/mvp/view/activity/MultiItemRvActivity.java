@@ -68,8 +68,7 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
                 jsonObject.put("fromUser", LoginBean.getInstance().getUsername());
                 jsonObject.put("messageType", 1);
                 jsonObject.put("message", YxxUtils.URLEncode(etComment.getText().toString()));
-                PresenterManager.getInstance()
-                        .setmIView(this)
+                presenterManager.setmIView(this)
                         .setCall(RetrofitUtil.getInstance()
                                 .createReq(IService.class).sendMessage(jsonObject.toJSONString()))
                         .request(YXXConstants.INVOKE_API_SECOND_TIME);
@@ -115,10 +114,11 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
         mRecyclerView.scrollToPosition(adapter.getItemCount());
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void getMyMessageList() {
         showProgress();
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .getMyMessageList(jsonObject.toJSONString()))
                 .request();
@@ -160,8 +160,10 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
         hideProgress();
     }
 
+    private Handler mHandler = new Handler();
+
     private void delayShowMessageInfo() {
-        new Handler().postDelayed(new Runnable() {
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 jsonObject.put("username", LoginBean.getInstance().getUsername());
@@ -171,7 +173,7 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
     }
 
     private void delayShowClientInfo() {
-        new Handler().postDelayed(new Runnable() {
+        mHandler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 mDatas.add(addChatMessageClient());
@@ -235,5 +237,12 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
             etComment.setText("");
             includeComment.setVisibility(View.GONE);
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mHandler.removeCallbacksAndMessages(null);
+        mHandler = null;
     }
 }

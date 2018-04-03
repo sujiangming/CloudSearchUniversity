@@ -427,6 +427,8 @@ public class PersonInfoActivity extends SjmBaseActivity {
         builder.show();
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     /**
      * update user info
      *
@@ -436,9 +438,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
      */
     private void invokeService(int flag, int value, String imagePath) {
         showProgress();
-        PresenterManager presenterManager = PresenterManager.getInstance()
-                .setmContext(this)
-                .setmIView(this);
+        presenterManager.setmIView(this);
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         if (flag == 0) {

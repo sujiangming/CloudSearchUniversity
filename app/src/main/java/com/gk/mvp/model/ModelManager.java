@@ -13,23 +13,13 @@ import retrofit2.Callback;
 
 public class ModelManager implements IModel<CommonBean> {
 
-    public static Call<CommonBean> miBeanCall;
-    public static Call<ResponseBody> miBeanCallForResponseBody;
-    public static ModelManager mDataManager;
+    public Call<CommonBean> miBeanCall;
+    public Call<ResponseBody> miBeanCallForResponseBody;
 
-    private ModelManager() {
-
-    }
-
-    public static ModelManager getInstance(Call<CommonBean> call, Call<ResponseBody> callForResponseBody) {
-        if (mDataManager == null) {
-            synchronized (ModelManager.class) {
-                mDataManager = new ModelManager();
-            }
-        }
+    public ModelManager setCall(Call<CommonBean> call, Call<ResponseBody> callForResponseBody) {
         miBeanCall = call;
         miBeanCallForResponseBody = callForResponseBody;
-        return mDataManager;
+        return this;
     }
 
     @Override

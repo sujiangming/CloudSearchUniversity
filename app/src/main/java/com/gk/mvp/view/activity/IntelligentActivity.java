@@ -122,10 +122,12 @@ public class IntelligentActivity extends SjmBaseActivity {
         queryUserVolunteerReport(YXXConstants.INVOKE_API_SECOND_TIME);
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void queryUserVolunteerReport(int time) {
         showProgress();
         jsonObject.put("reportType", time);
-        PresenterManager.getInstance().setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).queryUserVolunteerReport(jsonObject.toJSONString()))
                 .request(time);
     }
@@ -133,7 +135,7 @@ public class IntelligentActivity extends SjmBaseActivity {
     private void generateReport(int type, int order) {
         showProgress();
         jsonObject.put("reportType", type);
-        PresenterManager.getInstance().setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).generateWishReport(jsonObject.toJSONString()))
                 .request(order);
     }

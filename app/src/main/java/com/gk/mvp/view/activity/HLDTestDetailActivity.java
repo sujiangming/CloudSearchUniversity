@@ -110,9 +110,10 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
         httpRequest();
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void httpRequest() {
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .getCareerTestHld())
                 .request();

@@ -318,6 +318,8 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         }
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
         showProgress();
         jsonObject.put("page", mPage);
@@ -326,8 +328,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         jsonObject.put("schoolBatch", tese);
         jsonObject.put("tese", schoolType);
         jsonObject.put("schoolName", schoolName);
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance()
                         .createReq(IService.class).getUniversityList(jsonObject.toJSONString()))
                 .requestForResponseBody(YXXConstants.INVOKE_API_DEFAULT_TIME);

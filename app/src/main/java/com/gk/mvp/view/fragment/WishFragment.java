@@ -510,6 +510,8 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
+
     /**
      * update user info
      *
@@ -533,10 +535,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 jsonObject.put("subjectType", value);
                 break;
         }
-        PresenterManager.getInstance()
-                .setmContext(getContext())
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).updateUserInfo(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 

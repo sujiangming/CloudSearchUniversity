@@ -1,11 +1,9 @@
 package com.gk.mvp.presenter;
 
-import android.content.Context;
 import android.text.TextUtils;
 
 import com.gk.beans.CommonBean;
 import com.gk.mvp.model.ModelManager;
-import com.gk.mvp.model.inter.IModel;
 import com.gk.mvp.view.IView;
 
 import java.io.IOException;
@@ -20,53 +18,20 @@ import retrofit2.Response;
  */
 
 public class PresenterManager {
-    private IModel mModel;
     private IView mIView;
-    private Context mContext;
-    private static PresenterManager mInstance;
     private Call mCall;
     private int mOrder = 1;//默认每次只是调用一次接口
     private boolean mIsShow = false;
     private String errorInfo = "请求失败";
+    private ModelManager modelManager;
 
-    private PresenterManager() {
-
-    }
-
-    public static PresenterManager getInstance() {
-        if (mInstance == null) {
-            synchronized (PresenterManager.class) {
-                mInstance = new PresenterManager();
-            }
-        }
-        return mInstance;
-    }
-
-    public IModel getmModel() {
-        return mModel;
-    }
-
-    public PresenterManager setmModel(IModel mModel) {
-        this.mModel = mModel;
-        return mInstance;
-    }
-
-    public IView getmIView() {
-        return mIView;
+    public PresenterManager() {
+        modelManager = new ModelManager();
     }
 
     public PresenterManager setmIView(IView mIView) {
         this.mIView = mIView;
-        return mInstance;
-    }
-
-    public Context getmContext() {
-        return mContext;
-    }
-
-    public PresenterManager setmContext(Context mContext) {
-        this.mContext = mContext;
-        return mInstance;
+        return this;
     }
 
     public Call getCall() {
@@ -75,7 +40,7 @@ public class PresenterManager {
 
     public PresenterManager setCall(Call mCall) {
         this.mCall = mCall;
-        return mInstance;
+        return this;
     }
 
     public PresenterManager isShowProgress(boolean isShow) {
@@ -83,7 +48,7 @@ public class PresenterManager {
             this.mIsShow = isShow;
             mIView.showProgress();
         }
-        return mInstance;
+        return this;
     }
 
     public void hideShowProgress() {
@@ -92,13 +57,8 @@ public class PresenterManager {
         }
     }
 
-    public PresenterManager setInvokeOrder(int order) {
-        this.mOrder = order;
-        return mInstance;
-    }
-
     public PresenterManager request() {
-        ModelManager.getInstance(mCall, null).getServerData(new Callback<CommonBean>() {
+        modelManager.setCall(mCall, null).getServerData(new Callback<CommonBean>() {
             @Override
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
                 if (!response.isSuccessful()) {
@@ -126,7 +86,7 @@ public class PresenterManager {
                 hideShowProgress();
             }
         });
-        return mInstance;
+        return this;
     }
 
     private void render(CommonBean commonBean) {
@@ -142,7 +102,7 @@ public class PresenterManager {
      */
     public PresenterManager request(int flag) {
         final int invokeFlag = flag;
-        ModelManager.getInstance(mCall, null).getServerData(new Callback<CommonBean>() {
+        modelManager.setCall(mCall, null).getServerData(new Callback<CommonBean>() {
             @Override
             public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
 
@@ -171,7 +131,7 @@ public class PresenterManager {
                 hideShowProgress();
             }
         });
-        return mInstance;
+        return this;
     }
 
     /**
@@ -187,7 +147,7 @@ public class PresenterManager {
 
     public PresenterManager requestForResponseBody(int flag) {
         final int invokeFlag = flag;
-        ModelManager.getInstance(null, mCall).getServerDataForResponseBody(new Callback<ResponseBody>() {
+        modelManager.setCall(null, mCall).getServerDataForResponseBody(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
@@ -201,7 +161,7 @@ public class PresenterManager {
                 mIView.fillWithNoData(t.getMessage(), invokeFlag);
             }
         });
-        return mInstance;
+        return this;
     }
 
     private void renderForResponseBody(ResponseBody responseBody, int flag) {

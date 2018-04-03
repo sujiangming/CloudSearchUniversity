@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gk.R;
+import com.gk.global.YXXApplication;
 import com.gk.mvp.view.IView;
 import com.gk.mvp.view.custom.SjmProgressBar;
 import com.gk.mvp.view.custom.TopBarView;
@@ -31,6 +32,7 @@ import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
+import com.squareup.leakcanary.RefWatcher;
 
 import java.lang.reflect.Field;
 
@@ -212,6 +214,9 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        //leakCanary检测内存泄漏的方法
+        RefWatcher refWatcher = YXXApplication.refWatcher;
+        refWatcher.watch(this);
     }
 
     @Override

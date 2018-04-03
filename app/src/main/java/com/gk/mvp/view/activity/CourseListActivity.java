@@ -14,7 +14,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.MaterialItemBean;
 import com.gk.global.YXXConstants;
@@ -24,7 +23,6 @@ import com.gk.http.download.ProgressHelper;
 import com.gk.mvp.presenter.MaterialPresenter;
 import com.gk.mvp.view.adpater.MaterialListAdapter;
 import com.gk.mvp.view.custom.TopBarView;
-import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryFileUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -60,11 +58,9 @@ public class CourseListActivity extends SjmBaseActivity {
 
     List<MaterialItemBean.DataBean> list = new ArrayList<>();
 
-    private GlideImageLoader imageLoader = new GlideImageLoader();
     private int page = 0;
     private String course;
     private boolean isLoadMore = false;
-    private JSONObject jsonObject = new JSONObject();
     private MaterialPresenter<MaterialItemBean> materialPresenter;
     private MaterialListAdapter adapter;
 

@@ -98,7 +98,7 @@ public class SchoolDetailZsPlanFragment extends SjmBaseFragment {
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("schoolName", YxxUtils.URLEncode(uniName));
-        PresenterManager.getInstance()
+        new PresenterManager()
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getUniMajorPlan(jsonObject.toJSONString()))
                 .request();

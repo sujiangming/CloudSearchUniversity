@@ -112,10 +112,10 @@ public class LiveVideoFragment extends SjmBaseFragment {
         stopLayoutRefreshByTag(isLoadMore);
     }
 
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
+
     private void getVideoAdsList() {
-        PresenterManager.getInstance()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class)
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .getVideoAdsList())
                 .request(YXXConstants.INVOKE_API_SECOND_TIME);
     }
@@ -123,10 +123,7 @@ public class LiveVideoFragment extends SjmBaseFragment {
     private void invoke(int page) {
         showProgress();
         jsonObject.put("page", page);
-        PresenterManager.getInstance()
-                .setmContext(getContext())
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoList(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoList(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 

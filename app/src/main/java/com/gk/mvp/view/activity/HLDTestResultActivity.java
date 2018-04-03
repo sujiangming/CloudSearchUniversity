@@ -129,13 +129,14 @@ public class HLDTestResultActivity extends SjmBaseActivity {
                 });
     }
 
+    private PresenterManager presenterManager = new PresenterManager();
+
     private void httpRequest() {
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("answers", getSelectedAnswer());
-        PresenterManager.getInstance()
-                .setmIView(this)
+        presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .getHldTestReport(jsonObject.toJSONString()))
                 .request();
@@ -274,5 +275,20 @@ public class HLDTestResultActivity extends SjmBaseActivity {
     private void updateHandicapList(String values) {
         String strCall = "javascript:set_option_value('" + values + "')";
         mChart.loadUrl(strCall);
+    }
+
+    private void destroyWebView() {
+        if (mChart != null) {
+            mChart.pauseTimers();
+            mChart.removeAllViews();
+            mChart.destroy();
+            mChart = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroyWebView();
     }
 }
