@@ -62,7 +62,6 @@ public class SchoolZZZSDetailActivity extends SjmBaseActivity {
     private TextView[] textViews;
     private SchoolZZZsBean uniName;
     private Bundle bundle = new Bundle();
-    private GlideImageLoader imageLoader = new GlideImageLoader();
 
     @Override
     public int getResouceId() {
@@ -81,7 +80,7 @@ public class SchoolZZZSDetailActivity extends SjmBaseActivity {
     }
 
     private void initDataByQuery() {
-        imageLoader.displayImage(this, uniName.getUniversityLogo(), ivQueryItem);
+        GlideImageLoader.displayImage(this, uniName.getUniversityLogo(), ivQueryItem);
         tvSchoolName.setText(uniName.getUniversityName());
         String area = uniName.getUniversityCity();
         if (area != null && !"".equals(area)) {

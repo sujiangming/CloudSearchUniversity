@@ -134,7 +134,6 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     private OnLiveBean onLiveBean;
     private OnLiveRoomInfo onLiveRoomInfo;
     private int onlyOneTime = 0;
-    private GlideImageLoader imageLoader = new GlideImageLoader();
 
     private int screenHeight = 0;//屏幕高度初始值
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
@@ -213,7 +212,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         if (onlyOneTime == 0) {
             onlyOneTime = 1;
             if (roomInfo.getHeadImg() != null && !"".equals(roomInfo.getHeadImg())) {
-                imageLoader.displayByImgRes(this, roomInfo.getHeadImg(), circleImageView, R.drawable.my);
+                GlideImageLoader.displayByImgRes(this, roomInfo.getHeadImg(), circleImageView, R.drawable.my);
             }
             if (roomInfo.getNickName() != null && !"".equals(roomInfo.getNickName())) {
                 tvNickName.setText(roomInfo.getNickName());
@@ -228,7 +227,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                 for (String url : stringSet) {
                     View view = View.inflate(this, R.layout.on_live_images, null);
                     CircleImageView circleImageView = view.findViewById(R.id.civ_image);
-                    imageLoader.displayByImgRes(this, url, circleImageView, R.drawable.my);
+                    GlideImageLoader.displayByImgRes(this, url, circleImageView, R.drawable.my);
                     llImages.addView(view);
                 }
             }
@@ -267,7 +266,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        imageLoader.displayImage(this, onLiveBean.getLiveVerticalLogo(), imageView);
+        GlideImageLoader.displayImage(this, onLiveBean.getLiveVerticalLogo(), imageView);
 
         videoPlayerLiveDetail.getTitleTextView().setVisibility(View.GONE);
         videoPlayerLiveDetail.getBackButton().setVisibility(View.GONE);

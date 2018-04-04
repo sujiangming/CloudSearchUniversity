@@ -82,7 +82,6 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
     private QWListBean qwListBean;
     private List<QWAnsBean> qwAnsBeans = new ArrayList<>();
-    private GlideImageLoader imageLoader = new GlideImageLoader();
     private JSONObject jsonObject = new JSONObject();
     private int addAnsFlag = 0;
 
@@ -106,13 +105,13 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
             return;
         }
         jsonObject.put("queId", qwListBean.getQueId());
-        imageLoader.displayImage(this, qwListBean.getHeadImg(), civHeader);
+        GlideImageLoader.displayImage(this, qwListBean.getHeadImg(), civHeader);
         tvNickName.setText(qwListBean.getNickName() == null ? "未知" : qwListBean.getNickName());
-        tvTimeRight.setText(JdryTime.getDayHourMinBySec(qwListBean.getQueTime()));
-        tvContent.setText(qwListBean.getQueContent());
-        tvTitle.setText(qwListBean.getQueTitle());
-        tvScanCount.setText(qwListBean.getViewTimes() + "");
-        tvCareCount.setText(qwListBean.getAttentionTimes() + "");
+        YxxUtils.setViewData(tvTimeRight,JdryTime.getDayHourMinBySec(qwListBean.getQueTime()));
+        YxxUtils.setViewData(tvContent,qwListBean.getQueContent());
+        YxxUtils.setViewData(tvTitle,qwListBean.getQueTitle());
+        YxxUtils.setViewData(tvScanCount,qwListBean.getViewTimes() + "");
+        YxxUtils.setViewData(tvCareCount,qwListBean.getAttentionTimes() + "");
         addViewTimes();
         getAnswerList();
     }
@@ -127,7 +126,7 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
                 viewHolder.setText(R.id.tv_nick_name, item.getNickName());
                 viewHolder.setText(R.id.tv_time_right, JdryTime.getDayHourMinBySec(item.getAnsTime()));
                 viewHolder.setText(R.id.tv_content, item.getAnsContent());
-                imageLoader.displayImage(QWDetailActivity.this, item.getHeadImg(), (ImageView) viewHolder.getView(R.id.civ_header));
+                GlideImageLoader.displayImage(QWDetailActivity.this, item.getHeadImg(), (ImageView) viewHolder.getView(R.id.civ_header));
             }
         });
     }
@@ -144,9 +143,10 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
+        //GlideImageLoader.stopLoad(this);
     }
 
     private void addViewTimes() {
@@ -257,8 +257,8 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
                 addAnsFlag = 1;
                 jsonObject.put("username", LoginBean.getInstance().getUsername());
                 jsonObject.put("ansContent", YxxUtils.URLEncode(etComment.getText().toString()));
-               presenterManager.setCall(RetrofitUtil.getInstance()
-                                .createReq(IService.class).addAnswer(jsonObject.toJSONString()))
+                presenterManager.setCall(RetrofitUtil.getInstance()
+                        .createReq(IService.class).addAnswer(jsonObject.toJSONString()))
                         .request(YXXConstants.INVOKE_API_SECOND_TIME);
                 break;
         }

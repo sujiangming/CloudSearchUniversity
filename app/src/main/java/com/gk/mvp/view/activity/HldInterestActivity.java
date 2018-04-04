@@ -104,11 +104,21 @@ public class HldInterestActivity extends SjmBaseActivity {
                 .enqueue(new Callback<UserRechargeTimes>() {
                     @Override
                     public void onResponse(Call<UserRechargeTimes> call, Response<UserRechargeTimes> response) {
-                        if (response.isSuccessful()) {
-                            UserRechargeTimes rechargeTimes = response.body();
-                            rechargeTimesData = rechargeTimes.getData();
+                        if (!response.isSuccessful()) {
                             return;
                         }
+
+                        if (null == response.body()) {
+                            return;
+                        }
+
+                        UserRechargeTimes rechargeTimes = response.body();
+
+                        if (null == rechargeTimes) {
+                            return;
+                        }
+
+                        rechargeTimesData = rechargeTimes.getData();
                     }
 
                     @Override
@@ -139,10 +149,22 @@ public class HldInterestActivity extends SjmBaseActivity {
                 .enqueue(new Callback<CommonBean>() {
                     @Override
                     public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                        if (response.isSuccessful()) {
-                            CommonBean commonBean = response.body();
-                            priceBean = JSON.parseObject(commonBean.getData().toString(), VIPPriceBean.class);
+                        if (!response.isSuccessful()) {
+                            return;
                         }
+
+                        if (null == response.body()) {
+                            return;
+                        }
+
+                        CommonBean commonBean = response.body();
+
+                        if (null == commonBean.getData()) {
+                            return;
+                        }
+
+                        priceBean = JSON.parseObject(commonBean.getData().toString(), VIPPriceBean.class);
+
                     }
 
                     @Override
@@ -240,6 +262,7 @@ public class HldInterestActivity extends SjmBaseActivity {
                                 toast("获取订单信息失败");
                                 return;
                             }
+
                             WeiXinPay weiXinPay = JSON.parseObject(commonBean.getData().toString(), WeiXinPay.class);
                             payForWeiXin(weiXinPay);
                             hideProgress();
@@ -415,7 +438,7 @@ public class HldInterestActivity extends SjmBaseActivity {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
         mHandler = null;
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
     }

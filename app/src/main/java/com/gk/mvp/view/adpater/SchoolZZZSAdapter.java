@@ -18,7 +18,6 @@ import com.gk.tools.YxxUtils;
 
 public class SchoolZZZSAdapter extends JdryBaseAdapter {
 
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
 
     public SchoolZZZSAdapter(Context context) {
         super(context);
@@ -67,7 +66,7 @@ public class SchoolZZZSAdapter extends JdryBaseAdapter {
             viewHolder.tv_school_mark_2.setVisibility(View.GONE);
         }
 
-        glideImageLoader.displayByImgRes(mContext, dataBean.getUniversityLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);
+        GlideImageLoader.displayByImgRes(mContext, dataBean.getUniversityLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);
 
         YxxUtils.setViewData(viewHolder.tv_school_name, dataBean.getUniversityName());
 

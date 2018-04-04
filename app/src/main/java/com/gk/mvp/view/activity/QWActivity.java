@@ -45,7 +45,6 @@ public class QWActivity extends SjmBaseActivity {
     private JSONObject jsonObject = new JSONObject();
     private List<QWListBean> list = new ArrayList<>();
     private CommonAdapter<QWListBean> adapter;
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
 
     @Override
     public int getResouceId() {
@@ -71,7 +70,7 @@ public class QWActivity extends SjmBaseActivity {
                     viewHolder.setBackgroundColor(R.id.tv_top_line, 0x00000000);
                 }
                 viewHolder.setText(R.id.tv_title, item.getQueTitle());
-                glideImageLoader.displayImage(QWActivity.this, item.getHeadImg(), (ImageView) viewHolder.getView(R.id.civ_header));
+                GlideImageLoader.displayImage(QWActivity.this, item.getHeadImg(), (ImageView) viewHolder.getView(R.id.civ_header));
                 viewHolder.setText(R.id.tv_nick_name, item.getNickName());
                 viewHolder.setText(R.id.tv_time_right, JdryTime.getFullTimeBySec(item.getQueTime()));
                 viewHolder.setText(R.id.tv_content, item.getQueContent());
@@ -90,14 +89,12 @@ public class QWActivity extends SjmBaseActivity {
         });
     }
 
-
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
 
     private void invoke() {
         jsonObject.put("page", mPage);
-        new PresenterManager()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance()
-                        .createReq(IService.class).getQuestionList(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance()
+                .createReq(IService.class).getQuestionList(jsonObject.toJSONString()))
                 .request();
     }
 
@@ -145,5 +142,14 @@ public class QWActivity extends SjmBaseActivity {
 
         list.addAll(qwBeans);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+        //GlideImageLoader.stopLoad(this);
     }
 }

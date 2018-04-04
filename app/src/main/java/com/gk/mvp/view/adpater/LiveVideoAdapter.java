@@ -17,12 +17,8 @@ import com.gk.tools.GlideImageLoader;
  */
 
 public class LiveVideoAdapter extends JdryBaseAdapter {
-
-    private GlideImageLoader imageLoader;
-
     public LiveVideoAdapter(Context context) {
         super(context);
-        imageLoader = new GlideImageLoader();
     }
 
     @SuppressLint("InflateParams")
@@ -42,7 +38,7 @@ public class LiveVideoAdapter extends JdryBaseAdapter {
         LiveBean liveBean = (LiveBean) list.get(position);
         viewHolder.tvLiveTitle.setText(liveBean.getVideoName());
         viewHolder.tvTeacher.setText(liveBean.getSpeaker());
-        imageLoader.displayImage(mContext, liveBean.getVideoLogo(), viewHolder.ivItem);
+        GlideImageLoader.displayImage(mContext.getApplicationContext(), liveBean.getVideoLogo(), viewHolder.ivItem);
         return convertView;
     }
 

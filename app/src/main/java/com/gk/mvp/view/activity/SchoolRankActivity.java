@@ -20,7 +20,6 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.adpater.RankSchoolAdapter;
-import com.gk.tools.GlideImageLoader;
 import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -53,7 +52,6 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
     }
 
     private List<SchoolRankBean> schoolBeanList = new ArrayList<>();
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
     private JSONObject jsonObject;
     private int mPage = 0;
     private boolean isLoadMore = false;

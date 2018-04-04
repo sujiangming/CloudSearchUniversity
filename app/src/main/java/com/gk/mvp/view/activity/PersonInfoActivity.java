@@ -81,7 +81,6 @@ public class PersonInfoActivity extends SjmBaseActivity {
 
     private LoginBean loginBean;
     private static final String CODE_KEY = "code";
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
     private DialogInterface mDialog;
     private String editInfo = "您已经编辑过了";
     private String noFilled = "未填写";
@@ -97,7 +96,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
         setTopBar(topBar, "个人信息", 0);
         loginBean = LoginBean.getInstance();
         if (loginBean.getHeadImg() != null && !"".equals(loginBean.getHeadImg())) {
-            glideImageLoader.displayImage(this, loginBean.getHeadImg(), ivUserHead);
+            GlideImageLoader.displayImage(this, loginBean.getHeadImg(), ivUserHead);
         } else {
             ivUserHead.setImageResource(R.drawable.my);
         }
@@ -335,7 +334,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
         public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
             if (resultList != null) {
                 String imagePath = resultList.get(0).getPhotoPath();
-                glideImageLoader.displayImage(PersonInfoActivity.this, imagePath, ivUserHead);
+                GlideImageLoader.displayImage(PersonInfoActivity.this, imagePath, ivUserHead);
                 showProgress();
                 uploadFile(imagePath);
             }
@@ -432,9 +431,10 @@ public class PersonInfoActivity extends SjmBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
+        //GlideImageLoader.stopLoad(this);
     }
 
     /**

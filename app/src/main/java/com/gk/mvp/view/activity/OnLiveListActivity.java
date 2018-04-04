@@ -43,7 +43,6 @@ public class OnLiveListActivity extends SjmBaseActivity {
     }
 
     private List<OnLiveBean> list = new ArrayList<>();
-    private GlideImageLoader loader = new GlideImageLoader();
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
@@ -78,7 +77,7 @@ public class OnLiveListActivity extends SjmBaseActivity {
             protected void convert(ViewHolder viewHolder, OnLiveBean item, int position) {
                 viewHolder.setText(R.id.tv_on_live_name, item.getLiveName());
                 ImageView imageView = viewHolder.getView(R.id.iv_item);
-                loader.displayCircleRadius(OnLiveListActivity.this, item.getLiveCrossLogo(), imageView, 30);
+                GlideImageLoader.displayCircleRadius(OnLiveListActivity.this, item.getLiveCrossLogo(), imageView, 30);
             }
         });
         lvOnlive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -105,5 +104,6 @@ public class OnLiveListActivity extends SjmBaseActivity {
         if(null != presenterManager && null != presenterManager.getCall()){
             presenterManager.getCall().cancel();
         }
+        //GlideImageLoader.stopLoad(this);
     }
 }

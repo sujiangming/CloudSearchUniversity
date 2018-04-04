@@ -197,7 +197,6 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         if (recommendSchsBeans == null || recommendSchsBeans.size() == 0) {
             return;
         }
-        GlideImageLoader imageLoader = new GlideImageLoader();
         for (int i = 0; i < recommendSchsBeans.size(); i++) {
             final LuQuRiskBean.RecommendSchsBean bean = recommendSchsBeans.get(i);
             View view = View.inflate(this, R.layout.risk_result_item, null);
@@ -205,7 +204,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
             ImageView ivLogo = view.findViewById(R.id.iv_logo);
 
             textView.setText(bean.getSchoolName());
-            imageLoader.displayImage(this, bean.getSchoolLogo(), ivLogo);
+            GlideImageLoader.displayImage(this, bean.getSchoolLogo(), ivLogo);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -225,7 +224,6 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         if (recommendSchsBeans == null || recommendSchsBeans.size() == 0) {
             return;
         }
-        GlideImageLoader imageLoader = new GlideImageLoader();
         for (int i = 0; i < recommendSchsBeans.size(); i++) {
             final LuQuRiskBean.RecommendSchsBean bean = recommendSchsBeans.get(i);
             View view = View.inflate(this, R.layout.risk_major_query_item, null);
@@ -234,7 +232,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
             ImageView ivLogo = view.findViewById(R.id.iv_logo);
             tv_university_name.setText(bean.getSchoolName());
             tv_major_name.setText(bean.getSchoolMajor());
-            imageLoader.displayImage(this, bean.getSchoolLogo(), ivLogo);
+            GlideImageLoader.displayImage(this, bean.getSchoolLogo(), ivLogo);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -254,8 +252,9 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
+        //GlideImageLoader.stopLoad(this);
     }
 }

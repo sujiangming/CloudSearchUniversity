@@ -64,7 +64,6 @@ public class MaterialListActivity extends SjmBaseActivity {
 
     List<MaterialItemBean.DataBean> list = new ArrayList<>();
 
-    private GlideImageLoader imageLoader = new GlideImageLoader();
     private int type;
     private int page = 0;
     private String course;
@@ -334,8 +333,9 @@ public class MaterialListActivity extends SjmBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
+        GlideImageLoader.stopLoad(getApplicationContext());
     }
 }

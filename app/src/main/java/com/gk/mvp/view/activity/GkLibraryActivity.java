@@ -166,7 +166,6 @@ public class GkLibraryActivity extends SjmBaseActivity {
 
     private JSONObject jsonObject = new JSONObject();
     private LectureBean lectureBean;
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
 
     @Override
     public int getResouceId() {
@@ -241,13 +240,13 @@ public class GkLibraryActivity extends SjmBaseActivity {
             llMsjtPart1.setVisibility(View.VISIBLE);
             llMsjzList[0].setVisibility(View.VISIBLE);
             String path = msjt.get(0).getLogo();
-            glideImageLoader.displayImage(this, path, ivMsjtList[0]);
+            GlideImageLoader.displayImage(this, path, ivMsjtList[0]);
             tvMsjzList[0].setText(msjt.get(0).getName());
         } else if (msjtLen == 2) {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.MsjtBean msjtBean = msjt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(this, path, ivMsjtList[i]);
+                GlideImageLoader.displayImage(this, path, ivMsjtList[i]);
                 tvMsjzList[i].setText(msjtBean.getName());
                 llMsjzList[i].setVisibility(View.VISIBLE);
             }
@@ -256,7 +255,7 @@ public class GkLibraryActivity extends SjmBaseActivity {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.MsjtBean msjtBean = msjt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(this, path, ivMsjtList[i]);
+                GlideImageLoader.displayImage(this, path, ivMsjtList[i]);
                 tvMsjzList[i].setText(msjtBean.getName());
                 llMsjzList[i].setVisibility(View.VISIBLE);
             }
@@ -266,7 +265,7 @@ public class GkLibraryActivity extends SjmBaseActivity {
             for (int i = 0; i < 4; ++i) {
                 LectureBean.MsjtBean msjtBean = msjt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(this, path, ivMsjtList[i]);
+                GlideImageLoader.displayImage(this, path, ivMsjtList[i]);
                 tvMsjzList[i].setText(msjtBean.getName());
                 llMsjzList[i].setVisibility(View.VISIBLE);
             }
@@ -285,13 +284,13 @@ public class GkLibraryActivity extends SjmBaseActivity {
             llLsztPart1.setVisibility(View.VISIBLE);
             llLiztList[0].setVisibility(View.VISIBLE);
             String path = lnzt.get(0).getLogo();
-            glideImageLoader.displayImage(this, path, ivLiztList[0]);
+            GlideImageLoader.displayImage(this, path, ivLiztList[0]);
             tvLiztList[0].setText(lnzt.get(0).getName());
         } else if (msjtLen == 2) {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.LnztBean msjtBean = lnzt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(this, path, ivLiztList[i]);
+                GlideImageLoader.displayImage(this, path, ivLiztList[i]);
                 tvLiztList[i].setText(msjtBean.getName());
                 llLiztList[i].setVisibility(View.VISIBLE);
             }
@@ -300,7 +299,7 @@ public class GkLibraryActivity extends SjmBaseActivity {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.LnztBean msjtBean = lnzt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(this, path, ivLiztList[i]);
+                GlideImageLoader.displayImage(this, path, ivLiztList[i]);
                 tvLiztList[i].setText(msjtBean.getName());
                 llLiztList[i].setVisibility(View.VISIBLE);
             }
@@ -310,7 +309,7 @@ public class GkLibraryActivity extends SjmBaseActivity {
             for (int i = 0; i < 4; ++i) {
                 LectureBean.LnztBean msjtBean = lnzt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(this, path, ivLiztList[i]);
+                GlideImageLoader.displayImage(this, path, ivLiztList[i]);
                 tvLiztList[i].setText(msjtBean.getName());
                 llLiztList[i].setVisibility(View.VISIBLE);
             }
@@ -329,13 +328,13 @@ public class GkLibraryActivity extends SjmBaseActivity {
             llMnsjPart1.setVisibility(View.VISIBLE);
             llMnsjList[0].setVisibility(View.VISIBLE);
             String path = mnsj.get(0).getLogo();
-            glideImageLoader.displayImage(this, path, ivMnsjList[0]);
+            GlideImageLoader.displayImage(this, path, ivMnsjList[0]);
             tvMnsjList[0].setText(mnsj.get(0).getName());
         } else if (msjtLen == 2) {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.MnsjBean msjtBean = mnsj.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(this, path, ivMnsjList[i]);
+                GlideImageLoader.displayImage(this, path, ivMnsjList[i]);
                 tvMnsjList[i].setText(msjtBean.getName());
                 llMnsjList[i].setVisibility(View.VISIBLE);
             }
@@ -344,7 +343,7 @@ public class GkLibraryActivity extends SjmBaseActivity {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.MnsjBean msjtBean = mnsj.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(this, path, ivMnsjList[i]);
+                GlideImageLoader.displayImage(this, path, ivMnsjList[i]);
                 tvMnsjList[i].setText(msjtBean.getName());
                 llMnsjList[i].setVisibility(View.VISIBLE);
             }
@@ -354,7 +353,7 @@ public class GkLibraryActivity extends SjmBaseActivity {
             for (int i = 0; i < 4; ++i) {
                 LectureBean.MnsjBean msjtBean = mnsj.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(this, path, ivMnsjList[i]);
+                GlideImageLoader.displayImage(this, path, ivMnsjList[i]);
                 tvMnsjList[i].setText(msjtBean.getName());
                 llMnsjList[i].setVisibility(View.VISIBLE);
             }
@@ -451,7 +450,7 @@ public class GkLibraryActivity extends SjmBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
     }

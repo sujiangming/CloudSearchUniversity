@@ -240,8 +240,6 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                 .request(YXXConstants.INVOKE_API_FORTH_TIME);
     }
 
-    private GlideImageLoader imageLoader = new GlideImageLoader();
-
     @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
@@ -262,7 +260,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                             viewHolder.setBackgroundColor(R.id.rl_comment_root, 0xFFF2F2F2);
                         }
                         if (!TextUtils.isEmpty(item.getHeadImg())) {
-                            imageLoader.displayByImgRes(LiveVideoDetailActivity.this, item.getHeadImg(), imageView, R.drawable.my);
+                            GlideImageLoader.displayByImgRes(LiveVideoDetailActivity.this, item.getHeadImg(), imageView, R.drawable.my);
                         } else {
                             imageView.setImageResource(R.drawable.my);
                         }
@@ -296,8 +294,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        GlideImageLoader glideImageLoader = new GlideImageLoader();
-        glideImageLoader.displayImage(this, liveBean.getVideoLogo(), imageView);
+        GlideImageLoader.displayImage(this, liveBean.getVideoLogo(), imageView);
         //外部辅助的旋转，帮助全屏
         orientationUtils = new OrientationUtils(this, videoPlayerLiveDetail);
         //初始化不打开外部的旋转
@@ -392,6 +389,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         if(null != presenterManager && null != presenterManager.getCall()){
             presenterManager.getCall().cancel();
         }
+        //GlideImageLoader.stopLoad(this);
     }
 
     @Override
@@ -403,13 +401,13 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         }
     }
 
-    public void setTitleTextView() {
-        //实现头部标题跑马灯效果
-        videoPlayerLiveDetail.getTitleTextView().setSelected(true);
-        videoPlayerLiveDetail.getTitleTextView().setFocusable(true);
-        videoPlayerLiveDetail.getTitleTextView().setFocusableInTouchMode(true);
-        videoPlayerLiveDetail.getTitleTextView().setSingleLine();
-        videoPlayerLiveDetail.getTitleTextView().setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        videoPlayerLiveDetail.getTitleTextView().setMarqueeRepeatLimit(-1);//等价于在xml配置成android:marqueeRepeatLimit ="marquee_forever"
-    }
+//    public void setTitleTextView() {
+//        //实现头部标题跑马灯效果
+//        videoPlayerLiveDetail.getTitleTextView().setSelected(true);
+//        videoPlayerLiveDetail.getTitleTextView().setFocusable(true);
+//        videoPlayerLiveDetail.getTitleTextView().setFocusableInTouchMode(true);
+//        videoPlayerLiveDetail.getTitleTextView().setSingleLine();
+//        videoPlayerLiveDetail.getTitleTextView().setEllipsize(TextUtils.TruncateAt.MARQUEE);
+//        videoPlayerLiveDetail.getTitleTextView().setMarqueeRepeatLimit(-1);//等价于在xml配置成android:marqueeRepeatLimit ="marquee_forever"
+//    }
 }

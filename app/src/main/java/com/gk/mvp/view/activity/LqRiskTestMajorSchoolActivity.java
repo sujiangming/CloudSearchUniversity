@@ -42,7 +42,6 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
 
     private List<QuerySchoolByMajorBean> schoolBeanList = new ArrayList<>();
     private JSONObject jsonObject = new JSONObject();
-    private GlideImageLoader imageLoader = new GlideImageLoader();
     private String majorName = null;
 
     @Override
@@ -109,7 +108,7 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
                     viewHolder.setText(R.id.tv_major_name, majorName);
                 }
 
-                imageLoader.displayByImgRes(LqRiskTestMajorSchoolActivity.this, item.getSchoolLogo(),
+                GlideImageLoader.displayByImgRes(LqRiskTestMajorSchoolActivity.this, item.getSchoolLogo(),
                         (ImageView) viewHolder.getView(R.id.iv_logo), R.drawable.gaoxiaozhanweitu);
             }
         });
@@ -131,5 +130,6 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
         if(null != presenterManager && null != presenterManager.getCall()){
             presenterManager.getCall().cancel();
         }
+        //GlideImageLoader.stopLoad(this);
     }
 }

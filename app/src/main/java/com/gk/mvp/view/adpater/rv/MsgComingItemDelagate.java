@@ -15,7 +15,6 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
  */
 public class MsgComingItemDelagate implements ItemViewDelegate<ChatMessageBean> {
     Context context;
-    GlideImageLoader glideImageLoader = new GlideImageLoader();
 
     public MsgComingItemDelagate(Context context) {
         this.context = context;
@@ -38,7 +37,7 @@ public class MsgComingItemDelagate implements ItemViewDelegate<ChatMessageBean> 
         if(TextUtils.isEmpty(chatMessage.getToUserImg())){
             holder.setImageResource(R.id.chat_from_icon,R.drawable.ym);
         }else{
-            glideImageLoader.displayImage(context, chatMessage.getToUserImg(), (CircleImageView) holder.getView(R.id.chat_from_icon));
+            GlideImageLoader.displayImage(context, chatMessage.getToUserImg(), (CircleImageView) holder.getView(R.id.chat_from_icon));
         }
     }
 }

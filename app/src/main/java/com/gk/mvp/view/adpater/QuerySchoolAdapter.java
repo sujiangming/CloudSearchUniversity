@@ -20,8 +20,6 @@ import com.gk.tools.YxxUtils;
 
 public class QuerySchoolAdapter extends JdryBaseAdapter {
 
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
-
     public QuerySchoolAdapter(Context context) {
         super(context);
     }
@@ -69,7 +67,7 @@ public class QuerySchoolAdapter extends JdryBaseAdapter {
             viewHolder.tv_school_mark_2.setVisibility(View.GONE);
         }
 
-        glideImageLoader.displayByImgRes(mContext, dataBean.getSchoolLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);
+        GlideImageLoader.displayByImgRes(mContext, dataBean.getSchoolLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);
 
         YxxUtils.setViewData(viewHolder.tv_school_name,dataBean.getSchoolName());
         YxxUtils.setViewData(viewHolder.tv_school_type,getPici(dataBean.getSchoolBatch()));

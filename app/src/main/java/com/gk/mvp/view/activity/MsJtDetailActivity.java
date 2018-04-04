@@ -90,8 +90,7 @@ public class MsJtDetailActivity extends SjmBaseActivity {
         //增加封面
         ImageView imageView = new ImageView(this);
         imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-        GlideImageLoader glideImageLoader = new GlideImageLoader();
-        glideImageLoader.displayImage(this, liveBean.getLogo(), imageView);
+        GlideImageLoader.displayImage(this, liveBean.getLogo(), imageView);
         //外部辅助的旋转，帮助全屏
         orientationUtils = new OrientationUtils(this, videoPlayerLiveDetail);
         //初始化不打开外部的旋转
@@ -182,6 +181,7 @@ public class MsJtDetailActivity extends SjmBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoPlayer.releaseAllVideos();
+        //GlideImageLoader.stopLoad(this);
         if (orientationUtils != null)
             orientationUtils.releaseListener();
     }

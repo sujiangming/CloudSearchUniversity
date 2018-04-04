@@ -76,7 +76,6 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     private TextView[] textViews;
     private QuerySchoolBean.DataBean uniName;
     private Bundle bundle = new Bundle();
-    private GlideImageLoader imageLoader = new GlideImageLoader();
     private String flagStr;
     private SchoolRankBean schoolRankBean;
 
@@ -107,7 +106,7 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     }
 
     private void initDataByQuery() {
-        imageLoader.displayImage(this, uniName.getSchoolLogo(), ivQueryItem);
+        GlideImageLoader.displayImage(this, uniName.getSchoolLogo(), ivQueryItem);
         tvSchoolName.setText(uniName.getSchoolName());
         String area = uniName.getSchoolArea();
         if (area != null && !"".equals(area)) {
@@ -138,7 +137,7 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     }
 
     private void initDataByRank() {
-        imageLoader.displayImage(this, schoolRankBean.getSchoolLogo(), ivQueryItem);
+        GlideImageLoader.displayImage(this, schoolRankBean.getSchoolLogo(), ivQueryItem);
         tvSchoolName.setText(schoolRankBean.getSchoolName());
         String area = schoolRankBean.getSchoolArea();
         if (area != null && !"".equals(area)) {
@@ -230,4 +229,5 @@ public class SchoolDetailActivity extends SjmBaseActivity {
             transaction.hide(schoolDetailZsPlanFragment);
         }
     }
+
 }

@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.util.Util;
 import com.gk.R;
 import com.gk.mvp.view.custom.GlideCircleTransform;
 
@@ -17,6 +18,9 @@ public class GlideImageLoader {
 
     public static void displayImage(Context context, Object path, ImageView imageView) {
         //Glide 加载图片简单用法
+        if (null == context) {
+            return;
+        }
         Glide.with(context)
                 .load(path)
                 .crossFade()
@@ -30,6 +34,9 @@ public class GlideImageLoader {
     }
 
     public static void displayCircleRadius(Context context, Object path, ImageView imageView, int radius) {
+        if (null == context) {
+            return;
+        }
         Glide.with(context)
                 .load(path)
                 .crossFade()
@@ -44,6 +51,9 @@ public class GlideImageLoader {
     }
 
     public static void displayByImgRes(Context context, Object path, ImageView imageView, int imgRes) {
+        if (null == context) {
+            return;
+        }
         Glide.with(context)
                 .load(path)
                 .crossFade()
@@ -53,5 +63,11 @@ public class GlideImageLoader {
                 .skipMemoryCache(false)
                 .diskCacheStrategy(DiskCacheStrategy.RESULT)
                 .into(imageView);
+    }
+
+    public static void stopLoad(Context context) {
+        if (Util.isOnMainThread()) {
+            Glide.with(context).pauseRequests();
+        }
     }
 }

@@ -50,11 +50,9 @@ public class UserFragment extends SjmBaseFragment {
         return R.layout.fragment_user;
     }
 
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
-
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
-        glideImageLoader.displayByImgRes(getContext(), LoginBean.getInstance().getHeadImg(), ivUserHead, R.drawable.my);
+        GlideImageLoader.displayByImgRes(getContext(), LoginBean.getInstance().getHeadImg(), ivUserHead, R.drawable.my);
         initData();
     }
 
@@ -68,9 +66,9 @@ public class UserFragment extends SjmBaseFragment {
 
         if (userImage != null) {
             if (!userImage.equals(userHeadImage)) {
-                glideImageLoader.displayImage(getContext(), userImage, ivUserHead);
+                GlideImageLoader.displayImage(getContext(), userImage, ivUserHead);
             } else {
-                glideImageLoader.displayImage(getContext(), userHeadImage, ivUserHead);
+                GlideImageLoader.displayImage(getContext(), userHeadImage, ivUserHead);
             }
         }
         if (nickName != null) {
@@ -95,7 +93,7 @@ public class UserFragment extends SjmBaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            glideImageLoader.displayImage(getContext(), LoginBean.getInstance().getHeadImg(), ivUserHead);
+            GlideImageLoader.displayImage(getContext(), LoginBean.getInstance().getHeadImg(), ivUserHead);
             initData();
         }
     }

@@ -23,6 +23,7 @@ import com.gk.http.download.ProgressHelper;
 import com.gk.mvp.presenter.MaterialPresenter;
 import com.gk.mvp.view.adpater.MaterialListAdapter;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryFileUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -326,5 +327,11 @@ public class CourseListActivity extends SjmBaseActivity {
             return;
         }
         startActivity(intent);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GlideImageLoader.stopLoad(getApplicationContext());
     }
 }

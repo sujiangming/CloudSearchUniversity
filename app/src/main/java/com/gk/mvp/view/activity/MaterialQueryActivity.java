@@ -51,7 +51,6 @@ public class MaterialQueryActivity extends SjmBaseActivity {
     private String searchKey;
     List<MaterialItemBean.DataBean> list;
     private CommonAdapter<MaterialItemBean.DataBean> adapter;
-    private GlideImageLoader imageLoader;
 
     @OnClick(R.id.back_image)
     public void onViewClicked() {
@@ -67,7 +66,6 @@ public class MaterialQueryActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         initSmartRefreshLayout(smartLayout, true);
         jsonObject = new JSONObject();
-        imageLoader = new GlideImageLoader();
         list = new ArrayList<>();
         showSearch();
         setSearchViewText(searchView);
@@ -126,6 +124,7 @@ public class MaterialQueryActivity extends SjmBaseActivity {
         if(null != presenterManager && null != presenterManager.getCall()){
             presenterManager.getCall().cancel();
         }
+        GlideImageLoader.stopLoad(this);
     }
 
     @Override
@@ -182,7 +181,7 @@ public class MaterialQueryActivity extends SjmBaseActivity {
                         viewHolder.setText(R.id.tv_type_content, "模拟试卷");
                         break;
                 }
-                imageLoader.displayImage(MaterialQueryActivity.this, item.getLogo(), (ImageView) viewHolder.getView(R.id.iv_item));
+                GlideImageLoader.displayImage(MaterialQueryActivity.this, item.getLogo(), (ImageView) viewHolder.getView(R.id.iv_item));
             }
         });
     }

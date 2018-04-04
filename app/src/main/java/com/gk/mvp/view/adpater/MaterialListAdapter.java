@@ -18,7 +18,6 @@ import com.gk.tools.JdryTime;
 
 public class MaterialListAdapter extends JdryBaseAdapter {
 
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
     private int type = 0;
 
     public MaterialListAdapter(Context context, int type) {
@@ -53,7 +52,7 @@ public class MaterialListAdapter extends JdryBaseAdapter {
             setTitle(viewHolder, type);
         }
 
-        glideImageLoader.displayImage(mContext, item.getLogo(), viewHolder.iv_item);
+        GlideImageLoader.displayImage(mContext, item.getLogo(), viewHolder.iv_item);
 
         return convertView;
     }

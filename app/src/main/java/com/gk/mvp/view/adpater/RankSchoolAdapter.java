@@ -20,7 +20,6 @@ import java.util.List;
 
 public class RankSchoolAdapter extends JdryBaseAdapter {
 
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
 
     public RankSchoolAdapter(Context context) {
         super(context);
@@ -65,7 +64,7 @@ public class RankSchoolAdapter extends JdryBaseAdapter {
             viewHolder.tv_school_mark_2.setText("双一流");
         }
 
-        glideImageLoader.displayByImgRes(mContext, dataBean.getSchoolLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);
+        GlideImageLoader.displayByImgRes(mContext, dataBean.getSchoolLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);
 
         viewHolder.tv_school_name.setText(dataBean.getSchoolName());
         viewHolder.tv_school_type.setText(getPici(dataBean.getSchoolBatch()));

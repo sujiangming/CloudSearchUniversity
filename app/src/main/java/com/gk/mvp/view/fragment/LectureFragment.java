@@ -174,7 +174,6 @@ public class LectureFragment extends SjmBaseFragment {
 
     private JSONObject jsonObject = new JSONObject();
     private LectureBean lectureBean;
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -249,13 +248,13 @@ public class LectureFragment extends SjmBaseFragment {
             llMsjtPart1.setVisibility(View.VISIBLE);
             llMsjzList[0].setVisibility(View.VISIBLE);
             String path = msjt.get(0).getLogo();
-            glideImageLoader.displayImage(getContext(), path, ivMsjtList[0]);
+            GlideImageLoader.displayImage(getContext(), path, ivMsjtList[0]);
             tvMsjzList[0].setText(msjt.get(0).getName());
         } else if (msjtLen == 2) {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.MsjtBean msjtBean = msjt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(getContext(), path, ivMsjtList[i]);
+                GlideImageLoader.displayImage(getContext(), path, ivMsjtList[i]);
                 tvMsjzList[i].setText(msjtBean.getName());
                 llMsjzList[i].setVisibility(View.VISIBLE);
             }
@@ -264,7 +263,7 @@ public class LectureFragment extends SjmBaseFragment {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.MsjtBean msjtBean = msjt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(getContext(), path, ivMsjtList[i]);
+                GlideImageLoader.displayImage(getContext(), path, ivMsjtList[i]);
                 tvMsjzList[i].setText(msjtBean.getName());
                 llMsjzList[i].setVisibility(View.VISIBLE);
             }
@@ -274,7 +273,7 @@ public class LectureFragment extends SjmBaseFragment {
             for (int i = 0; i < 4; ++i) {
                 LectureBean.MsjtBean msjtBean = msjt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(getContext(), path, ivMsjtList[i]);
+                GlideImageLoader.displayImage(getContext(), path, ivMsjtList[i]);
                 tvMsjzList[i].setText(msjtBean.getName());
                 llMsjzList[i].setVisibility(View.VISIBLE);
             }
@@ -293,13 +292,13 @@ public class LectureFragment extends SjmBaseFragment {
             llLsztPart1.setVisibility(View.VISIBLE);
             llLiztList[0].setVisibility(View.VISIBLE);
             String path = lnzt.get(0).getLogo();
-            glideImageLoader.displayImage(getContext(), path, ivLiztList[0]);
+            GlideImageLoader.displayImage(getContext(), path, ivLiztList[0]);
             tvLiztList[0].setText(lnzt.get(0).getName());
         } else if (msjtLen == 2) {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.LnztBean msjtBean = lnzt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(getContext(), path, ivLiztList[i]);
+                GlideImageLoader.displayImage(getContext(), path, ivLiztList[i]);
                 tvLiztList[i].setText(msjtBean.getName());
                 llLiztList[i].setVisibility(View.VISIBLE);
             }
@@ -308,7 +307,7 @@ public class LectureFragment extends SjmBaseFragment {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.LnztBean msjtBean = lnzt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(getContext(), path, ivLiztList[i]);
+                GlideImageLoader.displayImage(getContext(), path, ivLiztList[i]);
                 tvLiztList[i].setText(msjtBean.getName());
                 llLiztList[i].setVisibility(View.VISIBLE);
             }
@@ -318,7 +317,7 @@ public class LectureFragment extends SjmBaseFragment {
             for (int i = 0; i < 4; ++i) {
                 LectureBean.LnztBean msjtBean = lnzt.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(getContext(), path, ivLiztList[i]);
+                GlideImageLoader.displayImage(getContext(), path, ivLiztList[i]);
                 tvLiztList[i].setText(msjtBean.getName());
                 llLiztList[i].setVisibility(View.VISIBLE);
             }
@@ -337,13 +336,13 @@ public class LectureFragment extends SjmBaseFragment {
             llMnsjPart1.setVisibility(View.VISIBLE);
             llMnsjList[0].setVisibility(View.VISIBLE);
             String path = mnsj.get(0).getLogo();
-            glideImageLoader.displayImage(getContext(), path, ivMnsjList[0]);
+            GlideImageLoader.displayImage(getContext(), path, ivMnsjList[0]);
             tvMnsjList[0].setText(mnsj.get(0).getName());
         } else if (msjtLen == 2) {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.MnsjBean msjtBean = mnsj.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(getContext(), path, ivMnsjList[i]);
+                GlideImageLoader.displayImage(getContext(), path, ivMnsjList[i]);
                 tvMnsjList[i].setText(msjtBean.getName());
                 llMnsjList[i].setVisibility(View.VISIBLE);
             }
@@ -352,7 +351,7 @@ public class LectureFragment extends SjmBaseFragment {
             for (int i = 0; i < msjtLen; ++i) {
                 LectureBean.MnsjBean msjtBean = mnsj.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(getContext(), path, ivMnsjList[i]);
+                GlideImageLoader.displayImage(getContext(), path, ivMnsjList[i]);
                 tvMnsjList[i].setText(msjtBean.getName());
                 llMnsjList[i].setVisibility(View.VISIBLE);
             }
@@ -362,7 +361,7 @@ public class LectureFragment extends SjmBaseFragment {
             for (int i = 0; i < 4; ++i) {
                 LectureBean.MnsjBean msjtBean = mnsj.get(i);
                 String path = msjtBean.getLogo();
-                glideImageLoader.displayImage(getContext(), path, ivMnsjList[i]);
+                GlideImageLoader.displayImage(getContext(), path, ivMnsjList[i]);
                 tvMnsjList[i].setText(msjtBean.getName());
                 llMnsjList[i].setVisibility(View.VISIBLE);
             }

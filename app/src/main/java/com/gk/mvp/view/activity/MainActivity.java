@@ -127,7 +127,6 @@ public class MainActivity extends SjmBaseActivity {
     private int[] imageViewChangeRes = {R.drawable.shouye_press, R.drawable.zhibo_press, R.drawable.gaokaozhiyuan_selected3x, R.drawable.gaokao_press, R.drawable.my_press};
 
     private int index = 0;
-    private GlideImageLoader glideImageLoader = new GlideImageLoader();
     private VersionBean versionBean = null;
 
     @Override
@@ -370,7 +369,7 @@ public class MainActivity extends SjmBaseActivity {
     protected void onStart() {
         super.onStart();
         getPersimmions();
-        glideImageLoader.displayImage(this, LoginBean.getInstance().getHeadImg(), ivUserHeader);
+        GlideImageLoader.displayImage(this, LoginBean.getInstance().getHeadImg(), ivUserHeader);
         String userCname = LoginBean.getInstance().getNickName() == null ? "未填写" : LoginBean.getInstance().getNickName();
         tvWelcome.setText(userCname + ",欢迎回来！");
     }
@@ -382,6 +381,7 @@ public class MainActivity extends SjmBaseActivity {
         if(null != presenterManager && null != presenterManager.getCall()){
             presenterManager.getCall().cancel();
         }
+        //GlideImageLoader.stopLoad(this);
     }
 
 
