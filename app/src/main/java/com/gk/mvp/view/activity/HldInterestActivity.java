@@ -415,5 +415,8 @@ public class HldInterestActivity extends SjmBaseActivity {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
         mHandler = null;
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
     }
 }

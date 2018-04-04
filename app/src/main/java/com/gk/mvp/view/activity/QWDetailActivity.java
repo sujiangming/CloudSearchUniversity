@@ -141,6 +141,14 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
+
     private void addViewTimes() {
         presenterManager.setCall(RetrofitUtil.getInstance()
                 .createReq(IService.class).addViewTimes(jsonObject.toJSONString()))

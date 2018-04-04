@@ -132,6 +132,14 @@ public class IntelligentActivity extends SjmBaseActivity {
                 .request(time);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
+
     private void generateReport(int type, int order) {
         showProgress();
         jsonObject.put("reportType", type);

@@ -329,4 +329,13 @@ public class MaterialListActivity extends SjmBaseActivity {
         }
         startActivity(intent);
     }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
 }

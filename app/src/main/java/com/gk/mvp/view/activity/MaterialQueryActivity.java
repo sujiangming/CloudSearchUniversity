@@ -119,6 +119,15 @@ public class MaterialQueryActivity extends SjmBaseActivity {
                 .request();
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
+
     @Override
     public void refresh() {
         mPage = 0;

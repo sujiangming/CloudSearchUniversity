@@ -144,4 +144,12 @@ public class SplashActivity extends SjmBaseActivity {
         }
         return false;
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
 }

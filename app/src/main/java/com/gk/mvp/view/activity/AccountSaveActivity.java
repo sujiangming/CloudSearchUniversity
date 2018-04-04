@@ -120,4 +120,12 @@ public class AccountSaveActivity extends SjmBaseActivity {
         toast(YXXConstants.ERROR_INFO);
         hideProgress();
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
 }

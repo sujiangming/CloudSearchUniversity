@@ -120,6 +120,14 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
+
+    @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
         List<HLDTestBean> hldTestBeans = JSON.parseArray(commonBean.getData().toString(), HLDTestBean.class);

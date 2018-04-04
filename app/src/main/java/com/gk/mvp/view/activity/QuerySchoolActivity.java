@@ -335,6 +335,14 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
+
+    @Override
     public void refresh() {
         mPage = 0;
         isLoadMore = false;

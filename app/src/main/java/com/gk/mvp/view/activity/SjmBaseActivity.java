@@ -106,7 +106,7 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
     }
 
     public void setTextViewValues(TextView textView, String value) {
-        if (!TextUtils.isEmpty(value)) {
+        if (null != textView && !TextUtils.isEmpty(value)) {
             textView.setText(value);
         }
     }

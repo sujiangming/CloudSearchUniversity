@@ -106,6 +106,7 @@ public class MBTIActivity extends SjmBaseActivity {
     }
 
 
+
     private UserRechargeTimes.Data rechargeTimesData = null;
 
     private void getUserRechargeTimes() {
@@ -415,5 +416,9 @@ public class MBTIActivity extends SjmBaseActivity {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
         mHandler = null;
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
     }
+
 }

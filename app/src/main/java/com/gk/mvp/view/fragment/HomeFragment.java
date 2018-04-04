@@ -1,8 +1,10 @@
 package com.gk.mvp.view.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
 import com.gk.R;
@@ -29,6 +31,7 @@ import com.gk.mvp.view.activity.WishReportEnterActivity;
 import com.gk.tools.GlideImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -97,7 +100,12 @@ public class HomeFragment extends SjmBaseFragment {
             imageNameList.add(mDataBeans.get(i).getName());
             imageRedirectUrlList.add(mDataBeans.get(i).getRedirectUrl());
         }
-        banner.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
+        banner.setImages(imageList).setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                GlideImageLoader.displayImage(context, path, imageView);
+            }
+        }).start();
         banner.setOnBannerListener(new OnBannerListener() {
             @Override
             public void OnBannerClick(int position) {

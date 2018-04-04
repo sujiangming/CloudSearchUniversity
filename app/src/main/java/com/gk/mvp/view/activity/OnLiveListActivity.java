@@ -98,4 +98,12 @@ public class OnLiveListActivity extends SjmBaseActivity {
         stopRefreshLayout();
     }
 
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
 }

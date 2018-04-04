@@ -197,13 +197,13 @@ public class LectureFragment extends SjmBaseFragment {
         tvMnsjList = new TextView[]{tvMnsj1, tvMnsj2, tvMnsj3, tvMnsj4};
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            invoke(0);
-        }
-    }
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden) {
+//            invoke(0);
+//        }
+//    }
 
     private PresenterManager presenterManager = new PresenterManager().setmIView(this);
 
@@ -213,6 +213,7 @@ public class LectureFragment extends SjmBaseFragment {
         presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).getMaterialsList(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_FORTH_TIME);
     }
+
 
     @Override
     public <T> void fillWithData(T t, int order) {

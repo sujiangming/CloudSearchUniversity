@@ -161,6 +161,8 @@ public class MainActivity extends SjmBaseActivity {
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
+
+
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
@@ -377,7 +379,11 @@ public class MainActivity extends SjmBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         destroyAsyncTask();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
     }
+
 
     private String permissionInfo;
     private final int SDK_PERMISSION_REQUEST = 127;

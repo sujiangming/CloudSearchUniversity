@@ -124,4 +124,12 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
             }
         });
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
 }

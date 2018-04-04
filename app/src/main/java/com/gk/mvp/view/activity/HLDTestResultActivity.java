@@ -290,5 +290,9 @@ public class HLDTestResultActivity extends SjmBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         destroyWebView();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
     }
+
 }

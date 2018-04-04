@@ -157,6 +157,14 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
                 .requestForResponseBody(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
+
     private void search(String selfUniversityName) {
         showProgress();
         jsonObject.put("selfUniversityName", selfUniversityName);

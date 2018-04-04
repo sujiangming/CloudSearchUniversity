@@ -84,6 +84,8 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
         adapter.update(schoolBeanList);
     }
 
+
+
     private void invoke() {
         showProgress();
         jsonObject.put("page", mPage);
@@ -200,7 +202,7 @@ public class SchoolZSPlanActivity extends SjmBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (null != presenterManager) {
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
     }

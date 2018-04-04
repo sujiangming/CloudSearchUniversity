@@ -429,6 +429,14 @@ public class PersonInfoActivity extends SjmBaseActivity {
 
     private PresenterManager presenterManager = new PresenterManager();
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
+
     /**
      * update user info
      *

@@ -195,6 +195,14 @@ public class MBTITestResultActivity extends SjmBaseActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
+    }
+
+    @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         CommonBean commonBean = (CommonBean) t;

@@ -8,15 +8,14 @@ import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.gk.R;
 import com.gk.mvp.view.custom.GlideCircleTransform;
-import com.youth.banner.loader.ImageLoader;
 
 /**
  * Created by JDRY-SJM on 2017/9/6.
  */
 
-public class GlideImageLoader extends ImageLoader {
+public class GlideImageLoader {
 
-    public void displayImage(Context context, Object path, ImageView imageView) {
+    public static void displayImage(Context context, Object path, ImageView imageView) {
         //Glide 加载图片简单用法
         Glide.with(context)
                 .load(path)
@@ -30,7 +29,7 @@ public class GlideImageLoader extends ImageLoader {
                 .into(imageView);
     }
 
-    public void displayCircleRadius(Context context, Object path, ImageView imageView, int radius) {
+    public static void displayCircleRadius(Context context, Object path, ImageView imageView, int radius) {
         Glide.with(context)
                 .load(path)
                 .crossFade()
@@ -44,7 +43,7 @@ public class GlideImageLoader extends ImageLoader {
                 .into(imageView);
     }
 
-    public void displayByImgRes(Context context, Object path, ImageView imageView, int imgRes) {
+    public static void displayByImgRes(Context context, Object path, ImageView imageView, int imgRes) {
         Glide.with(context)
                 .load(path)
                 .crossFade()

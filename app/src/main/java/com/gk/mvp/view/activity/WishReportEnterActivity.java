@@ -98,6 +98,14 @@ public class WishReportEnterActivity extends SjmBaseActivity {
                 .request(time);
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != presenterManager && null != presenterManager.getCall()) {
+            presenterManager.getCall().cancel();
+        }
+    }
+
     private void generateReport(int type, int order) {
         showProgress();
         jsonObject.put("reportType", type);
@@ -109,6 +117,10 @@ public class WishReportEnterActivity extends SjmBaseActivity {
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         CommonBean commonBean = (CommonBean) t;
+        if (null == commonBean) {
+            toast(YXXConstants.ERROR_INFO);
+            return;
+        }
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 setWishResultBean(commonBean);

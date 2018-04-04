@@ -124,6 +124,8 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
                 .request();
     }
 
+
+
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
@@ -244,5 +246,10 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
         mHandler = null;
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
     }
+
+
 }

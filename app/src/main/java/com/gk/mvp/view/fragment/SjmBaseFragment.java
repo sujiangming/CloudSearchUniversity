@@ -12,7 +12,6 @@ import android.view.ViewGroup;
 import com.gk.global.YXXApplication;
 import com.gk.mvp.view.IView;
 import com.gk.mvp.view.custom.SjmProgressBar;
-import com.gk.tools.AppManager;
 import com.gk.tools.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -36,7 +35,7 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
     protected Context mContext;
     protected View mRootView;
 
-    private AppManager appManager = AppManager.getAppManager();
+    //private AppManager appManager = AppManager.getAppManager();
 
     private SjmProgressBar jdryProgressBar;
 
@@ -94,11 +93,13 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
     }
 
     public void closeActivity() {
-        appManager.finishActivity();
+        //appManager.finishActivity();
+        getActivity().finish();
     }
 
     public void closeActivity(Activity activity) {
-        appManager.finishActivity(activity);
+        // appManager.finishActivity(activity);
+        activity.finish();
     }
 
     @Override
@@ -177,7 +178,7 @@ public abstract class SjmBaseFragment extends Fragment implements IView {
 
     public void stopLayoutRefreshByTag(boolean isLoadMore) {
         if (isLoadMore) {
-           stopRefreshLayoutLoadMore();
+            stopRefreshLayoutLoadMore();
         } else {
             stopRefreshLayout();
         }

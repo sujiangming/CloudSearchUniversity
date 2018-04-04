@@ -226,9 +226,9 @@ public class VIPActivity extends SjmBaseActivity {
                             CommonBean commonBean = response.body();
                             VIPPriceBean priceBean = JSON.parseObject(commonBean.getData().toString(), VIPPriceBean.class);
                             if (priceBean != null) {
-                                rtvDiamondPrice.setText("钻石卡会员服务 ￥" + priceBean.getVipLevel3Amount() + "元");
-                                rtv_gold_price.setText("金卡会员服务 ￥" + priceBean.getVipLevel2Amount() + "元");
-                                rtv_silver_price.setText("银卡会员服务 ￥" + priceBean.getVipLevel1Amount() + "元");
+                                setTextViewValues(rtvDiamondPrice,"钻石卡会员服务 ￥" + priceBean.getVipLevel3Amount() + "元");
+                                setTextViewValues(rtv_gold_price,"金卡会员服务 ￥" + priceBean.getVipLevel2Amount() + "元");
+                                setTextViewValues(rtv_silver_price,"银卡会员服务 ￥" + priceBean.getVipLevel1Amount() + "元");
                             }
                         }
                     }
@@ -323,9 +323,7 @@ public class VIPActivity extends SjmBaseActivity {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("vipLevel", level);
-        new PresenterManager()
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class)
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .addUserOrder(jsonObject.toJSONString()))
                 .request();
     }
@@ -457,10 +455,15 @@ public class VIPActivity extends SjmBaseActivity {
                 });
     }
 
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
         mHandler = null;
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
     }
 }

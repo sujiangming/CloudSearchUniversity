@@ -1,9 +1,9 @@
 package com.gk.beans;
 
 import org.greenrobot.greendao.annotation.Entity;
+import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Unique;
-import org.greenrobot.greendao.annotation.Generated;
 
 /**
  * Created by JDRY-SJM on 2017/10/10.

@@ -477,6 +477,8 @@ public class LqRiskActivity extends SjmBaseActivity {
                 .request(YXXConstants.INVOKE_API_THREE_TIME);
     }
 
+
+
     @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
@@ -601,5 +603,9 @@ public class LqRiskActivity extends SjmBaseActivity {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
         mHandler = null;
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
     }
+
 }

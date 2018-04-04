@@ -193,6 +193,8 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
 
+
+
     private void addCommentInter() {
         String edit = etComment.getText().toString();
         if (TextUtils.isEmpty(edit)) {
@@ -386,8 +388,10 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoPlayer.releaseAllVideos();
-        if (orientationUtils != null)
-            orientationUtils.releaseListener();
+        if (orientationUtils != null) orientationUtils.releaseListener();
+        if(null != presenterManager && null != presenterManager.getCall()){
+            presenterManager.getCall().cancel();
+        }
     }
 
     @Override

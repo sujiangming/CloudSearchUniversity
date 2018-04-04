@@ -76,6 +76,7 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
     private int pageType = 1;//默认当前页面是本科页面 2 为专科页面
     private String majorJson = null;
     private MajorBean majorBean;
+    private DownTask asyncTask = new DownTask();
 
     @Override
     public int getResouceId() {
@@ -92,8 +93,15 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
             return;
         }
         //取出存储的数据，直接显示
-        new DownTask().execute("execute");
+        asyncTask.execute("execute");
         setSearchViewText(searchView);
+    }
+
+    private void destroyAsyncTask() {
+        if (asyncTask != null && !asyncTask.isCancelled()) {
+            asyncTask.cancel(true);
+        }
+        asyncTask = null;
     }
 
     /**
@@ -320,5 +328,11 @@ public class ProfessionalQueryActivity extends SjmBaseActivity implements Expand
         mHiddenAction.setDuration(250);
         llSearch.setAnimation(mHiddenAction);
         llSearch.setVisibility(View.GONE);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destroyAsyncTask();
     }
 }

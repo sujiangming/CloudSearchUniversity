@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 
@@ -26,6 +27,7 @@ import com.gk.tools.GlideImageLoader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
+import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,13 +74,13 @@ public class LiveVideoFragment extends SjmBaseFragment {
         invoke(0);
     }
 
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            invoke(0);
-        }
-    }
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        if (!hidden) {
+//            invoke(0);
+//        }
+//    }
 
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
@@ -116,7 +118,7 @@ public class LiveVideoFragment extends SjmBaseFragment {
 
     private void getVideoAdsList() {
         presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class)
-                        .getVideoAdsList())
+                .getVideoAdsList())
                 .request(YXXConstants.INVOKE_API_SECOND_TIME);
     }
 
@@ -168,7 +170,12 @@ public class LiveVideoFragment extends SjmBaseFragment {
         for (int i = 0; i < list.size(); i++) {
             imageList.add(list.get(i).getLiveCrossLogo());
         }
-        banner.setImages(imageList).setImageLoader(new GlideImageLoader()).start();
+        banner.setImages(imageList).setImageLoader(new ImageLoader() {
+            @Override
+            public void displayImage(Context context, Object path, ImageView imageView) {
+                GlideImageLoader.displayImage(context, path, imageView);
+            }
+        }).start();
     }
 
     private void addListener() {
