@@ -56,8 +56,6 @@ public class WishReportResultActivity extends SjmBaseActivity {
     private String[] orderIndex = {"①  ", "②  ", "③  ", "④  ", "⑤  ", "⑥  ", "⑦  ", "⑧  ", "⑨  ", "⑩  "};
     private int type = 0;
 
-    private WishResultBean wishResultBean = null;
-
     @Override
     public int getResouceId() {
         return R.layout.activity_wish_report_result;
@@ -67,7 +65,7 @@ public class WishReportResultActivity extends SjmBaseActivity {
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "我的志愿报告", 0);
         type = getIntent().getIntExtra("type", 0);
-        wishResultBean = (WishResultBean) getIntent().getSerializableExtra("bean");
+        WishResultBean wishResultBean = (WishResultBean) getIntent().getSerializableExtra("bean");
         if (null != wishResultBean) {
             initData(wishResultBean);
         }
@@ -139,7 +137,7 @@ public class WishReportResultActivity extends SjmBaseActivity {
 
                 if (null != firstBean.getRecommend_majors() && !"".equals(firstBean.getRecommend_majors())) {
                     String[] recommendMajors = firstBean.getRecommend_majors().split(",");
-                    if (recommendMajors != null && recommendMajors.length > 0) {
+                    if (recommendMajors.length > 0) {
                         for (int j = 0; j < recommendMajors.length; j++) {
                             View view1 = View.inflate(this, R.layout.wish_result_item_child, null);
                             TextView tvLeft = view1.findViewById(R.id.tv_left);
@@ -191,7 +189,7 @@ public class WishReportResultActivity extends SjmBaseActivity {
 
                 if (null != firstBean.getRecommend_majors() && !"".equals(firstBean.getRecommend_majors())) {
                     String[] recommendMajors = firstBean.getRecommend_majors().split(",");
-                    if (recommendMajors != null && recommendMajors.length > 0) {
+                    if (recommendMajors.length > 0) {
                         for (int j = 0; j < recommendMajors.length; j++) {
                             View view1 = View.inflate(this, R.layout.wish_result_item_child, null);
                             TextView tvLeft = view1.findViewById(R.id.tv_left);

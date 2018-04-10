@@ -19,12 +19,12 @@ android {
     }
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         greendao {
             //每次新增表或者新增字段或者删除表，都需要更改这个地方的数值，只认正整数
-            schemaVersion 6
+            schemaVersion 8
         }
     }
     //关于超过64K方法分Dex的解决办法
@@ -59,24 +59,19 @@ dependencies {
     compile 'com.youth.banner:banner:1.4.10'
     //add greenDao library
     compile 'org.greenrobot:greendao:3.2.2'
-    //视频播放器 //根据你的需求添加so文件
-    //compile 'com.shuyu:GSYVideoPlayer:2.1.0'
+    //视频播放器
     compile 'com.shuyu:gsyVideoPlayer-java:3.0.0'
     compile 'com.shuyu:gsyVideoPlayer-ex_so:3.0.0'
-    //万能adapter for listView
-    compile 'com.zhy:base-adapter:3.0.3'
-    //万能adapter for RecyclerView
+    //万能适配器
     compile 'com.zhy:base-rvadapter:3.0.3'
     //打开相册加载框架
     compile 'cn.finalteam:galleryfinal:1.4.8.7'
     compile 'com.android.support:support-v4:26.1.0'
-    compile 'com.baoyz.actionsheet:library:1.1.4'
     compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
     //微信集成
     compile 'com.tencent.mm.opensdk:wechat-sdk-android-with-mta:+'
     implementation files('libs/alipaySdk-20170922.jar')
     //直播点赞心形效果
-    compile 'tyrant:heartlayout:1.0.1'
     //ExpandableTextView
     compile 'com.ms-square:expandableTextView:0.1.4'
     implementation files('libs/fastjson-1.1.68.android.jar')

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:keep="@layout/on_live_list_item">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_margin="@dimen/space_5_dp"
             android:scaleType="fitXY"
-            android:src="@drawable/wish_report" />
+            android:src="@drawable/wish_report_bg" />
 
         <TextView
             android:id="@+id/tv_on_live_name"

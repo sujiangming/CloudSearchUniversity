@@ -1,6 +1,7 @@
 package com.gk.mvp.view.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
@@ -15,7 +16,6 @@ import com.gk.beans.LoginBean;
 import com.gk.beans.MBITTbale;
 import com.gk.beans.MBITTbaleDao;
 import com.gk.beans.MBTIResultBean;
-import com.gk.beans.MBTITypeEnum;
 import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
@@ -122,6 +122,7 @@ public class MBTITestResultActivity extends SjmBaseActivity {
     private TextView[] mbtiTypesTvs;
     private TextView[] mbtiTypesTvsDesc;
     private TextView[] mbtiCareerSummaryTvs;
+    private JSONObject mbtiJsonObject = new JSONObject();
 
     @Override
     public int getResouceId() {
@@ -142,6 +143,18 @@ public class MBTITestResultActivity extends SjmBaseActivity {
             mbtiResultBean = (MBTIResultBean) getIntent().getSerializableExtra("bean");
             initData();
         }
+        initJSONObject();
+    }
+
+    private void initJSONObject() {
+        mbtiJsonObject.put("E", "外向");
+        mbtiJsonObject.put("I", "内向");
+        mbtiJsonObject.put("S", "实感");
+        mbtiJsonObject.put("N", "直觉");
+        mbtiJsonObject.put("T", "思考");
+        mbtiJsonObject.put("F", "情感");
+        mbtiJsonObject.put("J", "判断");
+        mbtiJsonObject.put("P", "知觉");
     }
 
     private void minusUserRechargeTimes() {
@@ -152,15 +165,12 @@ public class MBTITestResultActivity extends SjmBaseActivity {
                 .minusUserRechargeTimes(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                        if (response.isSuccessful()) {
-                            CommonBean rechargeTimes = response.body();
-                            return;
-                        }
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
+
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
 
                     }
                 });
@@ -197,7 +207,7 @@ public class MBTITestResultActivity extends SjmBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
     }
@@ -206,6 +216,8 @@ public class MBTITestResultActivity extends SjmBaseActivity {
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         CommonBean commonBean = (CommonBean) t;
+        assert null != commonBean;
+        assert null != commonBean.getData();
         mbtiResultBean = JSON.parseObject(commonBean.getData().toString(), MBTIResultBean.class);
         initData();
     }
@@ -233,7 +245,7 @@ public class MBTITestResultActivity extends SjmBaseActivity {
             int len = types.length;
             for (int i = 0; i < len; i++) {
                 mbtiTypesTvs[i].setText(types[i]);
-                mbtiTypesTvsDesc[i].setText(MBTITypeEnum.getName(types[i]));
+                mbtiTypesTvsDesc[i].setText(mbtiJsonObject.getString(types[i]));
             }
         }
         String careerSummary = mbtiResultBean.getCareerSummary();
@@ -292,9 +304,9 @@ public class MBTITestResultActivity extends SjmBaseActivity {
                     String[] strings = recommond.split(",");
                     for (int j = 0; j < strings.length; j++) {
                         if (j == (strings.length - 1)) {
-                            values.append(j + "、").append(strings[j]);
+                            values.append(j).append("、").append(strings[j]);
                         } else {
-                            values.append(j + "、").append(strings[j]).append("\n");
+                            values.append(j).append("、").append(strings[j]).append("\n");
                         }
                     }
                 }

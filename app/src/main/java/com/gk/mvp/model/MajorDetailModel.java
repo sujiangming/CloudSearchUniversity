@@ -1,5 +1,7 @@
 package com.gk.mvp.model;
 
+import android.support.annotation.NonNull;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.beans.MajorInfoBean;
@@ -31,7 +33,7 @@ public class MajorDetailModel {
         jsonObject.put("majorTypeId", pid);
         RetrofitUtil.getInstance().createReq(IService.class).getMajorInfoList(jsonObject.toJSONString()).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
                         String body = response.body().string();
@@ -44,7 +46,7 @@ public class MajorDetailModel {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 iPresenterCallback.httpRequestFailure(t.getMessage(), 1);
             }
         });

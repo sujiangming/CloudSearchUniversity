@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:orientation="vertical"
     android:paddingLeft="@dimen/space_20_dp"
     android:paddingRight="@dimen/space_20_dp">

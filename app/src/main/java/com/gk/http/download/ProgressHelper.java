@@ -1,5 +1,6 @@
 package com.gk.http.download;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import java.io.IOException;
@@ -41,7 +42,7 @@ public class ProgressHelper {
         //添加拦截器，自定义ResponseBody，添加下载进度
         builder.networkInterceptors().add(new Interceptor() {
             @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
+            public okhttp3.Response intercept(@NonNull Chain chain) throws IOException {
                 okhttp3.Response originalResponse = chain.proceed(chain.request());
                 return originalResponse.newBuilder().body(
                         new ProgressResponseBody(originalResponse.body(), progressListener))

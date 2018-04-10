@@ -60,7 +60,7 @@ public class JdryPersistence {
         SharedPreferences sp = context.getSharedPreferences(objName, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sp.edit();
         edit.putString(objName, strObject);
-        edit.commit();
+        edit.apply();
     }
 
     public static String getObject(Context context, String objName) {
@@ -72,7 +72,7 @@ public class JdryPersistence {
         SharedPreferences sp = YXXApplication.getInstance().getApplicationContext().getSharedPreferences(objName, Context.MODE_PRIVATE);
         SharedPreferences.Editor edit = sp.edit();
         edit.putString(objName, strObject);
-        edit.commit();
+        edit.apply();
     }
 
     public static String getObjectByAppContext(String objName) {
@@ -84,13 +84,13 @@ public class JdryPersistence {
         SharedPreferences sp = context.getSharedPreferences(keyName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.remove(keyName);
-        editor.commit();
+        editor.apply();
     }
 
     public static void clearLoginBean(Context context, String keyName) {
         SharedPreferences sp = context.getSharedPreferences(keyName, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sp.edit();
         editor.clear();
-        editor.commit();
+        editor.apply();
     }
 }

@@ -159,11 +159,11 @@ public class CommonTipDialog extends Dialog {
         messageStr = message;
     }
     public interface onYesOnclickListener {
-        public void onYesClick();
+        void onYesClick();
     }
 
     public interface onNoOnclickListener {
-        public void onNoClick();
+        void onNoClick();
     }
 
 }

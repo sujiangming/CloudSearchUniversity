@@ -16,10 +16,10 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.VIPActivity;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.tools.YxxUtils;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +38,7 @@ public class SchoolDetailLqDataFragment extends SjmBaseFragment {
 
     private List<UniversityLuQuDataBean> list = new ArrayList<>();
     private String uniName;
+    private CommonAdapter adapter;
 
     @Override
     public int getResourceId() {
@@ -47,6 +48,7 @@ public class SchoolDetailLqDataFragment extends SjmBaseFragment {
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
         uniName = getArguments().getString("uniName");
+        initAdapter();
     }
 
     @Override
@@ -129,16 +131,21 @@ public class SchoolDetailLqDataFragment extends SjmBaseFragment {
     private void handleData(List<UniversityLuQuDataBean> luQuDataBeans) {
         list.clear();
         list = luQuDataBeans;
-        lvScore.setAdapter(new CommonAdapter<UniversityLuQuDataBean>(getContext(), R.layout.school_detail_luqu_item, list) {
+        adapter.setItems(list);
+    }
+
+    private void initAdapter() {
+        adapter = new CommonAdapter<UniversityLuQuDataBean>(getContext(), list, R.layout.school_detail_luqu_item) {
             @Override
-            protected void convert(ViewHolder viewHolder, UniversityLuQuDataBean item, int position) {
+            public void convert(ViewHolder viewHolder, UniversityLuQuDataBean item) {
                 viewHolder.setText(R.id.tv_zy_name, item.getMajorName());
                 viewHolder.setText(R.id.tv_year, item.getYearStr());
                 viewHolder.setText(R.id.tv_type, item.getSubjectType());
                 viewHolder.setText(R.id.tv_score_hight, item.getHighestScore());
                 viewHolder.setText(R.id.tv_score_lower, item.getLowestScore());
             }
-        });
+        };
+        lvScore.setAdapter(adapter);
     }
 
 }

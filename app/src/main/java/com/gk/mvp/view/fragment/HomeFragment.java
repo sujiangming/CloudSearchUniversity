@@ -3,6 +3,7 @@ package com.gk.mvp.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -73,10 +74,10 @@ public class HomeFragment extends SjmBaseFragment {
         RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList()
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
+                            if ((commonBean != null ? commonBean.getStatus() : 0) == 1) {
                                 List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean.getData().toString(), AdsBean.MDataBean.class);
                                 AdsBean.getInstance().saveAdsBean(mDataBeans);
                                 initBannerData(mDataBeans);
@@ -85,7 +86,7 @@ public class HomeFragment extends SjmBaseFragment {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
 
                     }
                 });
@@ -93,11 +94,11 @@ public class HomeFragment extends SjmBaseFragment {
 
     private void initBannerData(List<AdsBean.MDataBean> mDataBeans) {
         final List<String> imageList = new ArrayList<>();
-        final List<String> imageNameList = new ArrayList<>();
+        //final List<String> imageNameList = new ArrayList<>();
         final List<String> imageRedirectUrlList = new ArrayList<>();
         for (int i = 0; i < mDataBeans.size(); i++) {
             imageList.add(mDataBeans.get(i).getUrl());
-            imageNameList.add(mDataBeans.get(i).getName());
+            //imageNameList.add(mDataBeans.get(i).getName());
             imageRedirectUrlList.add(mDataBeans.get(i).getRedirectUrl());
         }
         banner.setImages(imageList).setImageLoader(new ImageLoader() {

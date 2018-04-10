@@ -1,5 +1,7 @@
 package com.gk.http.download;
 
+import android.support.annotation.NonNull;
+
 import com.gk.global.YXXConstants;
 import com.gk.http.FastJsonConverterFactory;
 import com.gk.http.RetrofitUtil;
@@ -30,7 +32,7 @@ public class RetrofitDownloadUtils {
     }
 
     public RetrofitDownloadUtils setProgressListener(ProgressListener progressListener) {
-        this.progressListener = progressListener;
+        RetrofitDownloadUtils.progressListener = progressListener;
         return mInstance;
     }
 
@@ -42,7 +44,7 @@ public class RetrofitDownloadUtils {
         builder.connectTimeout(DEFAULT_TIMEOUT, TimeUnit.SECONDS);
         builder.addNetworkInterceptor(new Interceptor() {
             @Override
-            public okhttp3.Response intercept(Chain chain) throws IOException {
+            public okhttp3.Response intercept(@NonNull Chain chain) throws IOException {
                 okhttp3.Response orginalResponse = chain.proceed(chain.request());
                 return orginalResponse.newBuilder()
                         .body(new ProgressResponseBody(orginalResponse.body(),progressListener)).build();

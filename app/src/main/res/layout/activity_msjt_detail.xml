@@ -12,7 +12,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer
                 android:id="@+id/video_player_live_detail"

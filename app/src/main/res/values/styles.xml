@@ -5,9 +5,10 @@
         <item name="colorPrimary">@color/colorPrimary</item><!-- 状态栏 -->
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item><!-- toolbar -->
         <item name="colorAccent">@color/colorAccent</item> <!-- 重点 -->
+        <item name="android:background">@null</item>
         <item name="actionSheetStyle">@style/ActionSheetStyleiOS7</item>
-        <!--自定义AlertDialog-->
-        <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert.Self</item>
+        <item name="alertDialogTheme">@style/Theme.AppCompat.Light.Dialog.Alert.Self
+        </item> <!--自定义AlertDialog-->
     </style>
 
     <style name="jdryStyle" parent="BaseAppTheme">
@@ -64,6 +65,12 @@
         <item name="android:textSize">@dimen/text_16_sp</item>
     </style>
 
+    <!--自定义alertDialog样式-->
+    <style name="Theme.AppCompat.Light.Dialog.Alert.Self" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
+        <!--修改AlertDialog按钮的颜色-->
+        <item name="colorAccent">#3F51B5</item>
+    </style>
+
     <!-- iOS7 Style -->
     <style name="ActionSheetStyleiOS7">
         <item name="actionSheetBackground">@android:color/transparent</item>
@@ -80,9 +87,4 @@
         <item name="actionSheetTextSize">12sp</item>
     </style>
 
-    <!--自定义alertDialog样式-->
-    <style name="Theme.AppCompat.Light.Dialog.Alert.Self" parent="@style/Theme.AppCompat.Light.Dialog.Alert">
-        <!--修改AlertDialog按钮的颜色-->
-        <item name="colorAccent">#3F51B5</item>
-    </style>
 </resources>

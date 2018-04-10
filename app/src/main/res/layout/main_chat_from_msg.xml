@@ -1,48 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="horizontal">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <com.gk.mvp.view.custom.CircleImageView
-                android:id="@+id/chat_from_icon"
-                android:layout_width="49dp"
-                android:layout_height="49dp"
-                android:src="@drawable/ym" />
-
-            <TextView
-                android:id="@+id/chat_from_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:text="小黑"
-                android:textColor="@color/color555555"
-                android:textSize="@dimen/font_12_sp" />
-        </LinearLayout>
+        <com.gk.mvp.view.custom.CircleImageView
+            android:id="@+id/chat_from_icon"
+            android:layout_width="49dp"
+            android:layout_height="49dp"
+            android:src="@drawable/ym" />
 
         <TextView
-            android:id="@+id/chat_from_content"
+            android:id="@+id/chat_from_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/chatfrom_bg_normal"
-            android:clickable="true"
-            android:focusable="true"
-            android:gravity="center_vertical"
-            android:lineSpacingExtra="2dp"
-            android:minHeight="30dp"
-            android:text="有大吗。。。"
-            android:textColor="@color/color353535"
-            android:textSize="@dimen/font_14_sp" />
+            android:layout_gravity="center"
+            android:text="小黑"
+            android:textColor="@color/color555555"
+            android:textSize="@dimen/font_12_sp" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/chat_from_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/chatfrom_bg_normal"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center_vertical"
+        android:lineSpacingExtra="2dp"
+        android:minHeight="30dp"
+        android:text="有大吗。。。"
+        android:textColor="@color/color353535"
+        android:textSize="@dimen/font_14_sp" />
 </LinearLayout>

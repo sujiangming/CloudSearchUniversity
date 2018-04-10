@@ -1,6 +1,7 @@
 package com.gk.mvp.view.activity;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -13,11 +14,8 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
-import com.gk.beans.HLDImageTypeEnum;
-import com.gk.beans.HLDImageTypeStringEnum;
 import com.gk.beans.HLDTable;
 import com.gk.beans.HLDTableDao;
-import com.gk.beans.HLDTypeEnum;
 import com.gk.beans.HldReportBean;
 import com.gk.beans.LoginBean;
 import com.gk.global.YXXApplication;
@@ -85,7 +83,9 @@ public class HLDTestResultActivity extends SjmBaseActivity {
     private TextView[] textViews;
     private TextView[] textViewType;
     private HldReportBean hldReportBean;
-    private int flag = 0;
+    private JSONObject imageJsonObject = new JSONObject();
+    private JSONObject imageDescJsonObject = new JSONObject();
+    private JSONObject typeJsonObject = new JSONObject();
 
     @Override
     public int getResouceId() {
@@ -95,9 +95,10 @@ public class HLDTestResultActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "兴趣测试", 0);
+        initJSONObject();
         textViews = new TextView[]{tv1, tv2, tv3};
         textViewType = new TextView[]{tvForIv1, tvForIv2, tvForIv3};
-        flag = getIntent().getIntExtra("flag", 0);
+        int flag = getIntent().getIntExtra("flag", 0);
         if (2 == flag) { //正常答题完毕的时候，需要调用减1的接口
             minusUserRechargeTimes();
             httpRequest();
@@ -107,23 +108,43 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         }
     }
 
+    private void initJSONObject() {
+        imageJsonObject.put("A", R.drawable.hld);
+        imageJsonObject.put("S", R.drawable.hld_blue);
+        imageJsonObject.put("E", R.drawable.hld);
+        imageJsonObject.put("C", R.drawable.hld_blue);
+        imageJsonObject.put("R", R.drawable.hld);
+        imageJsonObject.put("I", R.drawable.hld_blue);
+
+        imageDescJsonObject.put("A", R.string.a_type);
+        imageDescJsonObject.put("S", R.string.s_type);
+        imageDescJsonObject.put("E", R.string.e_type);
+        imageDescJsonObject.put("C", R.string.c_type);
+        imageDescJsonObject.put("R", R.string.r_type);
+        imageDescJsonObject.put("I", R.string.i_type);
+
+        typeJsonObject.put("A", "艺术");
+        typeJsonObject.put("S", "社会");
+        typeJsonObject.put("E", "企业");
+        typeJsonObject.put("C", "传统");
+        typeJsonObject.put("R", "实际");
+        typeJsonObject.put("I", "研究");
+    }
+
     private void minusUserRechargeTimes() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", LoginBean.getInstance().getUsername());
-        jsonObject.put("rechargeType", 11);//11 心理测试
+        JSONObject imageJsonObject = new JSONObject();
+        imageJsonObject.put("username", LoginBean.getInstance().getUsername());
+        imageJsonObject.put("rechargeType", 11);//11 心理测试
         RetrofitUtil.getInstance().createReq(IService.class)
-                .minusUserRechargeTimes(jsonObject.toJSONString())
+                .minusUserRechargeTimes(imageJsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
-                        if (response.isSuccessful()) {
-                            CommonBean rechargeTimes = response.body();
-                            return;
-                        }
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
+
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
 
                     }
                 });
@@ -133,12 +154,12 @@ public class HLDTestResultActivity extends SjmBaseActivity {
 
     private void httpRequest() {
         showProgress();
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("username", LoginBean.getInstance().getUsername());
-        jsonObject.put("answers", getSelectedAnswer());
+        JSONObject imageJsonObject = new JSONObject();
+        imageJsonObject.put("username", LoginBean.getInstance().getUsername());
+        imageJsonObject.put("answers", getSelectedAnswer());
         presenterManager.setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
-                        .getHldTestReport(jsonObject.toJSONString()))
+                        .getHldTestReport(imageJsonObject.toJSONString()))
                 .request();
     }
 
@@ -179,8 +200,7 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         if (hldReportBean == null) {
             return;
         }
-        int[] scores = new int[]{hldReportBean.getCareerA(), hldReportBean.getCareerS(), hldReportBean.getCareerE()
-                , hldReportBean.getCareerC(), hldReportBean.getCareerR(), hldReportBean.getCareerI()};
+        int[] scores = new int[]{hldReportBean.getCareerA(), hldReportBean.getCareerS(), hldReportBean.getCareerE(), hldReportBean.getCareerC(), hldReportBean.getCareerR(), hldReportBean.getCareerI()};
         initWebView(JSON.toJSONString(scores));
         initCommon();
         addCommonSubView();
@@ -210,12 +230,12 @@ public class HLDTestResultActivity extends SjmBaseActivity {
         String[] strings = careerType.split(",");
         for (int i = 0; i < strings.length; i++) {
             textViews[i].setText(strings[i]);
-            textViewType[i].setText(HLDTypeEnum.getName(strings[i]));
+            textViewType[i].setText(typeJsonObject.getString(strings[i]));
             View view = View.inflate(this, R.layout.hld_result_xg_item, null);
             TextView imageView = view.findViewById(R.id.iv_hld_xg);
             TextView textView = view.findViewById(R.id.tv_hld_xg_desc);
-            imageView.setBackgroundResource(HLDImageTypeEnum.getImageRes(strings[i]));
-            imageView.setText(HLDImageTypeStringEnum.getImageRes(strings[i]));
+            imageView.setBackgroundResource(imageJsonObject.getIntValue(strings[i]));
+            imageView.setText(imageDescJsonObject.getIntValue(strings[i]));
             if (i == 0) {
                 textView.setText(hldReportBean.getCareerCommonOne());
             } else if (i == 1) {
@@ -246,9 +266,9 @@ public class HLDTestResultActivity extends SjmBaseActivity {
                     String[] strings = recommond.split(",");
                     for (int j = 0; j < strings.length; j++) {
                         if (j == (strings.length - 1)) {
-                            values.append(j + "、").append(strings[j]);
+                            values.append(j).append("、").append(strings[j]);
                         } else {
-                            values.append(j + "、").append(strings[j]).append("\n");
+                            values.append(j).append("、").append(strings[j]).append("\n");
                         }
                     }
                 }
@@ -290,7 +310,7 @@ public class HLDTestResultActivity extends SjmBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         destroyWebView();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
     }

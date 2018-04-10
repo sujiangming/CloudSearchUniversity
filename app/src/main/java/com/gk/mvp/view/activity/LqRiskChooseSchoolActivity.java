@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -17,11 +18,12 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.tools.YxxUtils;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
@@ -44,7 +46,6 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
 
     private List<String> schoolBeanList = new ArrayList<>();
     private JSONObject jsonObject = new JSONObject();
-    private int mPage = 0;
     private String nullString = "";
     private String[] schoolArray = {"清华大学", "北京大学", "中国人民大学", "北京交通大学", "北京工业大学",
             "北京航空航天大学", "北京理工大学", "北京科技大学", "中国政法大学",
@@ -66,9 +67,7 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
     }
 
     private void initData() {
-        for (int i = 0; i < schoolArray.length; i++) {
-            schoolBeanList.add(schoolArray[i]);
-        }
+        Collections.addAll(schoolBeanList, schoolArray);
         initListView();
     }
 
@@ -79,11 +78,9 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 invoke(nullString, nullString, nullString, nullString, YxxUtils.URLEncode(s));
-                if (searchview != null) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.hideSoftInputFromWindow(searchview.getWindowToken(), 0); // 输入法如果是显示状态，那么就隐藏输入法
-                    }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(searchview.getWindowToken(), 0); // 输入法如果是显示状态，那么就隐藏输入法
                 }
                 searchview.clearFocus(); // 不获取焦点
                 return true;
@@ -103,17 +100,38 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
         });
     }
 
-    private PresenterManager presenterManager = new PresenterManager();
+    private void initListView() {
+        adapter = new CommonAdapter<String>(this, schoolBeanList, R.layout.risk_test_query_item) {
+            @Override
+            public void convert(ViewHolder viewHolder, String item) {
+                viewHolder.setText(R.id.tv_name, item);
+            }
+        };
+        lvQuerySchool.setAdapter(adapter);
+        lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent();
+                intent.putExtra("schoolName", schoolBeanList.get(i));
+                LqRiskChooseSchoolActivity.this.setResult(110, intent);
+                closeActivity(LqRiskChooseSchoolActivity.this);
+            }
+        });
+
+    }
+
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
 
     private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
         showProgress();
+        int mPage = 0;
         jsonObject.put("page", mPage);
         jsonObject.put("schoolArea", schoolArea);//学校地区
         jsonObject.put("schoolCategory", schoolCategory);//学校类别
         jsonObject.put("schoolType", schoolType);//学校类型（1本科、2专业）
         jsonObject.put("tese", tese);//特色
         jsonObject.put("schoolName", schoolName);
-        presenterManager.setmIView(this)
+        presenterManager
                 .setCall(RetrofitUtil.getInstance()
                         .createReq(IService.class).getUniversityList(jsonObject.toJSONString()))
                 .requestForResponseBody(YXXConstants.INVOKE_API_DEFAULT_TIME);
@@ -123,7 +141,7 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         String data = (String) t;
-        if (data == null || nullString.equals(data)) {
+        if (TextUtils.isEmpty(data)) {
             toast("没有相关数据");
             return;
         }
@@ -137,7 +155,7 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
         for (int i = 0; i < dataBeanList.size(); i++) {
             schoolBeanList.add(dataBeanList.get(i).getSchoolName());
         }
-        initListView();
+        adapter.setItems(schoolBeanList);
     }
 
     @Override
@@ -146,28 +164,10 @@ public class LqRiskChooseSchoolActivity extends SjmBaseActivity {
         hideProgress();
     }
 
-    private void initListView() {
-        lvQuerySchool.setAdapter(adapter = new CommonAdapter<String>(this, R.layout.risk_test_query_item, schoolBeanList) {
-            @Override
-            protected void convert(ViewHolder viewHolder, String item, int position) {
-                viewHolder.setText(R.id.tv_name, item);
-            }
-        });
-        lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent();
-                intent.putExtra("schoolName", schoolBeanList.get(i));
-                LqRiskChooseSchoolActivity.this.setResult(110, intent);
-                closeActivity(LqRiskChooseSchoolActivity.this);
-            }
-        });
-    }
-
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
     }

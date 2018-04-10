@@ -54,16 +54,8 @@ public class WishReportEnterActivity extends SjmBaseActivity {
 
     private int vipLevel = 0;
     private JSONObject jsonObject = new JSONObject();
-    private String tipUpdate = "立即升级";
-    private String lowLevel = "会员等级低，不能生成";
-    private String noGenerate = "未生成";
     private String generating = "生成中";
-    private String generated = "已生成";
-    private String rightNowGen = "立即生成";
-    private String rightNowSee = "立即查看";
     private String rightAfterSee = "请稍后查看";
-    private String generatingTip = "正在生成，请稍后进来查看";
-    private String wish_zj_btn = null;
     private WishResultBean wishResultBean = null;
 
 
@@ -86,7 +78,7 @@ public class WishReportEnterActivity extends SjmBaseActivity {
         initTextViewAndBtn(btnZj, tvYhLevelLow);
         queryUserVolunteerReport(YXXConstants.INVOKE_API_DEFAULT_TIME);
         queryUserVolunteerReport(YXXConstants.INVOKE_API_SECOND_TIME);
-        wish_zj_btn = JdryPersistence.getObject(this, "wish_zj_btn");
+        String wish_zj_btn = JdryPersistence.getObject(this, "wish_zj_btn");
     }
 
     private PresenterManager presenterManager = new PresenterManager().setmIView(this);
@@ -151,7 +143,9 @@ public class WishReportEnterActivity extends SjmBaseActivity {
 
     private void initTextViewAndBtn(Button button, TextView textView) {
         if (vipLevel <= 2) {
+            String lowLevel = "会员等级低，不能生成";
             textView.setText(lowLevel);
+            String tipUpdate = "立即升级";
             button.setText(tipUpdate);
         }
     }
@@ -167,6 +161,7 @@ public class WishReportEnterActivity extends SjmBaseActivity {
                 generateReport(type, order);
                 break;
             case 1:
+                String generatingTip = "正在生成，请稍后进来查看";
                 toast(generatingTip);
                 break;
             case 2:
@@ -185,7 +180,9 @@ public class WishReportEnterActivity extends SjmBaseActivity {
         button.setTag(commonBean.getFlag());
         switch (commonBean.getFlag()) {
             case 0:
+                String noGenerate = "未生成";
                 textView.setText(noGenerate);
+                String rightNowGen = "立即生成";
                 button.setText(rightNowGen);
                 break;
             case 1:
@@ -193,7 +190,9 @@ public class WishReportEnterActivity extends SjmBaseActivity {
                 button.setText(rightAfterSee);
                 break;
             case 2:
+                String generated = "已生成";
                 textView.setText(generated);
+                String rightNowSee = "立即查看";
                 button.setText(rightNowSee);
                 break;
         }

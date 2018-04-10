@@ -17,7 +17,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -238,7 +238,6 @@
                 android:id="@+id/ll_hld_xg_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_has_xq"
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:paddingBottom="@dimen/space_15_dp"
@@ -519,7 +518,6 @@
                 android:id="@+id/tv_fit_career"
                 android:layout_width="match_parent"
                 android:layout_height="55dp"
-                android:layout_below="@id/ll_hld_xg_container"
                 android:layout_marginTop="@dimen/space_20_dp"
                 android:background="#e8ecee"
                 android:drawableRight="@drawable/down_arrow3x"
@@ -534,7 +532,6 @@
                 android:id="@+id/ll_xg_fit_career"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/tv_fit_career"
                 android:orientation="vertical">
 
                 <!--<include layout="@layout/hld_result_xg_fit_item" />-->

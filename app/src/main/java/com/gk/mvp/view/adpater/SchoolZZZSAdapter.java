@@ -96,20 +96,4 @@ public class SchoolZZZSAdapter extends JdryBaseAdapter {
         ImageView iv_query_item;
 
     }
-
-    private String getPici(String string) {
-        String ret = "";
-        switch (string) {
-            case "1":
-                ret = "提前批";
-                break;
-            case "2":
-                ret = "一批";
-                break;
-            case "3":
-                ret = "二批";
-                break;
-        }
-        return ret;
-    }
 }

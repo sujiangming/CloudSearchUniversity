@@ -197,18 +197,8 @@ public class ViewHolder
 	@SuppressLint("NewApi")
 	public ViewHolder setAlpha(int viewId, float value)
 	{
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-		{
-			getView(viewId).setAlpha(value);
-		} else
-		{
-			// Pre-honeycomb hack to set Alpha value
-			AlphaAnimation alpha = new AlphaAnimation(value, value);
-			alpha.setDuration(0);
-			alpha.setFillAfter(true);
-			getView(viewId).startAnimation(alpha);
-		}
-		return this;
+        getView(viewId).setAlpha(value);
+        return this;
 	}
 
 	public ViewHolder setVisible(int viewId, boolean visible)
@@ -296,14 +286,14 @@ public class ViewHolder
 
 	public ViewHolder setChecked(int viewId, boolean checked)
 	{
-		Checkable view = (Checkable) getView(viewId);
+		Checkable view = getView(viewId);
 		view.setChecked(checked);
 		return this;
 	}
 	
 	public ListView getListView(int viewId)
 	{
-		ListView listView = (ListView) getView(viewId);
+		ListView listView = getView(viewId);
 		
 		return listView;
 	}

@@ -7,10 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.beans.CourseTypeEnum;
 import com.gk.beans.MaterialItemBean;
+import com.gk.global.YXXConstants;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryTime;
+import com.gk.tools.YxxUtils;
 
 /**
  * Created by JDRY-SJM on 2018/1/16.
@@ -43,9 +44,11 @@ public class MaterialListAdapter extends JdryBaseAdapter {
 
         MaterialItemBean.DataBean item = (MaterialItemBean.DataBean) list.get(position);
 
-        viewHolder.tv_live_title.setText(item.getName());
-        viewHolder.tv_time_content.setText(JdryTime.getFullTimeBySec(item.getUploadTime()));
-        viewHolder.tv_km_content.setText(CourseTypeEnum.getSubjectTypeName(item.getCourse()));
+        YxxUtils.setViewData(viewHolder.tv_live_title, item.getName());
+        YxxUtils.setViewData(viewHolder.tv_time_content, JdryTime.getFullTimeBySec(item.getUploadTime()));
+        YxxUtils.setViewData(viewHolder.tv_km_content, YXXConstants.jsonObject.getString(item.getCourse()));
+
+
         if (0 == type) {
             setTitle(viewHolder, item.getType());
         } else {

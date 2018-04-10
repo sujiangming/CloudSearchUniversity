@@ -27,6 +27,7 @@ public class NetUtils {
         if (context != null) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
+            assert mConnectivityManager != null;
             NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
             if (mNetworkInfo != null) {
                 return mNetworkInfo.isAvailable();
@@ -45,6 +46,7 @@ public class NetUtils {
         if (context != null) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
+            assert mConnectivityManager != null;
             NetworkInfo mWiFiNetworkInfo = mConnectivityManager
                     .getNetworkInfo(ConnectivityManager.TYPE_WIFI);
             if (mWiFiNetworkInfo != null) {
@@ -64,6 +66,7 @@ public class NetUtils {
         if (context != null) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
+            assert mConnectivityManager != null;
             NetworkInfo mMobileNetworkInfo = mConnectivityManager
                     .getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
             if (mMobileNetworkInfo != null) {
@@ -83,6 +86,7 @@ public class NetUtils {
         if (context != null) {
             ConnectivityManager mConnectivityManager = (ConnectivityManager) context
                     .getSystemService(Context.CONNECTIVITY_SERVICE);
+            assert mConnectivityManager != null;
             NetworkInfo mNetworkInfo = mConnectivityManager.getActiveNetworkInfo();
             if (mNetworkInfo != null && mNetworkInfo.isAvailable()) {
                 return mNetworkInfo.getType();

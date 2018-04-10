@@ -68,15 +68,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
         goForgetPwd("weixin");
     }
 
-    private String descPrefix = "温馨提示：未注册云寻校的手机，登录时将自动注册，且代表您已同意";
-    private boolean isLogin = false;
-    private static int mEnterFlag = 0;
-    private String userName;
-    private String password;
-    private VerifyCodeBean verifyCodeBean;
     private MyCountDownTimer countDownTimerUtils;
-    private final long TIME = 60 * 1000L;
-    private final long INTERVAL = 1000L;
     private PresenterManager presenterManager = new PresenterManager().setmIView(this);
 
     @Override
@@ -89,7 +81,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
 
     public static LoginLeftFragment newInstance(int enterFlag) {
         LoginLeftFragment blankFragment = new LoginLeftFragment();
-        mEnterFlag = enterFlag;
+        int mEnterFlag = enterFlag;
         return blankFragment;
     }
 
@@ -104,6 +96,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
     protected void onCreateViewByMe(Bundle savedInstanceState) {
         editViewContentChangeEvent(etUserPhone);
         editViewContentChangeEvent(etUserPwd);
+        String descPrefix = "温馨提示：未注册云寻校的手机，登录时将自动注册，且代表您已同意";
         tvPs.setText(Html.fromHtml(descPrefix + "<font color='red'>《云寻校用户协议》</font>"));
     }
 
@@ -135,6 +128,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
     private void setTvLoginBackgroundRes() {
         int etName = etUserPhone.getText().length();
         int etPwd = etUserPwd.getText().length();
+        boolean isLogin = false;
         if (etName > 0 && etPwd > 0) {
             tvLogin.setBackgroundResource(R.drawable.login_press_style);
             isLogin = true;
@@ -146,7 +140,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
 
     @OnClick({R.id.btn_code, R.id.tv_login})
     public void onViewClicked(View view) {
-        userName = etUserPhone.getText().toString();
+        String userName = etUserPhone.getText().toString();
         if (userName.isEmpty()) {
             toast("请输入手机号");
             return;
@@ -166,7 +160,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
                 break;
             case R.id.tv_login:
                 showProgress();
-                password = etUserPwd.getText().toString();
+                String password = etUserPwd.getText().toString();
                 if (password.isEmpty()) {
                     toast("请输入验证码");
                     return;
@@ -190,7 +184,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 CommonBean commonBean = (CommonBean) t;
-                verifyCodeBean = JSON.parseObject(commonBean.getData().toString(), VerifyCodeBean.class);
+                VerifyCodeBean verifyCodeBean = JSON.parseObject(commonBean.getData().toString(), VerifyCodeBean.class);
                 ToastUtils.toast(getContext(), "验证码已发至您的手机上");
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
@@ -251,6 +245,8 @@ public class LoginLeftFragment extends SjmBaseFragment {
      */
     private void startTimer() {
         if (countDownTimerUtils == null) {
+            long INTERVAL = 1000L;
+            long TIME = 60 * 1000L;
             countDownTimerUtils = new MyCountDownTimer(TIME, INTERVAL);
         }
         countDownTimerUtils.start();

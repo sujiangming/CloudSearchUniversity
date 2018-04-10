@@ -91,10 +91,10 @@ public class JdryTime {
     }
 
     public static Date addDay(Date date, int day) {
-        Date newDate = new Date();
+        Date newDate;
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
-        calendar.add(calendar.DATE, day);//把日期往后增加一天.整数往后推,负数往前移动
+        calendar.add(Calendar.DATE, day);//把日期往后增加一天.整数往后推,负数往前移动
         newDate = calendar.getTime();   //这个时间就是日期往后推一天的结果
         return newDate;
     }
@@ -131,7 +131,7 @@ public class JdryTime {
 
     //将string类型的时间转换成long类型的时间
     public static long formateTime(String str) {
-        Date date = null;
+        Date date;
         long time = 0L;
         try {
             date = new SimpleDateFormat("yyyy/MM/dd").parse(str);

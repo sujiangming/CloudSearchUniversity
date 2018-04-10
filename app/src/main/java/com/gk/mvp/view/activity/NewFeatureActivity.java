@@ -39,8 +39,6 @@ public class NewFeatureActivity extends SjmBaseActivity implements ViewPager.OnP
     private int[] imageIdArray;//图片资源的数组
     private List<View> viewList;//图片资源的集合
 
-    //实例化原点View
-    private ImageView iv_point;
     private ImageView[] ivPointArray;
 
     @Override
@@ -80,7 +78,7 @@ public class NewFeatureActivity extends SjmBaseActivity implements ViewPager.OnP
         //循环新建底部圆点ImageView，将生成的ImageView保存到数组中
         int size = viewList.size();
         for (int i = 0; i < size; i++) {
-            iv_point = new ImageView(this);
+            ImageView iv_point = new ImageView(this);
             LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(20, 20);
             layoutParams.setMargins(12, 0, 0, 0);
             iv_point.setLayoutParams(layoutParams);
@@ -162,7 +160,7 @@ public class NewFeatureActivity extends SjmBaseActivity implements ViewPager.OnP
                 toast("再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             } else {
-                appManager.finishAllActivity();
+                app.onTerminate();
             }
             return true;
         }

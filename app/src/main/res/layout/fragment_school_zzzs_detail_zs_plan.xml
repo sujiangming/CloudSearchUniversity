@@ -87,9 +87,10 @@
             android:id="@+id/lv_zs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="@null"
-            android:dividerHeight="0dp"
-            android:scrollbars="none">
+            android:divider="@color/color353535"
+            android:dividerHeight="@dimen/space_1_px"
+            android:scrollbars="none"
+            android:scrollingCache="false">
 
         </ListView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

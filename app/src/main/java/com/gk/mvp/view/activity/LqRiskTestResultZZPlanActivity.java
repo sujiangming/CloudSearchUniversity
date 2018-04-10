@@ -12,11 +12,11 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.YxxUtils;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class LqRiskTestResultZZPlanActivity extends SjmBaseActivity {
     TopBarView topBar;
 
     private List<UniversityZsPlanBean> list = new ArrayList<>();
-    private String uniName;
+    private CommonAdapter adapter;
 
     @Override
     public int getResouceId() {
@@ -45,9 +45,24 @@ public class LqRiskTestResultZZPlanActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        uniName = getIntent().getStringExtra("uniName");
+        String uniName = getIntent().getStringExtra("uniName");
         setTopBar(topBar, uniName, 0);
+        initAdapter();
         getMajorAdmissionsData(uniName);
+    }
+
+    private void initAdapter() {
+        adapter = new CommonAdapter<UniversityZsPlanBean>(this, list, R.layout.school_detail_list_item) {
+            @Override
+            public void convert(ViewHolder viewHolder, UniversityZsPlanBean item) {
+                viewHolder.setText(R.id.tv_year, (item.getMajorName() == null ? "----" : item.getMajorName()));
+                viewHolder.setText(R.id.tv_type, (item.getYearStr() == null ? "----" : item.getYearStr()));
+                viewHolder.setText(R.id.tv_score_hight, (item.getSubjectType() == null ? "----" : item.getSubjectType()));
+                viewHolder.setText(R.id.tv_score_lower, (item.getPlanNum() == null ? "----" : item.getPlanNum()));
+                viewHolder.setText(R.id.tv_score_control, (item.getArea() == null ? "----" : item.getArea()));
+            }
+        };
+        lvScore.setAdapter(adapter);
     }
 
     private PresenterManager presenterManager = new PresenterManager();
@@ -60,14 +75,6 @@ public class LqRiskTestResultZZPlanActivity extends SjmBaseActivity {
                 .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).getUniMajorPlan(jsonObject.toJSONString()))
                 .request();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
-            presenterManager.getCall().cancel();
-        }
     }
 
     @Override
@@ -94,15 +101,14 @@ public class LqRiskTestResultZZPlanActivity extends SjmBaseActivity {
 
     private void handleData(List<UniversityZsPlanBean> luQuDataBeans) {
         list = luQuDataBeans;
-        lvScore.setAdapter(new CommonAdapter<UniversityZsPlanBean>(this, R.layout.school_detail_list_item, list) {
-            @Override
-            protected void convert(ViewHolder viewHolder, UniversityZsPlanBean item, int position) {
-                viewHolder.setText(R.id.tv_year, (item.getMajorName() == null ? "----" : item.getMajorName()));
-                viewHolder.setText(R.id.tv_type, (item.getYearStr() == null ? "----" : item.getYearStr()));
-                viewHolder.setText(R.id.tv_score_hight, (item.getSubjectType() == null ? "----" : item.getSubjectType()));
-                viewHolder.setText(R.id.tv_score_lower, (item.getPlanNum() == null ? "----" : item.getPlanNum()));
-                viewHolder.setText(R.id.tv_score_control, (item.getArea() == null ? "----" : item.getArea()));
-            }
-        });
+        adapter.setItems(list);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (null != presenterManager && null != presenterManager.getCall()) {
+            presenterManager.getCall().cancel();
+        }
     }
 }

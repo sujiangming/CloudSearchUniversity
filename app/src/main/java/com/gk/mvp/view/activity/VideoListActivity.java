@@ -11,7 +11,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LiveBean;
-import com.gk.beans.OnLiveBean;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
@@ -42,7 +41,6 @@ public class VideoListActivity extends SjmBaseActivity {
     private List<LiveBean> liveBeanList = new ArrayList<>();
 
     private int mPage = 0;
-    private List<OnLiveBean> list = new ArrayList<>();
     private boolean isLoadMore = false;
 
     @Override
@@ -97,7 +95,7 @@ public class VideoListActivity extends SjmBaseActivity {
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
-        if (commonBean.getData() == null) {
+        if (null == commonBean || commonBean.getData() == null) {
             toast("没有数据");
             return;
         }

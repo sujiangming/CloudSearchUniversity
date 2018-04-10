@@ -22,7 +22,7 @@ public class VideoCommentAadapter extends JdryBaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ViewHolder viewHolder = null;
+        ViewHolder viewHolder;
         if (convertView != null) {
             viewHolder = (ViewHolder) convertView.getTag();
         } else {

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+<layer-list xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    tools:keep="@drawable/title_bottom_border">
     <!-- 连框颜色值 -->
     <item>
         <shape>

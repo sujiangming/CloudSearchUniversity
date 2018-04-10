@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gk.R;
@@ -75,13 +74,12 @@ public class ProfessionalChildAdapter extends BaseExpandableListAdapter {
      */
     @Override
     public View getGroupView(int parentPosition, boolean isExpandabled, View view, ViewGroup viewGroup) {
-        ViewHolder holder = null;
+        ViewHolder holder;
         if (view == null) {
             view = LayoutInflater.from(mContext).inflate(R.layout.child_adapter, null);
             holder = new ViewHolder();
-            holder.mChildGroupTV = (TextView) view.findViewById(R.id.childGroupTV);
-            holder.mImg = (ImageView) view.findViewById(R.id.kpi_back_img);
-            holder.mTvScore = (TextView) view.findViewById(R.id.score_value);
+            holder.mChildGroupTV = view.findViewById(R.id.childGroupTV);
+            holder.mTvScore = view.findViewById(R.id.score_value);
             view.setTag(holder);
         } else {
             holder = (ViewHolder) view.getTag();
@@ -98,7 +96,6 @@ public class ProfessionalChildAdapter extends BaseExpandableListAdapter {
     class ViewHolder {
 
         private TextView mChildGroupTV;
-        private ImageView mImg;
         private TextView mTvScore;
     }
 
@@ -114,13 +111,13 @@ public class ProfessionalChildAdapter extends BaseExpandableListAdapter {
      */
     @Override
     public View getChildView(int parentPosition, int childPosition, boolean isExpandabled, View view, ViewGroup viewGroup) {
-        ChildHolder holder = null;
+        ChildHolder holder;
         if (view == null) {
             view = LayoutInflater.from(mContext).inflate(
                     R.layout.child_child, null);
             holder = new ChildHolder();
-            holder.childChildTV = (TextView) view.findViewById(R.id.childGroupTV);
-            holder.score = (TextView) view.findViewById(R.id.score_value);
+            holder.childChildTV = view.findViewById(R.id.childGroupTV);
+            holder.score = view.findViewById(R.id.score_value);
             view.setTag(holder);
         } else {
             holder = (ChildHolder) view.getTag();

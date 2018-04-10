@@ -2,6 +2,7 @@ package com.gk.mvp.view.fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.InputType;
 import android.text.TextUtils;
@@ -13,7 +14,6 @@ import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baoyz.actionsheet.ActionSheet;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
@@ -28,6 +28,7 @@ import com.gk.mvp.view.activity.MBTIActivity;
 import com.gk.mvp.view.activity.VIPActivity;
 import com.gk.mvp.view.custom.CommonTipDialog;
 import com.gk.mvp.view.custom.RichText;
+import com.gk.mvp.view.custom.actionsheet.ActionSheet;
 import com.gk.tools.YxxEncoderUtils;
 import com.gk.tools.YxxUtils;
 
@@ -95,7 +96,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     private DialogInterface mDialog;
     private int requestCode = 0;
 
-    private int screenHeight = 0;//屏幕高度
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
     private String etHitStr = "请输入内容";
     private String emptyStr = "";
@@ -235,16 +235,16 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     toast("请输入一个您中意的学校");
                     return;
                 }
-                String schoolsValue = "";
+                StringBuilder schoolsValue = new StringBuilder();
                 for (int i = 0; i < universities.size(); i++) {
                     if (i == (universities.size() - 1)) {
-                        schoolsValue += universities.get(i);
+                        schoolsValue.append(universities.get(i));
                     } else {
-                        schoolsValue += universities.get(i) + ",";
+                        schoolsValue.append(universities.get(i)).append(",");
                     }
                 }
-                updateWishUniversity(schoolsValue);
-                LoginBean.getInstance().setWishUniversity(schoolsValue).save();
+                updateWishUniversity(schoolsValue.toString());
+                LoginBean.getInstance().setWishUniversity(schoolsValue.toString()).save();
                 hideEditDialogUniversity();
                 tvYixiang.setText("已选" + universities.size() + "个");
                 hideSoftKey();
@@ -259,16 +259,16 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     toast("您还没有选择");
                     return;
                 }
-                String provinceStr = "";
+                StringBuilder provinceStr = new StringBuilder();
                 for (int i = 0; i < yourChoicesName.size(); i++) {
                     if (i == (yourChoicesName.size() - 1)) {
-                        provinceStr += yourChoicesName.get(i);
+                        provinceStr.append(yourChoicesName.get(i));
                     } else {
-                        provinceStr += yourChoicesName.get(i) + ",";
+                        provinceStr.append(yourChoicesName.get(i)).append(",");
                     }
                 }
-                updateUserIntentArea(provinceStr);
-                LoginBean.getInstance().setWishProvince(provinceStr).save();
+                updateUserIntentArea(provinceStr.toString());
+                LoginBean.getInstance().setWishProvince(provinceStr.toString()).save();
                 hideEditDialogProvince();
                 tvProvince.setText("已选" + yourChoicesName.size() + "个");
                 break;
@@ -329,8 +329,6 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         }
     }
 
-    private CommonTipDialog selfDialog = null;
-
     private void showUpdateScoreDialog() {
         final CommonTipDialog commonTipDialog = new CommonTipDialog(getContext());
         commonTipDialog.setTitle("温馨提示");
@@ -353,7 +351,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 commonTipDialog.dismiss();
             }
         });
-        selfDialog = commonTipDialog;
+        CommonTipDialog selfDialog = commonTipDialog;
         commonTipDialog.show();
     }
 
@@ -396,14 +394,14 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     }
 
     List<String> yourChoicesName = new ArrayList<>();
+    public static final String[] PROVINCES = {"不限", "北京", "上海", "天津", "重庆", "河北", "山西", "内蒙古", "辽宁", "吉林", "黑龙江", "江苏", "浙江", "安徽", "福建", "江西", "山东", "河南", "湖北", "湖南", "广东", "广西", "海南", "四川", "贵州", "云南", "西藏", "陕西", "甘肃", "青海", "宁夏", "新疆", "台湾", "香港", "澳门"};
 
     private void showMultiChoiceDialog() {
         showEditDialogProvince();
-        final String[] items = YXXConstants.PROVINCES;
-        for (int i = 0; i < items.length; ++i) {
+        for (int i = 0; i < PROVINCES.length; ++i) {
             View view = View.inflate(getContext(), R.layout.province_item, null);
             TextView textView = view.findViewById(R.id.tv_province_name);
-            textView.setText(items[i]);
+            textView.setText(PROVINCES[i]);
             final ImageView checkBox = view.findViewById(R.id.check_box);
             final int finalI = i;
             checkBox.setOnClickListener(new View.OnClickListener() {
@@ -416,11 +414,11 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                             return;
                         }
                         checkBox.setImageResource(R.drawable.gouxuan);
-                        yourChoicesName.add(items[finalI]);
+                        yourChoicesName.add(PROVINCES[finalI]);
                         view.setTag("1");
                     } else {
                         checkBox.setImageResource(R.drawable.not_gouxuan);
-                        yourChoicesName.remove(items[finalI]);
+                        yourChoicesName.remove(PROVINCES[finalI]);
                         view.setTag("0");
                     }
                 }
@@ -462,9 +460,9 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("文理科选择");
         //定义单选的选项
-        final String[] items = new String[]{"文科", "理科"};
+        final String[] PROVINCES = new String[]{"文科", "理科"};
         //arg1：表示默认选中哪一项，-1表示没有默认选中项
-        builder.setSingleChoiceItems(items, -1, new DialogInterface.OnClickListener() {
+        builder.setSingleChoiceItems(PROVINCES, -1, new DialogInterface.OnClickListener() {
             //点击任何一个单选选项都会触发这个侦听方法执行
             //arg1：点击的是哪一个选项
             @Override
@@ -475,7 +473,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 requestCode = 3;
                 invokeService(1, value);
                 mDialog = dialog;
-                tvWenli.setText(items[which]);
+                tvWenli.setText(PROVINCES[which]);
             }
         });
         builder.show();
@@ -486,7 +484,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
      */
     private void initKeyBoardParameter() {
         //获取屏幕高度
-        screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
+        int screenHeight = getActivity().getWindowManager().getDefaultDisplay().getHeight();
         //阀值设置为屏幕高度的1/3
         keyHeight = screenHeight / 3;
     }
@@ -583,8 +581,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
-        if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
-        } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+        if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
             clearAllEditView();
             hideEditDialogUniversity();
         }
@@ -601,7 +598,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 .updateUserIntentSch(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
                             if (null == commonBean) {
@@ -616,7 +613,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast(ERROR_MSG);
                         hideProgress();
                     }
@@ -632,7 +629,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 .updateUserIntentArea(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
                             if (null == commonBean) {
@@ -647,7 +644,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast(ERROR_MSG);
                         hideProgress();
                     }
@@ -666,7 +663,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 .getUserIntentSch(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
                             if (null == commonBean) {
@@ -687,7 +684,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         hideProgress();
                     }
                 });
@@ -705,7 +702,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                 .getUserIntentArea(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
                             if (null == commonBean) {
@@ -720,7 +717,7 @@ public class WishFragment extends SjmBaseFragment implements View.OnLayoutChange
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         hideProgress();
                     }
                 });

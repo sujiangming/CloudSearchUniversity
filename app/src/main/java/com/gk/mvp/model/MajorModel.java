@@ -1,5 +1,7 @@
 package com.gk.mvp.model;
 
+import android.support.annotation.NonNull;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.beans.MajorBean;
@@ -36,7 +38,7 @@ public class MajorModel {
     public void httpRequest() {
         RetrofitUtil.getInstance().createReq(IService.class).getMajorTypeList().enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
                         String body = response.body().string();
@@ -50,7 +52,7 @@ public class MajorModel {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 iPresenterCallback.httpRequestFailure(t, 1);
             }
         });
@@ -83,7 +85,7 @@ public class MajorModel {
         jsonObject.put("type", "");
         RetrofitUtil.getInstance().createReq(IService.class).getMajorListByName(jsonObject.toJSONString()).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
                         String body = response.body().string();
@@ -96,7 +98,7 @@ public class MajorModel {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 iPresenterCallback.httpRequestFailure(t, 2);
             }
         });

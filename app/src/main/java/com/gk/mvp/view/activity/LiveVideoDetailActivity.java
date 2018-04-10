@@ -23,6 +23,8 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.listener.SjmStandardVideoAllCallBackListener;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.mvp.view.custom.SjmListView;
 import com.gk.tools.GlideImageLoader;
@@ -33,8 +35,6 @@ import com.shuyu.gsyvideoplayer.listener.LockClickListener;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -87,7 +87,6 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
     private boolean isTvZan = false;
     private boolean isIvZan = false;
 
-    private int screenHeight = 0;//屏幕高度
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
 
 
@@ -135,7 +134,8 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
     private boolean isPause;
     private LiveBean liveBean;
     private List<CommentVideoBean> commentVideoBeans = new ArrayList<>();
-
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
+    private CommonAdapter adapter;
 
     @Override
     public int getResouceId() {
@@ -148,10 +148,10 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         initKeyBoardParameter();
         initData();
         initVideo();
+        initLvComment();
         addFocusInter();
         getCommentInter();
-        //添加layout大小发生改变监听器
-        rootView.addOnLayoutChangeListener(this);
+        rootView.addOnLayoutChangeListener(this);//添加layout大小发生改变监听器
     }
 
     private void initData() {
@@ -163,7 +163,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
 
     private void initKeyBoardParameter() {
         //获取屏幕高度
-        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         //阀值设置为屏幕高度的1/3
         keyHeight = screenHeight / 3;
     }
@@ -171,9 +171,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
         //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
-        if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
-            //Toast.makeText(this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
-        } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+       if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
             includeComment.setVisibility(View.GONE);
             etComment.clearFocus();
             etComment.setHint("我来说两句");
@@ -181,19 +179,14 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         }
     }
 
-    private PresenterManager presenterManager = new PresenterManager();
-
     private void getCommentInter() {
         showProgress();
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("videoId", liveBean.getId());
         String json = jsonObject.toJSONString();
-        presenterManager.setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoCommentList(json))
+        presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class).getVideoCommentList(json))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
     }
-
-
 
     private void addCommentInter() {
         String edit = etComment.getText().toString();
@@ -207,7 +200,6 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("content", YxxUtils.URLEncode(edit));
         presenterManager
-                .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).addVideoComment(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_SECOND_TIME);
     }
@@ -216,7 +208,7 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         showProgress();
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("videoId", liveBean.getId());
-        presenterManager.setmIView(this)
+        presenterManager
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).addVideoZan(jsonObject1.toJSONString()))
                 .request(YXXConstants.INVOKE_API_THREE_TIME);
     }
@@ -235,37 +227,43 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         JSONObject jsonObject1 = new JSONObject();
         jsonObject1.put("videoId", liveBean.getId());
         presenterManager
-                .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class).addVideoAttention(jsonObject1.toJSONString()))
                 .request(YXXConstants.INVOKE_API_FORTH_TIME);
+    }
+
+    private void initLvComment() {
+        adapter = new CommonAdapter<CommentVideoBean>(this, commentVideoBeans, R.layout.video_comment) {
+            @Override
+            public void convert(ViewHolder viewHolder, CommentVideoBean item) {
+                CircleImageView imageView = viewHolder.getView(R.id.iv_user_icon);
+                viewHolder.setText(R.id.tv_user, item.getNickName());
+                viewHolder.setText(R.id.tv_time, JdryTime.format(JdryTime.getFullDate(JdryTime.getFullTimeBySec(item.getCreateTime()))));
+                viewHolder.setText(R.id.tv_comment_content, item.getContent());
+                int tmp = commentVideoBeans.indexOf(item) % 2;
+                if (tmp == 0) { //偶数
+                    viewHolder.setBackgroundColor(R.id.rl_comment_root, 0xFFF2F2F2);
+                }
+                if (!TextUtils.isEmpty(item.getHeadImg())) {
+                    GlideImageLoader.displayByImgRes(LiveVideoDetailActivity.this, item.getHeadImg(), imageView, R.drawable.my);
+                } else {
+                    imageView.setImageResource(R.drawable.my);
+                }
+            }
+        };
+        lvComment.setAdapter(adapter);
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         final CommonBean commonBean = (CommonBean) t;
+        assert commonBean != null;
+        assert null != commonBean.getData();
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 commentVideoBeans = JSON.parseArray(commonBean.getData().toString(), CommentVideoBean.class);
                 tvComment.setText("评论:  " + commentVideoBeans.size());
-                lvComment.setAdapter(new CommonAdapter<CommentVideoBean>(this, R.layout.video_comment, commentVideoBeans) {
-                    @Override
-                    protected void convert(ViewHolder viewHolder, CommentVideoBean item, int position) {
-                        CircleImageView imageView = viewHolder.getView(R.id.iv_user_icon);
-                        viewHolder.setText(R.id.tv_user, item.getNickName());
-                        viewHolder.setText(R.id.tv_time, JdryTime.format(JdryTime.getFullDate(JdryTime.getFullTimeBySec(item.getCreateTime()))));
-                        viewHolder.setText(R.id.tv_comment_content, item.getContent());
-                        int tmp = position % 2;
-                        if (tmp == 0) { //偶数
-                            viewHolder.setBackgroundColor(R.id.rl_comment_root, 0xFFF2F2F2);
-                        }
-                        if (!TextUtils.isEmpty(item.getHeadImg())) {
-                            GlideImageLoader.displayByImgRes(LiveVideoDetailActivity.this, item.getHeadImg(), imageView, R.drawable.my);
-                        } else {
-                            imageView.setImageResource(R.drawable.my);
-                        }
-                    }
-                });
+                adapter.setItems(commentVideoBeans);
                 lvComment.smoothScrollToPosition(lvComment.getFirstVisiblePosition());
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
@@ -386,10 +384,9 @@ public class LiveVideoDetailActivity extends SjmBaseActivity implements View.OnL
         super.onDestroy();
         GSYVideoPlayer.releaseAllVideos();
         if (orientationUtils != null) orientationUtils.releaseListener();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
-        //GlideImageLoader.stopLoad(this);
     }
 
     @Override

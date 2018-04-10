@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:orientation="vertical">
 
     <com.gk.mvp.view.custom.TopBarView
@@ -51,7 +50,6 @@
                 android:id="@+id/iv_user_head"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
-                android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/space_15_dp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/my" />

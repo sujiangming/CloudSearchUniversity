@@ -82,9 +82,9 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
             convertView = LayoutInflater.from(mContext).inflate(
                     R.layout.parent_group_item, null);
             holder = new ViewHolder();
-            holder.upImg = (ImageView) convertView.findViewById(R.id.kpi_back_img);
-            holder.code = (TextView) convertView.findViewById(R.id.kpi_score);
-            holder.title = (TextView) convertView.findViewById(R.id.title);
+            holder.upImg = convertView.findViewById(R.id.kpi_back_img);
+            holder.code = convertView.findViewById(R.id.kpi_score);
+            holder.title = convertView.findViewById(R.id.title);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
@@ -171,7 +171,7 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
                         ToastUtils.toast(mContext, "没有数据");
                         return false;
                     }
-                    if (beans != null && beans.size() > 0) {
+                    if (beans.size() > 0) {
                         MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean nodesBean = beans.get(childIndex);
                         Intent intent = new Intent();
                         intent.setClass(mContext, ProfessionalDetailActivity.class);
@@ -189,7 +189,7 @@ public class ProfessionalParentAdapter extends BaseExpandableListAdapter {
         childListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
-                int mHeight = 0;
+                int mHeight;
                 List<MajorBean.DataBean.NodesBeanXX.NodesBeanX.NodesBean> nodesBeanXES = secondNodesBeanX.getNodes();
                 if (nodesBeanXES == null || nodesBeanXES.size() == 0) {
                     mHeight = 1;

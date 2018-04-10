@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.gk.R;
 import com.gk.beans.LiveBean;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.YxxUtils;
 
 
 /**
@@ -30,15 +31,15 @@ public class LiveVideoAdapter extends JdryBaseAdapter {
         } else {
             convertView = inflater.inflate(R.layout.fragment_live_item, null);
             viewHolder = new ViewHolder();
-            viewHolder.tvLiveTitle = (TextView) convertView.findViewById(R.id.tv_live_title);
-            viewHolder.ivItem = (ImageView) convertView.findViewById(R.id.iv_item);
-            viewHolder.tvTeacher = (TextView) convertView.findViewById(R.id.tv_teacher);
+            viewHolder.tvLiveTitle = convertView.findViewById(R.id.tv_live_title);
+            viewHolder.ivItem = convertView.findViewById(R.id.iv_item);
+            viewHolder.tvTeacher = convertView.findViewById(R.id.tv_teacher);
             convertView.setTag(viewHolder);
         }
         LiveBean liveBean = (LiveBean) list.get(position);
-        viewHolder.tvLiveTitle.setText(liveBean.getVideoName());
-        viewHolder.tvTeacher.setText(liveBean.getSpeaker());
-        GlideImageLoader.displayImage(mContext.getApplicationContext(), liveBean.getVideoLogo(), viewHolder.ivItem);
+        YxxUtils.setViewData(viewHolder.tvLiveTitle,liveBean.getVideoName());
+        YxxUtils.setViewData(viewHolder.tvTeacher,liveBean.getSpeaker());
+        GlideImageLoader.displayImage(mContext, liveBean.getVideoLogo(), viewHolder.ivItem);
         return convertView;
     }
 

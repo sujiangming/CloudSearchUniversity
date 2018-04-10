@@ -2,9 +2,12 @@ package com.gk.tools;
 
 import android.app.ActivityManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -18,6 +21,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Field;
 import java.net.URLEncoder;
 import java.util.Iterator;
 import java.util.List;
@@ -33,6 +37,7 @@ public class YxxUtils {
     public static void showSoftInputFromWindow(EditText editText) {
         editText.requestFocus();
         InputMethodManager inputManager = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert inputManager != null;
         inputManager.showSoftInput(editText, 0);
     }
 
@@ -42,6 +47,7 @@ public class YxxUtils {
     public static void hideSoftInputKeyboard(EditText editText) {
         //隐藏软盘
         InputMethodManager imm = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
         imm.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         editText.clearFocus();
         editText.setText("");
@@ -94,7 +100,7 @@ public class YxxUtils {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (editText.getText().toString().trim() != null && !editText.getText().toString().trim().equals("")) {
+                if (!editText.getText().toString().trim().equals("")) {
                     if (editText.getText().toString().trim().substring(0, 1).equals(".")) {
                         editText.setText("0" + editText.getText().toString().trim());
                         editText.setSelection(1);
@@ -160,13 +166,11 @@ public class YxxUtils {
 
                 os.close();
 
-                os = null;
             }
             if (fos != null) {
 
                 fos.close();
 
-                fos = null;
             }
         }
     }
@@ -192,11 +196,40 @@ public class YxxUtils {
 
     public static void printAllRunningActivity(Context context) {
         ActivityManager activityManager = (ActivityManager) context.getSystemService(Context.ACTIVITY_SERVICE);
+        assert activityManager != null;
         List<ActivityManager.RunningTaskInfo> tasks = activityManager.getRunningTasks(30);
         Iterator<ActivityManager.RunningTaskInfo> itInfo = tasks.iterator();
         while (itInfo.hasNext()) {
             ActivityManager.RunningTaskInfo info = itInfo.next();
             Log.d("activity running:", "【id=" + info.baseActivity.getClass().hashCode() + "】," + info.baseActivity.getClassName());
         }
+    }
+
+    /**
+     * 动态修改AlertDialog字体颜色
+     *
+     * @param dialog
+     * @param msgColor
+     * @param positiveBtnColor
+     * @param negativeBtnColor
+     */
+    public void setAlertDialogTextColor(AlertDialog dialog, int msgColor, int positiveBtnColor, int negativeBtnColor) {
+        //修改内容颜色
+        try {
+            Field mAlert = AlertDialog.class.getDeclaredField("mAlert");
+            mAlert.setAccessible(true);
+            Object mAlertController = mAlert.get(dialog);
+            Field mMessage = mAlertController.getClass().getDeclaredField("mMessageView");
+            mMessage.setAccessible(true);
+            TextView mMessageView = (TextView) mMessage.get(mAlertController);
+            mMessageView.setTextColor(msgColor);
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+        //修改按钮颜色
+        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE);
+        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
     }
 }

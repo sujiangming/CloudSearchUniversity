@@ -3,21 +3,18 @@ package com.gk.mvp.view.activity;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.content.pm.PackageManager;
-import android.content.res.Resources;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
-import android.util.TypedValue;
 import android.view.KeyEvent;
 import android.view.View;
-import android.widget.LinearLayout;
 
 import com.gk.R;
 import com.gk.mvp.view.adpater.LoginFragmentPagerAdapter;
 import com.gk.mvp.view.custom.TopBarView;
 
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +33,6 @@ public class LoginActivity extends SjmBaseActivity {
     TopBarView topBarLogin;
 
     private List<String> list;
-    private int mEnterFlag = 0;
 
     @Override
     public int getResouceId() {
@@ -46,7 +42,7 @@ public class LoginActivity extends SjmBaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        appManager.finishAllActivity();
+        app.onTerminate();
     }
 
     @Override
@@ -54,14 +50,9 @@ public class LoginActivity extends SjmBaseActivity {
         getPersimmions();
         initTopBar();
         initData();
+        int mEnterFlag = 0;
         pager.setAdapter(new LoginFragmentPagerAdapter(getSupportFragmentManager(), list, mEnterFlag));
         tabLayout.setupWithViewPager(pager);
-//        tabLayout.post(new Runnable() {
-//            @Override
-//            public void run() {
-//                setIndicator(tabLayout, 40, 40);
-//            }
-//        });
     }
 
     private void initTopBar() {
@@ -76,37 +67,6 @@ public class LoginActivity extends SjmBaseActivity {
         list.add("密码登录");
     }
 
-    public void setIndicator(TabLayout tabs, int leftDip, int rightDip) {
-        Class<?> tabLayout = tabs.getClass();
-        Field tabStrip = null;
-        try {
-            tabStrip = tabLayout.getDeclaredField("mTabStrip");
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-
-        tabStrip.setAccessible(true);
-        LinearLayout llTab = null;
-        try {
-            llTab = (LinearLayout) tabStrip.get(tabs);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        }
-
-        int left = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, leftDip, Resources.getSystem().getDisplayMetrics());
-        int right = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, rightDip, Resources.getSystem().getDisplayMetrics());
-
-        for (int i = 0; i < llTab.getChildCount(); i++) {
-            View child = llTab.getChildAt(i);
-            child.setPadding(0, 0, 0, 0);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1);
-            params.leftMargin = left;
-            params.rightMargin = right;
-            child.setLayoutParams(params);
-            child.invalidate();
-        }
-    }
-
     private long exitTime = 0;
 
     @Override
@@ -117,7 +77,7 @@ public class LoginActivity extends SjmBaseActivity {
                 toast("再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             } else {
-                appManager.finishAllActivity();
+                app.onTerminate();
             }
             return true;
         }
@@ -125,7 +85,6 @@ public class LoginActivity extends SjmBaseActivity {
     }
 
     private String permissionInfo;
-    private final int SDK_PERMISSION_REQUEST = 127;
 
     @TargetApi(26)
     private void getPersimmions() {
@@ -153,6 +112,7 @@ public class LoginActivity extends SjmBaseActivity {
             }
 
             if (permissions.size() > 0) {
+                int SDK_PERMISSION_REQUEST = 127;
                 requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
             }
         }
@@ -174,8 +134,8 @@ public class LoginActivity extends SjmBaseActivity {
 
     @TargetApi(26)
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                                           int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions,
+                                           @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 }

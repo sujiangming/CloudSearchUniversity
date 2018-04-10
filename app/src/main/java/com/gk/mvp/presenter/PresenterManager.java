@@ -1,5 +1,6 @@
 package com.gk.mvp.presenter;
 
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.gk.beans.CommonBean;
@@ -43,14 +44,6 @@ public class PresenterManager {
         return this;
     }
 
-    public PresenterManager isShowProgress(boolean isShow) {
-        if (isShow) {
-            this.mIsShow = isShow;
-            mIView.showProgress();
-        }
-        return this;
-    }
-
     public void hideShowProgress() {
         if (this.mIsShow) {
             mIView.hideProgress();
@@ -60,7 +53,7 @@ public class PresenterManager {
     public PresenterManager request() {
         modelManager.setCall(mCall, null).getServerData(new Callback<CommonBean>() {
             @Override
-            public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+            public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                 if (!response.isSuccessful()) {
                     mIView.fillWithNoData(errorInfo, mOrder);
                     return;
@@ -72,7 +65,7 @@ public class PresenterManager {
 
                 CommonBean commonBean = response.body();
 
-                if (1 != commonBean.getStatus()) {
+                if (1 != (commonBean != null ? commonBean.getStatus() : 0)) {
                     mIView.fillWithNoData(errorInfo, mOrder);
                     return;
                 }
@@ -81,7 +74,7 @@ public class PresenterManager {
             }
 
             @Override
-            public void onFailure(Call<CommonBean> call, Throwable t) {
+            public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                 mIView.fillWithNoData(t.getMessage(), mOrder);
                 hideShowProgress();
             }
@@ -104,7 +97,7 @@ public class PresenterManager {
         final int invokeFlag = flag;
         modelManager.setCall(mCall, null).getServerData(new Callback<CommonBean>() {
             @Override
-            public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+            public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
 
                 if (!response.isSuccessful()) {
                     mIView.fillWithNoData(errorInfo, invokeFlag);
@@ -117,7 +110,7 @@ public class PresenterManager {
 
                 CommonBean commonBean = response.body();
 
-                if (1 != commonBean.getStatus()) {
+                if (1 != (commonBean != null ? commonBean.getStatus() : 0)) {
                     mIView.fillWithNoData(errorInfo, invokeFlag);
                     return;
                 }
@@ -126,7 +119,7 @@ public class PresenterManager {
             }
 
             @Override
-            public void onFailure(Call<CommonBean> call, Throwable t) {
+            public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                 mIView.fillWithNoData(t.getMessage(), invokeFlag);
                 hideShowProgress();
             }
@@ -149,7 +142,7 @@ public class PresenterManager {
         final int invokeFlag = flag;
         modelManager.setCall(null, mCall).getServerDataForResponseBody(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     ResponseBody responseBody = response.body();
                     renderForResponseBody(responseBody, invokeFlag);
@@ -157,7 +150,7 @@ public class PresenterManager {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 mIView.fillWithNoData(t.getMessage(), invokeFlag);
             }
         });

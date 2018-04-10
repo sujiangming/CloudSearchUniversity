@@ -9,6 +9,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Looper;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -23,7 +24,6 @@ import com.gk.http.download.ProgressHelper;
 import com.gk.mvp.presenter.MaterialPresenter;
 import com.gk.mvp.view.adpater.MaterialListAdapter;
 import com.gk.mvp.view.custom.TopBarView;
-import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryFileUtil;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
@@ -189,7 +189,6 @@ public class CourseListActivity extends SjmBaseActivity {
     }
 
     private String permissionInfo;
-    private final int SDK_PERMISSION_REQUEST = 127;
 
     @TargetApi(26)
     private void getPersimmions() {
@@ -217,6 +216,7 @@ public class CourseListActivity extends SjmBaseActivity {
             }
 
             if (permissions.size() > 0) {
+                int SDK_PERMISSION_REQUEST = 127;
                 requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
             }
         }
@@ -238,7 +238,7 @@ public class CourseListActivity extends SjmBaseActivity {
 
     @TargetApi(26)
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
@@ -287,11 +287,12 @@ public class CourseListActivity extends SjmBaseActivity {
         Call<ResponseBody> call = retrofit.retrofitDownload(dataBean.getFileUrl());
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     File file = new File(Environment.getExternalStorageDirectory() + "/Download/", dataBean.getFileName());
                     String fileAbsolutePath = file.getAbsolutePath();
                     try {
+                        assert null != response.body();
                         InputStream is = response.body().byteStream();
                         FileOutputStream fos = new FileOutputStream(file);
                         BufferedInputStream bis = new BufferedInputStream(is);
@@ -314,7 +315,7 @@ public class CourseListActivity extends SjmBaseActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 toast(t.getMessage());
             }
         });
@@ -327,11 +328,5 @@ public class CourseListActivity extends SjmBaseActivity {
             return;
         }
         startActivity(intent);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        GlideImageLoader.stopLoad(getApplicationContext());
     }
 }

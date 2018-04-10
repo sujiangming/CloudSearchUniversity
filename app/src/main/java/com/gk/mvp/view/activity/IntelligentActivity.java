@@ -72,17 +72,9 @@ public class IntelligentActivity extends SjmBaseActivity {
 
     private int vipLevel = 0;
     private JSONObject jsonObject = new JSONObject();
-    private String tipUpdate = "立即升级";
-    private String lowLevel = "会员等级低，不能生成";
-    private String noGenerate = "未生成";
     private String generating = "生成中";
-    private String generated = "已生成";
-    private String rightNowGen = "立即生成";
-    private String rightNowSee = "立即查看";
     private String rightAfterSee = "请稍后查看";
-    private String generatingTip = "正在生成，请稍后进来查看";
     private WishResultBean wishResultBean = null;
-    private String intel_zj_btn = null;
 
     @Override
     public int getResouceId() {
@@ -99,7 +91,7 @@ public class IntelligentActivity extends SjmBaseActivity {
         super.onResume();
         initData();
         httpGetData();
-        intel_zj_btn = JdryPersistence.getObject(this, "intel_zj_btn");
+        String intel_zj_btn = JdryPersistence.getObject(this, "intel_zj_btn");
     }
 
     private void initData() {
@@ -184,7 +176,9 @@ public class IntelligentActivity extends SjmBaseActivity {
 
     private void initTextViewAndBtn(Button button, TextView textView) {
         if (vipLevel <= 2) {
+            String lowLevel = "会员等级低，不能生成";
             textView.setText(lowLevel);
+            String tipUpdate = "立即升级";
             button.setText(tipUpdate);
         }
     }
@@ -200,6 +194,7 @@ public class IntelligentActivity extends SjmBaseActivity {
                 generateReport(type, order);
                 break;
             case 1:
+                String generatingTip = "正在生成，请稍后进来查看";
                 toast(generatingTip);
                 break;
             case 2:
@@ -218,7 +213,9 @@ public class IntelligentActivity extends SjmBaseActivity {
         button.setTag(commonBean.getFlag());
         switch (commonBean.getFlag()) {
             case 0:
+                String noGenerate = "未生成";
                 textView.setText(noGenerate);
+                String rightNowGen = "立即生成";
                 button.setText(rightNowGen);
                 break;
             case 1:
@@ -226,7 +223,9 @@ public class IntelligentActivity extends SjmBaseActivity {
                 button.setText(rightAfterSee);
                 break;
             case 2:
+                String generated = "已生成";
                 textView.setText(generated);
+                String rightNowSee = "立即查看";
                 button.setText(rightNowSee);
                 break;
         }

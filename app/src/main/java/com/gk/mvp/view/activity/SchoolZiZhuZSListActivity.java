@@ -51,7 +51,6 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
     }
 
     private List<SchoolZZZsBean> schoolBeanList = new ArrayList<>();
-    private List<SchoolZZZsBean> schoolBeanListTmp = new ArrayList<>();
     private JSONObject jsonObject = new JSONObject();
     private int mPage = 0;
     private boolean isLoadMore = false;
@@ -110,9 +109,7 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
     }
 
     private void clearSearch() {
-        if (searchview != null) {
-            hideSoftKey();
-        }
+        hideSoftKey();
         searchview.clearFocus(); // 不获取焦点
     }
 
@@ -207,25 +204,24 @@ public class SchoolZiZhuZSListActivity extends SjmBaseActivity {
         }
         JSONObject jsonObject = JSON.parseObject(data);
         List<SchoolZZZsBean> querySchoolBean = JSONObject.parseArray(jsonObject.getString("data"), SchoolZZZsBean.class);
+        List<SchoolZZZsBean> schoolBeanListTmp = new ArrayList<>();
         if (!isLoadMore) {
             schoolBeanList = querySchoolBean;
             schoolBeanListTmp = schoolBeanList;
             adapter.update(schoolBeanList);
             return;
         }
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-            List<SchoolZZZsBean> dataBeans = querySchoolBean;
-            if (data == null) {
-                toast("别扯了，我是有底线的");
-                return;
-            }
-            schoolBeanList.addAll(dataBeans);
-            schoolBeanListTmp = schoolBeanList;
-            adapter.update(dataBeans, true);
-            if (lvQuerySchool != null) {
-                lvQuerySchool.smoothScrollToPosition(lvQuerySchool.getLastVisiblePosition(), 0);
-            }
+        stopRefreshLayoutLoadMore();
+        List<SchoolZZZsBean> dataBeans = querySchoolBean;
+        if (data == null) {
+            toast("别扯了，我是有底线的");
+            return;
+        }
+        schoolBeanList.addAll(dataBeans);
+        schoolBeanListTmp = schoolBeanList;
+        adapter.update(dataBeans, true);
+        if (lvQuerySchool != null) {
+            lvQuerySchool.smoothScrollToPosition(lvQuerySchool.getLastVisiblePosition(), 0);
         }
     }
 

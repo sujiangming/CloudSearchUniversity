@@ -30,9 +30,9 @@ public class LectureAdapter extends JdryBaseAdapter {
         }else{
             viewHolder = new ViewHolder();
             convertView = inflater.inflate(R.layout.fragment_lecture_item,null);
-            viewHolder.tvTitle = (TextView) convertView.findViewById(R.id.tv_lecture_title);
-            viewHolder.tvNum = (RichText) convertView.findViewById(R.id.rt_lecture);
-            viewHolder.ivSke = (ImageView) convertView.findViewById(R.id.iv_lecture_ske);
+            viewHolder.tvTitle = convertView.findViewById(R.id.tv_lecture_title);
+            viewHolder.tvNum = convertView.findViewById(R.id.rt_lecture);
+            viewHolder.ivSke = convertView.findViewById(R.id.iv_lecture_ske);
 
             convertView.setTag(viewHolder);
         }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -19,7 +19,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -337,6 +337,7 @@
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/space_1_px"
                 android:background="@android:color/white"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
                 android:visibility="gone">
@@ -352,9 +353,10 @@
                     <ImageView
                         android:id="@+id/iv_msjt_1"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
-                        android:scaleType="centerCrop" />
+                        android:layout_height="@dimen/space_100_dp"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/ym"
+                        tools:ignore="NestedWeights" />
 
                     <TextView
                         android:id="@+id/tv_msjz_1"
@@ -378,8 +380,7 @@
                     <ImageView
                         android:id="@+id/iv_msjt_2"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -398,6 +399,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@android:color/white"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
                 android:visibility="gone">
@@ -413,8 +415,7 @@
                     <ImageView
                         android:id="@+id/iv_msjt_3"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -423,8 +424,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -439,8 +439,7 @@
                     <ImageView
                         android:id="@+id/iv_msjt_4"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -449,8 +448,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
             </LinearLayout>
             <!--下半部分2-->
@@ -491,6 +489,7 @@
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/space_1_px"
                 android:background="@android:color/white"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
                 android:visibility="gone">
@@ -506,8 +505,7 @@
                     <ImageView
                         android:id="@+id/iv_lszt_1"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -516,8 +514,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -532,8 +529,7 @@
                     <ImageView
                         android:id="@+id/iv_lszt_2"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -542,8 +538,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -552,6 +547,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@android:color/white"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
                 android:visibility="gone">
@@ -567,8 +563,7 @@
                     <ImageView
                         android:id="@+id/iv_lszt_3"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="fitXY" />
 
                     <TextView
@@ -577,8 +572,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -593,8 +587,7 @@
                     <ImageView
                         android:id="@+id/iv_lszt_4"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="fitXY" />
 
                     <TextView
@@ -603,8 +596,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
             </LinearLayout>
             <!--试卷模拟-->
@@ -645,6 +637,7 @@
                 android:layout_height="150dp"
                 android:layout_marginTop="@dimen/space_1_px"
                 android:background="@android:color/white"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
                 android:visibility="gone">
@@ -660,8 +653,7 @@
                     <ImageView
                         android:id="@+id/iv_mnsj_1"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -670,8 +662,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -686,8 +677,7 @@
                     <ImageView
                         android:id="@+id/iv_mnsj_2"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -696,8 +686,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -706,6 +695,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:background="@android:color/white"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
                 android:visibility="gone">
@@ -721,8 +711,7 @@
                     <ImageView
                         android:id="@+id/iv_mnsj_3"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -731,8 +720,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -747,8 +735,7 @@
                     <ImageView
                         android:id="@+id/iv_mnsj_4"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -757,8 +744,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

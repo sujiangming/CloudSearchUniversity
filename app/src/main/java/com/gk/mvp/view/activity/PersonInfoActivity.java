@@ -20,7 +20,6 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.baoyz.actionsheet.ActionSheet;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.ImageBean;
@@ -34,6 +33,7 @@ import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.mvp.view.custom.CommonTipDialog;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.mvp.view.custom.actionsheet.ActionSheet;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.YxxUtils;
 
@@ -79,11 +79,8 @@ public class PersonInfoActivity extends SjmBaseActivity {
     @BindView(R.id.tv_user_nick_name)
     RichText tvUserNickName;
 
-    private LoginBean loginBean;
     private static final String CODE_KEY = "code";
     private DialogInterface mDialog;
-    private String editInfo = "您已经编辑过了";
-    private String noFilled = "未填写";
 
     @Override
     public int getResouceId() {
@@ -94,7 +91,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "个人信息", 0);
-        loginBean = LoginBean.getInstance();
+        LoginBean loginBean = LoginBean.getInstance();
         if (loginBean.getHeadImg() != null && !"".equals(loginBean.getHeadImg())) {
             GlideImageLoader.displayImage(this, loginBean.getHeadImg(), ivUserHead);
         } else {
@@ -123,6 +120,8 @@ public class PersonInfoActivity extends SjmBaseActivity {
             R.id.tv_student_rank, R.id.tv_wen_li_ke,
             R.id.tv_cancel_province, R.id.tv_submit_province})
     public void onViewClicked(View view) {
+        String noFilled = "未填写";
+        String editInfo = "您已经编辑过了";
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.iv_user_head:
@@ -234,13 +233,14 @@ public class PersonInfoActivity extends SjmBaseActivity {
         }
     }
 
+    public static final String[] PROVINCES = {"不限", "北京", "上海", "天津", "重庆", "河北", "山西", "内蒙古", "辽宁", "吉林", "黑龙江", "江苏", "浙江", "安徽", "福建", "江西", "山东", "河南", "湖北", "湖南", "广东", "广西", "海南", "四川", "贵州", "云南", "西藏", "陕西", "甘肃", "青海", "宁夏", "新疆", "台湾", "香港", "澳门"};
+
     private void showMultiChoiceDialog() {
         showEditDialogProvince();
-        final String[] items = YXXConstants.PROVINCES;
-        for (int i = 0; i < items.length; ++i) {
+        for (int i = 0; i < PROVINCES.length; ++i) {
             View view = View.inflate(this, R.layout.province_item, null);
             TextView textView = view.findViewById(R.id.tv_province_name);
-            textView.setText(items[i]);
+            textView.setText(PROVINCES[i]);
             final ImageView checkBox = view.findViewById(R.id.check_box);
             final int finalI = i;
             checkBox.setOnClickListener(new View.OnClickListener() {
@@ -253,11 +253,11 @@ public class PersonInfoActivity extends SjmBaseActivity {
                             return;
                         }
                         checkBox.setImageResource(R.drawable.gouxuan);
-                        yourChoicesName.add(items[finalI]);
+                        yourChoicesName.add(PROVINCES[finalI]);
                         view.setTag("1");
                     } else {
                         checkBox.setImageResource(R.drawable.not_gouxuan);
-                        yourChoicesName.remove(items[finalI]);
+                        yourChoicesName.remove(PROVINCES[finalI]);
                         view.setTag("0");
                     }
                 }
@@ -297,7 +297,6 @@ public class PersonInfoActivity extends SjmBaseActivity {
         }
     }
 
-    private final int REQUEST_CODE_CAMERA = 1000;
     private final int REQUEST_CODE_GALLERY = 1001;
 
     private FunctionConfig functionConfig = YXXApplication.getFunctionConfig();
@@ -359,7 +358,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
         Call<ResponseBody> call = RetrofitUtil.getInstance().createReq(IService.class).uploadImage("user", description, body);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 try {
                     if (response.isSuccessful()) {
                         String ret = response.body().string();
@@ -372,7 +371,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 Log.e("Upload error:", t.getMessage());
                 hideProgress();
             }
@@ -552,6 +551,7 @@ public class PersonInfoActivity extends SjmBaseActivity {
     }
 
     private void openCamera() {
+        int REQUEST_CODE_CAMERA = 1000;
         GalleryFinal.openCamera(REQUEST_CODE_CAMERA, functionConfig, mOnHanlderResultCallback);
     }
 }

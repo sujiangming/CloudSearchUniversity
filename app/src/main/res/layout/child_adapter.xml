@@ -1,40 +1,38 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@color/colorF0EFF3">
+    android:layout_height="50dp"
+    android:background="@color/colorBackground">
 
-    <RelativeLayout
+    <TextView
+        android:id="@+id/childGroupTV"
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="@dimen/space_50_dp"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@id/score_value"
+        android:gravity="center_vertical"
+        android:paddingLeft="40dp"
+        android:paddingRight="@dimen/space_12_dp"
+        android:text="@string/app_name" />
 
-        <TextView
-            android:id="@+id/childGroupTV"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:paddingLeft="40dp" />
+    <ImageView
+        android:id="@+id/kpi_back_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/up" />
 
-        <ImageView
-            android:id="@+id/kpi_back_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="20dp"
-            android:src="@drawable/up" />
-
-        <TextView
-            android:id="@+id/score_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="50dp"
-            android:gravity="center"
-            android:text="专业代码："
-            android:textColor="@color/color808080"
-            android:textSize="@dimen/font_12_sp"
-            android:visibility="visible" />
-    </RelativeLayout>
-
-</LinearLayout>
+    <TextView
+        android:id="@+id/score_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="50dp"
+        android:gravity="center"
+        android:text="专业代码："
+        android:textColor="@color/color808080"
+        android:textSize="@dimen/font_12_sp"
+        android:visibility="visible" />
+</RelativeLayout>

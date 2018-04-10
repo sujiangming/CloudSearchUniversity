@@ -117,26 +117,26 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         // 网络请求获取access_token
         RetrofitUtil.getInstance().createReq(IService.class).getAccessToken(url).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 ResponseBody responseBody;
                 if (response.isSuccessful()) {
                     responseBody = response.body();
                     try {
-                        processGetAccessTokenResult(responseBody.string());
+                        processGetAccessTokenResult(responseBody != null ? responseBody.string() : "");
                     } catch (IOException e) {
                         e.printStackTrace();
                         finish();
                     }
                 } else {
                     responseBody = response.errorBody();
-                    ToastUtils.toast(WXEntryActivity.this, "授权口令没有返回：" + responseBody.toString());
+                    ToastUtils.toast(WXEntryActivity.this, "授权口令没有返回：" + (responseBody != null ? responseBody.toString() : ""));
                     finish();
                 }
 
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 ToastUtils.toast(WXEntryActivity.this, "调用授权口令失败：" + t.getLocalizedMessage());
                 finish();
             }
@@ -179,7 +179,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 "&openid=" + openid;
         RetrofitUtil.getInstance().createReq(IService.class).getWXUserInfo(url).enqueue(new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+            public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 ResponseBody responseBody;
                 if (response.isSuccessful()) {
                     responseBody = response.body();
@@ -207,13 +207,13 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     }
                 } else {
                     responseBody = response.errorBody();
-                    ToastUtils.toast(WXEntryActivity.this, "没有获取到微信用户信息：" + responseBody.toString());
+                    ToastUtils.toast(WXEntryActivity.this, "没有获取到微信用户信息：" + (responseBody != null ? responseBody.toString() : ""));
                     finish();
                 }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable t) {
                 ToastUtils.toast(WXEntryActivity.this, "调用获取到微信用户信息接口失败：" + t.getMessage());
                 finish();
             }
@@ -233,10 +233,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 .weixinLogin(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
+                            if ((commonBean != null ? commonBean.getStatus() : 0) == 1) {
                                 LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
                                 LoginBean.getInstance().saveLoginBean(loginBean);
                                 LoginBean.getInstance().setWeixin(loginBean.getWeixin());
@@ -251,7 +251,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         ToastUtils.toast(WXEntryActivity.this, "调用微信登录接口失败：" + t.getMessage());
                         finish();
                     }
@@ -273,10 +273,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 .userBindingWeixin(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
+                            if ((commonBean != null ? commonBean.getStatus() : 0) == 1) {
                                 LoginBean loginBean = JSON.parseObject(commonBean.getData().toString(), LoginBean.class);
                                 LoginBean.getInstance().saveLoginBean(loginBean);
                                 LoginBean.getInstance().setWeixin(loginBean.getWeixin());
@@ -293,7 +293,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         ToastUtils.toast(WXEntryActivity.this, "调用绑定微信接口失败：" + t.getMessage());
                         finish();
                     }
@@ -322,7 +322,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                 .updateUserInfo(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             if (imagePath != null) {
                                 LoginBean.getInstance().setHeadImg(imagePath);
@@ -336,7 +336,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
 
                     }
                 });
@@ -346,10 +346,10 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList()
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
+                            if ((commonBean != null ? commonBean.getStatus() : 0) == 1) {
                                 List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean.getData().toString(), AdsBean.MDataBean.class);
                                 AdsBean.getInstance().saveAdsBean(mDataBeans);
                             }
@@ -358,7 +358,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         goMainActivity();
                     }
                 });

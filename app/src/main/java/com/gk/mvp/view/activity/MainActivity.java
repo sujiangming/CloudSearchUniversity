@@ -7,6 +7,7 @@ import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.KeyEvent;
@@ -161,7 +162,6 @@ public class MainActivity extends SjmBaseActivity {
     }
 
 
-
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
@@ -190,7 +190,7 @@ public class MainActivity extends SjmBaseActivity {
         appVersion.setApkName(PackageUtils.getAppName(this) + ".apk");
         appVersion.setVersionName(versionBean.getVersionCode());
         String sha1 = PackageUtils.getSHa1(this);
-        appVersion.setSha1(sha1 == null ? null : sha1);
+        appVersion.setSha1(sha1);
         AppUpdateUtils.init(getApplicationContext(), appVersion, false, true);
         AppUpdateUtils.upDate();
     }
@@ -213,11 +213,8 @@ public class MainActivity extends SjmBaseActivity {
         }
     }
 
-    private TranslateAnimation mShowAction;
-    private TranslateAnimation mHiddenAction;
-
     private void showWelcome() {
-        mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
+        TranslateAnimation mShowAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
                 -1.0f, Animation.RELATIVE_TO_SELF, 0.0f);
         mShowAction.setDuration(500);
@@ -226,7 +223,7 @@ public class MainActivity extends SjmBaseActivity {
     }
 
     private void hideWelcome() {
-        mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
+        TranslateAnimation mHiddenAction = new TranslateAnimation(Animation.RELATIVE_TO_SELF,
                 0.0f, Animation.RELATIVE_TO_SELF, 0.0f,
                 Animation.RELATIVE_TO_SELF, 0.0f, Animation.RELATIVE_TO_SELF,
                 -1.0f);
@@ -378,7 +375,7 @@ public class MainActivity extends SjmBaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         destroyAsyncTask();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
         //GlideImageLoader.stopLoad(this);
@@ -386,7 +383,6 @@ public class MainActivity extends SjmBaseActivity {
 
 
     private String permissionInfo;
-    private final int SDK_PERMISSION_REQUEST = 127;
 
     @TargetApi(26)
     private void getPersimmions() {
@@ -414,6 +410,7 @@ public class MainActivity extends SjmBaseActivity {
             }
 
             if (permissions.size() > 0) {
+                int SDK_PERMISSION_REQUEST = 127;
                 requestPermissions(permissions.toArray(new String[permissions.size()]), SDK_PERMISSION_REQUEST);
             }
         }
@@ -435,7 +432,7 @@ public class MainActivity extends SjmBaseActivity {
 
     @TargetApi(26)
     @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
 
@@ -449,7 +446,7 @@ public class MainActivity extends SjmBaseActivity {
                 toast("再按一次退出程序");
                 exitTime = System.currentTimeMillis();
             } else {
-                appManager.finishAllActivity();
+                app.onTerminate();
             }
             return true;
         }

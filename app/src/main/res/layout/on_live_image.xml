@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.gk.mvp.view.custom.CircleImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/space_30_dp"
     android:layout_height="@dimen/space_30_dp"
-    android:src="@drawable/menu01" />
+    android:src="@drawable/menu01"
+    tools:keep="@layout/on_live_image" />

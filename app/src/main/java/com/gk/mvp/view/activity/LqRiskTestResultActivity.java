@@ -84,7 +84,6 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
                 } else {
                     intent1.putExtra("uniName", valueDesc);
                 }
-                //intent1.putExtra("uniName", schoolName);
                 openNewActivityByIntent(LqRiskTestResultZZPlanActivity.class, intent1);
                 break;
         }
@@ -92,7 +91,6 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
 
     private String valueDesc;
     private int flag = 0;
-    private String aimSchool = "目标院校： ";
     private String schoolName;
 
     @Override
@@ -110,6 +108,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
 
     private void initData() {
         tvMyScore.setText("我的成绩：" + LoginBean.getInstance().getScore() + "分");
+        String aimSchool = "目标院校： ";
         if (flag == 2) {
             schoolName = getIntent().getStringExtra("schoolName");
             tv_my_aim_major.setVisibility(View.VISIBLE);
@@ -136,7 +135,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         tv_line_2.setVisibility(View.GONE);
     }
 
-    private PresenterManager presenterManager = new PresenterManager();
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
 
     private void evaluateReport() { //按高校生成报告
         showProgress();
@@ -144,7 +143,7 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         jsonObject.put("score", LoginBean.getInstance().getScore());
         jsonObject.put("schoolName", YxxUtils.URLEncode(valueDesc));
         jsonObject.put("username", LoginBean.getInstance().getUsername());
-        presenterManager.setmIView(this)
+        presenterManager
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .evaluateReport(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
@@ -158,7 +157,6 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("majorName", (valueDesc == null ? "" : YxxUtils.URLEncode(valueDesc)));
         presenterManager
-                .setmIView(this)
                 .setCall(RetrofitUtil.getInstance().createReq(IService.class)
                         .evaluateMajorReport(jsonObject.toJSONString()))
                 .request(YXXConstants.INVOKE_API_SECOND_TIME);
@@ -168,6 +166,10 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
     public <T> void fillWithData(T t, int order) {
         hideProgress();
         CommonBean commonBean = (CommonBean) t;
+        if (null == commonBean || null == commonBean.getData()) {
+            hideGoneView();
+            return;
+        }
         LuQuRiskBean luQuRiskBean = JSON.parseObject(commonBean.getData().toString(), LuQuRiskBean.class);
         if (luQuRiskBean == null) {
             hideGoneView();
@@ -255,6 +257,5 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
         if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
-        //GlideImageLoader.stopLoad(this);
     }
 }

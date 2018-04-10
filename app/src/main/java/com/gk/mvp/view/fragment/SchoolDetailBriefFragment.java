@@ -34,9 +34,6 @@ public class SchoolDetailBriefFragment extends SjmBaseFragment {
         showUpgradeDialog();
     }
 
-    private QuerySchoolBean.DataBean schoolBean;
-    private String flagStr;
-    private SchoolRankBean schoolRankBean;
     private String schoolName;
 
     @Override
@@ -52,15 +49,15 @@ public class SchoolDetailBriefFragment extends SjmBaseFragment {
     private void initData() {
         ExpandableTextView expandableTextView1 = expand_text_1.findViewById(R.id.expand_text_view);
         ExpandableTextView expandableTextView2 = expand_text_2.findViewById(R.id.expand_text_view);
-        flagStr = getArguments().getString("flag");
+        String flagStr = getArguments().getString("flag");
         if (flagStr != null && "query".equals(flagStr)) {
-            schoolBean = (QuerySchoolBean.DataBean) getArguments().getSerializable("schoolBean");
-            expandableTextView1.setText(schoolBean.getStuRecruitBrochure());
+            QuerySchoolBean.DataBean schoolBean = (QuerySchoolBean.DataBean) getArguments().getSerializable("schoolBean");
+            expandableTextView1.setText(schoolBean != null ? schoolBean.getStuRecruitBrochure() : "");
             expandableTextView2.setText(schoolBean.getSchoolProfile());
             schoolName = schoolBean.getSchoolName();
         } else {
-            schoolRankBean = (SchoolRankBean) getArguments().getSerializable("schoolBean");
-            expandableTextView1.setText(schoolRankBean.getStuRecruitBrochure());
+            SchoolRankBean schoolRankBean = (SchoolRankBean) getArguments().getSerializable("schoolBean");
+            expandableTextView1.setText(schoolRankBean != null ? schoolRankBean.getStuRecruitBrochure() : "");
             expandableTextView2.setText(schoolRankBean.getSchoolProfile());
             schoolName = schoolRankBean.getSchoolName();
         }

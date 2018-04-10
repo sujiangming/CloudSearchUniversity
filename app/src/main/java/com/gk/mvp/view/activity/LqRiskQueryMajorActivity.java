@@ -107,11 +107,9 @@ public class LqRiskQueryMajorActivity extends SjmBaseActivity {
             @Override
             public boolean onQueryTextSubmit(String s) {
                 majorPresenter.queryMajorByName(YxxUtils.URLEncode(s), 1);
-                if (searchview != null) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    if (imm != null) {
-                        imm.hideSoftInputFromWindow(searchview.getWindowToken(), 0); // 输入法如果是显示状态，那么就隐藏输入法
-                    }
+                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(searchview.getWindowToken(), 0); // 输入法如果是显示状态，那么就隐藏输入法
                 }
                 searchview.clearFocus(); // 不获取焦点
                 return true;

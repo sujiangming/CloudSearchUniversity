@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,7 +16,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
-import com.baoyz.actionsheet.ActionSheet;
 import com.gk.R;
 import com.gk.beans.AuthResult;
 import com.gk.beans.CommonBean;
@@ -34,6 +34,7 @@ import com.gk.mvp.view.custom.CommonTipDialog;
 import com.gk.mvp.view.custom.CommonTipDialog.onNoOnclickListener;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.mvp.view.custom.actionsheet.ActionSheet;
 import com.gk.tools.YxxUtils;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
@@ -72,7 +73,6 @@ public class LqRiskActivity extends SjmBaseActivity {
     TextView tv_risk_score;
 
     private int faultLevel = 1; //默认显示高校
-    private LoginBean loginBean;
     private String score;
     private String rank;
     private String weli;
@@ -100,7 +100,7 @@ public class LqRiskActivity extends SjmBaseActivity {
     }
 
     private void initData() {
-        loginBean = LoginBean.getInstance();
+        LoginBean loginBean = LoginBean.getInstance();
         score = loginBean.getScore();
         rank = loginBean.getRanking();
         weli = loginBean.getWlDesc();
@@ -296,7 +296,6 @@ public class LqRiskActivity extends SjmBaseActivity {
     }
 
     private int vipLevel = 0;
-    private int vipType = 0;
 
     private UserRechargeTimes.Data rechargeTimesData = null;
 
@@ -307,16 +306,16 @@ public class LqRiskActivity extends SjmBaseActivity {
                 .getUserRechargeTimes(jsonObject.toJSONString())
                 .enqueue(new Callback<UserRechargeTimes>() {
                     @Override
-                    public void onResponse(Call<UserRechargeTimes> call, Response<UserRechargeTimes> response) {
+                    public void onResponse(@NonNull Call<UserRechargeTimes> call, @NonNull Response<UserRechargeTimes> response) {
                         if (response.isSuccessful()) {
                             UserRechargeTimes rechargeTimes = response.body();
-                            rechargeTimesData = rechargeTimes.getData();
+                            rechargeTimesData = rechargeTimes != null ? rechargeTimes.getData() : null;
                             return;
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<UserRechargeTimes> call, Throwable t) {
+                    public void onFailure(@NonNull Call<UserRechargeTimes> call, @NonNull Throwable t) {
 
                     }
                 });
@@ -350,15 +349,15 @@ public class LqRiskActivity extends SjmBaseActivity {
                 .getVipLevelAmount()
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            priceBean = JSON.parseObject(commonBean.getData().toString(), VIPPriceBean.class);
+                            priceBean = JSON.parseObject(commonBean != null ? commonBean.getData().toString() : null, VIPPriceBean.class);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast(t.getMessage());
                     }
                 });
@@ -426,10 +425,10 @@ public class LqRiskActivity extends SjmBaseActivity {
                 .prepay(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getData() == null) {
+                            if ((commonBean != null ? commonBean.getData() : null) == null) {
                                 toast("获取订单信息失败");
                                 return;
                             }
@@ -440,7 +439,7 @@ public class LqRiskActivity extends SjmBaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast(t.getMessage());
                         hideProgress();
                     }
@@ -542,7 +541,7 @@ public class LqRiskActivity extends SjmBaseActivity {
                         LoginBean.getInstance().setVipLevel(vipLevel);
                         LoginBean.getInstance().save();
                         LoginBean.getInstance().setVipLevelTmp(vipLevel);
-                        vipType = LoginBean.getInstance().getVipLevel();
+                        int vipType = LoginBean.getInstance().getVipLevel();
                         tempOrderPaySuccess();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
@@ -581,10 +580,10 @@ public class LqRiskActivity extends SjmBaseActivity {
                 .tempOrderPaySuccess(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            toast(commonBean.getMessage());
+                            toast(commonBean != null ? commonBean.getMessage() : null);
                             rightNowTest();//立即进行测试
                         } else {
                             toast("支付失败，请重新支付！");
@@ -592,7 +591,7 @@ public class LqRiskActivity extends SjmBaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast("支付失败，请重新支付！");
                     }
                 });

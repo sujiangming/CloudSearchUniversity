@@ -82,7 +82,6 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
         }
     }
 
-    private int screenHeight = 0;//屏幕高度
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
 
     private List<ChatMessageBean> mDatas = new ArrayList<>();
@@ -227,7 +226,7 @@ public class MultiItemRvActivity extends SjmBaseActivity implements View.OnLayou
      */
     private void initKeyBoardParameter() {
         //获取屏幕高度
-        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         //阀值设置为屏幕高度的1/3
         keyHeight = screenHeight / 3;
     }

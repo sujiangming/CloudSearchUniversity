@@ -34,16 +34,12 @@ import java.security.MessageDigest;
 
 public class AppUpdateUtils {
     private static Context mContext;
-    private static int mVersionCode;
     private static AppVersion mAppVersion;
     private static String mVersionName;
-    private static String mFileName;
     private static ProgressDialog mProgressDialog;
     private static String mLocalFilepath;
     private static DownloadFileAsyncTask mDownloadFileAsyncTask;
     private static boolean hasCancel = false;
-    // 如果是自动更新，那么就不跳出已经是最新版本的对话框。否则用户点击更新应用按钮，弹出已经是最新版本的提示框
-    private static boolean mIsAuto = false;
     private static boolean mShowProgressDialog = false;
     private static final int NOTIFY_ID = 54;
     private static NotificationManager mNotificationManager;
@@ -59,15 +55,15 @@ public class AppUpdateUtils {
      */
     public static void init(Context context, AppVersion newAv, boolean isauto,
                             boolean showProgressDialog) {
-        mIsAuto = isauto;
+        boolean mIsAuto = isauto;
         mShowProgressDialog = showProgressDialog;
         mContext = context;
         mNotificationManager = (NotificationManager) context
                 .getSystemService(android.content.Context.NOTIFICATION_SERVICE);
-        mVersionCode = PackageUtils.getVersionCode(mContext);
+        int mVersionCode = PackageUtils.getVersionCode(mContext);
         mVersionName = PackageUtils.getVersionName(mContext);
         mAppVersion = newAv;
-        mFileName = mAppVersion.getApkName();
+        String mFileName = mAppVersion.getApkName();
         File sdDir = null;
 
         // 判断sd卡是否存在
@@ -128,9 +124,6 @@ public class AppUpdateUtils {
         return isNew;
     }
 
-    private static AlertDialog.Builder pwdBuilder;
-    private static AlertDialog pwdDialog;
-
     /**
      * 更新应用提示
      */
@@ -150,7 +143,7 @@ public class AppUpdateUtils {
         } else {
             sb.append(mAppVersion.getContent()).append("\n");
         }
-        pwdBuilder = new AlertDialog.Builder(mContext, AlertDialog.THEME_HOLO_LIGHT)
+        AlertDialog.Builder pwdBuilder = new AlertDialog.Builder(mContext, AlertDialog.THEME_HOLO_LIGHT)
                 .setTitle("提示")
                 .setMessage(sb.toString())
                 .setPositiveButton("确认", new DialogInterface.OnClickListener() {
@@ -170,7 +163,7 @@ public class AppUpdateUtils {
                         });
         // 创建
         pwdBuilder.setCancelable(false);
-        pwdDialog = pwdBuilder.create();
+        AlertDialog pwdDialog = pwdBuilder.create();
         // 显示对话框
         pwdDialog.show();
     }
@@ -359,7 +352,7 @@ public class AppUpdateUtils {
     // 使用自带算法 获取文件的SHA1
     private static String getFileSHA1(File file) {
         if (file.exists()) {
-            MessageDigest digest = null;
+            MessageDigest digest;
             byte buffer[] = new byte[1024];
             int len;
             try {
@@ -421,7 +414,7 @@ public class AppUpdateUtils {
         boolean isNew = false;
         String newVersion = versionResultBean.getVersion();
         String oldVersion = PackageUtils.getVersionName(context);
-        String[] oldVersionArray = oldVersion.split("\\.");
+        String[] oldVersionArray = oldVersion != null ? oldVersion.split("\\.") : new String[0];
         String[] newVersionArray = newVersion.split("\\.");
 
         if (oldVersionArray.length >= newVersionArray.length) {

@@ -1,5 +1,6 @@
 package com.gk.wxapi;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -67,6 +68,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onReq(BaseReq baseReq) {
     }
 
+    @SuppressLint("StringFormatInvalid")
     @Override
     public void onResp(BaseResp resp) {
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {//微信支付
@@ -98,17 +100,17 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                 .tempOrderPaySuccess(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
+                            if ((commonBean != null ? commonBean.getStatus() : 0) == 1) {
                                 ToastUtils.toast(WXPayEntryActivity.this, commonBean.getMessage());
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
 
                     }
                 });

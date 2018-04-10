@@ -20,8 +20,9 @@ public class ConnectionChangeReceiver extends BroadcastReceiver {
         Log.e(TAG, "网络状态改变");
         boolean success = false;
         //获得网络连接服务
-        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(context.CONNECTIVITY_SERVICE);
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         //获取wifi连接状态
+        assert connectivityManager != null;
         NetworkInfo.State state = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
         //判断是否正在使用wifi网络
         if (state == NetworkInfo.State.CONNECTED) {

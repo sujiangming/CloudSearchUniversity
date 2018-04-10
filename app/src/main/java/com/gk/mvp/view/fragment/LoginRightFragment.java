@@ -49,8 +49,6 @@ public class LoginRightFragment extends SjmBaseFragment {
         goForgetPwd("weixin");
     }
 
-    private boolean isLogin = false;
-    private static int mEnterFlag = 0;
     private String userName;
     private String password;
     private SaltBean saltBean;
@@ -66,7 +64,7 @@ public class LoginRightFragment extends SjmBaseFragment {
 
     public static LoginRightFragment newInstance(int enterFlag) {
         LoginRightFragment blankFragment = new LoginRightFragment();
-        mEnterFlag = enterFlag;
+        int mEnterFlag = enterFlag;
         return blankFragment;
     }
 
@@ -106,6 +104,7 @@ public class LoginRightFragment extends SjmBaseFragment {
     private void setTvLoginBackgroundRes() {
         int etName = etUserPhone.getText().length();
         int etPwd = etUserPwd.getText().length();
+        boolean isLogin = false;
         if (etName > 0 && etPwd > 0) {
             tvLogin.setBackgroundResource(R.drawable.login_press_style);
             isLogin = true;

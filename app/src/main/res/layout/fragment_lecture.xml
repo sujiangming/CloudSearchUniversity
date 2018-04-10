@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
     android:gravity="center"
     android:orientation="vertical">
 
@@ -24,7 +23,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <LinearLayout
@@ -344,7 +343,8 @@
                 android:background="@android:color/white"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:id="@+id/ll_msjt_1"
@@ -357,8 +357,7 @@
                     <ImageView
                         android:id="@+id/iv_msjt_1"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -367,8 +366,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -383,8 +381,7 @@
                     <ImageView
                         android:id="@+id/iv_msjt_2"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -393,8 +390,7 @@
                         android:layout_height="@dimen/space_30_dp"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:maxLines="1"
-                        android:text="杨幂迷" />
+                        android:maxLines="1" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -405,7 +401,8 @@
                 android:background="@android:color/white"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:id="@+id/ll_msjt_3"
@@ -418,8 +415,7 @@
                     <ImageView
                         android:id="@+id/iv_msjt_3"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -444,8 +440,7 @@
                     <ImageView
                         android:id="@+id/iv_msjt_4"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -498,7 +493,8 @@
                 android:background="@android:color/white"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:id="@+id/ll_lszt_1"
@@ -511,8 +507,7 @@
                     <ImageView
                         android:id="@+id/iv_lszt_1"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -537,8 +532,7 @@
                     <ImageView
                         android:id="@+id/iv_lszt_2"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -559,7 +553,8 @@
                 android:background="@android:color/white"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:id="@+id/ll_lszt_3"
@@ -572,8 +567,7 @@
                     <ImageView
                         android:id="@+id/iv_lszt_3"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="fitXY" />
 
                     <TextView
@@ -598,8 +592,7 @@
                     <ImageView
                         android:id="@+id/iv_lszt_4"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="fitXY" />
 
                     <TextView
@@ -652,7 +645,8 @@
                 android:background="@android:color/white"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:id="@+id/ll_mnsj_1"
@@ -665,8 +659,7 @@
                     <ImageView
                         android:id="@+id/iv_mnsj_1"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -691,8 +684,7 @@
                     <ImageView
                         android:id="@+id/iv_mnsj_2"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -713,7 +705,8 @@
                 android:background="@android:color/white"
                 android:orientation="horizontal"
                 android:padding="@dimen/space_12_dp"
-                android:visibility="gone">
+                android:visibility="gone"
+                android:baselineAligned="false">
 
                 <LinearLayout
                     android:id="@+id/ll_mnsj_3"
@@ -726,8 +719,7 @@
                     <ImageView
                         android:id="@+id/iv_mnsj_3"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView
@@ -752,8 +744,7 @@
                     <ImageView
                         android:id="@+id/iv_mnsj_4"
                         android:layout_width="match_parent"
-                        android:layout_height="0dp"
-                        android:layout_weight="1"
+                        android:layout_height="@dimen/space_100_dp"
                         android:scaleType="centerCrop" />
 
                     <TextView

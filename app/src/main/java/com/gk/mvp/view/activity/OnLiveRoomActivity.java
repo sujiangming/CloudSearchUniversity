@@ -21,14 +21,15 @@ import com.gk.beans.OnLiveBean;
 import com.gk.beans.OnLiveRoomInfo;
 import com.gk.global.YXXConstants;
 import com.gk.mvp.presenter.OnLiveRoomPresenter;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.CircleImageView;
+import com.gk.mvp.view.custom.heart.HeartLayout;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.YxxUtils;
 import com.shuyu.gsyvideoplayer.builder.GSYVideoOptionBuilder;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -40,7 +41,6 @@ import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.OnClick;
-import tyrantgit.widget.HeartLayout;
 
 /**
  * Created by JDRY-SJM on 2017/12/19.
@@ -132,10 +132,8 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     private CommonAdapter<OnLiveRoomInfo.FansSpeakBean> adapter;
     private OnLiveRoomPresenter roomPresenter;
     private OnLiveBean onLiveBean;
-    private OnLiveRoomInfo onLiveRoomInfo;
     private int onlyOneTime = 0;
 
-    private int screenHeight = 0;//屏幕高度初始值
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
 
     private String flower = "/flower";
@@ -167,10 +165,6 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     @Override
     public <T> void fillWithData(T t, int order) {
         switch (order) {
-            case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                break;
-            case YXXConstants.INVOKE_API_SECOND_TIME:
-                break;
             case YXXConstants.INVOKE_API_THREE_TIME:
                 OnLiveRoomInfo.FansSpeakBean fanSpeakBean = (OnLiveRoomInfo.FansSpeakBean) t;
                 if (fanSpeakBean == null) {
@@ -183,7 +177,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                 llComment.setVisibility(View.GONE);
                 break;
             case YXXConstants.INVOKE_API_FORTH_TIME:
-                onLiveRoomInfo = (OnLiveRoomInfo) t;
+                OnLiveRoomInfo onLiveRoomInfo = (OnLiveRoomInfo) t;
                 initRoomInfo(onLiveRoomInfo);
                 if (2 == onLiveRoomInfo.getLiveStatus()) { //直播已经结束
                     showCommonTipeDialog("直播结束");
@@ -196,16 +190,6 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     public <T> void fillWithNoData(T t, int order) {
         toast(YXXConstants.ERROR_INFO);
         hideProgress();
-        switch (order) {
-            case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                break;
-            case YXXConstants.INVOKE_API_SECOND_TIME:
-                break;
-            case YXXConstants.INVOKE_API_THREE_TIME:
-                break;
-            case YXXConstants.INVOKE_API_FORTH_TIME:
-                break;
-        }
     }
 
     private void initRoomInfo(OnLiveRoomInfo roomInfo) {
@@ -316,10 +300,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    return true;
-                }
-                return false;
+                return keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN;
             }
         });
         builder.setMessage(status);
@@ -357,10 +338,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         builder.setOnKeyListener(new DialogInterface.OnKeyListener() {
             @Override
             public boolean onKey(DialogInterface dialogInterface, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    return true;
-                }
-                return false;
+                return keyCode == KeyEvent.KEYCODE_BACK && event.getAction() == KeyEvent.ACTION_DOWN;
             }
         });
         AlertDialog dialog = builder.create();
@@ -368,9 +346,9 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     }
 
     private void initListView() {
-        listView.setAdapter(adapter = new CommonAdapter<OnLiveRoomInfo.FansSpeakBean>(this, R.layout.on_live_detail_chat_item, fanSpeakBeanList) {
+        adapter = new CommonAdapter<OnLiveRoomInfo.FansSpeakBean>(this, fanSpeakBeanList, R.layout.on_live_detail_chat_item) {
             @Override
-            protected void convert(ViewHolder viewHolder, OnLiveRoomInfo.FansSpeakBean item, int position) {
+            public void convert(ViewHolder viewHolder, OnLiveRoomInfo.FansSpeakBean item) {
                 viewHolder.setText(R.id.tv_replier, (item.getNickName() == null ? "游客：" : (item.getNickName() + "：")));
                 if (item.getFansSpeak().equals(flower)) {
                     viewHolder.setVisible(R.id.iv_zan, true);
@@ -386,7 +364,8 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
                     viewHolder.setVisible(R.id.iv_zan, false);
                 }
             }
-        });
+        };
+        listView.setAdapter(adapter);
         listView.smoothScrollByOffset(adapter.getCount());
     }
 
@@ -439,18 +418,13 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
     }
 
     private void setScreenHeight() {
-        //获取屏幕高度
-        screenHeight = getWindowManager().getDefaultDisplay().getHeight();
-        //阀值设置为屏幕高度的1/3
+        int screenHeight = getWindowManager().getDefaultDisplay().getHeight();
         keyHeight = screenHeight / 3;
     }
 
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        //现在认为只要控件将Activity向上推的高度超过了1/3屏幕高，就认为软键盘弹起
-        if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
-            //Toast.makeText(this, "监听到软键盘弹起...", Toast.LENGTH_SHORT).show();
-        } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+        if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
             llComment.setVisibility(View.GONE);
             et_reply.clearFocus();
             et_reply.setText("");
@@ -475,10 +449,16 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
             return;
         }
         super.onBackPressed();
+//        clearHeartTask();
+//        stopTimer();
+//        stopHandler();
         closeActivity(this);
-        clearHeartTask();
-        stopTimer();
-        stopHandler();
+        //roomPresenter.fansExitLiveRooms();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         roomPresenter.fansExitLiveRooms();
     }
 
@@ -489,7 +469,7 @@ public class OnLiveRoomActivity extends SjmBaseActivity implements View.OnLayout
         clearHeartTask();
         stopTimer();
         stopHandler();
-        roomPresenter.fansExitLiveRooms();
+        //roomPresenter.fansExitLiveRooms();
         handler.removeCallbacksAndMessages(null);
         handler = null;
     }

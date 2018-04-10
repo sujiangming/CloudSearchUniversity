@@ -1,5 +1,7 @@
 package com.gk.mvp.model;
 
+import android.support.annotation.NonNull;
+
 import com.alibaba.fastjson.JSONObject;
 import com.gk.beans.MaterialItemBean;
 import com.gk.global.YXXConstants;
@@ -40,7 +42,7 @@ public class MaterialModel {
                 .getMaterialsByCourse(jsonObject.toJSONString())
                 .enqueue(new Callback<MaterialItemBean>() {
                     @Override
-                    public void onResponse(Call<MaterialItemBean> call, Response<MaterialItemBean> response) {
+                    public void onResponse(@NonNull Call<MaterialItemBean> call, @NonNull Response<MaterialItemBean> response) {
                         if (response.isSuccessful()) {
                             materialItemBean = response.body();
                             iPresenterCallback.httpRequestSuccess(materialItemBean, YXXConstants.INVOKE_API_DEFAULT_TIME);
@@ -51,7 +53,7 @@ public class MaterialModel {
                     }
 
                     @Override
-                    public void onFailure(Call<MaterialItemBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<MaterialItemBean> call, @NonNull Throwable t) {
                         materialItemBean.setMessage(t.getMessage());
                         iPresenterCallback.httpRequestFailure(materialItemBean, YXXConstants.INVOKE_API_DEFAULT_TIME);
                     }

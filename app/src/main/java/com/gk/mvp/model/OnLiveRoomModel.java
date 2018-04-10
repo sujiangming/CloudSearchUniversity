@@ -1,5 +1,7 @@
 package com.gk.mvp.model;
 
+import android.support.annotation.NonNull;
+
 import com.alibaba.fastjson.JSONObject;
 import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
@@ -20,11 +22,10 @@ import retrofit2.Response;
 public class OnLiveRoomModel {
     private IPresenterCallback iPresenterCallback;
     private JSONObject jsonObject = new JSONObject();
-    private OnLiveBean onLiveBean;
 
     public OnLiveRoomModel(IPresenterCallback iPresenterCallback, OnLiveBean onLiveBean) {
         this.iPresenterCallback = iPresenterCallback;
-        this.onLiveBean = onLiveBean;
+        OnLiveBean onLiveBean1 = onLiveBean;
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("liveRoomId", onLiveBean.getId());
         fansEnterLiveRooms();
@@ -37,10 +38,10 @@ public class OnLiveRoomModel {
                 .fansEnterLiveRooms(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
+                            if ((commonBean != null ? commonBean.getStatus() : 0) == 1) {
                                 iPresenterCallback.httpRequestSuccess(commonBean, YXXConstants.INVOKE_API_DEFAULT_TIME);
                             } else {
                                 iPresenterCallback.httpRequestFailure(commonBean.getMessage(), YXXConstants.INVOKE_API_DEFAULT_TIME);
@@ -51,7 +52,7 @@ public class OnLiveRoomModel {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         iPresenterCallback.httpRequestFailure(t.getMessage(), YXXConstants.INVOKE_API_DEFAULT_TIME);
                     }
                 });
@@ -63,10 +64,10 @@ public class OnLiveRoomModel {
                 .fansExitLiveRooms(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
+                            if ((commonBean != null ? commonBean.getStatus() : 0) == 1) {
                                 iPresenterCallback.httpRequestSuccess(commonBean, YXXConstants.INVOKE_API_SECOND_TIME);
                             } else {
                                 iPresenterCallback.httpRequestFailure(commonBean.getMessage(), YXXConstants.INVOKE_API_SECOND_TIME);
@@ -77,7 +78,7 @@ public class OnLiveRoomModel {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         iPresenterCallback.httpRequestFailure(t.getMessage(), YXXConstants.INVOKE_API_SECOND_TIME);
                     }
                 });
@@ -90,10 +91,10 @@ public class OnLiveRoomModel {
                 .fansLiveRoomsSpeak(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
+                            if ((commonBean != null ? commonBean.getStatus() : 0) == 1) {
                                 iPresenterCallback.httpRequestSuccess(commonBean, YXXConstants.INVOKE_API_THREE_TIME);
                             } else {
                                 iPresenterCallback.httpRequestFailure(commonBean.getMessage(), YXXConstants.INVOKE_API_THREE_TIME);
@@ -104,7 +105,7 @@ public class OnLiveRoomModel {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         iPresenterCallback.httpRequestFailure(t.getMessage(), YXXConstants.INVOKE_API_THREE_TIME);
                     }
                 });
@@ -116,10 +117,10 @@ public class OnLiveRoomModel {
                 .getLiveRoomsInfo(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
+                            if ((commonBean != null ? commonBean.getStatus() : 0) == 1) {
                                 iPresenterCallback.httpRequestSuccess(commonBean, YXXConstants.INVOKE_API_FORTH_TIME);
                             } else {
                                 iPresenterCallback.httpRequestFailure(commonBean.getMessage(), YXXConstants.INVOKE_API_FORTH_TIME);
@@ -130,7 +131,7 @@ public class OnLiveRoomModel {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         iPresenterCallback.httpRequestFailure(t.getMessage(), YXXConstants.INVOKE_API_FORTH_TIME);
                     }
                 });

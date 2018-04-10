@@ -49,9 +49,6 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (mDatas != null) {
-            //Log.e("test", "mDatas size == " + mDatas.size());
-        }
         return null != mDatas ? mDatas.size() : 0;
     }
 

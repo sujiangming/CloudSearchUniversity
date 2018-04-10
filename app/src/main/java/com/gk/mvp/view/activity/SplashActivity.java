@@ -38,7 +38,6 @@ public class SplashActivity extends SjmBaseActivity {
         goWinByVersion();
     }
 
-    private String userName;
     private String password;
 
     private PresenterManager presenterManager= new PresenterManager().setmIView(this);
@@ -49,7 +48,7 @@ public class SplashActivity extends SjmBaseActivity {
             openNewActivity(LoginActivity.class);
             return;
         }
-        userName = LoginBean.getInstance().getUsername();
+        String userName = LoginBean.getInstance().getUsername();
         if (TextUtils.isEmpty(userName)) {
             openNewActivity(LoginActivity.class);
             return;
@@ -137,6 +136,7 @@ public class SplashActivity extends SjmBaseActivity {
             YXXApplication.getDaoSession().getLocalVersionBeanDao().insertOrReplace(localVersionBean);
             return true;
         }
+        assert currentVersion != null;
         if (!currentVersion.equals(localVersionBean.getVersionName())) {
             localVersionBean.setVersionName(currentVersion);
             YXXApplication.getDaoSession().getLocalVersionBeanDao().insertOrReplace(localVersionBean);

@@ -2,6 +2,7 @@ package com.gk.mvp.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -16,12 +17,12 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.YxxUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,6 +44,7 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
     private List<QuerySchoolByMajorBean> schoolBeanList = new ArrayList<>();
     private JSONObject jsonObject = new JSONObject();
     private String majorName = null;
+    private CommonAdapter adapter;
 
     @Override
     public int getResouceId() {
@@ -54,6 +56,7 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
         setTopBar(topBar, "请选择学校", 0);
         initSmartRefreshLayout(smartRfQuerySchool, false);
         majorName = getIntent().getStringExtra("major");
+        initListView();
         invoke();
     }
 
@@ -86,7 +89,7 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
         if (schoolBeanList.size() == 0) {
             return;
         }
-        initListView();
+        adapter.setItems(schoolBeanList);
     }
 
     @Override
@@ -97,21 +100,24 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
     }
 
     private void initListView() {
-        lvQuerySchool.setAdapter(new CommonAdapter<QuerySchoolByMajorBean>(this, R.layout.risk_major_query_item, schoolBeanList) {
+        adapter = new CommonAdapter<QuerySchoolByMajorBean>(this, schoolBeanList, R.layout.risk_major_query_item) {
             @Override
-            protected void convert(ViewHolder viewHolder, QuerySchoolByMajorBean item, int position) {
+            public void convert(ViewHolder viewHolder, QuerySchoolByMajorBean item) {
                 String schoolName = item.getSchoolName();
-                if (schoolName != null && !"".equals(schoolName)) {
+
+                if (!TextUtils.isEmpty(schoolName)) {
                     viewHolder.setText(R.id.tv_university_name, schoolName);
                 }
-                if (majorName != null && !"".equals(majorName)) {
+
+                if (!TextUtils.isEmpty(majorName)) {
                     viewHolder.setText(R.id.tv_major_name, majorName);
                 }
 
                 GlideImageLoader.displayByImgRes(LqRiskTestMajorSchoolActivity.this, item.getSchoolLogo(),
                         (ImageView) viewHolder.getView(R.id.iv_logo), R.drawable.gaoxiaozhanweitu);
             }
-        });
+        };
+        lvQuerySchool.setAdapter(adapter);
         lvQuerySchool.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -127,9 +133,8 @@ public class LqRiskTestMajorSchoolActivity extends SjmBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
-        //GlideImageLoader.stopLoad(this);
     }
 }

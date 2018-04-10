@@ -2,6 +2,7 @@ package com.gk.mvp.view.activity;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.support.annotation.NonNull;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -48,8 +49,6 @@ public class ForgetPasswordActivity extends SjmBaseActivity {
     private String pageFlag;
 
     private MyCountDownTimer countDownTimerUtils;
-    private final long TIME = 60 * 1000L;
-    private final long INTERVAL = 1000L;
 
     @Override
     public int getResouceId() {
@@ -169,14 +168,14 @@ public class ForgetPasswordActivity extends SjmBaseActivity {
                 .getVerityfyCode(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         CommonBean commonBean = response.body();
-                        toast(commonBean.getMessage());
+                        toast(commonBean != null ? commonBean.getMessage() : response.message());
                         hideProgress();
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast("获取失败");
                         hideProgress();
                     }
@@ -189,11 +188,11 @@ public class ForgetPasswordActivity extends SjmBaseActivity {
                 .forgetPassword(para)
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         hideProgress();
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            toast(commonBean.getMessage());
+                            toast(commonBean != null ? commonBean.getMessage() : response.message());
                             closeActivity(ForgetPasswordActivity.this);
                         } else {
                             toast("获取新密码失败！");
@@ -201,7 +200,7 @@ public class ForgetPasswordActivity extends SjmBaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast(t.getMessage());
                         hideProgress();
                     }
@@ -231,6 +230,8 @@ public class ForgetPasswordActivity extends SjmBaseActivity {
      */
     private void startTimer() {
         if (countDownTimerUtils == null) {
+            long INTERVAL = 1000L;
+            long TIME = 60 * 1000L;
             countDownTimerUtils = new MyCountDownTimer(TIME, INTERVAL);
         }
         countDownTimerUtils.start();

@@ -16,12 +16,12 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryTime;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,13 +60,13 @@ public class QWActivity extends SjmBaseActivity {
     }
 
     private void initAdapter() {
-        lvQw.setAdapter(adapter = new CommonAdapter<QWListBean>(this, R.layout.qw_list_item, list) {
+        adapter = new CommonAdapter<QWListBean>(this, list, R.layout.qw_list_item) {
             @Override
-            protected void convert(ViewHolder viewHolder, QWListBean item, int position) {
+            public void convert(ViewHolder viewHolder, QWListBean item) {
                 if (item == null) {
                     return;
                 }
-                if (position == 0) {
+                if (list.indexOf(item) == 0) {
                     viewHolder.setBackgroundColor(R.id.tv_top_line, 0x00000000);
                 }
                 viewHolder.setText(R.id.tv_title, item.getQueTitle());
@@ -78,7 +78,8 @@ public class QWActivity extends SjmBaseActivity {
                 viewHolder.setText(R.id.tv_reply_count, "回复 " + item.getCommentTimes());
                 viewHolder.setText(R.id.tv_scan_count, "浏览 " + item.getViewTimes());
             }
-        });
+        };
+        lvQw.setAdapter(adapter);
         lvQw.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -92,6 +93,7 @@ public class QWActivity extends SjmBaseActivity {
     private PresenterManager presenterManager = new PresenterManager().setmIView(this);
 
     private void invoke() {
+        showProgress();
         jsonObject.put("page", mPage);
         presenterManager.setCall(RetrofitUtil.getInstance()
                 .createReq(IService.class).getQuestionList(jsonObject.toJSONString()))
@@ -114,12 +116,13 @@ public class QWActivity extends SjmBaseActivity {
 
     @Override
     public <T> void fillWithData(T t, int order) {
+        hideProgress();
+        stopLayoutRefreshByTag(isLoadMore);
         CommonBean commonBean = (CommonBean) t;
+        assert null != commonBean;
+        assert null != commonBean.getData();
         List<QWListBean> qwBeans = JSON.parseArray(commonBean.getData().toString(), QWListBean.class);
         handleData(qwBeans);
-        stopLayoutRefreshByTag(isLoadMore);
-        hideProgress();
-
     }
 
     @Override
@@ -147,9 +150,8 @@ public class QWActivity extends SjmBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
-        //GlideImageLoader.stopLoad(this);
     }
 }

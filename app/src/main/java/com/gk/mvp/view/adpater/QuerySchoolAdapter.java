@@ -9,8 +9,11 @@ import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.beans.QuerySchoolBean;
-import com.gk.beans.UniversityAreaEnum;
-import com.gk.beans.UniversityTypeEnum;
+import com.gk.beans.UniversityAreaBean;
+import com.gk.beans.UniversityAreaBeanDao;
+import com.gk.beans.UniversityTypeBean;
+import com.gk.beans.UniversityTypeBeanDao;
+import com.gk.global.YXXApplication;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.YxxUtils;
 
@@ -69,16 +72,32 @@ public class QuerySchoolAdapter extends JdryBaseAdapter {
 
         GlideImageLoader.displayByImgRes(mContext, dataBean.getSchoolLogo(), viewHolder.iv_query_item, R.drawable.gaoxiaozhanweitu);
 
-        YxxUtils.setViewData(viewHolder.tv_school_name,dataBean.getSchoolName());
-        YxxUtils.setViewData(viewHolder.tv_school_type,getPici(dataBean.getSchoolBatch()));
+        YxxUtils.setViewData(viewHolder.tv_school_name, dataBean.getSchoolName());
+        YxxUtils.setViewData(viewHolder.tv_school_type, getPici(dataBean.getSchoolBatch()));
 
         if (!TextUtils.isEmpty(dataBean.getSchoolCategory())) {
-            int category = Integer.valueOf(dataBean.getSchoolCategory());
-            viewHolder.tv_school_level.setText(UniversityTypeEnum.getName(category));
+            UniversityTypeBean universityTypeBean = YXXApplication.getDaoSession().getUniversityTypeBeanDao()
+                    .queryBuilder().where(UniversityTypeBeanDao.Properties.Index.eq(dataBean.getSchoolCategory())).unique();
+            if (null == universityTypeBean) {
+                viewHolder.tv_school_level.setText("");
+            } else {
+                viewHolder.tv_school_level.setText(universityTypeBean.getName());
+            }
+        } else {
+            viewHolder.tv_school_level.setText("");
         }
 
-        if(!TextUtils.isEmpty(dataBean.getSchoolArea())){
-            viewHolder.tv_school_address.setText(UniversityAreaEnum.getName(Integer.valueOf(dataBean.getSchoolArea())));
+        if (!TextUtils.isEmpty(dataBean.getSchoolArea())) {
+            UniversityAreaBean universityAreaBean = YXXApplication.getDaoSession().getUniversityAreaBeanDao()
+                    .queryBuilder().where(UniversityAreaBeanDao.Properties.Index.eq(dataBean.getSchoolArea())).unique();
+            if (null == universityAreaBean) {
+                viewHolder.tv_school_address.setText("");
+            } else {
+                viewHolder.tv_school_address.setText(universityAreaBean.getName());
+            }
+
+        } else {
+            viewHolder.tv_school_address.setText("");
         }
 
         return convertView;

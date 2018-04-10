@@ -14,7 +14,6 @@ import com.gk.mvp.view.IView;
 
 public class OnLiveRoomPresenter<T> implements IPresenterCallback<T> {
 
-    private OnLiveBean onLiveBean;
     private OnLiveRoomModel roomModel;
     private IView iView;
     public OnLiveRoomInfo onLiveRoomInfo;
@@ -22,7 +21,7 @@ public class OnLiveRoomPresenter<T> implements IPresenterCallback<T> {
 
     public OnLiveRoomPresenter(IView iView, OnLiveBean onLiveBean) {
         this.iView = iView;
-        this.onLiveBean = onLiveBean;
+        OnLiveBean onLiveBean1 = onLiveBean;
         iView.showProgress();
         roomModel = new OnLiveRoomModel(this, onLiveBean);
     }
@@ -43,10 +42,6 @@ public class OnLiveRoomPresenter<T> implements IPresenterCallback<T> {
     public void httpRequestSuccess(T o, int order) {
         CommonBean commonBean = (CommonBean) o;
         switch (order) {
-            case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                break;
-            case YXXConstants.INVOKE_API_SECOND_TIME:
-                break;
             case YXXConstants.INVOKE_API_THREE_TIME:
                 getOnLiveRoomFanSpeakSuccess(commonBean);
                 break;
@@ -60,10 +55,6 @@ public class OnLiveRoomPresenter<T> implements IPresenterCallback<T> {
     @Override
     public void httpRequestFailure(T o, int order) {
         switch (order) {
-            case YXXConstants.INVOKE_API_DEFAULT_TIME:
-                break;
-            case YXXConstants.INVOKE_API_SECOND_TIME:
-                break;
             case YXXConstants.INVOKE_API_THREE_TIME:
                 getOnLiveRoomFanSpeakFail((String) o);
                 break;
@@ -75,7 +66,7 @@ public class OnLiveRoomPresenter<T> implements IPresenterCallback<T> {
     }
 
     private void getOnLiveRoomInfoSuccess(CommonBean commonBean) {
-        if (commonBean.getData() == null) {
+        if (null == commonBean || commonBean.getData() == null) {
             return;
         }
         onLiveRoomInfo = JSON.parseObject(commonBean.getData().toString(), OnLiveRoomInfo.class);
@@ -87,7 +78,7 @@ public class OnLiveRoomPresenter<T> implements IPresenterCallback<T> {
     }
 
     private void getOnLiveRoomFanSpeakSuccess(CommonBean commonBean) {
-        if (commonBean.getData() == null) {
+        if (null == commonBean || commonBean.getData() == null) {
             return;
         }
         fanSpeakBean = JSON.parseObject(commonBean.getData().toString(), OnLiveRoomInfo.FansSpeakBean.class);

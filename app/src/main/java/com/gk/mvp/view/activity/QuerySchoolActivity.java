@@ -19,10 +19,15 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.QuerySchoolBean;
-import com.gk.beans.UniversityAreaEnum;
-import com.gk.beans.UniversityFeatureEnum;
-import com.gk.beans.UniversityLevelEnum;
-import com.gk.beans.UniversityTypeEnum;
+import com.gk.beans.UniversityAreaBean;
+import com.gk.beans.UniversityAreaBeanDao;
+import com.gk.beans.UniversityFeatureBean;
+import com.gk.beans.UniversityFeatureBeanDao;
+import com.gk.beans.UniversityLevelBean;
+import com.gk.beans.UniversityLevelBeanDao;
+import com.gk.beans.UniversityTypeBean;
+import com.gk.beans.UniversityTypeBeanDao;
+import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
@@ -79,7 +84,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 if (!isSpinner1Clicked) {
                     rlChoose.setVisibility(View.VISIBLE);
                     tv_muti_choose.setVisibility(View.VISIBLE);
-                    gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityAreaEnum.getAreaList(), 1);
+                    gridViewChooseAdapter = new GridViewChooseAdapter(this, YXXApplication.getDaoSession().getUniversityAreaBeanDao().loadAll(), 1);
                     initGridViewAdapter();
                     isSpinner1Clicked = true;
                 } else {
@@ -92,7 +97,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 if (!isSpinner2Clicked) {
                     rlChoose.setVisibility(View.VISIBLE);
                     tv_muti_choose.setVisibility(View.GONE);
-                    gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityTypeEnum.getUniversityList(), 2);
+                    gridViewChooseAdapter = new GridViewChooseAdapter(this, YXXApplication.getDaoSession().getUniversityTypeBeanDao().loadAll(), 2);
                     initGridViewAdapter();
                     isSpinner2Clicked = true;
                 } else {
@@ -105,7 +110,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 if (!isSpinner3Clicked) {
                     rlChoose.setVisibility(View.VISIBLE);
                     tv_muti_choose.setVisibility(View.GONE);
-                    gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityFeatureEnum.getUniversityFeatureList(), 3);
+                    gridViewChooseAdapter = new GridViewChooseAdapter(this, YXXApplication.getDaoSession().getUniversityFeatureBeanDao().loadAll(), 3);
                     initGridViewAdapter();
                     isSpinner3Clicked = true;
                 } else {
@@ -119,7 +124,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 if (!isSpinner4Clicked) {
                     rlChoose.setVisibility(View.VISIBLE);
                     tv_muti_choose.setVisibility(View.GONE);
-                    gridViewChooseAdapter = new GridViewChooseAdapter(this, UniversityLevelEnum.getUniversityLevelList(), 4);
+                    gridViewChooseAdapter = new GridViewChooseAdapter(this, YXXApplication.getDaoSession().getUniversityLevelBeanDao().loadAll(), 4);
                     initGridViewAdapter();
                     isSpinner4Clicked = true;
                 } else {
@@ -130,40 +135,40 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 type = 4;
                 break;
             case R.id.btn_choose:
-                String str = nullStr;
-                String strName = nullStr;
+                StringBuilder str = new StringBuilder(nullStr);
+                StringBuilder strName = new StringBuilder(nullStr);
                 rlChoose.setVisibility(View.GONE);
-                queryIndexList = gridViewChooseAdapter.getCheckedArray();
+                List<String> queryIndexList = gridViewChooseAdapter.getCheckedArray();
                 if (queryIndexList != null) {
                     for (int i = 0; i < queryIndexList.size(); i++) {
                         gridViewChooseAdapter.getIsCheck().set(i, false);
                         if (i == queryIndexList.size() - 1) {
-                            str += queryIndexList.get(i);
-                            strName += getEnumName(Integer.valueOf(queryIndexList.get(i)));
+                            str.append(queryIndexList.get(i));
+                            strName.append(getEnumName(Integer.valueOf(queryIndexList.get(i))));
                         } else {
-                            str += queryIndexList.get(i) + ",";
-                            strName += getEnumName(Integer.valueOf(queryIndexList.get(i))) + ",";
+                            str.append(queryIndexList.get(i)).append(",");
+                            strName.append(getEnumName(Integer.valueOf(queryIndexList.get(i)))).append(",");
                         }
                     }
                 }
-                if (!strName.equals(nullStr)) {
-                    setEnumName(strName, str);
+                if (!strName.toString().equals(nullStr)) {
+                    setEnumName(strName.toString(), str.toString());
                 }
                 isLoadMore = false;
                 mPage = 0;
                 isSearcher = false;
                 if (type == 1) {
-                    spinner1.setTag(str);
-                    invoke(str, spinner2.getTag().toString(), spinner3.getTag().toString(), spinner4.getTag().toString(), nullStr);
+                    spinner1.setTag(str.toString());
+                    invoke(str.toString(), spinner2.getTag().toString(), spinner3.getTag().toString(), spinner4.getTag().toString(), nullStr);
                 } else if (type == 2) {
-                    spinner2.setTag(str);
-                    invoke(spinner1.getTag().toString(), str, spinner3.getTag().toString(), spinner4.getTag().toString(), nullStr);
+                    spinner2.setTag(str.toString());
+                    invoke(spinner1.getTag().toString(), str.toString(), spinner3.getTag().toString(), spinner4.getTag().toString(), nullStr);
                 } else if (type == 3) {
-                    spinner3.setTag(str);
-                    invoke(spinner1.getTag().toString(), spinner2.getTag().toString(), str, spinner4.getTag().toString(), nullStr);
+                    spinner3.setTag(str.toString());
+                    invoke(spinner1.getTag().toString(), spinner2.getTag().toString(), str.toString(), spinner4.getTag().toString(), nullStr);
                 } else if (type == 4) {
-                    spinner4.setTag(str);
-                    invoke(spinner1.getTag().toString(), spinner2.getTag().toString(), spinner3.getTag().toString(), str, nullStr);
+                    spinner4.setTag(str.toString());
+                    invoke(spinner1.getTag().toString(), spinner2.getTag().toString(), spinner3.getTag().toString(), str.toString(), nullStr);
                 }
                 break;
             case R.id.tv_bg_click:
@@ -178,14 +183,12 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     private int mPage = 0;
     private boolean isLoadMore = false;
     private GridViewChooseAdapter gridViewChooseAdapter;
-    private List<String> queryIndexList;
     private int type = 1;
     private String nullStr = "";
     private String searchKey = nullStr;
     private QuerySchoolAdapter adapter;
     private boolean isSpinner1Clicked, isSpinner2Clicked, isSpinner3Clicked, isSpinner4Clicked;
     private boolean isSearcher = false;
-
 
     @Override
     public int getResouceId() {
@@ -216,17 +219,40 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     }
 
     private String getEnumName(int index) {
-        String name = nullStr;
         if (type == 1) {
-            name = UniversityAreaEnum.getName(index);
+            UniversityAreaBean universityAreaBean = YXXApplication.getDaoSession().getUniversityAreaBeanDao()
+                    .queryBuilder().where(UniversityAreaBeanDao.Properties.Index.eq(index)).unique();
+
+            if (null == universityAreaBean) {
+                return nullStr;
+            }
+            return universityAreaBean.getName();
         } else if (type == 2) {
-            name = UniversityTypeEnum.getName(index);
+            UniversityTypeBean universityTypeBean = YXXApplication.getDaoSession()
+                    .getUniversityTypeBeanDao()
+                    .queryBuilder().where(UniversityTypeBeanDao.Properties.Index.eq(index)).unique();
+            if (null == universityTypeBean) {
+                return nullStr;
+            }
+            return universityTypeBean.getName();
         } else if (type == 3) {
-            name = UniversityFeatureEnum.getName(index);
+            UniversityFeatureBean universityFeatureBean = YXXApplication.getDaoSession()
+                    .getUniversityFeatureBeanDao()
+                    .queryBuilder().where(UniversityFeatureBeanDao.Properties.Index.eq(index)).unique();
+            if (null == universityFeatureBean) {
+                return nullStr;
+            }
+            return universityFeatureBean.getName();
         } else {
-            name = UniversityLevelEnum.getName(index);
+
+            UniversityLevelBean universityLevelBean = YXXApplication.getDaoSession()
+                    .getUniversityLevelBeanDao()
+                    .queryBuilder().where(UniversityLevelBeanDao.Properties.Index.eq(index)).unique();
+            if (null == universityLevelBean) {
+                return nullStr;
+            }
+            return universityLevelBean.getName();
         }
-        return name;
     }
 
     private void setEnumName(String name, String tag) {
@@ -303,9 +329,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
     }
 
     private void clearSearch() {
-        if (searchview != null) {
-            hideSoftKey();
-        }
+        hideSoftKey();
         searchview.clearFocus(); // 不获取焦点
     }
 
@@ -318,7 +342,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         }
     }
 
-    private PresenterManager presenterManager = new PresenterManager();
+    private PresenterManager presenterManager = new PresenterManager().setmIView(this);
 
     private void invoke(String schoolArea, String schoolCategory, String schoolType, String tese, String schoolName) {
         showProgress();
@@ -328,10 +352,17 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         jsonObject.put("schoolBatch", tese);
         jsonObject.put("tese", schoolType);
         jsonObject.put("schoolName", schoolName);
-        presenterManager.setmIView(this)
-                .setCall(RetrofitUtil.getInstance()
-                        .createReq(IService.class).getUniversityList(jsonObject.toJSONString()))
+        presenterManager.setCall(RetrofitUtil.getInstance()
+                .createReq(IService.class).getUniversityList(jsonObject.toJSONString()))
                 .requestForResponseBody(YXXConstants.INVOKE_API_DEFAULT_TIME);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if (null != presenterManager && null != presenterManager.getCall()) {
+            presenterManager.getCall().cancel();
+        }
     }
 
     @Override
@@ -340,7 +371,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
         if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
-        adapter = null;
+        //GlideImageLoader.stopLoad(this);
     }
 
     @Override
@@ -388,18 +419,16 @@ public class QuerySchoolActivity extends SjmBaseActivity {
             adapter.update(schoolBeanList);
             return;
         }
-        if (isLoadMore) {
-            stopRefreshLayoutLoadMore();
-            List<QuerySchoolBean.DataBean> dataBeans = querySchoolBean.getData();
-            if (data == null) {
-                toast("别扯了，我是有底线的");
-                return;
-            }
-            schoolBeanList.addAll(dataBeans);
-            adapter.update(dataBeans, true);
-            if (lvQuerySchool != null) {
-                lvQuerySchool.smoothScrollToPosition(lvQuerySchool.getLastVisiblePosition(), 0);
-            }
+        stopRefreshLayoutLoadMore();
+        List<QuerySchoolBean.DataBean> dataBeans = querySchoolBean.getData();
+        if (data == null) {
+            toast("别扯了，我是有底线的");
+            return;
+        }
+        schoolBeanList.addAll(dataBeans);
+        adapter.update(dataBeans, true);
+        if (lvQuerySchool != null) {
+            lvQuerySchool.smoothScrollToPosition(lvQuerySchool.getLastVisiblePosition(), 0);
         }
     }
 

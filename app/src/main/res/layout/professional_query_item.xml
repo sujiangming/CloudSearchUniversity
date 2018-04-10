@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/tv_zy_name"
     android:layout_width="match_parent"
     android:layout_height="@dimen/space_44_dp"
@@ -8,4 +9,5 @@
     android:paddingLeft="@dimen/space_12_dp"
     android:text="搜索结果"
     android:textColor="@color/color353535"
-    android:textSize="@dimen/font_14_sp" />
+    android:textSize="@dimen/font_14_sp"
+    tools:keep="@layout/professional_query_item" />

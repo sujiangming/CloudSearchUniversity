@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:hint="@string/school_query"
-    android:label="@string/score_query">
+    android:label="@string/score_query"
+    tools:keep="@xml/searchable">
 
 </searchable>

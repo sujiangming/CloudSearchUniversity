@@ -8,8 +8,11 @@ import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.beans.SchoolRankBean;
-import com.gk.beans.UniversityAreaEnum;
+import com.gk.beans.UniversityAreaBean;
+import com.gk.beans.UniversityAreaBeanDao;
+import com.gk.global.YXXApplication;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.YxxUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -69,8 +72,12 @@ public class RankSchoolAdapter extends JdryBaseAdapter {
         viewHolder.tv_school_name.setText(dataBean.getSchoolName());
         viewHolder.tv_school_type.setText(getPici(dataBean.getSchoolBatch()));
         viewHolder.tv_school_level.setText("1".equals(dataBean.getSchoolCategory()) ? "综合类" : "教育类");
-        viewHolder.tv_school_address.setText(UniversityAreaEnum.getName(Integer.valueOf(dataBean.getSchoolArea())));
-
+        UniversityAreaBean universityAreaBean = YXXApplication.getDaoSession().getUniversityAreaBeanDao().queryBuilder().where(UniversityAreaBeanDao.Properties.Index.eq(dataBean.getSchoolArea())).unique();
+        if (null != universityAreaBean) {
+            YxxUtils.setViewData(viewHolder.tv_school_address, universityAreaBean.getName());
+        } else {
+            viewHolder.tv_school_address.setText("");
+        }
         List<TextView> viewList = new ArrayList<>();
         viewList.add(viewHolder.tv_school_rank_0);
         viewList.add(viewHolder.tv_school_rank_1);

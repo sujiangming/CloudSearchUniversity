@@ -159,7 +159,6 @@
                 android:id="@+id/tv_submit_university"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:paddingBottom="@dimen/space_12_dp"

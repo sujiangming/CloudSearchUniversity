@@ -222,7 +222,7 @@ public class HLDTestDetailActivity extends SjmBaseActivity {
 
     private boolean isSelected() {
         for (RadioGroup radio : radioGroups) {
-            RadioButton radioButton = (RadioButton) findViewById(radio.getCheckedRadioButtonId());
+            RadioButton radioButton = findViewById(radio.getCheckedRadioButtonId());
             if (radioButton == null) {
                 return false;
             }

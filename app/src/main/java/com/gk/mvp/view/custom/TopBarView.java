@@ -85,9 +85,9 @@ public class TopBarView extends RelativeLayout implements OnClickListener {
         View layout = LayoutInflater.from(context).inflate(R.layout.common_header,
                 this, true);
 
-        backView = (ImageView) layout.findViewById(R.id.back_image);
-        titleView = (TextView) layout.findViewById(R.id.text_title);
-        rightView = (ImageView) layout.findViewById(R.id.right_image);
+        backView = layout.findViewById(R.id.back_image);
+        titleView = layout.findViewById(R.id.text_title);
+        rightView = layout.findViewById(R.id.right_image);
         backView.setOnClickListener(this);
         rightView.setOnClickListener(this);
 

@@ -49,8 +49,7 @@
                 <ImageView
                     android:id="@+id/iv_home"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitCenter"
                     android:src="@drawable/shouye_press" />
 
@@ -79,8 +78,7 @@
                 <ImageView
                     android:id="@+id/iv_live"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitCenter"
                     android:src="@drawable/zhibo_95" />
 
@@ -114,8 +112,7 @@
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:gravity="center_horizontal|bottom"
                     android:paddingBottom="5dp"
                     android:text="@string/main_tab_txt3"
@@ -137,8 +134,7 @@
                 <ImageView
                     android:id="@+id/iv_tab_lecture"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitCenter"
                     android:src="@drawable/gaokao_74" />
 
@@ -166,8 +162,7 @@
                 <ImageView
                     android:id="@+id/iv_tab_user"
                     android:layout_width="wrap_content"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
                     android:scaleType="fitCenter"
                     android:src="@drawable/my" />
 

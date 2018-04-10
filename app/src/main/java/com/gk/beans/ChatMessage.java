@@ -74,7 +74,7 @@ public class ChatMessage {
     public static List<ChatMessage> MOCK_DATAS = new ArrayList<>();
 
     static {
-        ChatMessage msg = null;
+        ChatMessage msg;
         msg = new ChatMessage(R.drawable.xiaohei, "student", "where are you ",
                 null, false);
         MOCK_DATAS.add(msg);

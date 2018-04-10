@@ -5,9 +5,9 @@ import android.widget.ListView;
 
 import com.gk.R;
 import com.gk.beans.HelpCenterBean;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.TopBarView;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,9 +50,9 @@ public class OperationHelpActivity extends SjmBaseActivity {
             helpCenterBean.setAnswer(answers[i]);
             list.add(helpCenterBean);
         }
-        lvHelp.setAdapter(new CommonAdapter<HelpCenterBean>(this, R.layout.help_center_item, list) {
+        lvHelp.setAdapter(new CommonAdapter<HelpCenterBean>(this, list, R.layout.help_center_item) {
             @Override
-            protected void convert(ViewHolder viewHolder, HelpCenterBean item, int position) {
+            public void convert(ViewHolder viewHolder, HelpCenterBean item) {
                 viewHolder.setText(R.id.tv_question, item.getQuestion());
                 viewHolder.setText(R.id.tv_answer, item.getAnswer());
             }

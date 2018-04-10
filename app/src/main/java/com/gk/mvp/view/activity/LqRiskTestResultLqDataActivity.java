@@ -12,11 +12,11 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.YxxUtils;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +36,7 @@ public class LqRiskTestResultLqDataActivity extends SjmBaseActivity {
     ListView lvScore;
 
     private List<UniversityLuQuDataBean> list = new ArrayList<>();
-    private String uniName;
+    private CommonAdapter adapter;
 
     @Override
     public int getResouceId() {
@@ -45,9 +45,24 @@ public class LqRiskTestResultLqDataActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        uniName = getIntent().getStringExtra("uniName");
+        String uniName = getIntent().getStringExtra("uniName");
         setTopBar(topBar, uniName, 0);
+        initAdapter();
         getMajorAdmissionsData(uniName);
+    }
+
+    private void initAdapter() {
+        adapter = new CommonAdapter<UniversityLuQuDataBean>(this, list, R.layout.school_detail_luqu_item) {
+            @Override
+            public void convert(ViewHolder viewHolder, UniversityLuQuDataBean item) {
+                viewHolder.setText(R.id.tv_zy_name, item.getMajorName());
+                viewHolder.setText(R.id.tv_year, item.getYearStr());
+                viewHolder.setText(R.id.tv_type, item.getSubjectType());
+                viewHolder.setText(R.id.tv_score_hight, item.getHighestScore());
+                viewHolder.setText(R.id.tv_score_lower, item.getLowestScore());
+            }
+        };
+        lvScore.setAdapter(adapter);
     }
 
     private PresenterManager presenterManager = new PresenterManager();
@@ -86,22 +101,13 @@ public class LqRiskTestResultLqDataActivity extends SjmBaseActivity {
     private void handleData(List<UniversityLuQuDataBean> luQuDataBeans) {
         list.clear();
         list = luQuDataBeans;
-        lvScore.setAdapter(new CommonAdapter<UniversityLuQuDataBean>(this, R.layout.school_detail_luqu_item, list) {
-            @Override
-            protected void convert(ViewHolder viewHolder, UniversityLuQuDataBean item, int position) {
-                viewHolder.setText(R.id.tv_zy_name, item.getMajorName());
-                viewHolder.setText(R.id.tv_year, item.getYearStr());
-                viewHolder.setText(R.id.tv_type, item.getSubjectType());
-                viewHolder.setText(R.id.tv_score_hight, item.getHighestScore());
-                viewHolder.setText(R.id.tv_score_lower, item.getLowestScore());
-            }
-        });
+        adapter.setItems(list);
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
     }

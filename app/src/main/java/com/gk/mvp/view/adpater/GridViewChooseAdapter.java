@@ -6,10 +6,10 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.gk.R;
-import com.gk.beans.UniversityAreaEnum;
-import com.gk.beans.UniversityFeatureEnum;
-import com.gk.beans.UniversityLevelEnum;
-import com.gk.beans.UniversityTypeEnum;
+import com.gk.beans.UniversityAreaBean;
+import com.gk.beans.UniversityFeatureBean;
+import com.gk.beans.UniversityLevelBean;
+import com.gk.beans.UniversityTypeBean;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -76,22 +76,22 @@ public class GridViewChooseAdapter<T> extends JdryBaseAdapter {
         }
         switch (type) {
             case 1:
-                UniversityAreaEnum universityAreaEnum = (UniversityAreaEnum) list.get(position);
-                holder.textView.setText(universityAreaEnum.getName());
-                holder.textView.setHint(String.valueOf(universityAreaEnum.getIndex()));
+                UniversityAreaBean universityArea = (UniversityAreaBean) list.get(position);
+                holder.textView.setText(universityArea.getName());
+                holder.textView.setHint(String.valueOf(universityArea.getIndex()));
                 break;
             case 2:
-                UniversityTypeEnum universityTypeEnum = (UniversityTypeEnum) list.get(position);
+                UniversityTypeBean universityTypeEnum = (UniversityTypeBean) list.get(position);
                 holder.textView.setText(universityTypeEnum.getName());
                 holder.textView.setHint(String.valueOf(universityTypeEnum.getIndex()));
                 break;
             case 3:
-                UniversityFeatureEnum universityFeatureEnum = (UniversityFeatureEnum) list.get(position);
+                UniversityFeatureBean universityFeatureEnum = (UniversityFeatureBean) list.get(position);
                 holder.textView.setText(universityFeatureEnum.getName());
                 holder.textView.setHint(String.valueOf(universityFeatureEnum.getIndex()));
                 break;
             case 4:
-                UniversityLevelEnum universityLevelEnum = (UniversityLevelEnum) list.get(position);
+                UniversityLevelBean universityLevelEnum = (UniversityLevelBean) list.get(position);
                 holder.textView.setText(universityLevelEnum.getName());
                 holder.textView.setHint(String.valueOf(universityLevelEnum.getIndex()));
                 break;
@@ -119,7 +119,7 @@ public class GridViewChooseAdapter<T> extends JdryBaseAdapter {
          *  如果本身不是选中状态,就让他变成选中状态
          */
         TextView textView = (TextView) view;
-        isCheck.set(post, isCheck.get(post).booleanValue() == true ? false : true);
+        isCheck.set(post, isCheck.get(post).booleanValue() != true);
         if (isCheck.get(post)) {
             textView.setBackgroundResource(R.drawable.more_data_bg);
             textView.setTextColor(0xFFFFFFFF);

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/space_50_dp">
+    android:layout_height="@dimen/space_50_dp"
+    tools:keep="@layout/same_score_item">
 
     <TextView
         android:id="@+id/tv_same_score_name"

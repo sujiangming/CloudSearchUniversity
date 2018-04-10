@@ -19,12 +19,10 @@ public class RetrofitUtil {
     public static final int DEFAULT_TIMEOUT = 30;
 
     public Retrofit mRetrofit;
-    private static RetrofitUtil mInstance;
 
-    /**
-     * 私有构造方法
-     */
-    private RetrofitUtil() {
+    public static RetrofitUtil mInstance;
+
+    public RetrofitUtil() {
 
         HttpLoggingInterceptor logging = new HttpLoggingInterceptor();
 
@@ -51,10 +49,8 @@ public class RetrofitUtil {
     }
 
     public static RetrofitUtil getInstance() {
-        if (mInstance == null) {
-            synchronized (RetrofitUtil.class) {
-                mInstance = new RetrofitUtil();
-            }
+        if (null == mInstance) {
+            mInstance = new RetrofitUtil();
         }
         return mInstance;
     }

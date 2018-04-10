@@ -14,11 +14,11 @@ import com.gk.beans.OnLiveBean;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -43,12 +43,34 @@ public class OnLiveListActivity extends SjmBaseActivity {
     }
 
     private List<OnLiveBean> list = new ArrayList<>();
+    private CommonAdapter adapter;
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "直播列表", 0);
         initSmartRefreshLayout(smartLayout, false);
+        initAdapter();
         getVideoAdsList();
+    }
+
+    private void initAdapter() {
+        adapter = new CommonAdapter<OnLiveBean>(this, list, R.layout.on_live_list_item) {
+            @Override
+            public void convert(ViewHolder viewHolder, OnLiveBean item) {
+                viewHolder.setText(R.id.tv_on_live_name, item.getLiveName());
+                ImageView imageView = viewHolder.getView(R.id.iv_item);
+                GlideImageLoader.displayCircleRadius(OnLiveListActivity.this, item.getLiveCrossLogo(), imageView, 30);
+            }
+        };
+        lvOnlive.setAdapter(adapter);
+        lvOnlive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent = new Intent();
+                intent.putExtra("bean", list.get(i));
+                openNewActivityByIntent(OnLiveRoomActivity.class, intent);
+            }
+        });
     }
 
     @Override
@@ -71,23 +93,10 @@ public class OnLiveListActivity extends SjmBaseActivity {
         hideProgress();
         stopRefreshLayout();
         CommonBean commonBean = (CommonBean) t;
+        assert null != commonBean;
+        assert null != commonBean.getData();
         list = JSON.parseArray(commonBean.getData().toString(), OnLiveBean.class);
-        lvOnlive.setAdapter(new CommonAdapter<OnLiveBean>(this, R.layout.on_live_list_item, list) {
-            @Override
-            protected void convert(ViewHolder viewHolder, OnLiveBean item, int position) {
-                viewHolder.setText(R.id.tv_on_live_name, item.getLiveName());
-                ImageView imageView = viewHolder.getView(R.id.iv_item);
-                GlideImageLoader.displayCircleRadius(OnLiveListActivity.this, item.getLiveCrossLogo(), imageView, 30);
-            }
-        });
-        lvOnlive.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent();
-                intent.putExtra("bean", list.get(i));
-                openNewActivityByIntent(OnLiveRoomActivity.class, intent);
-            }
-        });
+        adapter.setItems(list);
     }
 
     @Override
@@ -101,9 +110,8 @@ public class OnLiveListActivity extends SjmBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
-        //GlideImageLoader.stopLoad(this);
     }
 }

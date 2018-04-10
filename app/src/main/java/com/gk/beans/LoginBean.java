@@ -85,8 +85,6 @@ public class LoginBean implements Serializable {
     private String username;
     private int vipLevel;
     private String weixin;
-    //下面的几个属性是自己添加的，方便使用
-    private String wlDesc;
     private String wishUniversity;
     private String wishProvince;
     private boolean hasReport;
@@ -214,7 +212,7 @@ public class LoginBean implements Serializable {
     }
 
     public String getVipLevelDesc() {
-        String desc = "";
+        String desc;
         switch (this.getVipLevel()) {
             case 1:
                 desc = "普通会员";
@@ -248,7 +246,7 @@ public class LoginBean implements Serializable {
     }
 
     public int getLevelImage() {
-        int imageIndex = 0;
+        int imageIndex;
         switch (this.getVipLevel()) {
             case 1:
                 imageIndex = R.drawable.pu_user; //"普通会员";
@@ -566,7 +564,7 @@ public class LoginBean implements Serializable {
     }
 
     public void setWlDesc(String wlDesc) {
-        this.wlDesc = wlDesc;
+        String wlDesc1 = wlDesc;
     }
 
     public String getWishUniversity() {

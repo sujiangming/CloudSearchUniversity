@@ -1,17 +1,15 @@
 package com.gk.mvp.view.activity;
 
 import android.app.Activity;
-import android.content.DialogInterface;
+import android.app.ActivityManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
-import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -24,7 +22,6 @@ import com.gk.global.YXXApplication;
 import com.gk.mvp.view.IView;
 import com.gk.mvp.view.custom.SjmProgressBar;
 import com.gk.mvp.view.custom.TopBarView;
-import com.gk.tools.AppManager;
 import com.gk.tools.ToastUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -33,8 +30,6 @@ import com.scwang.smartrefresh.layout.header.ClassicsHeader;
 import com.scwang.smartrefresh.layout.listener.OnLoadmoreListener;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import com.squareup.leakcanary.RefWatcher;
-
-import java.lang.reflect.Field;
 
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
@@ -50,12 +45,9 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
 
     private Unbinder unbinder;
 
-    public AppManager appManager = AppManager.getAppManager();
+    protected YXXApplication app;
 
     private SjmProgressBar jdryProgressBar;
-
-    protected Typeface mTfRegular;
-    protected Typeface mTfLight;
 
     /**
      * 设置状态栏透明
@@ -126,53 +118,16 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
         autoComplete.setHintTextColor(getResources().getColor(R.color.color808080));
     }
 
-    /**
-     * 动态修改AlertDialog字体颜色
-     *
-     * @param dialog
-     * @param msgColor
-     * @param positiveBtnColor
-     * @param negativeBtnColor
-     */
-    public void setAlertDialogTextColor(AlertDialog dialog, int msgColor, int positiveBtnColor, int negativeBtnColor) {
-        //修改内容颜色
-        try {
-            Field mAlert = AlertDialog.class.getDeclaredField("mAlert");
-            mAlert.setAccessible(true);
-            Object mAlertController = mAlert.get(dialog);
-            Field mMessage = mAlertController.getClass().getDeclaredField("mMessageView");
-            mMessage.setAccessible(true);
-            TextView mMessageView = (TextView) mMessage.get(mAlertController);
-            mMessageView.setTextColor(msgColor);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (NoSuchFieldException e) {
-            e.printStackTrace();
-        }
-        //修改按钮颜色
-        dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLUE);
-        dialog.getButton(DialogInterface.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
-    }
-
-    @Override
-    public <T> void fillWithNoData(T t, int order) {
-
-    }
-
-    @Override
-    public <T> void fillWithData(T t, int order) {
-
-    }
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getResouceId());
-        mTfRegular = Typeface.createFromAsset(getAssets(), "OpenSans-Regular.ttf");
-        mTfLight = Typeface.createFromAsset(getAssets(), "OpenSans-Light.ttf");
         unbinder = ButterKnife.bind(this);
         onCreateByMe(savedInstanceState);
-        appManager.addActivity(this);
+        //将当前Activity加进集合
+        app = (YXXApplication) getApplication();
+        app.activities.add(this);
+        //getLargeMemory();
     }
 
     public void openNewActivity(Class<?> cls, Bundle bundle) {
@@ -197,11 +152,13 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
     }
 
     public void closeActivity() {
-        appManager.finishActivity();
+        app.activities.remove(this);
+        this.finish();
     }
 
     public void closeActivity(Activity activity) {
-        appManager.finishActivity(activity);
+        app.activities.remove(activity);
+        activity.finish();
     }
 
     @Override
@@ -214,6 +171,7 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
     protected void onDestroy() {
         super.onDestroy();
         unbinder.unbind();
+        app.activities.remove(this);//将当前Activity移除集合
         //leakCanary检测内存泄漏的方法
         RefWatcher refWatcher = YXXApplication.refWatcher;
         refWatcher.watch(this);
@@ -235,8 +193,23 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
         }
     }
 
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+
+    }
+
+    @Override
+    public <T> void fillWithData(T t, int order) {
+
+    }
+
     public void toast(String desc) {
-        ToastUtils.toast(this, desc);
+        if (null == desc) {
+            ToastUtils.toast(this, "请求失败");
+        } else {
+            ToastUtils.toast(this, desc);
+        }
+
     }
 
     public void refresh() {
@@ -290,33 +263,15 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
         }
     }
 
-    public RefreshLayout getmRefreshLayout() {
-        return mRefreshLayout;
-    }
-
     public void setmRefreshLayout(RefreshLayout mRefreshLayout) {
         if (this.mRefreshLayout == null) {
             this.mRefreshLayout = mRefreshLayout;
         }
     }
 
-    /**
-     * 获取屏幕的宽度 单位为px
-     *
-     * @return
-     */
-    public int getScreenWidth() {
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        return dm.widthPixels;
-    }
-
-    /**
-     * 获取屏幕的高度 单位为px
-     *
-     * @return
-     */
-    public int getScreenHeight() {
-        DisplayMetrics dm = getResources().getDisplayMetrics();
-        return dm.heightPixels;
+    public void getLargeMemory() {
+        ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
+        int heapSize = activityManager != null ? activityManager.getMemoryClass() : 0;
+        //Log.d("heapSize:", "" + heapSize);
     }
 }

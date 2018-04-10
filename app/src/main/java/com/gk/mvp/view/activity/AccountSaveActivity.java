@@ -61,7 +61,7 @@ public class AccountSaveActivity extends SjmBaseActivity {
                 String oldPwd = etOldPwd.getText().toString();
                 newPwd1 = etNewPwd.getText().toString();
                 String newPwd2 = etConfirmNewPwd.getText().toString();
-                if (oldPwd == null || oldPwd.equals("")) {
+                if (oldPwd.equals("")) {
                     toast("请输入旧密码");
                     return;
                 }
@@ -69,7 +69,7 @@ public class AccountSaveActivity extends SjmBaseActivity {
                     toast("请输入新密码");
                     return;
                 }
-                if (newPwd2 == null || newPwd2.equals("")) {
+                if (newPwd2.equals("")) {
                     toast("请确认新密码");
                     return;
                 }

@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@android:color/white"
-    android:paddingBottom="@dimen/space_9_dp">
+    android:paddingBottom="@dimen/space_9_dp"
+    tools:keep="@layout/qw_list_item">
 
     <TextView
         android:id="@+id/tv_top_line"

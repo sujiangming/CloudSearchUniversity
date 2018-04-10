@@ -3,6 +3,8 @@ package com.gk.mvp.view.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.text.TextUtils;
+import android.util.SparseArray;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -10,8 +12,9 @@ import android.widget.TextView;
 import com.gk.R;
 import com.gk.beans.QuerySchoolBean;
 import com.gk.beans.SchoolRankBean;
-import com.gk.beans.UniversityAreaEnum;
-import com.gk.beans.UniversityTypeEnum;
+import com.gk.beans.UniversityTypeBean;
+import com.gk.beans.UniversityTypeBeanDao;
+import com.gk.global.YXXApplication;
 import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
@@ -76,8 +79,8 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     private TextView[] textViews;
     private QuerySchoolBean.DataBean uniName;
     private Bundle bundle = new Bundle();
-    private String flagStr;
     private SchoolRankBean schoolRankBean;
+    private SparseArray<String> sparseArray = new SparseArray<>();
 
     @Override
     public int getResouceId() {
@@ -87,7 +90,8 @@ public class SchoolDetailActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "高校详情", 0);
-        flagStr = getIntent().getStringExtra("flag");
+        initSparseArray();
+        String flagStr = getIntent().getStringExtra("flag");
         if (flagStr != null && "query".equals(flagStr)) {
             uniName = (QuerySchoolBean.DataBean) getIntent().getSerializableExtra("uniName");
             bundle.putString("uniName", uniName.getSchoolName());
@@ -105,16 +109,57 @@ public class SchoolDetailActivity extends SjmBaseActivity {
         initFragments();
     }
 
+    private void initSparseArray() {
+        sparseArray.put(0, "不限");
+        sparseArray.put(1, "北京");
+        sparseArray.put(2, "天津");
+        sparseArray.put(3, "上海");
+        sparseArray.put(4, "重庆");
+        sparseArray.put(5, "河北");
+        sparseArray.put(6, "山西");
+        sparseArray.put(7, "辽宁");
+        sparseArray.put(8, "吉林");
+        sparseArray.put(9, "黑龙江");
+        sparseArray.put(10, "江苏");
+        sparseArray.put(11, "浙江");
+        sparseArray.put(12, "安徽");
+        sparseArray.put(13, "福建");
+        sparseArray.put(14, "江西");
+        sparseArray.put(15, "山东");
+        sparseArray.put(16, "河南");
+        sparseArray.put(17, "湖北");
+        sparseArray.put(18, "湖南");
+        sparseArray.put(19, "广东");
+        sparseArray.put(20, "海南");
+        sparseArray.put(21, "四川");
+        sparseArray.put(22, "贵州");
+        sparseArray.put(23, "云南");
+        sparseArray.put(24, "陕西");
+        sparseArray.put(25, "甘肃");
+        sparseArray.put(26, "青海");
+        sparseArray.put(27, "台湾");
+        sparseArray.put(28, "蒙古");
+        sparseArray.put(29, "广西");
+        sparseArray.put(30, "西藏");
+        sparseArray.put(31, "宁夏");
+        sparseArray.put(32, "新疆");
+        sparseArray.put(33, "香港");
+        sparseArray.put(34, "澳门");
+    }
+
     private void initDataByQuery() {
         GlideImageLoader.displayImage(this, uniName.getSchoolLogo(), ivQueryItem);
         tvSchoolName.setText(uniName.getSchoolName());
         String area = uniName.getSchoolArea();
         if (area != null && !"".equals(area)) {
-            tvSchoolCity.setText(UniversityAreaEnum.getName(Integer.valueOf(area)));
+            tvSchoolCity.setText(sparseArray.get(Integer.valueOf(area)));
         }
         String schoolCategory = uniName.getSchoolCategory();
-        if (schoolCategory != null && !"".equals(schoolCategory)) {
-            tvSchoolType.setText(UniversityTypeEnum.getName(Integer.valueOf(schoolCategory)));
+        if (!TextUtils.isEmpty(schoolCategory)) {
+            UniversityTypeBean universityTypeBean = YXXApplication.getDaoSession().getUniversityTypeBeanDao().queryBuilder().where(UniversityTypeBeanDao.Properties.Index.eq(schoolCategory)).unique();
+            if (null != universityTypeBean) {
+                tvSchoolType.setText(universityTypeBean.getName());
+            }
         }
         int isNef = uniName.getIsNef();
         if (isNef == 1) {
@@ -141,11 +186,14 @@ public class SchoolDetailActivity extends SjmBaseActivity {
         tvSchoolName.setText(schoolRankBean.getSchoolName());
         String area = schoolRankBean.getSchoolArea();
         if (area != null && !"".equals(area)) {
-            tvSchoolCity.setText(UniversityAreaEnum.getName(Integer.valueOf(area)));
+            tvSchoolCity.setText(sparseArray.get(Integer.valueOf(area)));
         }
         String schoolCategory = schoolRankBean.getSchoolCategory();
         if (schoolCategory != null && !"".equals(schoolCategory)) {
-            tvSchoolType.setText(UniversityTypeEnum.getName(Integer.valueOf(schoolCategory)));
+            UniversityTypeBean universityTypeBean = YXXApplication.getDaoSession().getUniversityTypeBeanDao().queryBuilder().where(UniversityTypeBeanDao.Properties.Index.eq(schoolCategory)).unique();
+            if (null != universityTypeBean) {
+                tvSchoolType.setText(universityTypeBean.getName());
+            }
         }
         String isNef = schoolRankBean.getIsNef();
         if (isNef != null && !"".equals(isNef) && "1".equals(isNef)) {

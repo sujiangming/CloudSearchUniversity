@@ -209,7 +209,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_8_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -225,7 +224,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -241,7 +239,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -257,7 +254,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -273,7 +269,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -289,7 +284,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -305,7 +299,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -321,7 +314,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -399,7 +391,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_8_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -415,7 +406,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -431,7 +421,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -447,7 +436,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -463,7 +451,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -479,7 +466,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -495,7 +481,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -573,7 +558,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_8_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -589,7 +573,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -605,7 +588,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -621,7 +603,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -637,7 +618,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"
@@ -653,7 +633,6 @@
                     <com.gk.mvp.view.custom.RichText
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_vip_desc"
                         android:layout_marginLeft="@dimen/space_17_dp"
                         android:layout_marginTop="@dimen/space_5_dp"
                         android:drawablePadding="@dimen/space_5_dp"

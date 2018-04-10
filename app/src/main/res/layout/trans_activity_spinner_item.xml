@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?><!--spinner展开后的Item布局-->
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/trans_spinner_textView"
     android:layout_width="match_parent"
     android:layout_height="50dp"
@@ -9,4 +10,5 @@
     android:maxLines="1"
     android:text="SpinnerItem"
     android:textColor="@color/color302f30"
-    android:textSize="16dp"></TextView>
+    android:textSize="16sp"
+    tools:keep="@layout/trans_activity_spinner_item"></TextView>

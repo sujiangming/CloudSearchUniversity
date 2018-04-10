@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
@@ -17,7 +18,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
-import com.baoyz.actionsheet.ActionSheet;
 import com.gk.R;
 import com.gk.beans.AuthResult;
 import com.gk.beans.CommonBean;
@@ -33,11 +33,12 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.mvp.view.custom.actionsheet.ActionSheet;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.tencent.mm.opensdk.modelpay.PayReq;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -74,17 +75,15 @@ public class SameScoreActivity extends SjmBaseActivity {
     TextView tvMoreData;
 
     private List<SameScoreItem> list = new ArrayList<>();
-    CommonAdapter adapter = null;
+    private CommonAdapter adapter = null;
     private JSONObject jsonObject = new JSONObject();
     private int mPage = 0;
     private boolean isLoadMore = false;
     private int vip = 0;
-    private String queryMoreStr = "查看更多";
     private String score = "";
 
     @OnClick(R.id.tv_more_data)
     public void tvMoreDataClick() {
-        String tag = tvMoreData.getTag().toString();
         String etValue = etSameTop10.getText().toString();
         if (!TextUtils.isEmpty(etValue) && !score.equals(etValue)) {
             score = etValue;
@@ -92,12 +91,13 @@ public class SameScoreActivity extends SjmBaseActivity {
             isLoadMore = false;
             tvMoreData.setTag("0");
         }
-        tag = tvMoreData.getTag().toString();
+        String tag = tvMoreData.getTag().toString();
         if ("0".equals(tag)) {
             if (vip > 1) {
                 getSameScoreDirection();
             }
             tvMoreData.setTag("1");
+            String queryMoreStr = "查看更多";
             tvMoreData.setText(queryMoreStr);
             return;
         }
@@ -143,12 +143,12 @@ public class SameScoreActivity extends SjmBaseActivity {
     }
 
     private void initListView() {
-        lvSameScore.setAdapter(adapter = new CommonAdapter<SameScoreItem>(this, R.layout.same_score_item, list) {
+        adapter = new CommonAdapter<SameScoreItem>(this, list, R.layout.same_score_item) {
             @Override
-            protected void convert(ViewHolder viewHolder, SameScoreItem item, int position) {
+            public void convert(ViewHolder viewHolder, SameScoreItem item) {
                 viewHolder.setText(R.id.tv_same_score_name, item.getSchoolName());
-                viewHolder.setText(R.id.tv_score_start, item.getLowestScore() + "");
-                viewHolder.setText(R.id.tv_score_end, item.getHighestScore() + "");
+                viewHolder.setText(R.id.tv_score_start, String.valueOf(item.getLowestScore()));
+                viewHolder.setText(R.id.tv_score_end, String.valueOf(item.getHighestScore()));
 
                 int max = item.getHighestScore();
                 int min = item.getLowestScore();
@@ -165,7 +165,8 @@ public class SameScoreActivity extends SjmBaseActivity {
                     progressBar.setProgress(i);
                 }
             }
-        });
+        };
+        lvSameScore.setAdapter(adapter);
     }
 
     private void getSameScoreDirection() {
@@ -200,12 +201,13 @@ public class SameScoreActivity extends SjmBaseActivity {
         list.addAll(sameScoreItems);
         adapter.notifyDataSetChanged();
         lvSameScore.smoothScrollToPosition(list.size());
-
     }
 
     @Override
     public <T> void fillWithData(T t, int order) {
         CommonBean commonBean = (CommonBean) t;
+        assert null != commonBean;
+        assert null != commonBean.getData();
         List<SameScoreItem> sameScoreItems = JSON.parseArray(commonBean.getData().toString(), SameScoreItem.class);
         handleData(sameScoreItems);
         hideProgress();
@@ -227,7 +229,6 @@ public class SameScoreActivity extends SjmBaseActivity {
     }
 
     private int vipLevel = 0;
-    private int vipType = 0;
 
     private void showUpgradeDialog() {
         vip = LoginBean.getInstance().getVipLevel();
@@ -245,16 +246,16 @@ public class SameScoreActivity extends SjmBaseActivity {
                 .getUserRechargeTimes(jsonObject.toJSONString())
                 .enqueue(new Callback<UserRechargeTimes>() {
                     @Override
-                    public void onResponse(Call<UserRechargeTimes> call, Response<UserRechargeTimes> response) {
+                    public void onResponse(@NonNull Call<UserRechargeTimes> call, @NonNull Response<UserRechargeTimes> response) {
                         if (response.isSuccessful()) {
                             UserRechargeTimes rechargeTimes = response.body();
-                            rechargeTimesData = rechargeTimes.getData();
+                            rechargeTimesData = rechargeTimes != null ? rechargeTimes.getData() : null;
                             return;
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<UserRechargeTimes> call, Throwable t) {
+                    public void onFailure(@NonNull Call<UserRechargeTimes> call, @NonNull Throwable t) {
 
                     }
                 });
@@ -268,15 +269,17 @@ public class SameScoreActivity extends SjmBaseActivity {
                 .getVipLevelAmount()
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
+                            assert null != commonBean;
+                            assert null != commonBean.getData();
                             priceBean = JSON.parseObject(commonBean.getData().toString(), VIPPriceBean.class);
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast(t.getMessage());
                     }
                 });
@@ -353,10 +356,10 @@ public class SameScoreActivity extends SjmBaseActivity {
                 .prepay(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getData() == null) {
+                            if ((commonBean != null ? commonBean.getData() : null) == null) {
                                 toast("获取订单信息失败");
                                 return;
                             }
@@ -367,7 +370,7 @@ public class SameScoreActivity extends SjmBaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast(t.getMessage());
                         hideProgress();
                     }
@@ -401,11 +404,11 @@ public class SameScoreActivity extends SjmBaseActivity {
                 .addUserOrder(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         hideProgress();
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            VipOrderBean vipOrderBean = JSON.parseObject(commonBean.getData().toString(), VipOrderBean.class);
+                            VipOrderBean vipOrderBean = JSON.parseObject(commonBean != null ? commonBean.getData().toString() : null, VipOrderBean.class);
                             String sign = vipOrderBean.getSign();
                             LoginBean.getInstance().setOrderNo(vipOrderBean.getOrderNo());
                             payV2(sign);
@@ -415,7 +418,7 @@ public class SameScoreActivity extends SjmBaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast("支付失败，请重新支付！");
                     }
                 });
@@ -464,7 +467,7 @@ public class SameScoreActivity extends SjmBaseActivity {
                         LoginBean.getInstance().setVipLevel(vipLevel);
                         LoginBean.getInstance().save();
                         LoginBean.getInstance().setVipLevelTmp(vipLevel);
-                        vipType = LoginBean.getInstance().getVipLevel();
+                        int vipType = LoginBean.getInstance().getVipLevel();
                         tempOrderPaySuccess();
                     } else {
                         // 该笔订单真实的支付结果，需要依赖服务端的异步通知。
@@ -503,10 +506,10 @@ public class SameScoreActivity extends SjmBaseActivity {
                 .tempOrderPaySuccess(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            toast(commonBean.getMessage());
+                            toast(commonBean != null ? commonBean.getMessage() : null);
                             getSameScoreDirection();
                         } else {
                             toast("支付失败，请重新支付！");
@@ -514,7 +517,7 @@ public class SameScoreActivity extends SjmBaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast("支付失败，请重新支付！");
                     }
                 });

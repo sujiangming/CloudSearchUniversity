@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,7 +15,6 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alipay.sdk.app.PayTask;
-import com.baoyz.actionsheet.ActionSheet;
 import com.gk.R;
 import com.gk.beans.AuthResult;
 import com.gk.beans.CommonBean;
@@ -30,6 +30,7 @@ import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.RichText;
 import com.gk.mvp.view.custom.TopBarView;
+import com.gk.mvp.view.custom.actionsheet.ActionSheet;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 
 import java.util.Map;
@@ -87,7 +88,6 @@ public class VIPActivity extends SjmBaseActivity {
     @BindView(R.id.tv_open_silver)
     TextView tvOpenSilver;
 
-    private String form = null;
     private LoginBean loginBean;
     private int vipType = 0;
     private int vipLevel = 0;
@@ -199,7 +199,7 @@ public class VIPActivity extends SjmBaseActivity {
     private void initUIByForm() {
         Intent intent = getIntent();
         if (intent != null) {
-            form = intent.getStringExtra("form");
+            String form = intent.getStringExtra("form");
             if (form != null) {
                 if (form.equals("vip_choose")) {
                     llGold.setVisibility(View.GONE);
@@ -221,20 +221,23 @@ public class VIPActivity extends SjmBaseActivity {
                 .getVipLevelAmount()
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
+                            if (commonBean == null) {
+                                return;
+                            }
                             VIPPriceBean priceBean = JSON.parseObject(commonBean.getData().toString(), VIPPriceBean.class);
                             if (priceBean != null) {
-                                setTextViewValues(rtvDiamondPrice,"钻石卡会员服务 ￥" + priceBean.getVipLevel3Amount() + "元");
-                                setTextViewValues(rtv_gold_price,"金卡会员服务 ￥" + priceBean.getVipLevel2Amount() + "元");
-                                setTextViewValues(rtv_silver_price,"银卡会员服务 ￥" + priceBean.getVipLevel1Amount() + "元");
+                                setTextViewValues(rtvDiamondPrice, "钻石卡会员服务 ￥" + priceBean.getVipLevel3Amount() + "元");
+                                setTextViewValues(rtv_gold_price, "金卡会员服务 ￥" + priceBean.getVipLevel2Amount() + "元");
+                                setTextViewValues(rtv_silver_price, "银卡会员服务 ￥" + priceBean.getVipLevel1Amount() + "元");
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast(t.getMessage());
                     }
                 });
@@ -280,10 +283,10 @@ public class VIPActivity extends SjmBaseActivity {
                 .prepay(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getData() == null) {
+                            if ((commonBean != null ? commonBean.getData() : null) == null) {
                                 toast("获取订单信息失败");
                                 return;
                             }
@@ -294,7 +297,7 @@ public class VIPActivity extends SjmBaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
                         toast(t.getMessage());
                         hideProgress();
                     }
@@ -324,7 +327,7 @@ public class VIPActivity extends SjmBaseActivity {
         jsonObject.put("username", LoginBean.getInstance().getUsername());
         jsonObject.put("vipLevel", level);
         presenterManager.setCall(RetrofitUtil.getInstance().createReq(IService.class)
-                        .addUserOrder(jsonObject.toJSONString()))
+                .addUserOrder(jsonObject.toJSONString()))
                 .request();
     }
 
@@ -439,17 +442,17 @@ public class VIPActivity extends SjmBaseActivity {
                 .tempOrderPaySuccess(jsonObject.toJSONString())
                 .enqueue(new Callback<CommonBean>() {
                     @Override
-                    public void onResponse(Call<CommonBean> call, Response<CommonBean> response) {
+                    public void onResponse(@NonNull Call<CommonBean> call, @NonNull Response<CommonBean> response) {
                         if (response.isSuccessful()) {
                             CommonBean commonBean = response.body();
-                            if (commonBean.getStatus() == 1) {
+                            if ((commonBean != null ? commonBean.getStatus() : 0) == 1) {
                                 toast(commonBean.getMessage());
                             }
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<CommonBean> call, Throwable t) {
+                    public void onFailure(@NonNull Call<CommonBean> call, @NonNull Throwable t) {
 
                     }
                 });
@@ -462,7 +465,7 @@ public class VIPActivity extends SjmBaseActivity {
         super.onDestroy();
         mHandler.removeCallbacksAndMessages(null);
         mHandler = null;
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
     }

@@ -151,10 +151,6 @@ public class LectureFragment extends SjmBaseFragment {
     @BindView(R.id.ll_mnsj_part_2)
     LinearLayout llMnsjPart2;
 
-    private List<LectureBean.LnztBean> lnzt;
-    private List<LectureBean.MnsjBean> mnsj;
-    private List<LectureBean.MsjtBean> msjt;
-
     private LinearLayout[] llMsjzList;
     private ImageView[] ivMsjtList;
     private TextView[] tvMsjzList;
@@ -239,7 +235,7 @@ public class LectureFragment extends SjmBaseFragment {
     }
 
     private void initMsjt() {
-        msjt = lectureBean.getMsjt();
+        List<LectureBean.MsjtBean> msjt = lectureBean.getMsjt();
         if (msjt == null) {
             return;
         }
@@ -283,7 +279,7 @@ public class LectureFragment extends SjmBaseFragment {
     }
 
     private void initLszt() {
-        lnzt = lectureBean.getLnzt();
+        List<LectureBean.LnztBean> lnzt = lectureBean.getLnzt();
         if (lnzt == null) {
             return;
         }
@@ -327,7 +323,7 @@ public class LectureFragment extends SjmBaseFragment {
     }
 
     private void initMnsj() {
-        mnsj = lectureBean.getMnsj();
+        List<LectureBean.MnsjBean> mnsj = lectureBean.getMnsj();
         if (mnsj == null) {
             return;
         }

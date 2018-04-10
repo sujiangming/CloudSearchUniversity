@@ -216,11 +216,8 @@ public class JdryFileUtil {
             }
         }
         if (!flag) return false;
-        if (dirFile.delete()) {//删除当前目录
-            return true;
-        } else {
-            return false;
-        }
+        //删除当前目录
+        return dirFile.delete();
     }
 
     /**
@@ -234,7 +231,7 @@ public class JdryFileUtil {
         File file = new File(sPath);
         // 判断目录或文件是否存在
         if (!file.exists()) {  // 不存在返回 false
-            return flag;
+            return false;
         } else {
             // 判断是否为文件
             if (file.isFile()) {  // 为文件时调用删除文件方法

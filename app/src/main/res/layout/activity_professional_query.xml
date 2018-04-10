@@ -27,33 +27,31 @@
             android:layout_marginLeft="@dimen/space_30_dp"
             android:layout_marginRight="@dimen/space_30_dp"
             android:layout_weight="1"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_level_1"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/space_100_dp"
                 android:layout_height="30dp"
-                android:layout_weight="1"
                 android:background="@drawable/fault_level_left_press"
                 android:gravity="center"
                 android:tag="01"
                 android:text="本科"
                 android:textColor="@android:color/white"
-                android:textSize="12dp" />
+                android:textSize="12sp" />
 
             <TextView
                 android:id="@+id/tv_level_2"
-                android:layout_width="0dp"
+                android:layout_width="@dimen/space_100_dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="-1dp"
-                android:layout_weight="1"
                 android:background="@drawable/fault_level_right_normal"
                 android:gravity="center"
                 android:tag="02"
                 android:text="专科"
                 android:textColor="@color/color2fa2cb"
-                android:textSize="12dp" />
+                android:textSize="12sp" />
         </LinearLayout>
 
         <ImageView

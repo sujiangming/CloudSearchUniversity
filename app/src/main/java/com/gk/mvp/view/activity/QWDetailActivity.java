@@ -21,14 +21,14 @@ import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
+import com.gk.mvp.view.adpater.CommonAdapter;
+import com.gk.mvp.view.adpater.ViewHolder;
 import com.gk.mvp.view.custom.CircleImageView;
 import com.gk.mvp.view.custom.SjmListView;
 import com.gk.mvp.view.custom.TopBarView;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryTime;
 import com.gk.tools.YxxUtils;
-import com.zhy.adapter.abslistview.CommonAdapter;
-import com.zhy.adapter.abslistview.ViewHolder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -78,12 +78,12 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
     @BindView(R.id.root_view)
     View rootView;
 
-    private int screenHeight = 0;//屏幕高度
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
     private QWListBean qwListBean;
     private List<QWAnsBean> qwAnsBeans = new ArrayList<>();
     private JSONObject jsonObject = new JSONObject();
     private int addAnsFlag = 0;
+    private CommonAdapter adapter;
 
     @Override
     public int getResouceId() {
@@ -95,8 +95,8 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
         setTopBar(topBar, "问答详情", 0);
         qwListBean = (QWListBean) getIntent().getSerializableExtra("bean");
         initKeyBoardParameter();
+        initAdapter();
         initData();
-        //添加layout大小发生改变监听器
         rootView.addOnLayoutChangeListener(this);
     }
 
@@ -107,20 +107,20 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
         jsonObject.put("queId", qwListBean.getQueId());
         GlideImageLoader.displayImage(this, qwListBean.getHeadImg(), civHeader);
         tvNickName.setText(qwListBean.getNickName() == null ? "未知" : qwListBean.getNickName());
-        YxxUtils.setViewData(tvTimeRight,JdryTime.getDayHourMinBySec(qwListBean.getQueTime()));
-        YxxUtils.setViewData(tvContent,qwListBean.getQueContent());
-        YxxUtils.setViewData(tvTitle,qwListBean.getQueTitle());
-        YxxUtils.setViewData(tvScanCount,qwListBean.getViewTimes() + "");
-        YxxUtils.setViewData(tvCareCount,qwListBean.getAttentionTimes() + "");
+        YxxUtils.setViewData(tvTimeRight, JdryTime.getDayHourMinBySec(qwListBean.getQueTime()));
+        YxxUtils.setViewData(tvContent, qwListBean.getQueContent());
+        YxxUtils.setViewData(tvTitle, qwListBean.getQueTitle());
+        YxxUtils.setViewData(tvScanCount, qwListBean.getViewTimes() + "");
+        YxxUtils.setViewData(tvCareCount, qwListBean.getAttentionTimes() + "");
         addViewTimes();
         getAnswerList();
     }
 
     private void initAdapter() {
-        lvQwJd.setAdapter(new CommonAdapter<QWAnsBean>(this, R.layout.qw_detail_item, qwAnsBeans) {
+        adapter = new CommonAdapter<QWAnsBean>(this, qwAnsBeans, R.layout.qw_detail_item) {
             @Override
-            protected void convert(ViewHolder viewHolder, QWAnsBean item, int position) {
-                if (position == 0) {
+            public void convert(ViewHolder viewHolder, QWAnsBean item) {
+                if (qwAnsBeans.indexOf(item) == 0) {
                     viewHolder.setBackgroundColor(R.id.tv_top_line, 0x00000000);
                 }
                 viewHolder.setText(R.id.tv_nick_name, item.getNickName());
@@ -128,7 +128,8 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
                 viewHolder.setText(R.id.tv_content, item.getAnsContent());
                 GlideImageLoader.displayImage(QWDetailActivity.this, item.getHeadImg(), (ImageView) viewHolder.getView(R.id.civ_header));
             }
-        });
+        };
+        lvQwJd.setAdapter(adapter);
     }
 
     private PresenterManager presenterManager = new PresenterManager().setmIView(this);
@@ -146,7 +147,6 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
         if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
-        //GlideImageLoader.stopLoad(this);
     }
 
     private void addViewTimes() {
@@ -168,7 +168,7 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
         switch (order) {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 qwAnsBeans = JSON.parseArray(commonBean.getData().toString(), QWAnsBean.class);
-                initAdapter();
+                adapter.setItems(qwAnsBeans);
                 if (addAnsFlag == 1) {
                     hideSoftKey();
                 }
@@ -202,7 +202,7 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
      */
     private void initKeyBoardParameter() {
         //获取屏幕高度
-        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         //阀值设置为屏幕高度的1/3
         keyHeight = screenHeight / 3;
     }
@@ -210,6 +210,7 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
     private void hideSoftKey() {
         //隐藏软盘
         InputMethodManager imm = (InputMethodManager) etComment.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
         imm.hideSoftInputFromWindow(etComment.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         //editText失去焦点
         etComment.clearFocus();
@@ -220,9 +221,7 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
 
     @Override
     public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
-        if (oldBottom != 0 && bottom != 0 && (oldBottom - bottom > keyHeight)) {
-
-        } else if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
+        if (oldBottom != 0 && bottom != 0 && (bottom - oldBottom > keyHeight)) {
             includeComment.setVisibility(View.GONE);
             etComment.setText("");
             etComment.clearFocus();
@@ -237,6 +236,7 @@ public class QWDetailActivity extends SjmBaseActivity implements View.OnLayoutCh
                 etComment.requestFocus();
                 InputMethodManager inputManager =
                         (InputMethodManager) etComment.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                assert inputManager != null;
                 inputManager.showSoftInput(etComment, 0);
                 break;
             case R.id.tv_care:

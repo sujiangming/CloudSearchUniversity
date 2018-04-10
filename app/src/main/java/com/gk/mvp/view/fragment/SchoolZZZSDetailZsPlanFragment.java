@@ -55,14 +55,6 @@ public class SchoolZZZSDetailZsPlanFragment extends SjmBaseFragment {
     }
 
     @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden) {
-            getMajorAdmissionsData(uniName);
-        }
-    }
-
-    @Override
     public void refresh() {
         page = 0;
         isLoadMore = false;
@@ -119,17 +111,15 @@ public class SchoolZZZSDetailZsPlanFragment extends SjmBaseFragment {
             adapter.setItems(list);
             return;
         }
-        if (isLoadMore) {
-            if (null == commonBean || null == commonBean.getData()) {
-                toast("没有更多数据了");
-                return;
-            }
-            List<SchoolZZZSPlanBean> dataBeans = JSON.parseArray(commonBean.getData().toString(), SchoolZZZSPlanBean.class);
-            list.addAll(dataBeans);
-            adapter.setItems(list);
-            if (lvScore != null) {
-                lvScore.smoothScrollToPosition(lvScore.getLastVisiblePosition(), 0);
-            }
+        if (null == commonBean || null == commonBean.getData()) {
+            toast("没有更多数据了");
+            return;
+        }
+        List<SchoolZZZSPlanBean> dataBeans = JSON.parseArray(commonBean.getData().toString(), SchoolZZZSPlanBean.class);
+        list.addAll(dataBeans);
+        adapter.setItems(list);
+        if (lvScore != null) {
+            lvScore.smoothScrollToPosition(lvScore.getLastVisiblePosition(), 0);
         }
     }
 

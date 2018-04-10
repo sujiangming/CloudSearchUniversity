@@ -96,9 +96,7 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
                 searchKey = YxxUtils.URLEncode(s);
                 isSearch = true;
                 invoke();
-                if (searchView != null) {
-                    hideSoftKey();
-                }
+                hideSoftKey();
                 searchView.clearFocus(); // 不获取焦点
                 return true;
             }
@@ -116,7 +114,6 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
         });
     }
 
-    private int screenHeight = 0;//屏幕高度
     private int keyHeight = 0;//软件盘弹起后所占高度阀值
 
     /**
@@ -124,7 +121,7 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
      */
     private void initKeyBoardParameter() {
         //获取屏幕高度
-        screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
+        int screenHeight = this.getWindowManager().getDefaultDisplay().getHeight();
         //阀值设置为屏幕高度的1/3
         keyHeight = screenHeight / 3;
     }
@@ -132,6 +129,7 @@ public class SchoolRankActivity extends SjmBaseActivity implements View.OnLayout
     private void hideSoftKey() {
         //隐藏软盘
         InputMethodManager imm = (InputMethodManager) searchView.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        assert imm != null;
         imm.hideSoftInputFromWindow(searchView.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
         //editText失去焦点
         searchView.clearFocus();

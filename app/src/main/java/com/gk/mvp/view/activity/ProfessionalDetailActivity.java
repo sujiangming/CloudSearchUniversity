@@ -88,7 +88,6 @@ public class ProfessionalDetailActivity extends SjmBaseActivity {
     TextView tvAbilityDesc;
     @BindView(R.id.tv_ability_content)
     TextView tvAbilityContent;
-    private String pid;
 
     @Override
     public int getResouceId() {
@@ -98,7 +97,7 @@ public class ProfessionalDetailActivity extends SjmBaseActivity {
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         setTopBar(topBar, "专业详情", 0);
-        pid = getIntent().getStringExtra("id");
+        String pid = getIntent().getStringExtra("id");
         if (pid == null) {
             return;
         }

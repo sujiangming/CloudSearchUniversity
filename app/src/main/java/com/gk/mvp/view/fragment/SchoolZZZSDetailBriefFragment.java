@@ -21,8 +21,6 @@ public class SchoolZZZSDetailBriefFragment extends SjmBaseFragment {
     @BindView(R.id.expand_text_2)
     View expand_text_2;
 
-    private SchoolZZZsBean schoolBean;
-
     @Override
     public int getResourceId() {
         return R.layout.fragment_school_zzzs_detail_brief;
@@ -36,8 +34,8 @@ public class SchoolZZZSDetailBriefFragment extends SjmBaseFragment {
     private void initData() {
         ExpandableTextView expandableTextView1 = expand_text_1.findViewById(R.id.expand_text_view);
         ExpandableTextView expandableTextView2 = expand_text_2.findViewById(R.id.expand_text_view);
-        schoolBean = (SchoolZZZsBean) getArguments().getSerializable("schoolBean");
-        expandableTextView1.setText(schoolBean.getSelfRecruitBrochure());
+        SchoolZZZsBean schoolBean = (SchoolZZZsBean) getArguments().getSerializable("schoolBean");
+        expandableTextView1.setText(schoolBean != null ? schoolBean.getSelfRecruitBrochure() : "");
         expandableTextView2.setText(schoolBean.getUniversitySummary());
     }
 }
