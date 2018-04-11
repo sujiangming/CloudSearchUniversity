@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -92,7 +93,7 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
         topBar.getBackView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                closeActivity(SjmBaseActivity.this);
+                closeActivity();
             }
         });
     }
@@ -127,7 +128,7 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
         //将当前Activity加进集合
         app = (YXXApplication) getApplication();
         app.activities.add(this);
-        //getLargeMemory();
+        getLargeMemory();
     }
 
     public void openNewActivity(Class<?> cls, Bundle bundle) {
@@ -172,7 +173,6 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
         super.onDestroy();
         unbinder.unbind();
         app.activities.remove(this);//将当前Activity移除集合
-        //leakCanary检测内存泄漏的方法
         RefWatcher refWatcher = YXXApplication.refWatcher;
         refWatcher.watch(this);
     }
@@ -272,6 +272,6 @@ public abstract class SjmBaseActivity extends AppCompatActivity implements IView
     public void getLargeMemory() {
         ActivityManager activityManager = (ActivityManager) getSystemService(Context.ACTIVITY_SERVICE);
         int heapSize = activityManager != null ? activityManager.getMemoryClass() : 0;
-        //Log.d("heapSize:", "" + heapSize);
+        Log.d("heapSize:", "" + heapSize);
     }
 }

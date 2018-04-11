@@ -1,7 +1,5 @@
 package com.gk.global;
 
-import com.alibaba.fastjson.JSONObject;
-
 /**
  * Created by wei on 2016/6/7.
  */
@@ -18,21 +16,5 @@ public class YXXConstants {
     public static final String ADS_INFO_SERIALIZE_KEY = "ads";
     public static final String MAJOR_JSON_SERIALIZE_KEY = "majorJson";
     public static final String ERROR_INFO = "请求失败";
-
-    public static JSONObject jsonObject = new JSONObject();
-
-    static {
-        jsonObject.put("yuwen", "语文");
-        jsonObject.put("shuxue", "数学");
-        jsonObject.put("yingyu", "英语");
-        jsonObject.put("lizong", "理综");
-        jsonObject.put("wenzong", "文综");
-        jsonObject.put("wuli", "物理");
-        jsonObject.put("huaxue", "化学");
-        jsonObject.put("lishi", "历史");
-        jsonObject.put("dili", "地理");
-        jsonObject.put("zhengzhi", "政治");
-        jsonObject.put("shengwu", "生物");
-    }
 
 }

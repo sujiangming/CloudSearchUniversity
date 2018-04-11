@@ -8,7 +8,9 @@ import android.widget.TextView;
 
 import com.gk.R;
 import com.gk.beans.MaterialItemBean;
-import com.gk.global.YXXConstants;
+import com.gk.beans.SubjectTypeBean;
+import com.gk.beans.SubjectTypeBeanDao;
+import com.gk.global.YXXApplication;
 import com.gk.tools.GlideImageLoader;
 import com.gk.tools.JdryTime;
 import com.gk.tools.YxxUtils;
@@ -46,9 +48,13 @@ public class MaterialListAdapter extends JdryBaseAdapter {
 
         YxxUtils.setViewData(viewHolder.tv_live_title, item.getName());
         YxxUtils.setViewData(viewHolder.tv_time_content, JdryTime.getFullTimeBySec(item.getUploadTime()));
-        YxxUtils.setViewData(viewHolder.tv_km_content, YXXConstants.jsonObject.getString(item.getCourse()));
 
-
+        SubjectTypeBean subjectTypeBean = YXXApplication.getDaoSession().getSubjectTypeBeanDao().queryBuilder().where(SubjectTypeBeanDao.Properties.Index.eq(item.getCourse())).unique();
+        if (null != subjectTypeBean) {
+            YxxUtils.setViewData(viewHolder.tv_km_content, subjectTypeBean.getName());
+        } else {
+            viewHolder.tv_km_content.setText("");
+        }
         if (0 == type) {
             setTitle(viewHolder, item.getType());
         } else {

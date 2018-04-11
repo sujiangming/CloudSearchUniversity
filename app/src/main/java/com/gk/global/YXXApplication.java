@@ -4,14 +4,13 @@ import android.app.Activity;
 import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.util.Log;
 
-import com.alibaba.fastjson.JSON;
 import com.gk.R;
 import com.gk.beans.AdsBean;
 import com.gk.beans.DaoMaster;
 import com.gk.beans.DaoSession;
 import com.gk.beans.LoginBean;
+import com.gk.beans.SubjectTypeBean;
 import com.gk.beans.UniversityAreaBean;
 import com.gk.beans.UniversityFeatureBean;
 import com.gk.beans.UniversityLevelBean;
@@ -49,6 +48,8 @@ public class YXXApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        CrashHandler crashHandler = CrashHandler.instance();
+        crashHandler.init();
         instance = this;
         sApi = WXEntryActivity.initWeiXin(this, Constant.WECHAT_APPID);
         payApi = WXPayEntryActivity.initWeiXinPay(this, Constant.WECHAT_APPID);
@@ -64,6 +65,7 @@ public class YXXApplication extends Application {
         initLoginBean();
         initImage();
         initAdsBean();
+        initSubjectTypeBean();
         initUniversityAreaBean();
         initUniversityFeatureBean();
         initUniversityLevelBean();
@@ -179,12 +181,6 @@ public class YXXApplication extends Application {
             daoSession.getUniversityAreaBeanDao().insertOrReplace(new UniversityAreaBean(32, "新疆"));
             daoSession.getUniversityAreaBeanDao().insertOrReplace(new UniversityAreaBean(33, "香港"));
             daoSession.getUniversityAreaBeanDao().insertOrReplace(new UniversityAreaBean(34, "澳门"));
-
-            List<UniversityAreaBean> universityAreaBean = daoSession.getUniversityAreaBeanDao().loadAll();
-
-            for (int i = 0; i < universityAreaBean.size(); i++) {
-                Log.d("UniversityAreaBean" + i, JSON.toJSONString(universityAreaBean.get(i)));
-            }
         }
     }
 
@@ -194,12 +190,6 @@ public class YXXApplication extends Application {
             daoSession.getUniversityFeatureBeanDao().insertOrReplace(new UniversityFeatureBean("985", 1));
             daoSession.getUniversityFeatureBeanDao().insertOrReplace(new UniversityFeatureBean("211", 2));
             daoSession.getUniversityFeatureBeanDao().insertOrReplace(new UniversityFeatureBean("双一流", 3));
-
-            List<UniversityFeatureBean> universityAreaBean = daoSession.getUniversityFeatureBeanDao().loadAll();
-
-            for (int i = 0; i < universityAreaBean.size(); i++) {
-                Log.d("UniversityFeatureBean" + i, JSON.toJSONString(universityAreaBean.get(i)));
-            }
         }
     }
 
@@ -209,12 +199,6 @@ public class YXXApplication extends Application {
             daoSession.getUniversityLevelBeanDao().insertOrReplace(new UniversityLevelBean("提前批", 1));
             daoSession.getUniversityLevelBeanDao().insertOrReplace(new UniversityLevelBean("一批", 2));
             daoSession.getUniversityLevelBeanDao().insertOrReplace(new UniversityLevelBean("二批", 3));
-
-            List<UniversityLevelBean> universityAreaBean = daoSession.getUniversityLevelBeanDao().loadAll();
-
-            for (int i = 0; i < universityAreaBean.size(); i++) {
-                Log.d("UniversityLevelBean" + i, JSON.toJSONString(universityAreaBean.get(i)));
-            }
         }
     }
 
@@ -234,12 +218,23 @@ public class YXXApplication extends Application {
             daoSession.getUniversityTypeBeanDao().insertOrReplace(new UniversityTypeBean("艺术", 11));
             daoSession.getUniversityTypeBeanDao().insertOrReplace(new UniversityTypeBean("体育", 12));
             daoSession.getUniversityTypeBeanDao().insertOrReplace(new UniversityTypeBean("军事", 13));
+        }
+    }
 
-            List<UniversityTypeBean> universityAreaBean = daoSession.getUniversityTypeBeanDao().loadAll();
-
-            for (int i = 0; i < universityAreaBean.size(); i++) {
-                Log.d("UniversityTypeBean" + i, JSON.toJSONString(universityAreaBean.get(i)));
-            }
+    private void initSubjectTypeBean() {
+        List<SubjectTypeBean> subjectTypeBeans = daoSession.getSubjectTypeBeanDao().loadAll();
+        if (null == subjectTypeBeans || 0 == subjectTypeBeans.size()) {
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("yuwen", "语文"));
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("shuxue", "数学"));
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("yingyu", "英语"));
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("lizong", "理综"));
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("wenzong", "文综"));
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("wuli", "物理"));
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("huaxue", "化学"));
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("lishi", "历史"));
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("dili", "地理"));
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("zhengzhi", "政治"));
+            daoSession.getSubjectTypeBeanDao().insertOrReplace(new SubjectTypeBean("shengwu", "生物"));
         }
     }
 

@@ -7,7 +7,6 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -19,7 +18,7 @@ import com.gk.tools.SjmDensityUtil;
 /**
  * @author JDRY-SJM
  */
-public class TopBarView extends RelativeLayout implements OnClickListener {
+public class TopBarView extends RelativeLayout {
 
     private ImageView backView;
     private ImageView rightView;
@@ -48,6 +47,7 @@ public class TopBarView extends RelativeLayout implements OnClickListener {
 
     /**
      * 从xml中获取配置信息
+     *
      * @param context
      * @param attrs
      */
@@ -88,8 +88,8 @@ public class TopBarView extends RelativeLayout implements OnClickListener {
         backView = layout.findViewById(R.id.back_image);
         titleView = layout.findViewById(R.id.text_title);
         rightView = layout.findViewById(R.id.right_image);
-        backView.setOnClickListener(this);
-        rightView.setOnClickListener(this);
+//        backView.setOnClickListener(this);
+//        rightView.setOnClickListener(this);
 
         if (null != leftImage)
             backView.setImageDrawable(leftImage);
@@ -113,43 +113,29 @@ public class TopBarView extends RelativeLayout implements OnClickListener {
     public void setTitle(String title) {
         titleView.setText(title);
     }
-
-    public ImageView getRightView() {
-        return rightView;
-    }
-
-    private onTitleBarClickListener onMyClickListener;
-
-    /**
-     * 设置按钮点击监听接口
-     * @param listener
-     */
-    public void setClickListener(onTitleBarClickListener listener) {
-        this.onMyClickListener = listener;
-    }
-
+    //   private onTitleBarClickListener onMyClickListener;
     /**
      * 导航栏点击监听接口
      */
-    public interface onTitleBarClickListener {
-
-        void onBackClick();
-
-        void onRightClick();
-    }
-
-    @Override
-    public void onClick(View v) {
-        int id = v.getId();
-        switch (id) {
-            case R.id.back_image:
-                if (null != onMyClickListener)
-                    onMyClickListener.onBackClick();
-                break;
-            case R.id.right_image:
-                if (null != onMyClickListener)
-                    onMyClickListener.onRightClick();
-                break;
-        }
-    }
+//    public interface onTitleBarClickListener {
+//
+//        void onBackClick();
+//
+//        void onRightClick();
+//    }
+//
+//    @Override
+//    public void onClick(View v) {
+//        int id = v.getId();
+//        switch (id) {
+//            case R.id.back_image:
+//                if (null != onMyClickListener)
+//                    onMyClickListener.onBackClick();
+//                break;
+//            case R.id.right_image:
+//                if (null != onMyClickListener)
+//                    onMyClickListener.onRightClick();
+//                break;
+//        }
+//    }
 }

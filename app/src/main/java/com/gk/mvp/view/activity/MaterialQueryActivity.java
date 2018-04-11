@@ -5,10 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -21,6 +19,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.CommonBean;
 import com.gk.beans.MaterialItemBean;
+import com.gk.beans.SubjectTypeBean;
+import com.gk.beans.SubjectTypeBeanDao;
+import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
@@ -130,7 +131,12 @@ public class MaterialQueryActivity extends SjmBaseActivity {
             public void convert(ViewHolder viewHolder, MaterialItemBean.DataBean item) {
                 setTextViewValues((TextView) viewHolder.getView(R.id.tv_live_title), item.getName());
                 setTextViewValues((TextView) viewHolder.getView(R.id.tv_time_content), JdryTime.getFullTimeBySec(item.getUploadTime()));
-                setTextViewValues((TextView) viewHolder.getView(R.id.tv_km_content), YXXConstants.jsonObject.getString(item.getCourse()));
+                SubjectTypeBean subjectTypeBean = YXXApplication.getDaoSession().getSubjectTypeBeanDao().queryBuilder().where(SubjectTypeBeanDao.Properties.Index.eq(item.getCourse())).unique();
+                if (null != subjectTypeBean) {
+                    setTextViewValues((TextView) viewHolder.getView(R.id.tv_km_content), subjectTypeBean.getName());
+                } else {
+                    setTextViewValues((TextView) viewHolder.getView(R.id.tv_km_content), "");
+                }
                 switch (item.getType()) {
                     case 1:
                         viewHolder.setText(R.id.tv_type_content, "名师讲堂");
@@ -219,7 +225,7 @@ public class MaterialQueryActivity extends SjmBaseActivity {
     private void openOrDownloadFile(MaterialItemBean.DataBean dataBean) {
         File file = new File(Environment.getExternalStorageDirectory() + "/Download/", dataBean.getFileName());
         if (file.exists()) {
-            openFile(file.getAbsolutePath());
+            JdryFileUtil.openFile(this, file);
         } else {
             retrofitDownload(dataBean);
         }
@@ -247,9 +253,6 @@ public class MaterialQueryActivity extends SjmBaseActivity {
         ProgressHelper.setProgressHandler(new DownloadProgressHandler() {
             @Override
             protected void onProgress(long bytesRead, long contentLength, boolean done) {
-                Log.e("是否在主线程中运行", String.valueOf(Looper.getMainLooper() == Looper.myLooper()));
-                Log.e("onProgress", String.format("%d%% done\n", (100 * bytesRead) / contentLength));
-                Log.e("done", "--->" + String.valueOf(done));
                 dialog.setMax((int) (contentLength / 1024));
                 dialog.setProgress((int) (bytesRead / 1024));
                 if (done) {
@@ -264,7 +267,6 @@ public class MaterialQueryActivity extends SjmBaseActivity {
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     File file = new File(Environment.getExternalStorageDirectory() + "/Download/", dataBean.getFileName());
-                    String fileAbsolutePath = file.getAbsolutePath();
                     try {
                         assert null != response.body();
                         InputStream is = response.body().byteStream();
@@ -282,7 +284,7 @@ public class MaterialQueryActivity extends SjmBaseActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    openFile(fileAbsolutePath);
+                    JdryFileUtil.openFile(MaterialQueryActivity.this, file);
                 } else {
                     toast(response.message());
                 }
@@ -293,15 +295,6 @@ public class MaterialQueryActivity extends SjmBaseActivity {
                 toast(t.getMessage());
             }
         });
-    }
-
-    private void openFile(String fileAbsolutePath) {
-        Intent intent = JdryFileUtil.openFile(fileAbsolutePath);
-        if (intent == null) {
-            toast("该文件已损坏");
-            return;
-        }
-        startActivity(intent);
     }
 
     @Override

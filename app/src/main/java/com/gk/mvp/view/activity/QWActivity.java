@@ -152,6 +152,8 @@ public class QWActivity extends SjmBaseActivity {
         super.onDestroy();
         if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
+            presenterManager.setCall(null);
+            presenterManager = null;
         }
     }
 }

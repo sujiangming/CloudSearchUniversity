@@ -8,9 +8,7 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Looper;
 import android.support.annotation.NonNull;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -243,7 +241,7 @@ public class MaterialListActivity extends SjmBaseActivity {
     private void openOrDownloadFile(MaterialItemBean.DataBean dataBean) {
         File file = new File(Environment.getExternalStorageDirectory() + "/Download/", dataBean.getFileName());
         if (file.exists()) {
-            openFile(file.getAbsolutePath());
+            JdryFileUtil.openFile(this, file);
         } else {
             retrofitDownload(dataBean);
         }
@@ -273,9 +271,9 @@ public class MaterialListActivity extends SjmBaseActivity {
         ProgressHelper.setProgressHandler(new DownloadProgressHandler() {
             @Override
             protected void onProgress(long bytesRead, long contentLength, boolean done) {
-                Log.e("是否在主线程中运行", String.valueOf(Looper.getMainLooper() == Looper.myLooper()));
-                Log.e("onProgress", String.format("%d%% done\n", (100 * bytesRead) / contentLength));
-                Log.e("done", "--->" + String.valueOf(done));
+//                Log.e("是否在主线程中运行", String.valueOf(Looper.getMainLooper() == Looper.myLooper()));
+//                Log.e("onProgress", String.format("%d%% done\n", (100 * bytesRead) / contentLength));
+//                Log.e("done", "--->" + String.valueOf(done));
                 dialog.setMax((int) (contentLength / 1024));
                 dialog.setProgress((int) (bytesRead / 1024));
                 if (done) {
@@ -290,7 +288,6 @@ public class MaterialListActivity extends SjmBaseActivity {
             public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     File file = new File(Environment.getExternalStorageDirectory() + "/Download/", dataBean.getFileName());
-                    String fileAbsolutePath = file.getAbsolutePath();
                     try {
                         InputStream is = response.body().byteStream();
                         FileOutputStream fos = new FileOutputStream(file);
@@ -307,7 +304,7 @@ public class MaterialListActivity extends SjmBaseActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    openFile(fileAbsolutePath);
+                    JdryFileUtil.openFile(MaterialListActivity.this, file);
                 } else {
                     toast(errorInfo);
                 }
@@ -318,15 +315,6 @@ public class MaterialListActivity extends SjmBaseActivity {
                 toast(errorInfo);
             }
         });
-    }
-
-    private void openFile(String fileAbsolutePath) {
-        Intent intent = JdryFileUtil.openFile(fileAbsolutePath);
-        if (intent == null) {
-            toast("该文件已损坏");
-            return;
-        }
-        startActivity(intent);
     }
 
 
