@@ -6,4 +6,5 @@
     android:padding="@dimen/space_10_dp"
     android:text="北京"
     android:textColor="@color/color353535"
-    android:textSize="@dimen/font_14_sp" />
+    android:textSize="@dimen/font_14_sp"
+    android:maxEms="1"/>

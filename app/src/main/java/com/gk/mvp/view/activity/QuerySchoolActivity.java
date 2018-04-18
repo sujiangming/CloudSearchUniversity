@@ -84,7 +84,7 @@ public class QuerySchoolActivity extends SjmBaseActivity {
                 if (!isSpinner1Clicked) {
                     rlChoose.setVisibility(View.VISIBLE);
                     tv_muti_choose.setVisibility(View.VISIBLE);
-                    gridViewChooseAdapter = new GridViewChooseAdapter(this, YXXApplication.getDaoSession().getUniversityAreaBeanDao().loadAll(), 1);
+                    gridViewChooseAdapter = new GridViewChooseAdapter(this,YXXApplication.getDaoSession().getUniversityAreaBeanDao().queryBuilder().where(UniversityAreaBeanDao.Properties.Index.notEq(0)).list() , 1);
                     initGridViewAdapter();
                     isSpinner1Clicked = true;
                 } else {

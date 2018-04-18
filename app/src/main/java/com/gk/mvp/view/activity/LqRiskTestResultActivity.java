@@ -2,6 +2,7 @@ package com.gk.mvp.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -64,6 +65,10 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
     RelativeLayout rl_up_data;
     @BindView(R.id.tv_line_2)
     TextView tv_line_2;
+    @BindView(R.id.tv_b_y_b)
+    TextView tv_b_y_b;
+    @BindView(R.id.tv_risk_desc)
+    TextView tv_risk_desc;
 
     @OnClick({R.id.tv_tag_1, R.id.tv_zs_plan})
     public void onViewClicked(View view) {
@@ -176,8 +181,33 @@ public class LqRiskTestResultActivity extends SjmBaseActivity {
             return;
         }
         showGoneView();
-        tvChart.setText(luQuRiskBean.getAdmissionProbability());
+        String probability = luQuRiskBean.getAdmissionProbability();
         initAddViews(luQuRiskBean.getRecommendSchs());
+        if (!TextUtils.isEmpty(probability)) {
+            tvChart.setText(probability);
+            String probabilitySub = probability.replace("%", "");
+            initViewData(Integer.valueOf(probabilitySub));
+        }
+    }
+
+    private void initViewData(int probability_int) {
+        if (probability_int <= 50) {
+            ///录取概率低，风险较高，不推荐
+            tv_b_y_b.setText("不考虑");
+            tv_b_y_b.setText(" 录取概率低，填报风险很高");
+        } else if (probability_int > 50 && probability_int <= 65) {
+            ///有一定的概率呗录取， 但是录取概率仍然较低，只能是冲一冲
+            tv_b_y_b.setText("冲一冲");
+            tv_b_y_b.setText("有一定的录取概率，但风险较高");
+        } else if (probability_int > 65 && probability_int <= 75) {
+            ///有一定的概率呗录取， 但是录取概率仍然较低，只能是稳一稳
+            tv_b_y_b.setText("稳一稳");
+            tv_b_y_b.setText(" 录取概率一般，可作为参考院校");
+        } else if (probability_int > 75) {
+            ///有一定的概率呗录取， 但是录取概率仍然较高，只能是保证
+            tv_b_y_b.setText("保一保");
+            tv_b_y_b.setText("录取概率较高，可作为保底院校");
+        }
     }
 
     @Override

@@ -113,7 +113,12 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
         checkHasNewVersion();
-        initView();
+        initImageViews();
+        showMainView();
+        initFragments();
+//        if (savedInstanceState == null) {
+//            initFragments();
+//        }
     }
 
     private void checkHasNewVersion() {
@@ -170,11 +175,6 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
         AppUpdateUtils.upDate();
     }
 
-    private void initView() {
-        showMainView();
-        initFragments();
-    }
-
     private void showMainView() {
         showWelcome();
     }
@@ -213,7 +213,6 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
 
     private void initFragments() {
         fragmentManager = getSupportFragmentManager();
-        initImageViews(); //初始化imageview数组
         changeFragment(index);//显示主页
     }
 
@@ -233,15 +232,16 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
                 if (null == homeFragment) {
                     homeFragment = new HomeFragment();
                     transaction.add(R.id.ll_fragment_container, homeFragment);
+                    //transaction.addToBackStack(homeFragment.getClass().getSimpleName());
                 } else {
                     transaction.show(homeFragment);
                 }
-
                 break;
             case 1:
                 if (null == liveVideoFragment) {
                     liveVideoFragment = new LiveVideoFragment();
                     transaction.add(R.id.ll_fragment_container, liveVideoFragment);
+                    //transaction.addToBackStack(liveVideoFragment.getClass().getSimpleName());
                 } else {
                     transaction.show(liveVideoFragment);
                 }
@@ -250,6 +250,7 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
                 if (null == wishFragment) {
                     wishFragment = new WishFragment();
                     transaction.add(R.id.ll_fragment_container, wishFragment);
+                    //transaction.addToBackStack(wishFragment.getClass().getSimpleName());
                 } else {
                     transaction.show(wishFragment);
                 }
@@ -258,6 +259,7 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
                 if (null == lectureFragment) {
                     lectureFragment = new LectureFragment();
                     transaction.add(R.id.ll_fragment_container, lectureFragment);
+                    //transaction.addToBackStack(lectureFragment.getClass().getSimpleName());
                 } else {
                     transaction.show(lectureFragment);
                 }
@@ -266,6 +268,7 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
                 if (null == userFragment) {
                     userFragment = new UserFragment();
                     transaction.add(R.id.ll_fragment_container, userFragment);
+                    //transaction.addToBackStack(userFragment.getClass().getSimpleName());
                 } else {
                     transaction.show(userFragment);
                 }
@@ -349,8 +352,7 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
                 Manifest.permission.CAMERA,
                 Manifest.permission.READ_EXTERNAL_STORAGE,
                 Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.CALL_PHONE,
-                Manifest.permission_group.STORAGE
+                Manifest.permission.CALL_PHONE
         };
         if (!EasyPermissions.hasPermissions(this, perms)) {
             EasyPermissions.requestPermissions(this, "需要打开相机和打电话的权限", REQUEST_CODE_QRCODE_PERMISSIONS, perms);

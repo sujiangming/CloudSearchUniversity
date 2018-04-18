@@ -48,8 +48,6 @@ public class YXXApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        CrashHandler crashHandler = CrashHandler.instance();
-        crashHandler.init();
         instance = this;
         sApi = WXEntryActivity.initWeiXin(this, Constant.WECHAT_APPID);
         payApi = WXPayEntryActivity.initWeiXinPay(this, Constant.WECHAT_APPID);
@@ -146,7 +144,7 @@ public class YXXApplication extends Application {
     private void initUniversityAreaBean() {
         List<UniversityAreaBean> universityAreaBeanList = daoSession.getUniversityAreaBeanDao().loadAll();
         if (null == universityAreaBeanList || 0 == universityAreaBeanList.size()) {
-            daoSession.getUniversityAreaBeanDao().insertOrReplace(new UniversityAreaBean(0, "不限"));
+            //daoSession.getUniversityAreaBeanDao().insertOrReplace(new UniversityAreaBean(0, "不限"));
             daoSession.getUniversityAreaBeanDao().insertOrReplace(new UniversityAreaBean(1, "北京"));
             daoSession.getUniversityAreaBeanDao().insertOrReplace(new UniversityAreaBean(2, "天津"));
             daoSession.getUniversityAreaBeanDao().insertOrReplace(new UniversityAreaBean(3, "上海"));

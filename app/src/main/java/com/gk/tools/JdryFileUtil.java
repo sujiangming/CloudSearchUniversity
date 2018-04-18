@@ -11,8 +11,6 @@ import android.support.v4.content.FileProvider;
 import android.text.TextUtils;
 import android.widget.Toast;
 
-import com.gk.global.CrashHandler;
-
 import java.io.File;
 import java.util.List;
 
@@ -77,8 +75,8 @@ public class JdryFileUtil {
 
         } catch (ActivityNotFoundException e) {
             Toast.makeText(context, "您没有安装Office等相关软件", Toast.LENGTH_SHORT).show();
-            CrashHandler crashHandler = CrashHandler.instance();
-            crashHandler.init();
+//            CrashHandler crashHandler = CrashHandler.instance();
+//            crashHandler.init();
         }
     }
 
