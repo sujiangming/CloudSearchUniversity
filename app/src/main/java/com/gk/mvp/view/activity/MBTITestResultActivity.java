@@ -131,7 +131,7 @@ public class MBTITestResultActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        setTopBar(topBar, "MBIT性格测试", 0);
+        setTopBar(topBar, "MBTI性格测试", 0);
         mbtiTypesTvs = new TextView[]{iv1, iv2, iv3, iv4};
         mbtiTypesTvsDesc = new TextView[]{tvForIv1, tvForIv2, tvForIv3, tvForIv4};
         mbtiCareerSummaryTvs = new TextView[]{tvTz1, tvTz2, tvTz3, tvTz4};

@@ -76,7 +76,7 @@ public class HldInterestActivity extends SjmBaseActivity {
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        setTopBar(topBar, "霍兰德性格测试", 0);
+        setTopBar(topBar, "霍兰德兴趣测试", 0);
         httpReqest();
         getVipLevelAmount();
     }

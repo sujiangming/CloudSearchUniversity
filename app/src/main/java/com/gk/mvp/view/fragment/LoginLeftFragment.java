@@ -128,13 +128,10 @@ public class LoginLeftFragment extends SjmBaseFragment {
     private void setTvLoginBackgroundRes() {
         int etName = etUserPhone.getText().length();
         int etPwd = etUserPwd.getText().length();
-        boolean isLogin = false;
         if (etName > 0 && etPwd > 0) {
             tvLogin.setBackgroundResource(R.drawable.login_press_style);
-            isLogin = true;
         } else {
             tvLogin.setBackgroundResource(R.color.color878787);
-            isLogin = false;
         }
     }
 
