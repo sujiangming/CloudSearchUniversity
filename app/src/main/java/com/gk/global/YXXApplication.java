@@ -52,6 +52,7 @@ public class YXXApplication extends Application {
         sApi = WXEntryActivity.initWeiXin(this, Constant.WECHAT_APPID);
         payApi = WXPayEntryActivity.initWeiXinPay(this, Constant.WECHAT_APPID);
         initLeakCanary();
+        CrashHandler.instance().init();
     }
 
     private void initLeakCanary() {

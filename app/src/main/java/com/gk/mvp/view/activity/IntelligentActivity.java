@@ -19,7 +19,6 @@ import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
 import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.custom.TopBarView;
-import com.gk.tools.JdryPersistence;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -91,7 +90,7 @@ public class IntelligentActivity extends SjmBaseActivity {
         super.onResume();
         initData();
         httpGetData();
-        String intel_zj_btn = JdryPersistence.getObject(this, "intel_zj_btn");
+        //String intel_zj_btn = JdryPersistence.getObject(this, "intel_zj_btn");
     }
 
     private void initData() {
@@ -127,7 +126,7 @@ public class IntelligentActivity extends SjmBaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if(null != presenterManager && null != presenterManager.getCall()){
+        if (null != presenterManager && null != presenterManager.getCall()) {
             presenterManager.getCall().cancel();
         }
     }
@@ -148,8 +147,13 @@ public class IntelligentActivity extends SjmBaseActivity {
             case YXXConstants.INVOKE_API_DEFAULT_TIME:
                 setWishResultBean(commonBean);
                 setTextViewAndBtn(btnRg, tvWishReport, commonBean);
-                tvSWantCity.setText("" + (wishResultBean.getIntentArea() == null ? "未知" : wishResultBean.getIntentArea()));
-                tvZy.setText("" + (wishResultBean.getIntentSch() == null ? "未知" : wishResultBean.getIntentSch()));
+                if (null != wishResultBean) {
+                    tvSWantCity.setText("" + (wishResultBean.getIntentArea() == null ? "未知" : wishResultBean.getIntentArea()));
+                    tvZy.setText("" + (wishResultBean.getIntentSch() == null ? "未知" : wishResultBean.getIntentSch()));
+                } else {
+                    tvSWantCity.setText("未知");
+                    tvZy.setText("未知");
+                }
                 break;
             case YXXConstants.INVOKE_API_SECOND_TIME:
                 setWishResultBean(commonBean);
