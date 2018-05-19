@@ -13,27 +13,15 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
-import com.gk.beans.CommonBean;
 import com.gk.beans.LoginBean;
-import com.gk.beans.VersionBean;
-import com.gk.beans.VersionResultBean;
-import com.gk.global.YXXApplication;
 import com.gk.global.YXXConstants;
-import com.gk.http.IService;
-import com.gk.http.RetrofitUtil;
-import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.fragment.HomeFragment;
 import com.gk.mvp.view.fragment.LectureFragment;
 import com.gk.mvp.view.fragment.LiveVideoFragment;
 import com.gk.mvp.view.fragment.UserFragment;
 import com.gk.mvp.view.fragment.WishFragment;
-import com.gk.tools.AppUpdateUtils;
-import com.gk.tools.AppVersion;
 import com.gk.tools.GlideImageLoader;
-import com.gk.tools.PackageUtils;
 
 import java.util.List;
 
@@ -103,7 +91,6 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
     private int[] imageViewChangeRes = {R.drawable.shouye_press, R.drawable.zhibo_press, R.drawable.gaokaozhiyuan_selected3x, R.drawable.gaokao_press, R.drawable.my_press};
 
     private int index = 0;
-    private VersionBean versionBean = null;
 
     @Override
     public int getResouceId() {
@@ -112,77 +99,20 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
 
     @Override
     protected void onCreateByMe(Bundle savedInstanceState) {
-        checkHasNewVersion();
-        initImageViews();
-        showMainView();
         initFragments();
-//        if (savedInstanceState == null) {
-//            initFragments();
-//        }
-    }
-
-    private void checkHasNewVersion() {
-        versionBean = YXXApplication.getDaoSession().getVersionBeanDao().queryBuilder().unique();
-        if (versionBean == null) {
-            checkVersion();
-            return;
+        initImageViews();
+        if(null != LoginBean.getInstance()){
+            GlideImageLoader.displayImage(this, LoginBean.getInstance().getHeadImg(), ivUserHeader);
+            String userCname = LoginBean.getInstance().getNickName() == null ? "未填写" : LoginBean.getInstance().getNickName();
+            tvWelcome.setText(userCname + ",欢迎回来！");
+            showWelcome();
         }
-        upgradeVersion();
-    }
-
-    private PresenterManager presenterManager = new PresenterManager();
-
-    private void checkVersion() {
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("version", PackageUtils.getVersionName(this));
-        presenterManager
-                .setmIView(this)
-                .setCall(RetrofitUtil.getInstance().createReq(IService.class).checkVersion(jsonObject.toJSONString()))
-                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
-    }
-
-
-    @Override
-    public <T> void fillWithData(T t, int order) {
-        CommonBean commonBean = (CommonBean) t;
-        if (1 != commonBean.getStatus()) {
-            return;
-        }
-        if (null == commonBean.getData()) {
-            return;
-        }
-        VersionResultBean versionResultBean = JSON.parseObject(commonBean.getData().toString(), VersionResultBean.class);
-        AppUpdateUtils.updateVersion(versionResultBean);//有更新
-        versionBean = YXXApplication.getDaoSession().getVersionBeanDao().queryBuilder().unique();
-        upgradeVersion();
-    }
-
-    @Override
-    public <T> void fillWithNoData(T t, int order) {
-
-    }
-
-    public void upgradeVersion() {
-        String url = versionBean.getDownUrl();
-        AppVersion appVersion = new AppVersion();
-        appVersion.setContent(versionBean.getUpdateContent());
-        appVersion.setUrl(url);
-        appVersion.setApkName(PackageUtils.getAppName(this) + ".apk");
-        appVersion.setVersionName(versionBean.getVersionCode());
-        String sha1 = PackageUtils.getSHa1(this);
-        appVersion.setSha1(sha1);
-        AppUpdateUtils.init(getApplicationContext(), appVersion, false, true);
-        AppUpdateUtils.upDate();
-    }
-
-    private void showMainView() {
-        showWelcome();
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == YXXConstants.LOGIN_SET_RESULT) {
-            showMainView();
+            showWelcome();
         }
     }
 
@@ -316,18 +246,9 @@ public class MainActivity extends SjmBaseActivity implements EasyPermissions.Per
     protected void onStart() {
         super.onStart();
         requestCodeQRCodePermissions();
-        GlideImageLoader.displayImage(this, LoginBean.getInstance().getHeadImg(), ivUserHeader);
-        String userCname = LoginBean.getInstance().getNickName() == null ? "未填写" : LoginBean.getInstance().getNickName();
-        tvWelcome.setText(userCname + ",欢迎回来！");
+
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (null != presenterManager && null != presenterManager.getCall()) {
-            presenterManager.getCall().cancel();
-        }
-    }
 
     private static final int REQUEST_CODE_QRCODE_PERMISSIONS = 1;
 

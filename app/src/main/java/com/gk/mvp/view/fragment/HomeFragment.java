@@ -8,11 +8,17 @@ import android.view.View;
 import android.widget.ImageView;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.gk.R;
 import com.gk.beans.AdsBean;
 import com.gk.beans.CommonBean;
+import com.gk.beans.VersionBean;
+import com.gk.beans.VersionResultBean;
+import com.gk.global.YXXApplication;
+import com.gk.global.YXXConstants;
 import com.gk.http.IService;
 import com.gk.http.RetrofitUtil;
+import com.gk.mvp.presenter.PresenterManager;
 import com.gk.mvp.view.activity.GkLibraryActivity;
 import com.gk.mvp.view.activity.HldInterestActivity;
 import com.gk.mvp.view.activity.IntelligentActivity;
@@ -29,7 +35,10 @@ import com.gk.mvp.view.activity.SchoolZiZhuZSListActivity;
 import com.gk.mvp.view.activity.VIPActivity;
 import com.gk.mvp.view.activity.VideoListActivity;
 import com.gk.mvp.view.activity.WishReportEnterActivity;
+import com.gk.tools.AppUpdateUtils;
+import com.gk.tools.AppVersion;
 import com.gk.tools.GlideImageLoader;
+import com.gk.tools.PackageUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.listener.OnBannerListener;
 import com.youth.banner.loader.ImageLoader;
@@ -51,6 +60,9 @@ public class HomeFragment extends SjmBaseFragment {
     @BindView(R.id.banner)
     Banner banner;
 
+    private PresenterManager presenterManager = new PresenterManager();
+    private VersionBean versionBean = null;
+
     @Override
     public int getResourceId() {
         return R.layout.fragment_home;
@@ -59,6 +71,7 @@ public class HomeFragment extends SjmBaseFragment {
     @Override
     protected void onCreateViewByMe(Bundle savedInstanceState) {
         initBanner();
+        checkHasNewVersion();
     }
 
     private void initBanner() {
@@ -69,6 +82,60 @@ public class HomeFragment extends SjmBaseFragment {
         }
         initBannerData(mDataBeans);
     }
+
+
+    private void checkHasNewVersion() {
+        versionBean = YXXApplication.getDaoSession().getVersionBeanDao().queryBuilder().unique();
+        if (versionBean == null) {
+            checkVersion();
+            return;
+        }
+        upgradeVersion();
+    }
+
+    private void checkVersion() {
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("version", PackageUtils.getVersionName(getContext()));
+        presenterManager
+                .setmIView(this)
+                .setCall(RetrofitUtil.getInstance().createReq(IService.class).checkVersion(jsonObject.toJSONString()))
+                .request(YXXConstants.INVOKE_API_DEFAULT_TIME);
+    }
+
+
+    @Override
+    public <T> void fillWithData(T t, int order) {
+        CommonBean commonBean = (CommonBean) t;
+        if (1 != commonBean.getStatus()) {
+            return;
+        }
+        if (null == commonBean.getData()) {
+            return;
+        }
+        VersionResultBean versionResultBean = JSON.parseObject(commonBean.getData().toString(), VersionResultBean.class);
+        AppUpdateUtils.updateVersion(versionResultBean);//有更新
+        versionBean = YXXApplication.getDaoSession().getVersionBeanDao().queryBuilder().unique();
+        upgradeVersion();
+    }
+
+    @Override
+    public <T> void fillWithNoData(T t, int order) {
+
+    }
+
+    public void upgradeVersion() {
+        String url = versionBean.getDownUrl();
+        AppVersion appVersion = new AppVersion();
+        appVersion.setContent(versionBean.getUpdateContent());
+        appVersion.setUrl(url);
+        appVersion.setApkName(PackageUtils.getAppName(getContext()) + ".apk");
+        appVersion.setVersionName(versionBean.getVersionCode());
+        String sha1 = PackageUtils.getSHa1(getContext());
+        appVersion.setSha1(sha1);
+        AppUpdateUtils.init(getContext(), appVersion, false, true);
+        AppUpdateUtils.upDate();
+    }
+
 
     private void getAdsInfo() {
         RetrofitUtil.getInstance().createReq(IService.class).getAdsInfoList()
@@ -94,11 +161,9 @@ public class HomeFragment extends SjmBaseFragment {
 
     private void initBannerData(List<AdsBean.MDataBean> mDataBeans) {
         final List<String> imageList = new ArrayList<>();
-        //final List<String> imageNameList = new ArrayList<>();
         final List<String> imageRedirectUrlList = new ArrayList<>();
         for (int i = 0; i < mDataBeans.size(); i++) {
             imageList.add(mDataBeans.get(i).getUrl());
-            //imageNameList.add(mDataBeans.get(i).getName());
             imageRedirectUrlList.add(mDataBeans.get(i).getRedirectUrl());
         }
         banner.setImages(imageList).setImageLoader(new ImageLoader() {
@@ -202,8 +267,6 @@ public class HomeFragment extends SjmBaseFragment {
                 openNewActivity(QWActivity.class);
                 break;
             case R.id.rtv_gaokao_tiku:
-//                MainActivity mainActivity = (MainActivity) getActivity();
-//                mainActivity.changeNavStyle(mainActivity.getLlLesson());
                 openNewActivity(GkLibraryActivity.class);
                 break;
             case R.id.rtv_on_live:

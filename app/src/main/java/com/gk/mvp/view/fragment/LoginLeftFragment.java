@@ -203,7 +203,7 @@ public class LoginLeftFragment extends SjmBaseFragment {
                 List<AdsBean.MDataBean> mDataBeans = JSON.parseArray(commonBean1.getData().toString(), AdsBean.MDataBean.class);
                 AdsBean.getInstance().saveAdsBean(mDataBeans);
                 openNewActivity(MainActivity.class);
-                closeActivity();
+                //closeActivity();
                 break;
         }
     }
