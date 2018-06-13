@@ -360,12 +360,4 @@
             </TableLayout>
         </LinearLayout>
     </ScrollView>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@android:color/transparent"
-        android:gravity="center"
-        android:text="@string/main_tab_txt1"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/font_16_sp" />
 </FrameLayout>
